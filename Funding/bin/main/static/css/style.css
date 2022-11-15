@@ -34,6 +34,7 @@ header {
 }
 
 .menu ul li a {
+    font-size: 17px;
     font-weight: bold;
 }
 
@@ -58,5 +59,6 @@ header {
 }
 
 .login ul li a {
+    font-size: 17px;
     font-weight: bold;
 }

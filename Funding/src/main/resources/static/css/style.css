@@ -1,8 +1,30 @@
-* { margin: 0; padding: 0; }
+@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+/* 
+font-family: 'Do Hyeon', sans-serif;
+font-family: 'Noto Sans KR', sans-serif;
+*/
+
+* {
+    margin: 0; padding: 0;
+    outline: none;
+    background-color: #F5EDED;
+    font-family: 'Noto Sans KR', sans-serif;
+}
 
 a { color: #000; text-decoration: none;}
 
 ul, li { list-style: none; }
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Do Hyeon', sans-serif;
+}
+
+input {
+    padding: 0 10px;
+    border: 1px solid #8C8C8C;
+    border-radius: none;
+}
 
 /* 홈페이지 상단 nav */
 header {
@@ -34,15 +56,28 @@ header {
 }
 
 .menu ul li a {
+    font-size: 17px;
     font-weight: bold;
 }
 
 /* 검색 */
-.search {}
+.search {
+}
 
-.sesarch .int_search {}
+.search form {
+    display: flex;
+    
+}
 
-.sesarch .btn_search {}
+.search form .int_search {
+    margin-right: 10px;
+    height: 25px;
+}
+
+.search form .btn_search {
+    cursor: pointer;
+    padding: 3px;
+}
 
 /* 로그인, 회원가입 */
 .login {}
@@ -58,5 +93,11 @@ header {
 }
 
 .login ul li a {
+    font-size: 17px;
     font-weight: bold;
+}
+
+/* 타이틀 */
+#title {
+    margin: 30px 0;
 }

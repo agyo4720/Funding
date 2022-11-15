@@ -43,44 +43,63 @@
     </header>
 
     <section>
+        <div id="title">
+            <h1>로그인</h1>
+        </div>
+
         <form>
             <!-- 아이디 -->
-            <div class="int_id">
+            <div class="int int_id">
                 <label for="id">아이디</label>
                 <input type="text" placeholder="아이디 입력">
             </div>
 
             <!-- 비밀번호 -->
-            <div class="int_pw">
+            <div class="int int_pw">
                 <label for="password">비밀번호</label>
                 <input type="password" placeholder="비밀번호 입력">
             </div>
 
             <!-- 비밀번호 확인 -->
-            <div class="int_pw_check">
+            <div class="int int_pw_check">
                 <label for="password_check">비밀번호 확인</label>
                 <input type="password" placeholder="비밀번호 확인">
             </div>
 
             <!-- 닉네임 -->
-            <div class="int_nickname">
+            <div class="int int_nickname">
                 <label for="nickname">닉네임</label>
                 <input type="text" placeholder="닉네임 입력">
             </div>
 
             <!-- 이메일 -->
-            <div class="int_email">
+            <!-- 인증하기도 추가 -->
+            <div class="int int_email">
                 <label for="email">이메일</label>
                 <input type="text" placeholder="이메일 입력">
             </div>
 
+            <!-- 주소 -->
+
             <!-- 전화번호 -->
-            <div class="int_mobile">
+            <div class="int int_mobile">
                 <label for="mobile">전화번호</label>
                 <input type="text" maxlength="16" placeholder="전화번호 입력">
             </div>
+
+             <!-- 멤버타입 -->
+             <div class="int_role">
+                <div class="rad_user">
+                    <label>유저</label>
+                    <input type="radio" name="role" value="user">
+                </div>
+                <div class="rad_artist">
+                    <label>아티스트</label>
+                    <input type="radio" name="role" value="artist">
+                </div>
+            </div>
             
-            <input type="submit" value="가입하기">
+            <input class="btn_join" type="submit" value="가입하기">
         </form>
     </section>
 </body>
