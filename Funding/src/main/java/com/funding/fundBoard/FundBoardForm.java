@@ -11,8 +11,6 @@ import lombok.Setter;
 @Setter
 public class FundBoardForm {
 	
-	
-	
 	@NotEmpty(message=" 제목은 필수항목입니다.")
 	private String subject;
 	
