@@ -96,5 +96,50 @@ public class PaymentController {
         model.addAttribute("code", code);
         return "/pay/fail";
     }
+    
+    //환불성공
+    @RequestMapping("/pay/cancel")
+    public String cancel(@RequestParam String paymentKey, Model model) throws Exception {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()));
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        Map<String, String> payloadMap = new HashMap<>();
+        //payloadMap.put("orderId", orderId);
+        //payloadMap.put("amount", String.valueOf(amount));
+        
+
+        HttpEntity<String> request = new HttpEntity<>(objectMapper.writeValueAsString(payloadMap), headers);
+
+        ResponseEntity<JsonNode> responseEntity = restTemplate.postForEntity(
+                "https://api.tosspayments.com/v1/payments/" + paymentKey, request, JsonNode.class);
+        if (responseEntity.getStatusCode() == HttpStatus.OK) {
+            JsonNode successNode = responseEntity.getBody();
+            log.info(successNode.toString());
+            model.addAttribute("orderId", successNode.get("orderId").asText());
+            String s = successNode.get("orderName").asText();
+            String ss = successNode.get("transactionKey").asText();
+            
+            //patmentService.savecreditinfo(paymentKey, orderId, amount, s, ss);
+            return "/pay/cancelSuccess";
+        } else {
+            JsonNode failNode = responseEntity.getBody();
+            model.addAttribute("message", failNode.get("message").asText());
+            model.addAttribute("code", failNode.get("code").asText());
+            return "/pay/cancelFail";
+        }
+    }
+
+    
+    
+    /*
+    //환불실패
+    @RequestMapping("/pay/fail")
+    public String failPayment(@RequestParam String message, @RequestParam String code, Model model) {
+        model.addAttribute("message", message);
+        model.addAttribute("code", code);
+        return "/pay/fail";
+    }
+    */
 
 }

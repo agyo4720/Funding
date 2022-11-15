@@ -1,0 +1,20 @@
+<head>
+  <title>환불하기</title>
+  <script src="https://js.tosspayments.com/v1/payment"></script>
+</head>
+<body>
+  <script>
+    var clientKey = 'test_ck_OALnQvDd2VJjgjj4daVMj7X41mNW'
+    var tossPayments = TossPayments(clientKey) // 클라이언트 키로 초기화하기
+    
+    tossPayments.requestPayment('결제 취소', { // 결제 수단 파라미터
+    	  // 결제 정보 파라미터
+    	  amount: 100,
+    	  orderId: orderId,
+    	  orderName: '토스 티셔츠 외 2건',
+    	  customerName: '박토스',
+    	  successUrl: 'http://localhost/cancelSuccess',
+    	  failUrl: 'http://localhost/cancelFail',
+    	})
+  </script>
+</body>
