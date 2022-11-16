@@ -44,63 +44,131 @@
 
     <section>
         <div id="title">
-            <h1>로그인</h1>
+            <h1>회원가입</h1>
         </div>
 
         <form>
             <!-- 아이디 -->
-            <div class="int int_id">
+            <div class="int int_userId">
                 <label for="id">아이디</label>
-                <input type="text" placeholder="아이디 입력">
+                <input type="text"/>
             </div>
 
             <!-- 비밀번호 -->
-            <div class="int int_pw">
+            <div class="int int_password">
                 <label for="password">비밀번호</label>
-                <input type="password" placeholder="비밀번호 입력">
+                <input type="password"/>
             </div>
 
             <!-- 비밀번호 확인 -->
             <div class="int int_pw_check">
                 <label for="password_check">비밀번호 확인</label>
-                <input type="password" placeholder="비밀번호 확인">
+                <input type="password"/>
+            </div>
+
+            <!-- 이름 -->
+            <div class="int int_name">
+                <label for="name">이름</label>
+                <input type="text"/>
             </div>
 
             <!-- 닉네임 -->
+            <!-- 중복확인 -->
             <div class="int int_nickname">
                 <label for="nickname">닉네임</label>
-                <input type="text" placeholder="닉네임 입력">
+                <input type="text"/>
             </div>
 
             <!-- 이메일 -->
             <!-- 인증하기도 추가 -->
             <div class="int int_email">
                 <label for="email">이메일</label>
-                <input type="text" placeholder="이메일 입력">
+                <input type="text"/>
+                <div class="int_domain">
+                    <p>@</p>
+                    <select name="sel_domain" id="sel_domain">
+                        <option value="">선택하기</option>
+                        <option value="gmail.com">gmail.com</option>
+                        <option value="naver.com">naver.com</option>
+                        <option value="nate.com">nate.com</option>
+                        <option value="kakao.com">kakao.com</option>
+                        <option value="direct" class="direct">직접 입력</option>
+                    </select>
+                    <!-- 직접 입력 input box -->
+                    <input type="text" id="int_direct" name="int_direct"/>
+                </div>
+                <button class="sub_email">인증번호 받기</button>
+            </div>
+
+            <!-- 생년월일 -->
+            <div class="int int_birth">
+                <label for="birth">생년월일</label>
+                <label for="birth_year">연도</label>
+                <input type="text"/>
+                <label for="birth_mm">월</label>
+                <select name="sel_birth_mm" id="sel_birth_mm">
+                    <option value="">선택하기</option>
+                    <option value="01">1</option>
+                    <option value="02">2</option>
+                    <option value="03">3</option>
+                    <option value="03">3</option>
+                </select>
+                <label for="birth_day">일</label>
+                <input type="text"/>
+            </div>
+
+            <!-- 성별 -->
+            <div class="int int_gender">
+                <label for="gender">성별</label>
+                <select name="sel_gender" id="sel_gender">
+                    <option value="">선택하기</option>
+                    <option value="남성">남성</option>
+                    <option value="여성">여성</option>
+                </select>
             </div>
 
             <!-- 주소 -->
+            <div class="int int_address">
+                <label for="address">주소</label>
+                <input type="text"/>
+            </div>
 
             <!-- 전화번호 -->
             <div class="int int_mobile">
                 <label for="mobile">전화번호</label>
-                <input type="text" maxlength="16" placeholder="전화번호 입력">
+                <div class="mobile">
+                    <p>010</p>
+                    <input type="text" maxlength="16" placeholder="- 제외 입력"/>
+                </div>
             </div>
 
              <!-- 멤버타입 -->
              <div class="int_role">
                 <div class="rad_user">
                     <label>유저</label>
-                    <input type="radio" name="role" value="user">
+                    <input type="radio" name="role" value="user"/>
                 </div>
                 <div class="rad_artist">
                     <label>아티스트</label>
-                    <input type="radio" name="role" value="artist">
+                    <input type="radio" name="role" value="artist"/>
                 </div>
             </div>
             
-            <input class="btn_join" type="submit" value="가입하기">
+            <input class="btn_join" type="submit" value="가입하기"/>
         </form>
     </section>
+    
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script>
+        $(function() {
+            $("#sel_domain").change(function() {
+                if($("#sel_domain").val() == "direct") {
+                    $("#int_direct").show();
+                } else {
+                    $("#int_direct").hide();
+                }
+            });
+        });
+    </script>
 </body>
 </html>
