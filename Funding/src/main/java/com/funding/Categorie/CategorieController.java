@@ -11,8 +11,6 @@ public class CategorieController {
 
 	private final CategorieService CategorieService;
 	
-	
-	
 	@RequestMapping("/Categorie")
 	public String Categorie() {
 		return "Categorie";
