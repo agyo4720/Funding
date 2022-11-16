@@ -34,8 +34,13 @@ public class PaymentController {
     private final PatmentService patmentService;
 
     @RequestMapping("/pay/tossPay")
-    private String in() {
+    private String tossPay() {
     	return "/pay/tossPay";
+    }
+    
+    @RequestMapping("/pay/cancel")
+    private String cancel() {
+    	return "/pay/cancel";
     }
     
     @PostConstruct
@@ -97,30 +102,24 @@ public class PaymentController {
         return "/pay/fail";
     }
     
+    
     //환불성공
-    @RequestMapping("/pay/cancel")
-    public String cancel(@RequestParam String paymentKey, Model model) throws Exception {
+    @RequestMapping("/pay/cancelSuccess")
+    public String cancel(@RequestParam String paymentKey, @RequestParam String cancelReason, Model model) throws Exception {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()));
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         Map<String, String> payloadMap = new HashMap<>();
-        //payloadMap.put("orderId", orderId);
-        //payloadMap.put("amount", String.valueOf(amount));
+        payloadMap.put("cancelReason", cancelReason);
         
-
         HttpEntity<String> request = new HttpEntity<>(objectMapper.writeValueAsString(payloadMap), headers);
 
-        ResponseEntity<JsonNode> responseEntity = restTemplate.postForEntity(
-                "https://api.tosspayments.com/v1/payments/" + paymentKey, request, JsonNode.class);
+        ResponseEntity<JsonNode> responseEntity = restTemplate.getForEntity(
+                "https://api.tosspayments.com/v1/payments/" + request, JsonNode.class);
         if (responseEntity.getStatusCode() == HttpStatus.OK) {
             JsonNode successNode = responseEntity.getBody();
-            log.info(successNode.toString());
-            model.addAttribute("orderId", successNode.get("orderId").asText());
-            String s = successNode.get("orderName").asText();
-            String ss = successNode.get("transactionKey").asText();
-            
-            //patmentService.savecreditinfo(paymentKey, orderId, amount, s, ss);
+            //String ss = successNode.get("transactionKey").asText();
             return "/pay/cancelSuccess";
         } else {
             JsonNode failNode = responseEntity.getBody();
