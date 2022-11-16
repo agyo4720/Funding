@@ -11,6 +11,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.funding.Categorie.CategorieService;
+import com.funding.fundArtist.FundArtistService;
+import com.funding.fundUser.FundUserService;
+
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -18,14 +22,18 @@ import lombok.RequiredArgsConstructor;
 public class FundBoardController {
 	
 	private final FundBoardRepository fundBoardRepository;
-	private final FundBoardService fundBoardService; 
+	private final FundBoardService fundBoardService;
+	private final FundUserService fundUserService;
+	private final CategorieService categorieService;
+	private final FundArtistService fundArtistService;
+	
 	
 	// 펀딩 리스트
 	@RequestMapping("fundBoard")
 	public String getFundBoard(Model model) {
 		List<FundBoard> fundBoard = this.fundBoardService.getFundBoard();
 		model.addAttribute("fundBoard", fundBoard);
-		return "fundBoard/fundBoard";
+		return "fundBoard";
 	}
 	
 //	// 펀딩리스트
@@ -48,27 +56,24 @@ public class FundBoardController {
 		
 		 if (bindingResult.hasErrors()) {
 			 
-			 List<FundBoard> fundBoardList = this.fundBoardRepository.findAll();
+			 //List<FundBoard> fundBoardList = this.fundBoardRepository.findAll();
+			 this.fundBoardService.getFundBoard();
 			 
-			 model.addAttribute("fundBoardList", fundBoardList);
+			 model.addAttribute("fundBoardList", this.fundBoardService.getFundBoard());
 			 
 			 return "fundBoard_form";
 		 }
 		
 		
-		 this.fundBoardService.create(fundBoardForm.getSubject(),
-				 					  fundBoardForm.getContent(),
-				 					  fundBoardForm.getPlace(),
-				 					  fundBoardForm.getStartDate(),
-				 					  fundBoardForm.getRuntime(),
-				 					  fundBoardForm.getState(),
-				 					  fundBoardForm.getFundDuration(),
-				 					  fundBoardForm.getMinFund(),
-				 					  fundBoardForm.getFundCurrent(),
-				 					  fundBoardForm.getFundAmount(),
-				 					  fundBoardForm.getCurrentMember(),
-				 					  fundBoardForm.getVote(),
-				 					  fundBoardForm.getStar());
+//		 this.fundBoardService.create(fundBoardForm.getSubject(),
+//				 					  fundBoardForm.getContent(),
+//				 					  fundBoardForm.getPlace(),
+//				 					  fundBoardForm.getStartDate(),
+//				 					  fundBoardForm.getRuntime(),
+//				 					  fundBoardForm.getFundDuration(),
+//				 					  fundBoardForm.getMinFund(),
+//				 					  fundBoardForm.getFundAmount(),
+//				 					  fundBoardForm.getCurrentMember());
 		 
 		 return "fundBoard";
 	}
