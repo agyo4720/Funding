@@ -105,13 +105,14 @@ public class PaymentController {
     
     //환불성공
     @RequestMapping("/pay/cancelSuccess")
-    public String cancel(@RequestParam String paymentKey, @RequestParam String cancelReason, Model model) throws Exception {
+    public String cancel(@RequestParam String paymentKey, @RequestParam String cancelReason,@RequestParam String requesterType, Model model) throws Exception {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()));
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         Map<String, String> payloadMap = new HashMap<>();
         payloadMap.put("cancelReason", cancelReason);
+        payloadMap.put("requesterType", requesterType);
         
         HttpEntity<String> request = new HttpEntity<>(objectMapper.writeValueAsString(payloadMap), headers);
 

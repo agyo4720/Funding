@@ -67,7 +67,7 @@ public class FundBoard {
 	@ManyToOne
 	private FundUser fundUserId; // 작성자 유저
 	
-	@ManyToOne
+	//@ManyToOne
 	private Category categoryId; // 카테고리
 	
 	@OneToOne
