@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.funding.fundUser.FundUser;
-import com.funding.fundUser.FundUserService;
 import com.funding.fundBoard.FundBoard;
 import com.funding.fundBoard.FundBoardService;
+import com.funding.fundUser.FundUser;
+import com.funding.fundUser.FundUserService;
 
 import lombok.RequiredArgsConstructor;
 

@@ -15,6 +15,7 @@ public class FundBoardService {
 
 	private final FundBoardRepository fundBoardRepository;
 	
+	// 펀딩 목록
 	public List<FundBoard> getFundBoard() {	
 		return this.fundBoardRepository.findAll();
 	}

@@ -1,0 +1,30 @@
+section {
+    margin: 100px auto;
+    width: 250px;
+}
+
+/* 타이틀 */
+#title {
+    margin: 30px 0;
+}
+
+/* 아이디 */
+.int_id {
+    margin: 10px 0 5px;
+}
+
+.int_id input {
+    float: right;
+}
+
+/* 비밀번호 */
+.int_pw {}
+
+.int_pw input {
+    float: right;
+    margin: 5px 0 20px;
+}
+
+.sub_login {
+    display: flex;
+}

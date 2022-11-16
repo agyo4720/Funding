@@ -1,8 +1,8 @@
 package com.funding.fundBoard;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
+import java.util.Locale.Category;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -11,21 +11,30 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.OneToOne;
 
+import com.funding.answer.Answer;
+import com.funding.answerAns.AnswerAns;
+import com.funding.fundArtist.FundArtist;
+import com.funding.fundArtistList.FundArtistList;
+import com.funding.fundList.FundList;
+import com.funding.fundUser.FundUser;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 
 @Setter
 @Getter
+@ToString
 @Entity
 public class FundBoard {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "fundBoardId_seq")
-	@SequenceGenerator(sequenceName = "fundBoardId_seq", allocationSize = 1, name = "fundBoardId_seq")
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "fundBoardId_seq")
+//	@SequenceGenerator(sequenceName = "fundBoardId_seq", allocationSize = 1, name = "fundBoardId_seq")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;	// 고유번호
 	
 	private String subject; // 제목
@@ -54,28 +63,28 @@ public class FundBoard {
 	
 	private Integer star; // 별점 평균
 	
-//	// 제약 조건
-//	@ManyToOne
-//	private FundUser fundUserId; // 작성자 유저
-//	
-//	@ManyToOne
-//	private Category categoryId; // 카테고리
-//	
-//	@OneToOne
-//	private FundArtist fundArtist_id; // 최종 선정된 공연자
-//	
-//	@OneToMany(mappedBy = "", cascade = CascadeType.REMOVE) 
-//	private List<FundList> FundList; // 펀딩한 유저 목록
-//	
-//	@OneToMany(mappedBy = "", cascade = CascadeType.REMOVE)
-//	private List<FundArtistList> fundArtistList; // 신청한 공연자 목록
-//	
-//	@OneToMany(mappedBy = "", cascade = CascadeType.REMOVE)
-//	private List<Question> question; // 질문들
-//	
-//	@OneToMany(mappedBy = "", cascade = CascadeType.REMOVE)
-//	private List<AnswerAns> answerAns; // 답변들
-//	// 제약 조건
+	// 제약 조건
+	@ManyToOne
+	private FundUser fundUserId; // 작성자 유저
+	
+	@ManyToOne
+	private Category categoryId; // 카테고리
+	
+	@OneToOne
+	private FundArtist fundArtistId; // 최종 선정된 공연자
+	
+	@OneToMany(mappedBy = "", cascade = CascadeType.REMOVE) 
+	private List<FundList> fundList; // 펀딩한 유저 목록
+	
+	@OneToMany(mappedBy = "", cascade = CascadeType.REMOVE)
+	private List<FundArtistList> fundArtistList; // 신청한 공연자 목록
+	
+	@OneToMany(mappedBy = "", cascade = CascadeType.REMOVE)
+	private List<Answer> question; // 질문들
+	
+	@OneToMany(mappedBy = "", cascade = CascadeType.REMOVE)
+	private List<AnswerAns> answerAns; // 답변들
+	// 제약 조건
 	
 	
 	

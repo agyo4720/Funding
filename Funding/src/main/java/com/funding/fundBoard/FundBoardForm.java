@@ -12,32 +12,32 @@ import lombok.Setter;
 public class FundBoardForm {
 	
 	@NotEmpty(message=" 제목은 필수항목입니다.")
-	private String subject;
+	private String subject; // 제목
 	
-	@NotEmpty(message="내용은 필수항목입니다.")
-	private String content;
+	private String content; // 내용
 	
-	@NotEmpty(message="장소은 필수항목입니다.")
-	private String place;
+	private String place; // 장소
 	
-	private LocalDateTime startDate;
+	private LocalDateTime startDate; // 공연 시작 일자
 	
-	private String runtime;
+	private String runtime; // 공연 시간
 	
-	private String state;
+//	private String state; // 펀딩 상태
 	
-	private String fundDuration;
+	private String fundDuration; // 펀딩 기간
 	
-	private Integer minFund;
+	private Integer minFund; // 1인 최소 펀딩 금액
 	
-	private Integer fundCurrent;
+//	private Integer fundCurrent; // 펀딩 현재 금액
 	
-	private Integer fundAmount;
+	private Integer fundAmount; // 펀딩 목표 금액
 	
-	private Integer currentMember;
+	private Integer currentMember; // 현재 모집 인원
 	
-	private Integer vote;
+//	private Integer vote; // 별점 투표 수
 	
-	private Integer star;
+//	private Integer star; // 별점 평균
+	
+	
 	
 }

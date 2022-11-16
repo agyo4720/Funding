@@ -8,8 +8,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import com.funding.fundUser.FundUser;
 import com.funding.answer.Answer;
+import com.funding.fundBoard.FundBoard;
+import com.funding.fundBoardTarget.FundBoardTarget;
+import com.funding.fundUser.FundUser;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -32,4 +34,13 @@ public class AnswerAns {
 	
 	@ManyToOne
 	private FundUser fundUserId;
+	
+	@ManyToOne
+	private FundBoard fundBoard;
+	
+	@ManyToOne
+	private FundBoardTarget fundBoardTarget;
+	
+	
+	
 }

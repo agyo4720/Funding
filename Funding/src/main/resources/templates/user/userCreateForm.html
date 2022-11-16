@@ -1,0 +1,87 @@
+<!-- 회원가입 -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Let's Funding</title>
+    <link rel="stylesheet" href="../../static/css/style.css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="../../static/css/main/home.css" th:href="@{/css/main/home.css}">
+</head>
+<body>
+    <!-- 홈페이지 상단 nav -->
+    <header>
+        <!-- 로고 -->
+        <div class="logo">
+            <a href="../main/home.html" th:href="@{/}">Let's Funding</a>
+        </div>
+
+        <!-- 메뉴 -->
+        <div class="menu">
+            <ul>
+                <li><a href="#">지정 펀딩</a></li>
+                <li><a href="#">미지정 펀딩</a></li>
+            </ul>
+        </div>
+
+        <!-- 검색 -->
+        <div class="search">
+            <form action="#">
+                <input class="int_search" type="text">
+                <input class="btn_search" type="submit">
+            </form>
+        </div>
+
+        <!-- 로그인 -->
+        <div class="login">
+            <ul>
+                <li><a href="../user/loginForm.html" th:href="@{/user/login}">로그인</a></li>
+                <li><a href="../user/userCreateForm.html" th:href="@{/user/register}">회원가입</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <section>
+        <form>
+            <!-- 아이디 -->
+            <div class="int_id">
+                <label for="id">아이디</label>
+                <input type="text" placeholder="아이디 입력">
+            </div>
+
+            <!-- 비밀번호 -->
+            <div class="int_pw">
+                <label for="password">비밀번호</label>
+                <input type="password" placeholder="비밀번호 입력">
+            </div>
+
+            <!-- 비밀번호 확인 -->
+            <div class="int_pw_check">
+                <label for="password_check">비밀번호 확인</label>
+                <input type="password" placeholder="비밀번호 확인">
+            </div>
+
+            <!-- 닉네임 -->
+            <div class="int_nickname">
+                <label for="nickname">닉네임</label>
+                <input type="text" placeholder="닉네임 입력">
+            </div>
+
+            <!-- 이메일 -->
+            <div class="int_email">
+                <label for="email">이메일</label>
+                <input type="text" placeholder="이메일 입력">
+            </div>
+
+            <!-- 전화번호 -->
+            <div class="int_mobile">
+                <label for="mobile">전화번호</label>
+                <input type="text" maxlength="16" placeholder="전화번호 입력">
+            </div>
+            
+            <input type="submit" value="가입하기">
+        </form>
+    </section>
+</body>
+</html>

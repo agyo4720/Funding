@@ -1,0 +1,62 @@
+* { margin: 0; padding: 0; }
+
+a { color: #000; text-decoration: none;}
+
+ul, li { list-style: none; }
+
+/* 홈페이지 상단 nav */
+header {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 20px 0;
+}
+
+/* 로고 */
+.logo {}
+
+.logo a {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+/* 메뉴 */
+.menu {}
+
+.menu ul {
+    display: flex;
+}
+
+.menu ul li {}
+
+.menu ul li:first-child {
+    margin-right: 20px;
+}
+
+.menu ul li a {
+    font-weight: bold;
+}
+
+/* 검색 */
+.search {}
+
+.sesarch .int_search {}
+
+.sesarch .btn_search {}
+
+/* 로그인, 회원가입 */
+.login {}
+
+.login ul {
+    display: flex;
+}
+
+.login ul li {}
+
+.login ul li:first-child {
+    margin-right: 20px;
+}
+
+.login ul li a {
+    font-weight: bold;
+}
