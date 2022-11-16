@@ -10,8 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.funding.FundUser.FundUser;
 import com.funding.fundBoard.FundBoard;
+import com.funding.fundUser.FundUser;
 
 import lombok.Getter;
 import lombok.Setter;
