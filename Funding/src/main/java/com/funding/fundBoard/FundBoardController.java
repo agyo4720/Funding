@@ -2,7 +2,6 @@ package com.funding.fundBoard;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -26,7 +25,7 @@ public class FundBoardController {
 	public String getFundBoard(Model model) {
 		List<FundBoard> fundBoard = this.fundBoardService.getFundBoard();
 		model.addAttribute("fundBoard", fundBoard);
-		return "fundBoard";
+		return "fundBoard/fundBoard";
 	}
 	
 //	// 펀딩리스트

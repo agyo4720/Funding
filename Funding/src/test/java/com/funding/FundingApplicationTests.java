@@ -1,20 +1,28 @@
 package com.funding;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
-import com.funding.FundArtist.FundArtist;
-import com.funding.FundArtist.FundArtistRepository;
-import com.funding.FundUser.FundUserRepository;
-
-import com.funding.fundBoard.FundBoard;
-import com.funding.fundBoard.FundBoardRepository;
 
 @SpringBootTest
 class FundingApplicationTests {
+
+	
+	@Test
+	public void timecheck() {
+		LocalDateTime time = null;
+		System.out.println("time : " + time);
+		String a = "2022-11-24";
+		String b = "03:21";
+		String result = a + " " +b;
+		DateTimeFormatter form = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		
+		time = LocalDateTime.parse(result,form);
+	}
+	
 
 }

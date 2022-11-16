@@ -17,28 +17,28 @@ import lombok.ToString;
 @Setter
 @ToString
 @Entity
-@Table(name="sale")
+@Table(name="sale")//회사
 public class Sale {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private Integer id;
+	private Integer id; //기본키
 	
 	@Column(name = "payCode")
-	private String payCode;
+	private String payCode; //결제완료키(환불할때 필요)
 	
 	@Column(name = "payDate")
-	private LocalDateTime payDate;
+	private LocalDateTime payDate; //결제날짜
+	
+	@Column(name = "orederId")
+	private String orederId; //주문번호
 	
 	@Column(name = "payMoney")
-	private Integer payMoney;
-	
-	@Column(name = "payState")
-	private String payState;
+	private Integer payMoney; //결제금액
 	
 	@Column(name = "fundUser_id")
-	private String fundUser_id;
+	private String fundUser_id; //고객이름
 	
 	@Column(name = "fundBoard_id")
-	private String fundBoard_id;
+	private String fundBoard_id; //공연이름
 }

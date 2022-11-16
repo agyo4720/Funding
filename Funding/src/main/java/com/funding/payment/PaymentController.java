@@ -16,7 +16,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.client.ResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 
@@ -24,16 +23,21 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor
-@Log
 @Controller
 public class PaymentController {
     private final RestTemplate restTemplate = new RestTemplate();
-    private final PatmentService patmentService;
     private final ObjectMapper objectMapper = new ObjectMapper();
+    private final PatmentService patmentService;
 
+    @RequestMapping("/index")
+    private String in() {
+    	return "/pay/index";
+    }
+    
     @PostConstruct
     private void init() {
         restTemplate.setErrorHandler(new ResponseErrorHandler() {
@@ -41,7 +45,6 @@ public class PaymentController {
             public boolean hasError(ClientHttpResponse response) {
                 return false;
             }
-
             @Override
             public void handleError(ClientHttpResponse response) {
             }
@@ -53,9 +56,9 @@ public class PaymentController {
     //결제성공
     @RequestMapping("/success")
     public String confirmPayment(
-            @RequestParam String paymentKey, @RequestParam String orderId, @RequestParam Long amount,
+            @RequestParam String paymentKey, @RequestParam String orderId, @RequestParam int amount,
             Model model) throws Exception {
-
+    	
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()));
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -72,30 +75,27 @@ public class PaymentController {
         if (responseEntity.getStatusCode() == HttpStatus.OK) {
             JsonNode successNode = responseEntity.getBody();
             model.addAttribute("orderId", successNode.get("orderId").asText());
-            String secret = successNode.get("secret").asText(); // 가상계좌의 경우 입금 callback 검증을 위해서 secret을 저장하기를 권장함
-            return "success";
+            //successNode.get("virtualAccount").get("customerName").asText();
+            String s = successNode.get("orderName").asText();
+            //String ss = successNode.get("virtualAccount").get("customerName").asText();
+            log.info(successNode.toString());
+            patmentService.savecreditinfo(paymentKey, orderId, amount, s);
+            
+            return "/pay/success";
         } else {
             JsonNode failNode = responseEntity.getBody();
             model.addAttribute("message", failNode.get("message").asText());
             model.addAttribute("code", failNode.get("code").asText());
-            return "fail";
+            return "/pay/fail";
         }
     }
 
-    //결제 실패
+    //결제실패
     @RequestMapping("/fail")
     public String failPayment(@RequestParam String message, @RequestParam String code, Model model) {
         model.addAttribute("message", message);
         model.addAttribute("code", code);
-        return "fail";
+        return "/pay/fail";
     }
 
-    //가상계좌 입금상태
-    private CallbackPayload callbackPayload;
-    @RequestMapping("/virtual-account/callback")
-    @ResponseStatus(HttpStatus.OK)
-    public void handleVirtualAccountCallback() {
-        if (callbackPayload.getStatus().equals("DONE")) {
-        }
-    }
 }

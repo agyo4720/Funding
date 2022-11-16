@@ -12,10 +12,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.funding.FundArtist.FundArtist;
-import com.funding.FundArtist.FundArtistRepository;
-import com.funding.FundUser.FundUser;
-import com.funding.FundUser.FundUserRepository;
+import com.funding.fundArtist.FundArtist;
+import com.funding.fundArtist.FundArtistRepository;
+import com.funding.fundUser.FundUser;
+import com.funding.fundUser.FundUserRepository;
 
 import lombok.RequiredArgsConstructor;
 
