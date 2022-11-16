@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.funding.FundUser.FundUser;
+import com.funding.fundUser.FundUser;
 import com.funding.fundBoard.FundBoard;
 
 import lombok.RequiredArgsConstructor;

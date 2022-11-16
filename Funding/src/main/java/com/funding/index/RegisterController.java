@@ -7,8 +7,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.funding.FundArtist.FundArtistService;
-import com.funding.FundUser.FundUserService;
+import com.funding.fundArtist.FundArtistService;
+import com.funding.fundUser.FundUserService;
 
 import lombok.RequiredArgsConstructor;
 

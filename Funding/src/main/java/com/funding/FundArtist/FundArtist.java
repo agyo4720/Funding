@@ -1,4 +1,4 @@
-package com.funding.FundArtist;
+package com.funding.fundArtist;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

@@ -1,4 +1,4 @@
-package com.funding.FundArtist;
+package com.funding.fundArtist;
 
 import java.util.Optional;
 

@@ -11,9 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.funding.FundUser.FundUser;
 import com.funding.answerAns.AnswerAns;
 import com.funding.fundBoard.FundBoard;
+import com.funding.fundUser.FundUser;
 
 import lombok.Getter;
 import lombok.Setter;

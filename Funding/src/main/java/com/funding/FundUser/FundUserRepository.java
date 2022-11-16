@@ -1,4 +1,4 @@
-package com.funding.FundUser;
+package com.funding.fundUser;
 
 import java.util.Optional;
 

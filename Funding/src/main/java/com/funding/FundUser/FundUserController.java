@@ -1,4 +1,4 @@
-package com.funding.FundUser;
+package com.funding.fundUser;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
