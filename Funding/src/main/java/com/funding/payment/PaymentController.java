@@ -111,23 +111,21 @@ public class PaymentController {
     
     
     @RequestMapping("/pay/lookup")
-    public String lookup(@RequestParam String paymentKey) throws Exception {
-    	if(paymentKey != null ) {
-    	log.info("%%%%%%%%%%%%%%%%%%%%%%"+paymentKey+"%%%%%%%%%%%%%%%%");
+    public void lookup() throws Exception {
+    	String paymentKey = "R1kZn04DxKBE92LAa5PVb591AaYzP37YmpXyJjg6OwzoeqdW";
     	
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()));
         headers.setContentType(MediaType.APPLICATION_JSON);
-        
-        Map<String, String> payloadMap = new HashMap<>();
-        payloadMap.put("paymentKey", paymentKey);
+        //headers.set("paymentKey", paymentKey);
+        //Map<String, String> payloadMap = new HashMap<>();
+        //payloadMap.put("paymentKey", paymentKey);
                 
-        HttpEntity<String> request = new HttpEntity<>(objectMapper.writeValueAsString(payloadMap), headers);
-
+        HttpEntity<String> request = new HttpEntity<>(objectMapper.writeValueAsString("paymentKey: "+paymentKey), headers);
+        log.info("%%%%%%%%%%%%%%%%%%%%%%"+request+"%%%%%%%%%%%%%%%%");
         ResponseEntity<JsonNode> responseEntity = restTemplate.getForEntity(
                 "https://api.tosspayments.com/v1/payments/-MAuWd-ecYGF3CCfSjqdG"+request, JsonNode.class);
-    	}
-    	return "/pay/lookup";
+
     }
     
     

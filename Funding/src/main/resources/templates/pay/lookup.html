@@ -16,18 +16,15 @@
     <p>----------------------</p>
     <button id="lookup-button">조회하기</button>
 </section>
-<script src="https://js.tosspayments.com/v1"></script>
+
 <script>
     var tossPayments = TossPayments("test_ck_OALnQvDd2VJjgjj4daVMj7X41mNW");
     var button = document.getElementById("lookup-button");
     button.addEventListener("click", function () {
         var method = document.querySelector('input[name=method]:checked').value;
-        var paymentData = {
-        	paymentKey: "R1kZn04DxKBE92LAa5PVb591AaYzP37YmpXyJjg6OwzoeqdW",
-        };
+
         tossPayments.requestPayment(method, paymentData);
-        console.log(method);
-        console.log(paymentData);
+
     });
 
 </script>
