@@ -4,9 +4,12 @@ package com.funding.fundBoardTarget;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.funding.Categorie.Categorie;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,7 +29,8 @@ public class FundTargetService {
 			String fundDurationE,
 			String startTime,
 			Integer minFund,
-			Integer fundAmount
+			Integer fundAmount,
+			Categorie categorie
 			) {
 		
 		DateTimeFormatter form = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -44,9 +48,21 @@ public class FundTargetService {
 		target.setMinFund(minFund);
 		target.setFundCurrent(0);
 		target.setFundAmount(fundAmount);
-
+		target.setCategorie(categorie);
 		
 		fundTargetRepository.save(target);
+	}
+	
+	//fundAll
+	public List<FundBoardTarget> findAll(){
+		List<FundBoardTarget> targetList = fundTargetRepository.findAll();
+		return targetList;
+	}
+	
+	//findById
+	public FundBoardTarget findById(Integer id) {
+		Optional<FundBoardTarget> fundBoardTarget = fundTargetRepository.findById(id);
+		return fundBoardTarget.get();
 	}
 	
 }

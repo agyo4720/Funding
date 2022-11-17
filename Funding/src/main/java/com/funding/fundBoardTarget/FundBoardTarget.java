@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.funding.Categorie.Categorie;
 import com.funding.answer.Answer;
 import com.funding.answerAns.AnswerAns;
 import com.funding.fundUser.FundUser;
@@ -32,7 +33,7 @@ public class FundBoardTarget {
 	
 	private String content;
 	
-	private String Artiest;
+	private String artiest;
 
 	private String place;
 	
@@ -55,8 +56,8 @@ public class FundBoardTarget {
 	@ManyToOne
 	private FundUser fundUser;
 	
-	//@ManyToOne
-	//private Categorie categorie;
+	@ManyToOne
+	private Categorie categorie;
 	
 	//@OneToMany(mappedBy = "fundBoardTarget", cascade = CascadeType.REMOVE)
 	//private List<FundList> fundList;

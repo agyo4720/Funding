@@ -1,33 +1,79 @@
-<div>
-	<form th:object="${targetForm}" method="post">
-		<div>카테고리</div>
-		<!-- 
-		<select name="categorie">
-			<option th:each="cate : ${cList}" th:value="${cate.id}" th:text="${cate.categoryName}"></option>
-		</select>
-		 -->
-		<div>제목</div>
-		<input type="text" th:field="*{subject}" autocomplete="off">
-		<div>내용</div>
-		<input type="text" th:field="*{content}" autocomplete="off">
-		<div>공연자</div>
-		<input type="text" name="Aertiest" value="" autocomplete="off">
-		<div>장소</div>
-		<input type="text" th:field="*{place}" autocomplete="off">
-		<div>공연 런타임</div>
-		<input type="text" th:field="*{runtime}" autocomplete="off" placeholder="분 단위 입력">
-		<div>펀딩 기간(오늘부터 시작)</div>
-		<input type="date" th:field="*{fundDurationE}" max="" autocomplete="off">
-		<div>공연 시작일</div>
-		<input type="date" th:field="*{startDate}" value="" autocomplete="off">	
-		<input type="time" th:field="*{startTime}" value="" autocomplete="off">	
-		<div>최소 펀딩 금액</div>
-		<input type="text" th:field="*{minFund}" value="" autocomplete="off">
-		<div>총 펀딩금액</div>
-		<input type="text" th:field="*{fundAmount}" value="" autocomplete="off">
-		
-		
-		<button type="submit">만들기</button>
-	</form>
+<!-- 지정 펀딩 등록 -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Let's Funding</title>
+    <link rel="stylesheet" href="../../static/css/style.css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="../../static/css/main/home.css" th:href="@{/css/main/home.css}">
+</head>
+<body>
+    <!-- 홈페이지 상단 nav -->
+    <header>
+        <!-- 로고 -->
+        <div class="logo">
+            <a href="../main/home.html" th:href="@{/}">Let's Funding</a>
+        </div>
 
-</div>
+        <!-- 메뉴 -->
+        <div class="menu">
+            <ul>
+                <li><a href="../fundTarget/fundTargetList.html" th:href="@{/fundTarget}">지정 펀딩</a></li>
+                <li><a href="#">미지정 펀딩</a></li>
+            </ul>
+        </div>
+
+        <!-- 검색 -->
+        <!-- <div class="search">
+            <form action="#" method="get">
+                <input class="int_search" type="text">
+                <input class="btn_search" type="submit" value="검색">
+            </form>
+        </div> -->
+
+        <!-- 로그인 -->
+        <div class="login">
+            <ul>
+                <li><a href="../user/loginForm.html" th:href="@{/user/login}">로그인</a></li>
+                <li><a href="../user/userCreateForm.html" th:href="@{/user/register}">회원가입</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <section>
+		<div>
+			<form th:object="${targetForm}" method="post">
+				<div>카테고리</div>
+				<select name="categorie">
+					<option th:each="cate : ${cList}" th:value="${cate.id}" th:text="${cate.categoryName}"></option>
+				</select>
+				<div>제목</div>
+				<input type="text" th:field="*{subject}" autocomplete="off">
+				<div>내용</div>
+				<input type="text" th:field="*{content}" autocomplete="off">
+				<div>공연자</div>
+				<input type="text" name="Aertiest" value="" autocomplete="off">
+				<div>장소</div>
+				<input type="text" th:field="*{place}" autocomplete="off">
+				<div>공연 런타임</div>
+				<input type="text" th:field="*{runtime}" autocomplete="off" placeholder="분 단위 입력">
+				<div>펀딩 기간(오늘부터 시작)</div>
+				<input type="date" th:field="*{fundDurationE}" max="" autocomplete="off">
+				<div>공연 시작일</div>
+				<input type="date" th:field="*{startDate}" value="" autocomplete="off">	
+				<input type="time" th:field="*{startTime}" value="" autocomplete="off">	
+				<div>최소 펀딩 금액</div>
+				<input type="text" th:field="*{minFund}" value="" autocomplete="off">
+				<div>총 펀딩금액</div>
+				<input type="text" th:field="*{fundAmount}" value="" autocomplete="off">
+				
+				
+				<button type="submit">만들기</button>
+			</form>
+		
+		</div>
+    </section>
+</body>
+</html>

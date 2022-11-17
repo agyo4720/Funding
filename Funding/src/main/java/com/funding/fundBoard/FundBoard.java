@@ -63,10 +63,10 @@ public class FundBoard {
 	
 	// 제약 조건
 	@ManyToOne
-	private FundUser fundUserId; // 작성자 유저
+	private FundUser fundUser; // 작성자 유저
 	
 	@ManyToOne
-	private Categorie categoryId; // 카테고리
+	private Categorie categorie; // 카테고리
 	
 	@OneToOne
 	private FundArtist fundArtistId; // 최종 선정된 공연자
