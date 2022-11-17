@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 
 import com.funding.answerAns.AnswerAns;
 import com.funding.fundBoard.FundBoard;
+import com.funding.fundBoardTarget.FundBoardTarget;
 import com.funding.fundUser.FundUser;
 
 import lombok.Getter;
@@ -33,6 +34,9 @@ public class Answer {
 	
 	@ManyToOne
 	private FundBoard fundBoard;
+	
+	@ManyToOne
+	private FundBoardTarget fundBoardTarget;
 	
 	@ManyToOne
 	private FundUser fundUserId;

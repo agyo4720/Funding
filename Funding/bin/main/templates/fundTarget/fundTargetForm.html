@@ -1,0 +1,31 @@
+<div>
+	<form th:object="${targetForm}" method="post">
+		<div>카테고리</div>
+		<select name="categorie">
+			<option th:each="cate : ${cList}" th:value="${cate.id}" th:text="${cate.categoryName}"></option>
+		</select>
+		<div>제목</div>
+		<input type="text" th:field="*{subject}" autocomplete="off">
+		<div>내용</div>
+		<input type="text" th:field="*{content}" autocomplete="off">
+		<div>공연자</div>
+		<input type="text" name="Aertiest" value="" autocomplete="off">
+		<div>장소</div>
+		<input type="text" th:field="*{place}" autocomplete="off">
+		<div>공연 런타임</div>
+		<input type="text" th:field="*{runtime}" autocomplete="off" placeholder="분 단위 입력">
+		<div>펀딩 기간(오늘부터 시작)</div>
+		<input type="date" th:field="*{fundDurationE}" max="" autocomplete="off">
+		<div>공연 시작일</div>
+		<input type="date" th:field="*{startDate}" value="" autocomplete="off">	
+		<input type="time" th:field="*{startTime}" value="" autocomplete="off">	
+		<div>최소 펀딩 금액</div>
+		<input type="text" th:field="*{minFund}" value="" autocomplete="off">
+		<div>총 펀딩금액</div>
+		<input type="text" th:field="*{fundAmount}" value="" autocomplete="off">
+		
+		
+		<button type="submit">만들기</button>
+	</form>
+
+</div>
