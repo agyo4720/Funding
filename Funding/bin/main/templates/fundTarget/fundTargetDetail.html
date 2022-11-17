@@ -1,0 +1,35 @@
+<div>세부내용</div>
+<div style="border:1px solid black">
+	<div th:text="${fundBoardTarget.subject}"></div>
+	<div th:text="${fundBoardTarget.content}"></div>
+	<div th:text="${fundBoardTarget.artiest}"></div>
+	<div th:text="|장소 : ${fundBoardTarget.place}"|></div>
+	<div th:text="|공연시간 : ${fundBoardTarget.runtime}분|"></div>
+	<div th:text="${fundBoardTarget.status}"></div>
+	<div th:text="|펀딩시작 : ${fundBoardTarget.fundDurationS}"|></div>
+	<div th:text="|펀딩마감 : ${fundBoardTarget.fundDurationE}"|></div>
+	<div th:text="|공연시작 : ${fundBoardTarget.startDate}"|></div>
+	<div>-----------------------------
+		<div>펀딩창
+			<div th:text="|최소 펀딩금액 : ${fundBoardTarget.minFund}"|></div>
+			<div th:text="|현재 모집금액 : ${fundBoardTarget.fundCurrent}"|></div>
+			<div th:text="|최종 목표금액 : ${fundBoardTarget.fundAmount}"|></div>
+			<button>펀딩하기</button>
+		</div>
+	</div>
+	<div>----------------------------------</div>
+	<div>댓글</div>
+	<div>
+		<form th:action="@{|/answer/target/create/${fundBoardTarget.id}|}" method="POST">
+			<input type="text" name="content" value="">
+			<button type="submit">댓글</button>
+		</form>
+	</div>
+	<div th:each="answer : ${aList}">
+		<div th:text="${answer.content}"></div>
+		<div th:text="${#temporals.format(answer.createDate, 'MM-dd HH:mm:ss')}"></div>
+		<div><a th:href="@{|/answer/delete/${answer.id}?location=target&id=${fundBoardTarget.id}|}">삭제</a></div>
+	</div>
+</div>
+
+

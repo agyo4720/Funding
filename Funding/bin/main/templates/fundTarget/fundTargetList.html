@@ -1,0 +1,15 @@
+<div>지정펀딩</div>
+<a href=/fundTarget/form>펀딩만들기</a>
+<div th:each="target : ${targetList}" style="border:1px solid black">
+	<a th:href="@{|/fundTarget/detail/${target.id}|}">
+		<div th:text="${target.subject}"></div>
+		<div th:text="${target.content}"></div>
+		<div th:text="${target.artiest}"></div>
+		<div th:text="|장소 : ${target.place}"|></div>
+		<div th:text="|공연시간 : ${target.runtime}분|"></div>
+		<div th:text="${target.status}"></div>
+		<div th:text="|펀딩시작 : ${target.fundDurationS}"|></div>
+		<div th:text="|펀딩마감 : ${target.fundDurationE}"|></div>
+		<div th:text="|공연시작 : ${target.startDate}"|></div>
+	</a>
+</div>
