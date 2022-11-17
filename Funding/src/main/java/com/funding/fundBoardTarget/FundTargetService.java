@@ -4,6 +4,8 @@ package com.funding.fundBoardTarget;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -49,6 +51,18 @@ public class FundTargetService {
 		target.setCategorie(categorie);
 		
 		fundTargetRepository.save(target);
+	}
+	
+	//fundAll
+	public List<FundBoardTarget> findAll(){
+		List<FundBoardTarget> targetList = fundTargetRepository.findAll();
+		return targetList;
+	}
+	
+	//findById
+	public FundBoardTarget findById(Integer id) {
+		Optional<FundBoardTarget> fundBoardTarget = fundTargetRepository.findById(id);
+		return fundBoardTarget.get();
 	}
 	
 }

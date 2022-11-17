@@ -33,7 +33,7 @@ public class FundBoardTarget {
 	
 	private String content;
 	
-	private String Artiest;
+	private String artiest;
 
 	private String place;
 	
