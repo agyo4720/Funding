@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -35,12 +36,12 @@ public class FundBoardController {
 		List<FundBoard> fundBoardList = this.fundBoardService.getFundBoard();
 		model.addAttribute("fundBoardList", fundBoardList);
 		
-		return "fundBoard_list";
+		return "/fundBoard/fundBoard_list";
 	}
 	
 	@GetMapping("/create")
 	public String create(FundBoardForm fundBoardForm) {
-		return "fundBoard_form";
+		return "/fundBoard/fundBoard_form";
 	}
 	
 	@PostMapping("/create")
@@ -50,23 +51,36 @@ public class FundBoardController {
 			Model model) {
 		
 		if(bindingResult.hasErrors()) {
-			return "fundBoard_form";
+			return "/fundBoard/fundBoard_form";
 		}
+		
+		String time = fundBoardForm.getStartDate() + " " +fundBoardForm.getStartTime();
 		
 		this.fundBoardService.create(
 				fundBoardForm.getSubject(),
 				fundBoardForm.getContent(),
 				fundBoardForm.getPlace(),
-				fundBoardForm.getStartDate(),
+				time,
 				fundBoardForm.getRuntime(),
 				fundBoardForm.getFundDuration(),
 				fundBoardForm.getMinFund(),
 				fundBoardForm.getFundAmount());
 		
-		return "fundBoard_form";
+		System.out.println("_____________________________");
+		
+		return "redirect:/fundBoard/list";
 		
 	}
 	
-	// 남규
+	@RequestMapping("/detail/{id}")
+	public String detail(@PathVariable ("id") Integer id, Model model) {
+		
+		FundBoard fundBoard = this.fundBoardService.findById(id);
+		model.addAttribute("fundBoard", fundBoard);
+		
+		
+		return "/fundBoard/fundBoard_detail";
+	}
+	
 	
 }

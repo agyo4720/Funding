@@ -17,16 +17,17 @@
 				<td>펀딩 상태</td>
 				<td>별점 투표 수</td>
 				<td>별점 평균</td>
+				<td></td>
 			</th>
 		</thead>
 		<tbody>
-			<tr th:each="fundBoard , loop : ${fundBoard}">
+			<tr th:each="fundBoard , loop : ${fundBoardList}">
 				<td th:text="${loop.count}"></td>
 				<td th:text="${fundBoard.subject}"></td>
 				<td th:text="${fundBoard.content}"></td>
-				<td th:text="${fundBoard.palce}"></td>
+				<td th:text="${fundBoard.place}"></td>
 				<td th:text="${fundBoard.startDate}"></td>
-				<td th:text="${fundBoard.runTime}"></td>
+				<td th:text="${fundBoard.runtime}"></td>
 				<td th:text="${fundBoard.fundDuration}"></td>
 				<td th:text="${fundBoard.minFund}"></td>
 				<td th:text="${fundBoard.fundAmount}"></td>
@@ -35,8 +36,9 @@
 				<td th:text="${fundBoard.state}"></td>
 				<td th:text="${fundBoard.vote}"></td>
 				<td th:text="${fundBoard.star}"></td>
+				<td><a th:href="@{|/fundBoard/detail/${fundBoard.id}|}">자세히 보기</a></td>
 			</tr>
 		</tbody>
 	</table>
-	<a><button type="submit">등록하기</button></a>
+	<a href="/fundBoard/create">등록하기</a>
 </div>

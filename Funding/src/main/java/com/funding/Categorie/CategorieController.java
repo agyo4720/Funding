@@ -19,7 +19,7 @@ public class CategorieController {
 	@RequestMapping("/list")
 	public String list(Model model) {
 		
-		List<Categorie> categorieList = this.CategorieService.getCategorie();
+		List<Categorie> categorieList = this.CategorieService.findAll();
 		model.addAttribute("categorieList", categorieList);
 		
 		return "/categorie_list";

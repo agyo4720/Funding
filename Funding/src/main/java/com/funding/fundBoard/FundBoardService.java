@@ -1,6 +1,7 @@
 package com.funding.fundBoard;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,7 +26,7 @@ public class FundBoardService {
 			String subject,
 			String content,
 			String place,
-			LocalDateTime startDate,
+			String startDate,
 			String runtime,
 			String fundDuration,
 			Integer minFund,
@@ -33,10 +34,12 @@ public class FundBoardService {
 		
 		FundBoard fundBoard = new FundBoard();
 		
+		DateTimeFormatter form = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		
 		fundBoard.setSubject(subject);
 		fundBoard.setContent(content);
 		fundBoard.setPlace(place);
-		fundBoard.setStartDate(startDate);
+		fundBoard.setStartDate(LocalDateTime.parse(startDate, form));
 		fundBoard.setRuntime(runtime);
 		fundBoard.setFundDuration(fundDuration);
 		fundBoard.setMinFund(minFund);

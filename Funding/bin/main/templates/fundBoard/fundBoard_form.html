@@ -2,34 +2,42 @@
 
 	<h2>펀딩 등록</h2>
 	
-	<form th:action="@{/fundBoard/create}" th:object="${fundBoardForm}" method="POST">
-	
-		<label for="subject">제목</label>
-		<input type="text" th:field="*{subject}">
+	<form th:object="${fundBoardForm}" method="POST">
+		<div>
+			<label for="subject">제목</label>
+			<input type="text" th:field="*{subject}">
+		</div>
 		
-		<label for="content">내용</label>
-		<input type="text" th:field="*{content}">
-		
-		<label for="place">장소</label>
-		<input type="text" th:field="*{place}">
-		
-		<label for="startDate">공연 시작 일자</label>
-		<input type="text" th:field="*{startDate}">
-		
-		<label for="runtime">공연 시간</label>
-		<input type="text" th:field="*{runtime}">
-		
-		<label for="fundDuration">펀딩 기간</label>
-		<input type="text" th:field="*{fundDuration}">
-		
-		<label for="minFund">1인 최소 펀딩 금액</label>
-		<input type="text" th:field="*{minFund}">
-		
-		<label for="fundAmount">펀딩 목표 금액</label>
-		<input type="text" th:field="*{fundAmount}">
-		
-		<a><button type="submit">등록하기</button></a>
-		
+		<div>
+			<label for="content">내용</label>
+			<input type="text" th:field="*{content}">
+		</div>
+		<div>
+			<label for="place">장소</label>
+			<input type="text" th:field="*{place}">
+		</div>
+		<div>
+			<label for="startDate">공연 시작 일자</label>
+			<input type="date" th:field="*{startDate}">
+			<input type="time" th:field="*{startTime}">
+		</div>
+		<div>
+			<label for="runtime">공연 시간</label>
+			<input type="text" th:field="*{runtime}">
+		</div>
+		<div>
+			<label for="fundDuration">펀딩 기간</label>
+			<input type="text" th:field="*{fundDuration}">
+		</div>
+		<div>
+			<label for="minFund">1인 최소 펀딩 금액</label>
+			<input type="number" th:field="*{minFund}">
+		</div>
+		<div>
+			<label for="fundAmount">펀딩 목표 금액</label>
+			<input type="number" th:field="*{fundAmount}">
+		</div>		
+		<button type="submit">등록하기</button>
 	</form>
 	
 </div>
