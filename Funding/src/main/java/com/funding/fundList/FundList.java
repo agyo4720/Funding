@@ -20,8 +20,6 @@ import lombok.ToString;
 public class FundList {
 
 	@Id
-//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "fundListId_seq")
-//	@SequenceGenerator(sequenceName = "fundListId_seq", allocationSize = 1, name = "fundListId_seq")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id; // 고유번호
 	
