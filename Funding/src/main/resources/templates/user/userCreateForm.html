@@ -20,7 +20,7 @@
         <!-- 메뉴 -->
         <div class="menu">
             <ul>
-                <li><a href="#">지정 펀딩</a></li>
+                <li><a href="../fundTarget/fundTargetList.html" th:href="@{/fundTarget}">지정 펀딩</a></li>
                 <li><a href="#">미지정 펀딩</a></li>
             </ul>
         </div>
@@ -138,13 +138,13 @@
             <div class="int int_address">
                 <label for="address">주소</label>
                 <span class="int_addr1">
-                    <input name="postCode" type="text" id="postCode" placeholder="우편 번호">
+                    <input name="postCode" type="text" id="postCode" placeholder="우편 번호" readonly>
                     <input type="text" class="btn_addr" onclick="btnPostCode()" value="우편번호 찾기">
                 </span>
                 <span class="int_addr2">
-                    <input name="address" type="text" id="addr" placeholder="주소">
+                    <input name="address" type="text" id="addr" placeholder="주소" readonly>
                     <input name="detailAddress" type="text" id="detailAddr" placeholder="상세 주소">
-                    <input name="extraAddress" type="text" id="extraAddr" placeholder="참고 항목">
+                    <input name="extraAddress" type="text" id="extraAddr" placeholder="참고 항목" readonly>
                 </span>
             </div>
 

@@ -20,7 +20,7 @@
         <!-- 메뉴 -->
         <div class="menu">
             <ul>
-                <li><a href="#">지정 펀딩</a></li>
+                <li><a href="../fundTarget/fundTargetList.html" th:href="@{/fundTarget}">지정 펀딩</a></li>
                 <li><a href="#">미지정 펀딩</a></li>
             </ul>
         </div>
@@ -58,6 +58,7 @@
             </div>
             <div class="sub_login">
                 <input id="login" class="btn_login" type="submit" value="로그인">
+                <button>비밀번호 찾기</button>
                 <div class="btn_join">
                     <p>아직 회원이 아니십니까?</p>
                     <a href="../user/userCreateForm.html" th:href="@{/user/register}">회원가입</a>

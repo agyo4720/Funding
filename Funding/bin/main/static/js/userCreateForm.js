@@ -20,14 +20,14 @@ function btnPostCode() {
                     extraAddr = ' (' + extraAddr + ')';
                 }
 
-                document.getElementById("extraAddress").value = extraAddr;
+                document.getElementById("extraAddr").value = extraAddr;
             } else {
-                document.getElementById("extraAddress").value = '';
+                document.getElementById("extraAddr").value = '';
             }
 
             document.getElementById("postCode").value = data.zonecode;
-            document.getElementById("address").value = addr;
-            document.getElementById("detailAddress").focus();
+            document.getElementById("addr").value = addr;
+            document.getElementById("detailAddr").focus();
         }
     }).open();
 }

@@ -1,6 +1,6 @@
 section {
     margin: 130px auto;
-    width: 270px;
+    width: 280px;
 }
 
 .int {
@@ -31,10 +31,16 @@ section {
     padding: 10px 0;
     width: 100%;
     background-color: #3E3636;
+    border-radius: 5px;
     color: #fff;
     font-weight: bold;
     font-size: 15px;
     letter-spacing: 2px;
+    transition: 0.5s;
+}
+
+.btn_login:hover {
+    background-color: #5e5252;
 }
 
 /* 가입하기 버튼 */
