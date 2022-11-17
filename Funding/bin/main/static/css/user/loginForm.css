@@ -1,0 +1,61 @@
+section {
+    margin: 130px auto;
+    width: 280px;
+}
+
+.int {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+}
+
+/* 아이디 */
+.int_id {}
+
+.int_id input {
+    height: 25px;
+}
+
+/* 비밀번호 */
+.int_pw {}
+
+.int_pw input {
+    height: 25px;
+}
+
+/* 로그인 버튼 */
+.sub_login {}
+
+.btn_login {
+    cursor: pointer;
+    padding: 10px 0;
+    width: 100%;
+    background-color: #3E3636;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 15px;
+    letter-spacing: 2px;
+    transition: 0.5s;
+}
+
+.btn_login:hover {
+    background-color: #5e5252;
+}
+
+/* 가입하기 버튼 */
+.btn_join {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
+.btn_join p {
+    margin-right: 10px;
+}
+
+.btn_join a {
+    color: #980000;
+    font-weight: bold;
+    text-decoration: underline;
+}

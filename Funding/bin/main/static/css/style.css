@@ -1,10 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+/* 
+font-family: 'Do Hyeon', sans-serif;
+font-family: 'Noto Sans KR', sans-serif;
+*/
+
 * {
     margin: 0; padding: 0;
+    outline: none;
+    /* background-color: #F5EDED; */
+    letter-spacing: 0.5px;
+    font-family: 'Noto Sans KR', sans-serif;
 }
 
 a { color: #000; text-decoration: none;}
 
 ul, li { list-style: none; }
+
+h1, h2, h3, h4, h5, h6 {
+    cursor: default;
+    letter-spacing: 2px;
+    font-family: 'Do Hyeon', sans-serif;
+}
+
+p { cursor: default; }
+
+input {
+    padding: 0 10px;
+    border: 1px solid #8C8C8C;
+    border-radius: 3px;
+}
+
+select {
+    padding: 0 5px;
+    border: 1px solid #8C8C8C;
+    border-radius: 3px;
+}
 
 /* 홈페이지 상단 nav */
 header {
@@ -25,9 +56,7 @@ header {
 /* 메뉴 */
 .menu {}
 
-.menu ul {
-    display: flex;
-}
+.menu ul { display: flex; }
 
 .menu ul li {}
 
@@ -35,24 +64,50 @@ header {
     margin-right: 20px;
 }
 
-.menu ul li a {}
+.menu ul li a {
+    font-size: 17px;
+    font-weight: bold;
+    font-family: 'Noto Sans KR', sans-serif;
+}
 
 /* 검색 */
-.search {}
+/* .search {}
 
-.sesarch .int_search {}
+.search form {
+    display: flex;
+    
+} */
 
-.sesarch .btn_search {}
+.search form .int_search {
+    margin-right: 10px;
+    height: 25px;
+}
+
+.search form .btn_search {
+    cursor: pointer;
+    padding: 3px;
+}
 
 /* 로그인, 회원가입 */
 .login {}
 
-.login ul {
-    display: flex;
-}
+.login ul { display: flex; }
 
 .login ul li {}
 
 .login ul li:first-child {
     margin-right: 20px;
+}
+
+.login ul li a {
+    font-size: 17px;
+    font-weight: bold;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+/* 타이틀 */
+#title {
+    margin: 30px 0;
+    font-size: 17px;
+    letter-spacing: 3px;
 }
