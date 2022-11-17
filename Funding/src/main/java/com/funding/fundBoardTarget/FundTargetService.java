@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 
 import org.springframework.stereotype.Service;
 
+import com.funding.Categorie.Categorie;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,7 +27,8 @@ public class FundTargetService {
 			String fundDurationE,
 			String startTime,
 			Integer minFund,
-			Integer fundAmount
+			Integer fundAmount,
+			Categorie categorie
 			) {
 		
 		DateTimeFormatter form = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -44,7 +46,7 @@ public class FundTargetService {
 		target.setMinFund(minFund);
 		target.setFundCurrent(0);
 		target.setFundAmount(fundAmount);
-
+		target.setCategorie(categorie);
 		
 		fundTargetRepository.save(target);
 	}

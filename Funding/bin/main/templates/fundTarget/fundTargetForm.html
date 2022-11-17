@@ -1,11 +1,9 @@
 <div>
 	<form th:object="${targetForm}" method="post">
 		<div>카테고리</div>
-		<!-- 
 		<select name="categorie">
 			<option th:each="cate : ${cList}" th:value="${cate.id}" th:text="${cate.categoryName}"></option>
 		</select>
-		 -->
 		<div>제목</div>
 		<input type="text" th:field="*{subject}" autocomplete="off">
 		<div>내용</div>

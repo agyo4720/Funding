@@ -2,7 +2,6 @@ package com.funding.fundBoard;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Locale.Category;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -13,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.funding.Categorie.Categorie;
 import com.funding.answer.Answer;
 import com.funding.answerAns.AnswerAns;
 import com.funding.fundArtist.FundArtist;
@@ -65,10 +65,10 @@ public class FundBoard {
 	
 	// 제약 조건
 	@ManyToOne
-	private FundUser fundUserId; // 작성자 유저
+	private FundUser fundUser; // 작성자 유저
 	
 	@ManyToOne
-	private Category categoryId; // 카테고리
+	private Categorie categorie; // 카테고리
 	
 	@OneToOne
 	private FundArtist fundArtistId; // 최종 선정된 공연자
