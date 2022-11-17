@@ -22,17 +22,16 @@
 <script>
     var tossPayments = TossPayments("test_ck_OALnQvDd2VJjgjj4daVMj7X41mNW");
     var button = document.getElementById("cancel-button");
-    var requesterType = "true";
+    var requesterType = "post";
     button.addEventListener("click", function () {
         var method = document.querySelector('input[name=method]:checked').value;
         var paymentData = {
         	paymentKey: "R1kZn04DxKBE92LAa5PVb591AaYzP37YmpXyJjg6OwzoeqdW",
             cancelReason: "고객이 취소를 원함",
             requesterType: requesterType,
-            successUrl: window.location.origin + "/pay/cancelSuccess",
-            failUrl: window.location.origin + "/pay/cancelFail",
         };
         tossPayments.requestPayment(method, paymentData);
+        console.log(paymentData);
     });
 
 </script>
