@@ -7,13 +7,13 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Controller
+@RequestMapping("/fundArtistList")
 public class FundArtistListController {
 	
 	private final FundArtistListService fundArtistListService;
 	
-	@RequestMapping("/fundArtistList")
-	public String fundArtistList() {
-		return "fundArtistList";
-	}
+	// 펀드 아티스트 리스트 목록
+	@RequestMapping("/list")
+	public String list
 
 }

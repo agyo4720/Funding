@@ -2,7 +2,6 @@ package com.funding.fundBoard;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Locale.Category;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -13,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.funding.Categorie.Categorie;
 import com.funding.answer.Answer;
 import com.funding.answerAns.AnswerAns;
 import com.funding.fundArtist.FundArtist;
@@ -32,8 +32,6 @@ import lombok.ToString;
 public class FundBoard {
 	
 	@Id
-//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "fundBoardId_seq")
-//	@SequenceGenerator(sequenceName = "fundBoardId_seq", allocationSize = 1, name = "fundBoardId_seq")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;	// 고유번호
 	
@@ -68,7 +66,7 @@ public class FundBoard {
 	private FundUser fundUserId; // 작성자 유저
 	
 	@ManyToOne
-	private Category categoryId; // 카테고리
+	private Categorie categoryId; // 카테고리
 	
 	@OneToOne
 	private FundArtist fundArtistId; // 최종 선정된 공연자
@@ -85,7 +83,5 @@ public class FundBoard {
 	@OneToMany(mappedBy = "", cascade = CascadeType.REMOVE)
 	private List<AnswerAns> answerAns; // 답변들
 	// 제약 조건
-	
-	// 수정 테스트
 	
 }
