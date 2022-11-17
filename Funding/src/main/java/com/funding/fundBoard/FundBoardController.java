@@ -66,8 +66,6 @@ public class FundBoardController {
 				fundBoardForm.getMinFund(),
 				fundBoardForm.getFundAmount());
 		
-		System.out.println("_____________________________");
-		
 		return "redirect:/fundBoard/list";
 		
 	}

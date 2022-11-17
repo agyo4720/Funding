@@ -15,4 +15,6 @@ public class FundListService {
 	public List<FundList> getFundList(){
 		return this.fundListRepository.findAll();
 	}
+	
+	
 }
