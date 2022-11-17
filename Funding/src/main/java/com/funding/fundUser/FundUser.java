@@ -21,6 +21,9 @@ public class FundUser {
 	private String nickname;
 	private String email;
 	private String mobile;
+	private String address;
+	private String gender;
+	private String birth;
 	private String role;
 	
 //	private List<FundBoard> FundBoard;

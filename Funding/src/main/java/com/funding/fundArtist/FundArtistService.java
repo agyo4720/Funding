@@ -23,6 +23,9 @@ public class FundArtistService {
 		fundArtist.setNickname(vo.getNickname());
 		fundArtist.setEmail(vo.getEmail());
 		fundArtist.setMobile(vo.getMobile());
+		fundArtist.setAddress(vo.getAddress());
+		fundArtist.setGender(vo.getGender());
+		fundArtist.setBirth(vo.getBirth());		
 		fundArtist.setRole("artist");
 		fundArtist.setLikeCount(0);
 		

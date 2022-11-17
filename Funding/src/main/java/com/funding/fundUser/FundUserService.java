@@ -25,6 +25,9 @@ public class FundUserService {
 		fundUser.setNickname(vo.getNickname());
 		fundUser.setEmail(vo.getEmail());
 		fundUser.setMobile(vo.getMobile());
+		fundUser.setAddress(vo.getAddress());
+		fundUser.setGender(vo.getGender());
+		fundUser.setBirth(vo.getBirth());		
 		fundUser.setRole("user");
 		
 		this.fundUserRepository.save(fundUser);

@@ -47,7 +47,7 @@
             <h1>회원가입</h1>
         </div>
 
-        <form>
+        <form action="/register" method="post">
             <!-- 아이디 -->
             <div class="int int_userId">
                 <label for="id">아이디</label>
@@ -72,18 +72,12 @@
                 <input type="text"/>
             </div>
 
-            <!-- 닉네임 -->
-            <!-- 중복확인 -->
-            <div class="int int_nickname">
-                <label for="nickname">닉네임</label>
-                <input type="text"/>
-            </div>
 
             <!-- 이메일 -->
             <!-- 인증하기도 추가 -->
             <div class="int int_email">
                 <label for="email">이메일</label>
-                <input type="text"/>
+                <input type="text" name="email"/>
                 <div class="int_domain">
                     <p>@</p>
                     <select name="sel_domain" id="sel_domain">
@@ -190,6 +184,6 @@
         });
     </script>
 
-    <script src="../../static/js/userCreateForm.js"></script>
+    <script src="/js/userCreateForm.js"></script>
 </body>
 </html>

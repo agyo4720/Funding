@@ -31,6 +31,15 @@ public class RegisterValidation {
 	@NotEmpty(message = "전화번호는 필수항목입니다.")
 	private String mobile;
 	
+	@NotEmpty(message = "주소는 필수항목입니다.")
+	private String address;
+	
+	@NotEmpty(message = "성별은 필수항목입니다.")
+	private String gender;
+	
+	@NotEmpty(message = "생년월일은 필수항목입니다.")
+	private String birth;
+	
 	@NotEmpty(message = "권한은 필수항목입니다.")
 	private String role;
 	
