@@ -86,28 +86,6 @@ public class FundBoard {
 	private List<AnswerAns> answerAns; // 답변들
 	// 제약 조건
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-	
-	
-	
-	
-	
-	
+	// 수정 테스트
 	
 }
