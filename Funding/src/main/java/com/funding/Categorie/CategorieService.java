@@ -26,4 +26,11 @@ public class CategorieService {
 		return cate.get(); 
 	}
 	
+	public void create(String name) {
+		Categorie categorie = new Categorie();
+		categorie.setCategoryName(name);
+		
+		categorieRepository.save(categorie);
+	}
+	
 }
