@@ -71,16 +71,16 @@ public class FundBoard {
 	@OneToOne
 	private FundArtist fundArtistId; // 최종 선정된 공연자
 	
-	@OneToMany(mappedBy = "", cascade = CascadeType.REMOVE) 
+	@OneToMany(mappedBy = "fundBoard", cascade = CascadeType.REMOVE) 
 	private List<FundList> fundList; // 펀딩한 유저 목록
 	
-	@OneToMany(mappedBy = "", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "fundBoard", cascade = CascadeType.REMOVE)
 	private List<FundArtistList> fundArtistList; // 신청한 공연자 목록
 	
-	@OneToMany(mappedBy = "", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "fundBoard", cascade = CascadeType.REMOVE)
 	private List<Answer> question; // 질문들
 	
-	@OneToMany(mappedBy = "", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "fundBoard", cascade = CascadeType.REMOVE)
 	private List<AnswerAns> answerAns; // 답변들
 	// 제약 조건
 	

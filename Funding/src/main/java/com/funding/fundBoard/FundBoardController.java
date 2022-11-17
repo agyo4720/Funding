@@ -67,8 +67,6 @@ public class FundBoardController {
 		
 	}
 	
-	
-	
-	
+	// 남규
 	
 }

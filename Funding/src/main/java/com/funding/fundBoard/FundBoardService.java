@@ -42,10 +42,10 @@ public class FundBoardService {
 		fundBoard.setMinFund(minFund);
 		fundBoard.setFundAmount(fundAmount);
 		fundBoard.setState("진행중");
-		fundBoard.setFundCurrent(100000000);
-		fundBoard.setCurrentMember(1);
-		fundBoard.setVote(1);
-		fundBoard.setStar(1);
+		fundBoard.setFundCurrent(0);
+		fundBoard.setCurrentMember(0);
+		fundBoard.setVote(0);
+		fundBoard.setStar(0);
 		
 		this.fundBoardRepository.save(fundBoard);
 	}
