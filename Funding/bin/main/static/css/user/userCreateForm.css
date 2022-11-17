@@ -9,37 +9,35 @@ section .int {
 
 section .int label {
     display: inline-block;
+    margin-bottom: 5px;
     width: 100%;
+    font-size: 15px;
 }
 
 section .int input {
-    margin-top: 7px;
     width: 100%;
     height: 30px;
+}
+
+section select {
+    cursor: pointer;
+    width: 332px;
+    height: 32px;
 }
 
 /* 이메일 */
 .int_domain {
     display: flex;
-    margin-top: 10px;
+    margin: 7px 0;
     width: 332px;
 }
 
 .int_domain p { margin-right: 7px; }
 
-.int_domain select {
-    cursor: pointer;
-    width: 100%;
-    height: 32px;
-}
-
-#int_direct {
-    margin: 0 0 0 5px;
-}
+#int_direct { margin-left: 5px; }
 
 .sub_email {
     cursor: pointer;
-    margin-top: 10px;
     padding: 10px 0;
     width: 332px;
     background-color: #3a2c2c;
@@ -49,24 +47,55 @@ section .int input {
     letter-spacing: 2px;
 }
 
-/* 성별 */
-#sel_gender {
-    cursor: pointer;
-    width: 100%;
-    height: 32px;
+/* 생년월일 */
+.bir_wrap {
+    display: flex;
+    width: 332px;
 }
+
+.bir {
+    width: 100%;
+    margin-right: 5px;
+}
+
+.bir:last-child {
+    margin-right: 0;
+}
+
+/* 주소 */
+.int_addr1 {
+    display: flex;
+    margin-bottom: 5px;
+    width: 332px;
+}
+
+#postCode { width: 200px; }
+
+.btn_addr { 
+    cursor: pointer;
+    margin-left: 5px;
+    width: 127px;
+    background-color: #3a2c2c;
+    color: #fff;
+    text-align: center;
+    font-size: 13px;
+    letter-spacing: 2px;
+}
+
+.int_addr2 input { margin-bottom: 5px; }
+
+.int_addr2 input:last-child { margin-bottom: 0; }
 
 /* 전화번호 */
 .mobile {
     display: flex;
     align-items: center;
-    width: 310px;
+    width: 332px;
 }
 
 .mobile p { width: 50px; }
 
 .mobile input {
-    margin-top: 0;
     width: 100%;
 }
 
