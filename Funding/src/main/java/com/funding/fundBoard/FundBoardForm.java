@@ -1,5 +1,6 @@
 package com.funding.fundBoard;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.validation.constraints.NotEmpty;
@@ -11,14 +12,15 @@ import lombok.Setter;
 @Setter
 public class FundBoardForm {
 	
-	@NotEmpty(message=" 제목은 필수항목입니다.")
+	
 	private String subject; // 제목
 	
 	private String content; // 내용
 	
 	private String place; // 장소
 	
-	private LocalDateTime startDate; // 공연 시작 일자
+	private String startDate; // 공연 시작 일자
+	private String startTime;
 	
 	private String runtime; // 공연 시간
 	
@@ -37,6 +39,8 @@ public class FundBoardForm {
 //	private Integer vote; // 별점 투표 수
 	
 //	private Integer star; // 별점 평균
+	
+	
 	
 	
 	

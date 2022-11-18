@@ -16,4 +16,5 @@ public class FundArtistListService {
 	public List<FundArtistList> getFundArtistList(){
 		return this.fundArtistListRepository.findAll();
 	}
+	
 }
