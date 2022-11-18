@@ -51,7 +51,8 @@
             <!-- 아이디 -->
             <div class="int int_userId">
                 <label for="id">아이디</label>
-                <input type="text"/>
+                <input type="text"/ id="username">
+                <input type="button" value="아이디 중복 확인" id="checkBtn">
             </div>
 
             <!-- 비밀번호 -->
@@ -168,7 +169,7 @@
     </section>
     
     <!-- JQuery -->
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <!-- 카카오 우편번호 API -->
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     
@@ -185,5 +186,35 @@
     </script>
 
     <script src="/js/userCreateForm.js"></script>
+    
+
+<script>
+        
+    // 'request'라는 id를 가진 버튼 클릭 시 실행.
+    $("#checkBtn").click(function(){
+ 
+            // json 형식으로 데이터 set
+            var params = {
+                      username      : $("#id").val()
+            }
+                
+            // ajax 통신
+            $.ajax({
+                type : "POST",            // HTTP method type(GET, POST) 형식이다.
+                url : "/user/idCheck",      // 컨트롤러에서 대기중인 URL 주소이다.
+                data : params,            // Json 형식의 데이터이다.
+                success : function(res){ // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
+                    // 응답코드 > 0000
+                    alert(res.code);
+                },
+                error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+                    alert("통신 실패.")
+                }
+            });
+        });
+            
+</script>
+    
+    
 </body>
 </html>

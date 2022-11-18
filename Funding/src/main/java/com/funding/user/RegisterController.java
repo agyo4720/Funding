@@ -1,5 +1,8 @@
 package com.funding.user;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -7,8 +10,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.funding.fundArtist.FundArtistService;
+import com.funding.fundUser.FundUser;
 import com.funding.fundUser.FundUserService;
 
 import lombok.RequiredArgsConstructor;
@@ -60,4 +65,21 @@ public class RegisterController {
 		return "main/home";
 		
 	}
+	
+	// id 중복검사
+	@PostMapping("/idCheck")
+	@ResponseBody
+	public Map<String, Object> idCheck(FundUser vo) {
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+        // 010-0000-0000
+        System.out.println(vo.getUsername());
+        
+        // 응답 데이터 셋팅
+        result.put("code", vo.getUsername());
+        
+        return result;
+	}
+	
 }
