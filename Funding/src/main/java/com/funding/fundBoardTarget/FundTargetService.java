@@ -7,6 +7,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.funding.Categorie.Categorie;
@@ -45,6 +49,7 @@ public class FundTargetService {
 		target.setFundDurationS(LocalDate.now());
 		target.setFundDurationE(LocalDate.parse(fundDurationE, DateTimeFormatter.ISO_DATE));
 		target.setStartDate(LocalDateTime.parse(startTime, form));
+		target.setCreateDate(LocalDateTime.now());
 		target.setMinFund(minFund);
 		target.setFundCurrent(0);
 		target.setFundAmount(fundAmount);
@@ -54,8 +59,9 @@ public class FundTargetService {
 	}
 	
 	//fundAll
-	public List<FundBoardTarget> findAll(){
-		List<FundBoardTarget> targetList = fundTargetRepository.findAll();
+	public Page<FundBoardTarget> findAll(int page){
+		Pageable pageable = PageRequest.of(page, 3, Sort.by("createDate").descending());
+		Page<FundBoardTarget> targetList = fundTargetRepository.findAll(pageable);
 		return targetList;
 	}
 	
@@ -63,6 +69,13 @@ public class FundTargetService {
 	public FundBoardTarget findById(Integer id) {
 		Optional<FundBoardTarget> fundBoardTarget = fundTargetRepository.findById(id);
 		return fundBoardTarget.get();
+	}
+	
+	//해당 카테고리만 가져오기
+	public Page<FundBoardTarget> findByCategorie(Categorie categorie, int page){
+		Pageable pageable = PageRequest.of(page, 3, Sort.by("createDate").descending());
+		Page<FundBoardTarget> targetList = fundTargetRepository.findByCategorie(categorie, pageable);
+		return targetList;
 	}
 	
 }

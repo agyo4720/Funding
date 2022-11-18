@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -66,11 +67,33 @@ public class FundTargetController {
 	
 	//글 목록 보기
 	@RequestMapping("")
-	public String showList(Model model) {
-		List<FundBoardTarget> targetList = fundTargetService.findAll();
+	public String showList(Model model,@RequestParam(value = "page", defaultValue="0") int page,
+			@RequestParam(value = "cate", defaultValue="0")Integer cateId) {
+		log.info("1번지점 : "+ cateId.toString());
+		//모든 카테고리 표시
+		if(cateId == 0) {
+			log.info(cateId.toString());
+			Page<FundBoardTarget> targetList = fundTargetService.findAll(page);
+			List<Categorie> cList = categorieService.findAll();	
+			
+			model.addAttribute("page",page);
+			model.addAttribute("cate",cateId);
+			model.addAttribute("cList", cList);
+			model.addAttribute("targetList", targetList);
+			return "fundTarget/fundTargetList";
+		//해당 카테고리 표시
+		}else {
+			Categorie categorie = categorieService.findById(cateId);
+			Page<FundBoardTarget> targetList = fundTargetService.findByCategorie(categorie, page);
+			List<Categorie> cList = categorieService.findAll();	
+			
+			model.addAttribute("page",page);
+			model.addAttribute("cate",cateId);
+			model.addAttribute("cList", cList);
+			model.addAttribute("targetList", targetList);
+			return "fundTarget/fundTargetList";
+		}
 		
-		model.addAttribute("targetList", targetList);
-		return "fundTarget/fundTargetList";
 	}
 	
 	//디테일 창으로
