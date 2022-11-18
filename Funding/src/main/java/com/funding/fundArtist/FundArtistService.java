@@ -28,7 +28,7 @@ public class FundArtistService {
 		fundArtist.setMobile(vo.getMobile());
 		fundArtist.setAddress(vo.getAddr1()+vo.getAddr2()+vo.getAddr3()+vo.getAddr4());
 		fundArtist.setGender(vo.getGender());
-		fundArtist.setBirth(Date.valueOf(vo.getYear()+vo.getMonth()+vo.getDay()));
+		fundArtist.setBirth(Date.valueOf(vo.getYear()+"-"+vo.getMonth()+"-"+vo.getDay()));
 		fundArtist.setRole("artist");
 		fundArtist.setLikeCount(0);
 		
@@ -36,8 +36,8 @@ public class FundArtistService {
 	}
 	
 	// userName 으로 계정정보 찾기
-	public FundArtist findByuserName(String username) {
+	public Optional<FundArtist> findByuserName(String username) {
 		Optional<FundArtist> fundArtist = fundArtistRepository.findByusername(username);
-		return fundArtist.get();
+		return fundArtist;
 	}
 }

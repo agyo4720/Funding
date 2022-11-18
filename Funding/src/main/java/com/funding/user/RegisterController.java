@@ -2,6 +2,7 @@ package com.funding.user;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.funding.fundArtist.FundArtist;
 import com.funding.fundArtist.FundArtistService;
 import com.funding.fundUser.FundUser;
 import com.funding.fundUser.FundUserService;
@@ -78,11 +80,26 @@ public class RegisterController {
         
         String uid = vo.getUsername();
         
-        // 응답 데이터 셋팅
-        result.put("code", vo.getUsername());
+
+        Optional<FundUser> FU = this.fundUserService.findByuserName(uid);
+        Optional<FundArtist> FA = this.fundArtistService.findByuserName(uid);
         
-//        this.fundUserService.findByuserName(uid);
-//        this.fundArtistService.findByuserName(uid);
+        
+        if(FU.isPresent()) {
+        	result.put("code", "사용중인 아이디입니다");
+        	return result;
+        }
+        
+        if(FA.isPresent()) {
+        	result.put("code", "사용중인 아이디입니다");
+        	return result;
+        }
+        	
+        
+        
+        // 응답 데이터 셋팅
+        result.put("code", "사용 가능한 ID 입니다");
+        
         
         return result;
 	}
