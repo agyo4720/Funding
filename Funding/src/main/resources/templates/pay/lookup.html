@@ -14,17 +14,16 @@
     <p>----------------------</p>
     <div><label><input type="radio" name="method" value="조회하기" checked/>조회하기</label></div>
     <p>----------------------</p>
-    <button id="lookup-button">조회하기</button>
+    <button id="lookup-button" >조회하기</button>
 </section>
-<script src="https://js.tosspayments.com/v1"></script> <!-- 토스결제창 불러오기  -->
+
 <script>
     
     var button = document.getElementById("lookup-button");
-    button.addEventListener("click", function () {
-        var method = document.querySelector('input[name=method]:checked').value;
-
-        
-
+    button.addEventListener("click", function (e) {
+        // var method = document.querySelector('input[name=method]:checked').value;
+        var loc = "http://localhost/pay/lookupSuccess";
+        location.href=loc;
     });
 
 </script>

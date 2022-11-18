@@ -20,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.ResponseErrorHandler;
@@ -50,6 +51,7 @@ public class PaymentController {
     	return "/pay/cancel";
     }
     
+
     @PostConstruct
     private void init() {
         restTemplate.setErrorHandler(new ResponseErrorHandler() {
@@ -113,19 +115,24 @@ public class PaymentController {
     }
     
     
-    @RequestMapping("/pay/lookup")
-    public void lookup() throws Exception {
+    @GetMapping("/pay/lookup")
+    public String lookup() throws Exception {
     	HttpRequest request = HttpRequest.newBuilder()
-    		    .uri(URI.create("https://api.tosspayments.com/v1/payments/iuL61eBd-qgYmW-wKZdZ5"))
-    		    .header("Authorization", "Basic dGVzdF9za196WExrS0V5cE5BcldtbzUwblgzbG1lYXhZRzVSOg==")
+    		    .uri(URI.create("https://api.tosspayments.com/v1/payments/R1kZn04DxKBE92LAa5PVb591AaYzP37YmpXyJjg6OwzoeqdW"))
+    		    .header("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()))
     		    .method("GET", HttpRequest.BodyPublishers.noBody())
     		    .build();
     		HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
     		System.out.println(response.body());
+    		
         log.info("%%%%%%%%%%%%%%%%%%%%%%"+response+"%%%%%%%%%%%%%%%%");
-
+            return "/pay/lookup";
     }
     
+    @RequestMapping("/pay/lookupSuccess")
+    private String lookupSuccess() {
+    	return "/pay/lookupSuccess";
+    }
     
     
     
