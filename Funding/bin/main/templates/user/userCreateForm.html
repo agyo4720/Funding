@@ -47,30 +47,37 @@
             <h1>회원가입</h1>
         </div>
 
-        <form action="/register" method="post">
+
+        <form action="/user/register" th:object="${registerValidation}" method="post">
+        
+ 		<!-- 에러확인 -->
+		<div th:if="${#fields.hasAnyErrors()}">
+		    <div th:each="err : ${#fields.allErrors()}" th:text="${err}" />
+		</div>
+		
             <!-- 아이디 -->
             <div class="int int_userId">
                 <label for="id">아이디</label>
-                <input type="text"/ id="username">
+                <input type="text" id="ggg" name="username">
                 <input type="button" value="아이디 중복 확인" id="checkBtn">
             </div>
 
             <!-- 비밀번호 -->
             <div class="int int_password">
                 <label for="password">비밀번호</label>
-                <input type="password"/>
+                <input type="password" name="password1"/>
             </div>
 
             <!-- 비밀번호 확인 -->
             <div class="int int_pw_check">
                 <label for="password_check">비밀번호 확인</label>
-                <input type="password"/>
+                <input type="password" name="password2"/>
             </div>
 
             <!-- 이름 -->
             <div class="int int_name">
                 <label for="name">이름</label>
-                <input type="text"/>
+                <input type="text" name="nickname"/>
             </div>
 
 
@@ -81,7 +88,7 @@
                 <input type="text" name="email"/>
                 <div class="int_domain">
                     <p>@</p>
-                    <select name="sel_domain" id="sel_domain">
+                    <select name="domain" id="sel_domain">
                         <option value="">선택하기</option>
                         <option value="gmail.com">gmail.com</option>
                         <option value="naver.com">naver.com</option>
@@ -90,7 +97,7 @@
                         <option value="direct" class="direct">직접 입력</option>
                     </select>
                     <!-- 직접 입력 input box -->
-                    <input type="text" id="int_direct" name="int_direct"/>
+                    <input type="text" id="int_direct" name="domainDirect"/>
                 </div>
                 <button class="sub_email">인증번호 받기</button>
             </div>
@@ -99,8 +106,8 @@
             <div class="int int_birth">
                 <label for="birth">생년월일</label>
                 <div class="bir_wrap">
-                    <input class="bir" type="text" placeholder="년(4)"/>
-                    <select class="bir" name="sel_birth_mm" id="sel_birth_mm">
+                    <input class="bir" type="text" name="year" placeholder="년(4)"/>
+                    <select class="bir" name="month" id="sel_birth_mm">
                         <option value="">선택하기</option>
                         <option value="01">1</option>
                         <option value="02">2</option>
@@ -115,14 +122,14 @@
                         <option value="11">11</option>
                         <option value="12">12</option>
                     </select>
-                    <input class="bir" type="text" placeholder="일"/>
+                    <input class="bir" type="text" name="day" placeholder="일"/>
                 </div>
             </div>
 
             <!-- 성별 -->
             <div class="int int_gender">
                 <label for="gender">성별</label>
-                <select name="sel_gender" id="sel_gender">
+                <select name="gender" id="sel_gender">
                     <option value="">선택하기</option>
                     <option value="남성">남성</option>
                     <option value="여성">여성</option>
@@ -133,13 +140,13 @@
             <div class="int int_address">
                 <label for="address">주소</label>
                 <span class="int_addr1">
-                    <input name="postCode" type="text" id="postCode" placeholder="우편 번호" readonly>
+                    <input name="addr1" type="text" id="postCode" placeholder="우편 번호" readonly>
                     <input type="text" class="btn_addr" onclick="btnPostCode()" value="우편번호 찾기">
                 </span>
                 <span class="int_addr2">
-                    <input name="address" type="text" id="addr" placeholder="주소" readonly>
-                    <input name="detailAddress" type="text" id="detailAddr" placeholder="상세 주소">
-                    <input name="extraAddress" type="text" id="extraAddr" placeholder="참고 항목" readonly>
+                    <input name="addr2" type="text" id="addr" placeholder="주소" readonly>
+                    <input name="addr3" type="text" id="detailAddr" placeholder="상세 주소">
+                    <input name="addr4" type="text" id="extraAddr" placeholder="참고 항목" readonly>
                 </span>
             </div>
 
@@ -148,7 +155,7 @@
                 <label for="mobile">전화번호</label>
                 <div class="mobile">
                     <p>010</p>
-                    <input type="text" maxlength="16" placeholder="- 제외"/>
+                    <input type="text" maxlength="16" placeholder="- 제외"/ name="mobile">
                 </div>
             </div>
 
@@ -195,7 +202,7 @@
  
             // json 형식으로 데이터 set
             var params = {
-                      username      : $("#id").val()
+                      username      : $("#ggg").val()
             }
                 
             // ajax 통신

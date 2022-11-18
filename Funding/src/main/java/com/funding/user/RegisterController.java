@@ -76,8 +76,13 @@ public class RegisterController {
         // 010-0000-0000
         System.out.println(vo.getUsername());
         
+        String uid = vo.getUsername();
+        
         // 응답 데이터 셋팅
         result.put("code", vo.getUsername());
+        
+//        this.fundUserService.findByuserName(uid);
+//        this.fundArtistService.findByuserName(uid);
         
         return result;
 	}
