@@ -16,7 +16,6 @@ public class CategorieController {
 	private final CategorieService categorieService;
 	
 	
-	
 	@GetMapping("/create")
 	public String CategorieForm() {
 		return "/categorie/categorieForm";
@@ -27,4 +26,5 @@ public class CategorieController {
 		categorieService.create(name);
 		return "redirect:/";
 	}
+
 }

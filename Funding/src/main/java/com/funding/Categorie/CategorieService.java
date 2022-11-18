@@ -1,5 +1,6 @@
 package com.funding.Categorie;
 
+
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +25,12 @@ public class CategorieService {
 		Optional<Categorie> cate = categorieRepository.findById(id);
 		
 		return cate.get(); 
+	}
+
+	// 카테고리 리스트
+	public List<Categorie> getCategorie(){
+		return this.categorieRepository.findAll();
+
 	}
 	
 	public void create(String name) {

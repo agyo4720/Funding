@@ -32,7 +32,7 @@ public class FundBoardForm {
 	
 	private Integer fundAmount; // 펀딩 목표 금액
 	
-	private Integer currentMember; // 현재 모집 인원
+//	private Integer currentMember; // 현재 모집 인원
 	
 //	private Integer vote; // 별점 투표 수
 	

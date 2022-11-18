@@ -1,0 +1,106 @@
+section {
+    margin: 0 auto;
+    width: 1200px;
+}
+
+/* 카테고리 */
+.categorie {
+    margin: 50px 0;
+}
+
+.categorie ul {
+    display: flex;
+    width: 400px;
+    margin: 0 auto;
+}
+
+.categorie ul li {
+    margin-right: 30px;
+}
+
+.categorie ul li:last-child {
+    margin-right: 0;
+}
+
+/* 공연 리스트 Form */
+.list_form {
+    margin: 70px auto;
+    width: 900px;
+}
+
+.con_list {
+    display: flex;
+}
+
+.image {
+    margin-right: 40px;
+    width: 200px;
+    height: 100%;
+    background-color: #dedede;
+}
+
+.con {
+    margin: 20px 0;
+    width: 100%;
+}
+
+.status {
+    display: inline-block;
+    padding: 3px 15px;
+    border: 1px solid;
+    border-radius: 20px;
+}
+
+.con_title p {
+    margin: 0;
+    color: #7c7c7c;
+}
+
+.con_title a h3 {
+    cursor: pointer;
+    margin-top: 7px;
+    letter-spacing: 2px;
+    transition: 0.5s;
+}
+
+.con_title a h3:hover {
+    text-decoration: underline;
+    text-underline-position: under;
+}
+
+.con_detail {
+    margin-top: 10px;
+}
+
+.view {
+    display: flex;
+    margin: 5px 0;
+}
+
+.view label {
+    width: 120px;
+}
+
+.view:last-child { margin: 0 auto;}
+
+hr { margin: 30px 0; }
+
+hr:last-child { visibility: hidden; }
+
+/* 펀딩 만들기 버튼 */
+.btn_create {
+    float: right;
+    margin-right: 150px;
+    padding: 10px 30px;
+    background-color: #3a2c2c;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 15px;
+    letter-spacing: 2px;
+    transition: 0.5s;
+}
+
+.btn_create:hover {
+    background-color: #5e5252;
+}
