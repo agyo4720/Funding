@@ -1,9 +1,5 @@
 package com.funding.Categorie;
 
-<<<<<<< HEAD
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-=======
 import java.util.List;
 
 import javax.validation.Valid;
@@ -12,34 +8,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
->>>>>>> namgo
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.RequiredArgsConstructor;
 
-@RequestMapping("/categorie")
 @RequiredArgsConstructor
 @Controller
+@RequestMapping("/categorie")
 public class CategorieController {
 
-	private final CategorieService categorieService;
+	private final CategorieService CategorieService;
 	
-<<<<<<< HEAD
-	
-	@GetMapping("/create")
-	public String CategorieForm() {
-		return "/categorie/categorieForm";
-	}
-	
-	@PostMapping("/create")
-	public String create(@RequestParam("categorieName")String name) {
-		categorieService.create(name);
-		return "redirect:/";
-	}
-
-=======
 	// 카테고리 리스트
 	@RequestMapping("/list")
 	public String list(Model model) {
@@ -72,10 +52,9 @@ public class CategorieController {
 		return "redirect:/categorie/list";
 	}
 	
-	// 2022 - 11 -18 - 1(작업중)
+	// 2022 - 11 -18 - 3(작업중)
 	
 	
 	
 	
->>>>>>> namgo
 }

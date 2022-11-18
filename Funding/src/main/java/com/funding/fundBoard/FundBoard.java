@@ -67,16 +67,6 @@ public class FundBoard {
 	
 	@ManyToOne
 	private Categorie categorie; // 카테고리
-<<<<<<< HEAD
-=======
-=======
-<<<<<<< HEAD
-	private Categorie categorie; // 카테고리
-=======
-	private Categorie categoryId; // 카테고리
->>>>>>> namgo
->>>>>>> main
->>>>>>> namgo
 	
 	@OneToOne
 	private FundArtist fundArtist; // 최종 선정된 공연자
