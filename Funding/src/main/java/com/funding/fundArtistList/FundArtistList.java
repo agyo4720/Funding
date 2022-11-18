@@ -25,7 +25,7 @@ public class FundArtistList {
 	private Integer id;	// 고유번호
 	
 	@ManyToOne
-	private FundBoard fundBoardId; // 펀딩글
+	private FundBoard fundBoard; // 펀딩글
 	
 	@ManyToOne
 	private FundArtist fundArtist; // 공연자

@@ -24,7 +24,7 @@ public class FundList {
 	private Integer id; // 고유번호
 	
 	@ManyToOne
-	private FundBoard fundBoardId; // 어느 펀딩인가?
+	private FundBoard fundBoard; // 어느 펀딩인가?
 	
 	@ManyToOne
 	private FundUser fundUserId; // 누가 펀딩했는가?
