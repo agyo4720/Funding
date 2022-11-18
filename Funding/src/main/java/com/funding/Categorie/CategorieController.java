@@ -52,7 +52,7 @@ public class CategorieController {
 		return "redirect:/categorie/list";
 	}
 	
-	// 2022 - 11 -17 최종 작업본
+	// 2022 - 11 -18 - 1(작업중)
 	
 	
 	
