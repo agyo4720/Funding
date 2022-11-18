@@ -136,7 +136,7 @@ public class PaymentController {
     		System.out.println(response.body());
     		log.info("%%%%%%%%%%%%%%%%%%%%%%"+response+"%%%%%%%%%%%%%%%%");
     		
-    		/*
+    	/*
         ResponseEntity<JsonNode> responseEntity = restTemplate.postForEntity(
                 "https://api.tosspayments.com/v1/payments/" + paymentKey, request, JsonNode.class);
         System.out.println("&&&&&&&&&"+responseEntity+"&&&&&&&&&");
@@ -153,7 +153,7 @@ public class PaymentController {
             model.addAttribute("code", failNode.get("code").asText());
             return "/pay/fail";
         }
-    		 */
+    	*/
     		
     	return "/pay/cancel";
     }
@@ -162,10 +162,12 @@ public class PaymentController {
     public String cancelSuccess()  {
 			return "/pay/cancelSuccess";
     }
+    
     //환불실패
     @RequestMapping("/pay/cancelFail")
-    public String cancelFail(@RequestParam String message, @RequestParam String code, Model model) {
+    public String cancelFail( String message, String code, Model model) {
     	//model.addAttribute("message", "이미취소");
+    	System.out.println(message);
         model.addAttribute("message", message);
         model.addAttribute("code", code);
         return "/pay/cancelFail";
