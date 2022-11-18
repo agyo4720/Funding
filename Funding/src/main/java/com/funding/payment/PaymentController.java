@@ -2,6 +2,10 @@ package com.funding.payment;
 
 
 
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +20,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.ResponseErrorHandler;
@@ -112,19 +115,14 @@ public class PaymentController {
     
     @RequestMapping("/pay/lookup")
     public void lookup() throws Exception {
-    	String paymentKey = "R1kZn04DxKBE92LAa5PVb591AaYzP37YmpXyJjg6OwzoeqdW";
-    	
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()));
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        //headers.set("paymentKey", paymentKey);
-        //Map<String, String> payloadMap = new HashMap<>();
-        //payloadMap.put("paymentKey", paymentKey);
-                
-        HttpEntity<String> request = new HttpEntity<>(objectMapper.writeValueAsString("paymentKey: "+paymentKey), headers);
-        log.info("%%%%%%%%%%%%%%%%%%%%%%"+request+"%%%%%%%%%%%%%%%%");
-        ResponseEntity<JsonNode> responseEntity = restTemplate.getForEntity(
-                "https://api.tosspayments.com/v1/payments/-MAuWd-ecYGF3CCfSjqdG"+request, JsonNode.class);
+    	HttpRequest request = HttpRequest.newBuilder()
+    		    .uri(URI.create("https://api.tosspayments.com/v1/payments/iuL61eBd-qgYmW-wKZdZ5"))
+    		    .header("Authorization", "Basic dGVzdF9za196WExrS0V5cE5BcldtbzUwblgzbG1lYXhZRzVSOg==")
+    		    .method("GET", HttpRequest.BodyPublishers.noBody())
+    		    .build();
+    		HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+    		System.out.println(response.body());
+        log.info("%%%%%%%%%%%%%%%%%%%%%%"+response+"%%%%%%%%%%%%%%%%");
 
     }
     
