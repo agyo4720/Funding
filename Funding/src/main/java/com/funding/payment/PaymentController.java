@@ -39,18 +39,7 @@ public class PaymentController {
     private final RestTemplate restTemplate = new RestTemplate();
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final PatmentService patmentService;
-
-
-    @RequestMapping("/pay/tossPay")
-    private String tossPay() {
-    	return "/pay/tossPay";
-    }
-    
-    @RequestMapping("/pay/cancel")
-    private String cancel() {
-    	return "/pay/cancel";
-    }
-    
+    private final String SECRET_KEY = "test_sk_JQbgMGZzorzl7aMN4D3l5E1em4dK";
 
     @PostConstruct
     private void init() {
@@ -64,9 +53,12 @@ public class PaymentController {
             }
         });
     }
-
-    private final String SECRET_KEY = "test_sk_JQbgMGZzorzl7aMN4D3l5E1em4dK";
-
+    
+    
+    @RequestMapping("/pay/tossPay")
+    private String tossPay() {
+    	return "/pay/tossPay";
+    }
     //결제성공
     @RequestMapping("/pay/success")
     public String confirmPayment(
@@ -81,21 +73,16 @@ public class PaymentController {
         payloadMap.put("orderId", orderId);
         payloadMap.put("amount", String.valueOf(amount));
         
-
         HttpEntity<String> request = new HttpEntity<>(objectMapper.writeValueAsString(payloadMap), headers);
-        
-        System.out.println("@@@@@@@"+request+"@@@@@@");
 
         ResponseEntity<JsonNode> responseEntity = restTemplate.postForEntity(
                 "https://api.tosspayments.com/v1/payments/" + paymentKey, request, JsonNode.class);
         System.out.println("&&&&&&&&&"+responseEntity+"&&&&&&&&&");
         if (responseEntity.getStatusCode() == HttpStatus.OK) {
             JsonNode successNode = responseEntity.getBody();
-            //log.info(successNode.toString());
             model.addAttribute("orderId", successNode.get("orderId").asText());
             String s = successNode.get("orderName").asText();
             String ss = successNode.get("transactionKey").asText();
-            
             patmentService.savecreditinfo(paymentKey, orderId, amount, s, ss);
             return "/pay/success";
         } else {
@@ -105,7 +92,6 @@ public class PaymentController {
             return "/pay/fail";
         }
     }
-
     //결제실패
     @RequestMapping("/pay/fail")
     public String failPayment(@RequestParam String message, @RequestParam String code, Model model) {
@@ -115,6 +101,8 @@ public class PaymentController {
     }
     
     
+    
+    //조회하기
     @GetMapping("/pay/lookup")
     public String lookup() throws Exception {
     	HttpRequest request = HttpRequest.newBuilder()
@@ -128,55 +116,60 @@ public class PaymentController {
         log.info("%%%%%%%%%%%%%%%%%%%%%%"+response+"%%%%%%%%%%%%%%%%");
             return "/pay/lookup";
     }
-    
+    //조회성공
     @RequestMapping("/pay/lookupSuccess")
     private String lookupSuccess() {
     	return "/pay/lookupSuccess";
     }
+   
     
-    
-    
-    //환불성공
-    @RequestMapping("/pay/cancelSuccess")
-    public String cancel(@RequestParam String paymentKey, @RequestParam String cancelReason, 
-    		@RequestParam String requesterType, Model model) throws Exception {
-        
-    	HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()));
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        System.out.println("$$$$$$"+headers+"$$$$$$$");
-        
-        Map<String, String> payloadMap = new HashMap<>();
-        payloadMap.put("paymentKey", paymentKey);
-        payloadMap.put("cancelReason", cancelReason);
-        payloadMap.put("requesterType", requesterType);
-        
-        HttpEntity<String> request = new HttpEntity<>(objectMapper.writeValueAsString(payloadMap), headers);
-        
-        System.out.println("$$$$$$"+request+"$$$$$$$");
-        
-        ResponseEntity<JsonNode> responseEntity = restTemplate.getForEntity(
-                "https://api.tosspayments.com/v1/payments" + request, JsonNode.class);
+    //환불하기
+    @RequestMapping("/pay/cancel")
+    private String cancel()throws Exception {
+    	HttpRequest request = HttpRequest.newBuilder()
+    		    .uri(URI.create("https://api.tosspayments.com/v1/payments/qKl56WYb7w4vZnjEJeQVxe2NvdZ2DrPmOoBN0k12dzgRG9px/cancel"))
+    		    .header("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()))
+    		    .header("Content-Type", "application/json")
+    		    .method("POST", HttpRequest.BodyPublishers.ofString("{\"cancelReason\":\"고객이 취소를 원함\"}"))
+    		    .build();
+    		HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+    		System.out.println(response.body());
+    		log.info("%%%%%%%%%%%%%%%%%%%%%%"+response+"%%%%%%%%%%%%%%%%");
+    		
+    		/*
+        ResponseEntity<JsonNode> responseEntity = restTemplate.postForEntity(
+                "https://api.tosspayments.com/v1/payments/" + paymentKey, request, JsonNode.class);
+        System.out.println("&&&&&&&&&"+responseEntity+"&&&&&&&&&");
         if (responseEntity.getStatusCode() == HttpStatus.OK) {
             JsonNode successNode = responseEntity.getBody();
-            return "/pay/cancelSuccess";
+            model.addAttribute("orderId", successNode.get("orderId").asText());
+            String s = successNode.get("orderName").asText();
+            String ss = successNode.get("transactionKey").asText();
+            patmentService.savecreditinfo(paymentKey, orderId, amount, s, ss);
+            return "/pay/success";
         } else {
             JsonNode failNode = responseEntity.getBody();
             model.addAttribute("message", failNode.get("message").asText());
             model.addAttribute("code", failNode.get("code").asText());
-            return "/pay/cancelFail";
+            return "/pay/fail";
         }
+    		 */
+    		
+    	return "/pay/cancel";
     }
-
-    /*
+    //환불성공
+    @RequestMapping("/pay/cancelSuccess")
+    public String cancelSuccess()  {
+			return "/pay/cancelSuccess";
+    }
     //환불실패
-    @RequestMapping("/pay/fail")
-    public String failPayment(@RequestParam String message, @RequestParam String code, Model model) {
+    @RequestMapping("/pay/cancelFail")
+    public String cancelFail(@RequestParam String message, @RequestParam String code, Model model) {
+    	//model.addAttribute("message", "이미취소");
         model.addAttribute("message", message);
         model.addAttribute("code", code);
-        return "/pay/fail";
+        return "/pay/cancelFail";
     }
-    */
+    
 
 }

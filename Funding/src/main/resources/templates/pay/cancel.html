@@ -18,22 +18,13 @@
     <p>----------------------</p>
     <button id="cancel-button">환불하기</button>
 </section>
-<script src="https://js.tosspayments.com/v1"></script>
-<script>
-    var tossPayments = TossPayments("test_ck_OALnQvDd2VJjgjj4daVMj7X41mNW");
-    var button = document.getElementById("cancel-button");
-    var requesterType = "post";
-    button.addEventListener("click", function () {
-        var method = document.querySelector('input[name=method]:checked').value;
-        var paymentData = {
-        	paymentKey: "R1kZn04DxKBE92LAa5PVb591AaYzP37YmpXyJjg6OwzoeqdW",
-            cancelReason: "고객이 취소를 원함",
-            requesterType: requesterType,
-        };
-        tossPayments.requestPayment(method, paymentData);
-        console.log(paymentData);
-    });
 
+<script>
+    var button = document.getElementById("cancel-button");
+    button.addEventListener("click", function () {
+        var loc = "http://localhost/pay/cancelFail";
+        location.href=loc;
+    });
 </script>
 </body>
 </html>
