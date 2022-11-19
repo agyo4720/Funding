@@ -13,7 +13,7 @@
     <!-- 홈페이지 상단 nav -->
     <header>
         <!-- 로고 -->
-        <div class="logo">
+        <div class="logo">	
             <a href="../main/home.html" th:href="@{/}">Let's Funding</a>
         </div>
 
@@ -65,13 +65,13 @@
 
             <!-- 비밀번호 -->
             <div class="int int_password">
-                <label for="password">비밀번호</label>
+                <label for="password1">비밀번호</label>
                 <input type="password" th:field="*{password1}"/>
             </div>
 
             <!-- 비밀번호 확인 -->
             <div class="int int_pw_check">
-                <label for="password_check">비밀번호 확인</label>
+                <label for="password2">비밀번호 확인</label>
                 <input type="password" th:field="*{password2}"/>
             </div>
 
@@ -195,73 +195,64 @@
 
     <script src="/js/userCreateForm.js"></script>
     
-
-    <!-- 유효성 검사 -->
-    <script>
-        //비번 정규표현식으로 확인 영어,숫자,특수문자,1~16자
-        function checkpw1(){
-            var pwpattern = /^[a-zA-Z0-9~!@#$%^&*()`_+?:;'"{}]{1,16}$/
-            console.log(pw1.value)
-            
-            if(pw1.value === ""){
-                error[1].innerHTML='필수 정보입니다.'
-                error[1].style.display='block'
-            }
-            else if(!pwpattern.test(pw1.value)){
-                error[1].innerHTML='올바른 입력이 아닙니다'
-                error[1].style.display='block'
-                pw1.innerHTML='사용불가'
-            }
-            else{
-                error[1].style.display='block'
-                error[1].innerHTML='안전'
-                error[1].style.color='#08a600'       
-            }
-        }
-
-    </script>
-
-     <!-- ajax 이용한 아이디 중복검사  -->
-    <script>
-    // 'checkBtn'라는 id를 가진 버튼 클릭 시 실행.
-    $("#checkBtn").click(function(){
- 
-            // json 형식으로 데이터 set
-            var params = {
-                      username      : $("#username").val()
-            }
-                
-            // ajax 통신
-            $.ajax({
-                type : "POST",            // HTTP method type(GET, POST) 형식이다.
-                url : "/user/idCheck",      // 컨트롤러에서 대기중인 URL 주소이다.
-                data : params,            // Json 형식의 데이터이다.
-                success : function(res){ // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
-                    // 응답코드 > 0000
-                    if(res.code == "아이디는 최소 3 최대 25자 입니다"){
-						$("#idCheckResult").html(res.code);
-					}
-					if(res.code == "사용중인 아이디입니다"){
-						$("#idCheckResult").html(res.code);
-					}
-					if(res.code == "사용 가능한 ID 입니다"){
-						$('#form').attr( 'action' ,'/user/register' );
-						$('#form').attr( 'id' ,'formActive' );
-						$('#submitBtn').attr( 'type' ,'submit' );
-						$('#submitBtn').attr( 'onclick' ,'' );
-						
-					}
-				
+    
+    <!-- ajax 이용한 아이디 중복검사 -->
+	<script>
+	        
+	    // 'checkBtn'라는 id를 가진 버튼 클릭 시 실행.
+	    $("#checkBtn").click(function(){
+	 
+	            // json 형식으로 데이터 set
+	            var params = {
+	                      username      : $("#username").val()
+	            }
+	                
+	            // ajax 통신
+	            $.ajax({
+	                type : "POST",            // HTTP method type(GET, POST) 형식이다.
+	                url : "/user/idCheck",      // 컨트롤러에서 대기중인 URL 주소이다.
+	                data : params,            // Json 형식의 데이터이다.
+	                success : function(res){ // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
+	                    // 응답코드 > 0000
+	                    if(res.code == "아이디는 최소 3 최대 25자 입니다"){
+							$("#idCheckResult").html(res.code);
+						}
+						if(res.code == "사용중인 아이디입니다"){
+							$("#idCheckResult").html(res.code);
+						}
+						if(res.code == "사용 가능한 ID 입니다"){
+							$('#form').attr( 'action' ,'/user/register' );
+							$('#form').attr( 'id' ,'formActive' );
+							$('#submitBtn').attr( 'type' ,'submit' );
+							$('#submitBtn').attr( 'onclick' ,'' );
+							
+						}
 					
-                    $("#idCheckResult").html(res.code);
-                },
-                error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
-                    alert("통신 실패.")
-                }
-            });
-        });
-            
-</script>
+						
+	                    $("#idCheckResult").html(res.code);
+	                },
+	                error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+	                    alert("통신 실패.")
+	                }
+	            });
+	        });
+	            
+	</script>
+	
+	
+	
+	<!-- 정규표현식으로 유효성 검사 -->
+	<script>
+	    $('#form').on('submit',()=>{
+	    	let idval = $('#userid').val()
+	        let idvalcheck = /^[a-z0-9]+$/
+	        if (!idvalcheck.test(idval) || idval.length<6){
+	        	alert('아이디는 영소문자,숫자로 구성된 6글자 이상으로 조합하시오.')
+	            $('#password1').focus()
+	            return false
+	        }
+	    })
+	</script>
     
     
 </body>
