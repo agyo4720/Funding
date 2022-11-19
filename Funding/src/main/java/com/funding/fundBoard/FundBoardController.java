@@ -1,6 +1,5 @@
 package com.funding.fundBoard;
 
-import java.security.Principal;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -80,5 +79,5 @@ public class FundBoardController {
 		return "/fundBoard/fundBoard_detail";
 	}
 	
-	
+	// 2022/11/19 - 1 작업중
 }
