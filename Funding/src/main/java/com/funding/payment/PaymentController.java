@@ -127,20 +127,8 @@ public class PaymentController {
     
     //환불하기
     @RequestMapping("/pay/cancel")
-    public String cancel (
-    		@RequestParam String paymentKey,
-    		@RequestParam String cancelReason) throws Exception {
-    	paymentKey = "R1kZn04DxKBE92LAa5PVb591AaYzP37YmpXyJjg6OwzoeqdW";
-    	cancelReason = "걍";
-    		HttpRequest request = HttpRequest.newBuilder()
-    		    .uri(URI.create("https://api.tosspayments.com/v1/payments/"+paymentKey+"/cancel"))
-    		    .header("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()))
-    		    .header("Content-Type", "application/json")
-    		    .method("POST", HttpRequest.BodyPublishers.ofString("{\"cancelReason\":\"" + cancelReason + "\"}"))
-    		    .build();
-    		HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-    		System.out.println(response.body());
-    		log.info("%%%%%%%%%%%%%%%%%%%%%%"+response+"%%%%%%%%%%%%%%%%");
+    public String cancel ()  {
+
     		
     	/*
         ResponseEntity<JsonNode> responseEntity = restTemplate.postForEntity(
@@ -165,7 +153,20 @@ public class PaymentController {
     }
     //환불성공
     @RequestMapping("/pay/cancelSuccess")
-    public String cancelSuccess()  {
+    public String cancelSuccess(CallbackPayload callback,
+    		@RequestParam String paymentKey,
+    		@RequestParam String cancelReason) throws Exception {
+    	paymentKey = "R1kZn04DxKBE92LAa5PVb591AaYzP37YmpXyJjg6OwzoeqdW";
+    	cancelReason = "걍";
+    		HttpRequest request = HttpRequest.newBuilder()
+    		    .uri(URI.create("https://api.tosspayments.com/v1/payments/"+paymentKey+"/cancel"))
+    		    .header("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()))
+    		    .header("Content-Type", "application/json")
+    		    .method("POST", HttpRequest.BodyPublishers.ofString("{\"cancelReason\":\"" + cancelReason + "\"}"))
+    		    .build();
+    		HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+    		System.out.println(response.body());
+    		log.info("%%%%%%%%%%%%%%%%%%%%%%"+response+"%%%%%%%%%%%%%%%%");
 			return "/pay/cancelSuccess";
     }
     

@@ -15,4 +15,5 @@ public class CallbackPayload {
     private String orderName; // 공연이름
     private int amount; //금액
     private String customerName; //고객이름
+    private String cancelReason; //고객이름
 }
