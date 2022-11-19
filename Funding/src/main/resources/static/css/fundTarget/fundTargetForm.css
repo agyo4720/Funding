@@ -1,0 +1,27 @@
+section {
+    margin: 0 auto;
+    /* width: 900px; */
+}
+
+section label {
+    display: inline-block;
+    width: 200px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.int {
+    margin: 10px 300px 10px 0;
+}
+
+.con {
+    display: flex;
+}
+
+.image {
+    width: 250px;
+    height: 350px;
+    background-color: #dedede;
+}
+
+button { }
