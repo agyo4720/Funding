@@ -75,7 +75,6 @@ public class RegisterController {
 		
 		Map<String, Object> result = new HashMap<String, Object>();
 		
-        // 010-0000-0000
         System.out.println(vo.getUsername());
         
         String uid = vo.getUsername();
@@ -84,6 +83,10 @@ public class RegisterController {
         Optional<FundUser> FU = this.fundUserService.findByuserName(uid);
         Optional<FundArtist> FA = this.fundArtistService.findByuserName(uid);
         
+        if(vo.getUsername().length()<3) {
+        	result.put("code", "아이디는 최소 3 최대 25자 입니다");
+        	return result;
+        }
         
         if(FU.isPresent()) {
         	result.put("code", "사용중인 아이디입니다");
@@ -94,14 +97,10 @@ public class RegisterController {
         	result.put("code", "사용중인 아이디입니다");
         	return result;
         }
-        	
         
         
         // 응답 데이터 셋팅
         result.put("code", "사용 가능한 ID 입니다");
-        
-        
         return result;
 	}
-	
 }

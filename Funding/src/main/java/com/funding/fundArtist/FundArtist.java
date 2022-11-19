@@ -2,6 +2,7 @@ package com.funding.fundArtist;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,6 +19,8 @@ public class FundArtist {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;			// 고유번호
+	
+	@Column(unique=true)
 	private String username; 	// 아이디
 	private String password; 	// 비밀번호
 	private String nickname;	// 이름
