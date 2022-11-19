@@ -45,6 +45,7 @@
     <section>
 		<div>
 			<form th:object="${targetForm}" method="post">
+			
 				<div>카테고리</div>
 				<select name="categorie">
 					<option th:each="cate : ${cList}" th:value="${cate.id}" th:text="${cate.categorieName}"></option>
@@ -68,7 +69,6 @@
 				<input type="number" th:field="*{minFund}" value="" autocomplete="off">
 				<div>총 펀딩금액</div>
 				<input type="number" th:field="*{fundAmount}" value="" autocomplete="off">
-				
 				
 				<button type="submit">만들기</button>
 			</form>

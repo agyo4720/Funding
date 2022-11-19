@@ -11,9 +11,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.funding.Categorie.Categorie;
 import com.funding.Categorie.CategorieService;
+import com.funding.answer.Answer;
+import com.funding.answer.AnswerService;
 import com.funding.fundArtist.FundArtistService;
 import com.funding.fundUser.FundUserService;
 
@@ -28,6 +31,7 @@ public class FundBoardController {
 	private final FundUserService fundUserService;
 	private final CategorieService categorieService;
 	private final FundArtistService fundArtistService;
+	private final AnswerService answerService;
 	
 	// 미지정 펀드 리스트
 	@RequestMapping("/list")
@@ -51,7 +55,7 @@ public class FundBoardController {
 	@PostMapping("/create")
 	public String create(
 			@Valid FundBoardForm fundBoardForm,
-			@PathVariable ("categorie") Integer id,
+			@RequestParam ("categorie") Integer id,
 			BindingResult bindingResult,
 			Model model) {
 		
@@ -85,9 +89,11 @@ public class FundBoardController {
 		FundBoard fundBoard = this.fundBoardService.findById(id);
 		model.addAttribute("fundBoard", fundBoard);
 		
+		List<Answer> answerList = this.answerService.findByFundBoard(fundBoard);
+		model.addAttribute("answerList", answerList);
 		
 		return "/fundBoard/fundBoard_detail";
 	}
 	
-	// 2022/11/19 - 2 하이텐작업중
+	// 2022/11/19 - 3 하이텐작업중
 }

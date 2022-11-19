@@ -2,6 +2,7 @@ package com.funding.answer;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -50,6 +51,18 @@ public class AnswerController {
 		FundBoardTarget fundBoardTarget = fundTargetService.findById(id);
 		answerService.createTargetAnswer(content, fundBoardTarget);
 		return String.format("redirect:/fundTarget/detail/%s", id);
+	}
+	
+	@RequestMapping("/fundBoard/create/{id}")
+	public String createFundBoardAnswer(
+			@RequestParam("content")String content,
+			@PathVariable("id")Integer id) {
+		
+		FundBoard fundBoard = this.fundBoardService.findById(id);
+		this.answerService.createBoardAnswer(content, fundBoard);
+		
+		return String.format("redirect:/fundBoard/detail/%s", id);
+		
 	}
 	
 }

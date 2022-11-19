@@ -25,7 +25,7 @@
 				<label for="categorieName">카테고리</label>
 				<select name = "categorie">
 					<option>카테고리 선택</option>
-					<option th:each="categorie : ${categorieList}" th:text="${categorie.categorieName}" th:value="${categorie.categorieName}"></option>
+					<option th:each="categorie : ${categorieList}" th:text="${categorie.categorieName}" th:value="${categorie.id}"></option>
 				</select>
 				<div>
 					<label for="subject">제목</label>
