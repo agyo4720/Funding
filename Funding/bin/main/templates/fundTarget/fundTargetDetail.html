@@ -46,14 +46,14 @@
 		<div>
 			<div th:text="${fundBoardTarget.status}">상태</div>
 			<div th:text="${fundBoardTarget.subject}">공연 이름</div>
-			<div th:text="${fundBoardTarget.content}">간단한 설명</div>
+			<!-- <div th:text="${fundBoardTarget.content}">간단한 설명</div> -->
 			<div th:text="${fundBoardTarget.artiest}">아티스트</div>
-			<div th:text="${fundBoardTarget.place}">장소</div>
+			<div th:text="${fundBoardTarget.startDate}">공연일</div>
+			<div th:text="${fundBoardTarget.place}">공연장</div>
 			<div th:text="|${fundBoardTarget.runtime}분|">공연시간</div>
-			<div th:text="${fundBoardTarget.fundDurationS} + ' ~ ' + ${fundBoardTarget.fundDurationE}">펀딩 기간</div>
-			<div th:text="${fundBoardTarget.startDate}">공연 시작</div>
             
             <div>펀딩
+                <div th:text="${fundBoardTarget.fundDurationS} + ' ~ ' + ${fundBoardTarget.fundDurationE}">펀딩 기간</div>
                 <div th:text="${fundBoardTarget.minFund}">최소 펀딩 금액</div>
                 <div th:text="${fundBoardTarget.fundCurrent}">현재 모집 금액</div>
                 <div th:text="${fundBoardTarget.fundAmount}">최종 목표 금액</div>

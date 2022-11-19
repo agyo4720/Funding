@@ -23,11 +23,12 @@ section {
     height: 25px;
 }
 
-/* 로그인 버튼 */
+/* 버튼 */
 .sub_login {}
 
-.btn_login {
+.btn {
     cursor: pointer;
+    margin-bottom: 10px;
     padding: 10px 0;
     width: 100%;
     background-color: #3E3636;
@@ -39,7 +40,7 @@ section {
     transition: 0.5s;
 }
 
-.btn_login:hover {
+.btn:hover {
     background-color: #5e5252;
 }
 
