@@ -56,7 +56,7 @@ public class PaymentController {
     
     
     @RequestMapping("/pay/tossPay")
-    private String tossPay() {
+    public String tossPay() {
     	return "/pay/tossPay";
     }
     //결제성공
@@ -78,6 +78,7 @@ public class PaymentController {
         ResponseEntity<JsonNode> responseEntity = restTemplate.postForEntity(
                 "https://api.tosspayments.com/v1/payments/" + paymentKey, request, JsonNode.class);
         System.out.println("&&&&&&&&&"+responseEntity+"&&&&&&&&&");
+        
         if (responseEntity.getStatusCode() == HttpStatus.OK) {
             JsonNode successNode = responseEntity.getBody();
             model.addAttribute("orderId", successNode.get("orderId").asText());
@@ -118,19 +119,21 @@ public class PaymentController {
     }
     //조회성공
     @RequestMapping("/pay/lookupSuccess")
-    private String lookupSuccess() {
+    public String lookupSuccess() {
     	return "/pay/lookupSuccess";
     }
    
     
     //환불하기
     @RequestMapping("/pay/cancel")
-    private String cancel()throws Exception {
+    public String cancel (
+    		@RequestParam("paymentKey")String paymentKey,
+    		@RequestParam("cancelReason")String cancelReason)throws Exception {
     	HttpRequest request = HttpRequest.newBuilder()
-    		    .uri(URI.create("https://api.tosspayments.com/v1/payments/qKl56WYb7w4vZnjEJeQVxe2NvdZ2DrPmOoBN0k12dzgRG9px/cancel"))
+    		    .uri(URI.create("https://api.tosspayments.com/v1/payments/"+paymentKey+"/cancel"))
     		    .header("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()))
     		    .header("Content-Type", "application/json")
-    		    .method("POST", HttpRequest.BodyPublishers.ofString("{\"cancelReason\":\"고객이 취소를 원함\"}"))
+    		    .method("POST", HttpRequest.BodyPublishers.ofString("{\"cancelReason\":\"{cancelReason}\"}"))
     		    .build();
     		HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
     		System.out.println(response.body());
