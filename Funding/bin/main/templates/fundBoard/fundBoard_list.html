@@ -1,44 +1,88 @@
-<div>
-	<h2>미지정 펀딩 리스트</h2>
-	<table>
-		<thead>
-			<th>
-				<td>번호</td>
-				<td>제목</td>
-				<td>내용</td>
-				<td>장소</td>
-				<td>공연 시작 일자</td>
-				<td>공연 시간</td>
-				<td>펀딩 기간</td>
-				<td>1인 최소 펀딩 금액</td>
-				<td>펀딩 목표 금액</td>
-				<td>펀딩 현재 금액</td>
-				<td>현재 모집 인원</td>
-				<td>펀딩 상태</td>
-				<td>별점 투표 수</td>
-				<td>별점 평균</td>
-				<td></td>
-			</th>
-		</thead>
-		<tbody>
-			<tr th:each="fundBoard , loop : ${fundBoardList}">
-				<td th:text="${loop.count}"></td>
-				<td th:text="${fundBoard.subject}"></td>
-				<td th:text="${fundBoard.content}"></td>
-				<td th:text="${fundBoard.place}"></td>
-				<td th:text="${fundBoard.startDate}"></td>
-				<td th:text="${fundBoard.runtime}"></td>
-				<td th:text="${fundBoard.fundDuration}"></td>
-				<td th:text="${fundBoard.minFund}"></td>
-				<td th:text="${fundBoard.fundAmount}"></td>
-				<td th:text="${fundBoard.fundCurrent}"></td>
-				<td th:text="${fundBoard.currentMember}"></td>
-				<td th:text="${fundBoard.state}"></td>
-				<td th:text="${fundBoard.vote}"></td>
-				<td th:text="${fundBoard.star}"></td>
-				<td><a th:href="@{|/fundBoard/detail/${fundBoard.id}|}">자세히 보기</a></td>
-			</tr>
-		</tbody>
-	</table>
-	<a href="/fundBoard/create">등록하기</a>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>fundBoard_list</title>
+
+	<style>
+		table{
+            border: 1px solid #000;
+            border-collapse: collapse;
+        }
+
+        table thead{
+            background-color:white;
+            color:black;
+        }
+
+        th{
+            border: 1px solid black;
+            background-color:black;
+            color:white
+        }
+
+        td{
+            border: 1px solid black;
+            color:black;
+        }
+	</style>
+</head>
+<body>
+	<div id="warp">
+		<div class="header">
+			<h2>펀딩 작성</h2>
+		</div>
+		
+		<div class="main">
+			<table>
+				<thead>
+					<tr>
+						<th>번호</th>
+						<th>카테고리</th>
+						<th>제목</th>
+						<th>내용</th>
+						<th>장소</th>
+						<th>공연 시작 일자</th>
+						<th>공연 시간</th>
+						<th>펀딩 기간</th>
+						<th>1인 최소 펀딩 금액</th>
+						<th>펀딩 목표 금액</th>
+						<th>펀딩 현재 금액</th>
+						<th>현재 모집 인원</th>
+						<th>펀딩 상태</th>
+						<th>별점 투표 수</th>
+						<th>별점 평균</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="fundBoard , loop : ${fundBoardList}">
+						<td th:text="${loop.count}"></td>
+						<td th:text="${fundBoard.categorie}"></td>
+						<td th:text="${fundBoard.subject}"></td>
+						<td th:text="${fundBoard.content}"></td>
+						<td th:text="${fundBoard.place}"></td>
+						<td th:text="${fundBoard.startDate}"></td>
+						<td th:text="${fundBoard.runtime}"></td>
+						<td th:text="${fundBoard.fundDuration}"></td>
+						<td th:text="${fundBoard.minFund}"></td>
+						<td th:text="${fundBoard.fundAmount}"></td>
+						<td th:text="${fundBoard.fundCurrent}"></td>
+						<td th:text="${fundBoard.currentMember}"></td>
+						<td th:text="${fundBoard.state}"></td>
+						<td th:text="${fundBoard.vote}"></td>
+						<td th:text="${fundBoard.star}"></td>
+						<a th:href="@{|/fundBoard/detail/${fundBoard.id}|}"><td>자세히 보기</td></a>
+					</tr>
+				</tbody>
+			</table>
+			<a href="/fundBoard/create">등록하기</a>
+		</div>
+
+	</div>
+	
+</body>
+</html>
+

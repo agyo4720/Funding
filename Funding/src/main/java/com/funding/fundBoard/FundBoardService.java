@@ -7,6 +7,8 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.funding.Categorie.Categorie;
+
 import lombok.RequiredArgsConstructor;
 
 
@@ -30,7 +32,8 @@ public class FundBoardService {
 			String runtime,
 			String fundDuration,
 			Integer minFund,
-			Integer fundAmount) {
+			Integer fundAmount,
+			Categorie categorie) {
 		
 		FundBoard fundBoard = new FundBoard();
 		
@@ -49,10 +52,12 @@ public class FundBoardService {
 		fundBoard.setCurrentMember(0);
 		fundBoard.setVote(0);
 		fundBoard.setStar(0);
+		fundBoard.setCategorie(categorie);
 		
 		this.fundBoardRepository.save(fundBoard);
 	}
 	
+	// id로 펀드보드 찾기
 	public FundBoard findById(Integer id) {
 		Optional<FundBoard> fundBoard = this.fundBoardRepository.findById(id);
 		return fundBoard.get();

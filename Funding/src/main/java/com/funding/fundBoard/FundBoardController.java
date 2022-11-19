@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.funding.Categorie.Categorie;
 import com.funding.Categorie.CategorieService;
 import com.funding.fundArtist.FundArtistService;
 import com.funding.fundUser.FundUserService;
@@ -39,13 +40,18 @@ public class FundBoardController {
 	}
 	
 	@GetMapping("/create")
-	public String create(FundBoardForm fundBoardForm) {
+	public String create(FundBoardForm fundBoardForm, Model model) {
+		
+		List<Categorie> categorieList = this.categorieService.findAll();
+		model.addAttribute("categorieList", categorieList);
+		
 		return "/fundBoard/fundBoard_form";
 	}
 	
 	@PostMapping("/create")
 	public String create(
 			@Valid FundBoardForm fundBoardForm,
+			@PathVariable ("categorie") Integer id,
 			BindingResult bindingResult,
 			Model model) {
 		
@@ -55,6 +61,8 @@ public class FundBoardController {
 		
 		String time = fundBoardForm.getStartDate() + " " + fundBoardForm.getStartTime();
 		
+		Categorie categorie = this.categorieService.findById(id);
+		
 		this.fundBoardService.create(
 				fundBoardForm.getSubject(),
 				fundBoardForm.getContent(),
@@ -63,7 +71,9 @@ public class FundBoardController {
 				fundBoardForm.getRuntime(),
 				fundBoardForm.getFundDuration(),
 				fundBoardForm.getMinFund(),
-				fundBoardForm.getFundAmount());
+				fundBoardForm.getFundAmount(),
+				categorie
+				);
 		
 		return "redirect:/fundBoard/list";
 		
@@ -79,5 +89,5 @@ public class FundBoardController {
 		return "/fundBoard/fundBoard_detail";
 	}
 	
-	// 2022/11/19 - 1 작업중
+	// 2022/11/19 - 2 작업중
 }

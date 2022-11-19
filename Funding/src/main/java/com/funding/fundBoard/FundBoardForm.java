@@ -21,7 +21,7 @@ public class FundBoardForm {
 	
 	private String startDate; // 공연 시작 일자
 	
-	private String startTime;
+	private String startTime; // 공연 시작 시간
 	
 	private String runtime; // 공연 시간
 	
