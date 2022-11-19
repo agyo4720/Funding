@@ -196,6 +196,30 @@
     <script src="/js/userCreateForm.js"></script>
     
 
+    <!-- 유효성 검사 -->
+    <script>
+        //비번 정규표현식으로 확인 영어,숫자,특수문자,1~16자
+        function checkpw1(){
+            var pwpattern = /^[a-zA-Z0-9~!@#$%^&*()`_+?:;'"{}]{1,16}$/
+            console.log(pw1.value)
+            
+            if(pw1.value === ""){
+                error[1].innerHTML='필수 정보입니다.'
+                error[1].style.display='block'
+            }
+            else if(!pwpattern.test(pw1.value)){
+                error[1].innerHTML='올바른 입력이 아닙니다'
+                error[1].style.display='block'
+                pw1.innerHTML='사용불가'
+            }
+            else{
+                error[1].style.display='block'
+                error[1].innerHTML='안전'
+                error[1].style.color='#08a600'       
+            }
+        }
+
+    </script>
 
      <!-- ajax 이용한 아이디 중복검사  -->
     <script>
