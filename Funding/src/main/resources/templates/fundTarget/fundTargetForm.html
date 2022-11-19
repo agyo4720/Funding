@@ -94,68 +94,7 @@
 					<div th:each="err : ${#fields.allErrors()}" th:text="${err}"></div>
 				</div>
 				<!-- //이미지 아무것도 선택 안하면 에러 출력 -->
-				
-=======
-			<form th:object="${targetForm}" method="post">
-                <div class="con">
-                    <div class="con_detail">
-                        <div class="int int_cate">
-                            <label>카테고리</label>
-                            <select name="categorie">
-                                <option th:each="cate : ${cList}" th:value="${cate.id}" th:text="${cate.categoryName}"></option>
-                            </select>
-                        </div>
-                        
-                        <div class="int int_title">
-                            <label>제목</label>
-                            <input type="text" th:field="*{subject}" autocomplete="off">
-                        </div>
-                        
-                        <div class="int int_content">
-                            <label>내용</label>
-                            <input type="text" th:field="*{content}" autocomplete="off">
-                        </div>
-                        
-                        <div class="int int_art">
-                            <label>공연자</label>
-                            <input type="text" name="artiest" value="" autocomplete="off">
-                        </div>
-                        
-                        <div class="int int_place">
-                            <label>장소</label>
-                            <input type="text" th:field="*{place}" autocomplete="off">
-                        </div>
-                        
-                        <div class="int int_runtime">
-                            <label>공연 런타임</label>
-                            <input type="text" th:field="*{runtime}" autocomplete="off" placeholder="분 단위 입력">
-                        </div>
-                        
-                        <div class="int int_duration">
-                            <label>펀딩 기간<br/>(오늘부터 시작)</label>
-                            <input type="date" th:field="*{fundDurationE}" max="" autocomplete="off">
-                        </div>
-                        
-                        <div class="int int_start">
-                            <label>공연 시작일</label>
-                            <input type="date" th:field="*{startDate}" value="" autocomplete="off">	
-                            <input type="time" th:field="*{startTime}" value="" autocomplete="off">	
-                        </div>
-                        
-                        <div class="int int_minfund">
-                            <label>최소 펀딩 금액</label>
-                            <input type="text" th:field="*{minFund}" value="" autocomplete="off">
-                        </div>
-                        
-                        <div class="int int_amountfund">
-                            <label>총 펀딩금액</label>
-                            <input type="text" th:field="*{fundAmount}" value="" autocomplete="off">
-                        </div>
-                    </div>
-                    
-                    <div class="image"></div>
-                </div>
->>>>>>> 123fd1bad331451b718580f03040266bbadf92fe
+
 				<button type="submit">만들기</button>
 			</form>
             
