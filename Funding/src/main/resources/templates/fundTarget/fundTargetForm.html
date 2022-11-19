@@ -44,7 +44,9 @@
 
     <section>
 		<div>
-			<form th:object="${targetForm}" method="post">
+			
+		
+			<form th:object="${targetForm}" method="post" enctype="multipart/form-data">
 				<div>카테고리</div>
 				<select name="categorie">
 					<option th:each="cate : ${cList}" th:value="${cate.id}" th:text="${cate.categorieName}"></option>
@@ -69,6 +71,28 @@
 				<div>총 펀딩금액</div>
 				<input type="number" th:field="*{fundAmount}" value="" autocomplete="off">
 				
+				<!-- 대표이미지 선택 -->
+				<div>
+					<input type="radio" name="imgPath" value="https://cdn.huffingtonpost.kr/news/photo/202101/105466_198431.jpeg"> 
+					<img src="https://cdn.huffingtonpost.kr/news/photo/202101/105466_198431.jpeg" alt="이미지1"
+					width="100" heigth="100">
+					<input type="radio" name="imgPath" value="https://en.pimg.jp/066/591/114/1/66591114.jpg"> 
+					<img src="https://en.pimg.jp/066/591/114/1/66591114.jpg" alt="이미지1"
+					width="100" heigth="100">
+				</div>
+				<!-- //대표이미지 선택 -->
+				
+				<!-- 파일 업로드 -->
+				<div>
+					<input type="file" multiple="multiple" name="file">
+				</div>
+				<!-- //파일 업로드 -->
+				
+				<!-- 이미지 아무것도 선택 안하면 에러 출력 -->
+				<div th:if="${#fields.hasAnyErrors()}">
+					<div th:each="err : ${#fields.allErrors()}" th:text="${err}"></div>
+				</div>
+				<!-- //이미지 아무것도 선택 안하면 에러 출력 -->
 				
 				<button type="submit">만들기</button>
 			</form>

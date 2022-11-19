@@ -53,17 +53,22 @@
 					<form>
 						<a th:each="cate : ${cList}" th:text="${cate.categorieName}"
 						  th:href="@{|?cate=${cate.id}&page=0|}"></a>
-						
 					</form>
 				</li>
-
 			</ul>
 		</div>
 
 		<div class="list_form" th:each="target : ${targetList}">
 			<div class="con_list">
 				<a href="../fundTarget/fundTargetDetail.html" th:href="@{|/fundTarget/detail/${target.id}|}">
-					<div class="image">이미지</div>
+					<div class="image">
+						<div th:if="${target.imgPath != null}">
+							<img th:src="${target.imgPath}" width="200" height="265">
+						</div>
+						<div th:if="${target.imgPath == null}">
+							<img th:src="|/fundTarget/img/${target.id}|" width="200" height="265">
+						</div>
+					</div>
 				</a>
 				<div class="con">
 					<div class="status">

@@ -57,6 +57,10 @@ public class FundBoardTarget {
 	
 	private Integer fundAmount;
 	
+	private String imgPath;
+	
+	private String filePath;
+	
 	@ManyToOne
 	private FundUser fundUser;
 	
