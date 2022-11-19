@@ -41,6 +41,8 @@ public class FundBoardForm {
 	
 //	private Integer star; // 별점 평균
 	
+	private LocalDateTime createDate;
+	
 	
 	
 	

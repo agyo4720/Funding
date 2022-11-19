@@ -61,6 +61,8 @@ public class FundBoard {
 	
 	private Integer star; // 별점 평균
 	
+	private LocalDateTime createDate;
+	
 	// 제약 조건
 	@ManyToOne
 	private FundUser fundUser; // 작성자 유저

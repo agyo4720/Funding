@@ -1,9 +1,12 @@
 package com.funding.fundBoard;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -35,9 +38,11 @@ public class FundBoardController {
 	
 	// 미지정 펀드 리스트
 	@RequestMapping("/list")
-	public String list(Model model) {
+	public String list(
+			@RequestParam(value = "page", defaultValue = "0") Integer page,
+			Model model) {
 		
-		List<FundBoard> fundBoardList = this.fundBoardService.getFundBoard();
+		Page<FundBoard> fundBoardList = this.fundBoardService.findAll(page);
 		model.addAttribute("fundBoardList", fundBoardList);
 		
 		return "/fundBoard/fundBoard_list";
@@ -76,6 +81,7 @@ public class FundBoardController {
 				fundBoardForm.getFundDuration(),
 				fundBoardForm.getMinFund(),
 				fundBoardForm.getFundAmount(),
+				fundBoardForm.getCreateDate(),
 				categorie
 				);
 		
@@ -95,5 +101,5 @@ public class FundBoardController {
 		return "/fundBoard/fundBoard_detail";
 	}
 	
-	// 2022/11/19 - 3 하이텐작업중
+	// 2022/11/19 - 4 하이텐작업중
 }
