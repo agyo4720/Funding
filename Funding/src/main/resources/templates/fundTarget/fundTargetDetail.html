@@ -101,9 +101,20 @@
             </div>
         </div>
 
-        <div th:text="${fundBoardTarget.content}">설명</div>
+        <hr/>
+        
+        <div class="con_text">
+            <div id="title">
+                <h2>콘서트 내용</h2>
+            </div>
+            <div th:text="${fundBoardTarget.content}">설명</div>
+        </div>
+        
+        <hr/>
 
-        <div>댓글</div>
+        <div>
+            댓글
+        </div>
         <div>
             <form th:action="@{|/answer/target/create/${fundBoardTarget.id}|}" method="POST">
                 <input type="text" name="content" value=""/>

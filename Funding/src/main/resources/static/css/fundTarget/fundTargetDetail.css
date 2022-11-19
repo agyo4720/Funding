@@ -1,3 +1,8 @@
+section {
+    margin: 0 auto;
+    width: 1000px;
+}
+
 /* con */
 .con {
     display: flex;
@@ -97,3 +102,9 @@
 .btn:hover {
     background-color: #5e5252;
 }
+
+section hr {
+    margin: 30px 0;
+}
+
+/* 콘서트 내용 */

@@ -46,9 +46,9 @@
         <div class="con">
             <div class="left">
                 <div class="cate">
-                    <a href="../fundTarget/fundTargetList.html">지정 펀딩</a>
-                    <p>></p>
-                    <a href="../fundTarget/fundTargetList.html">카테고리1</a>
+                    <a href="../fundTarget/fundTargetList.html">
+                        <p>지정 펀딩 > 카테고리1</p>
+                    </a>
                 </div>
                 <h2 th:text="${fundBoardTarget.subject}">공연 이름</h2>
                 <div class="image"></div>
@@ -82,26 +82,39 @@
                         <p th:text="${fundBoardTarget.fundDurationS}
                          + ' ~ ' + ${fundBoardTarget.fundDurationE}">2022.11.19 (토) ~ 2022.12.19 (일)</p>
                     </div>
-                    <div class="view">
-                        <label for="minFUnd">최소 펀딩 금액</label>
-                        <p th:text="${fundBoardTarget.minFund}">최소 펀딩 금액</p>
+                    <div class="view funding">
+                        <label for="funding">펀딩금액</label>
+                        <p th:text="${fundBoardTarget.fundCurrent}">7,600,000</p>
+                        <p>/</p>
+                        <p th:text="${fundBoardTarget.fundAmount}">8,000,000</p>
                     </div>
                     <div class="view">
-                        <label for="fundCurrent">현재 모집 금액</label>
-                        <p th:text="${fundBoardTarget.fundCurrent}">현재 모집 금액</p>
+                        <label for="count">현재 인원</label>
+                        <p>76명</p>
                     </div>
-                    <div class="view">
-                        <label for="fundAmount">최종 목표 금액</label>
-                        <p th:text="${fundBoardTarget.fundAmount}">최종 목표 금액</p>
+                    <div class="view minFund">
+                        <label for="minFund">최소 펀딩 금액</label>
+                        <p th:text="${fundBoardTarget.minFund}">100,000원</p>
                     </div>
                     <button class="btn">펀딩하기</button>
                 </div>
             </div>
         </div>
 
-        <div th:text="${fundBoardTarget.content}">설명</div>
+        <hr/>
+        
+        <div class="con_text">
+            <div id="title">
+                <h2>콘서트 내용</h2>
+            </div>
+            <div th:text="${fundBoardTarget.content}">설명</div>
+        </div>
+        
+        <hr/>
 
-        <div>댓글</div>
+        <div>
+            댓글
+        </div>
         <div>
             <form th:action="@{|/answer/target/create/${fundBoardTarget.id}|}" method="POST">
                 <input type="text" name="content" value=""/>

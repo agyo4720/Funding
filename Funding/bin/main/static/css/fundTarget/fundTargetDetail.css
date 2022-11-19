@@ -1,3 +1,8 @@
+section {
+    margin: 0 auto;
+    width: 1000px;
+}
+
 /* con */
 .con {
     display: flex;
@@ -11,6 +16,10 @@
 .left .cate {
     display: flex;
     margin-bottom: 5px;
+}
+
+.left .cate a p {
+    cursor: pointer;
 }
 
 .left .cate a, .left .cate p {
@@ -34,39 +43,58 @@
 .status {
     display: inline-block;
     padding: 3px 15px;
-    margin-bottom: 5px;
-    border: 1px solid;
+    margin-bottom: 10px;
+    border: 2px solid #B00E0E;
     border-radius: 20px;
+    color: #B00E0E;
+    font-weight: bold;
 }
 
 .right .view {
     display: flex;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
+    font-size: 15px;
 }
 
 .right label {
-    width: 130px;
+    width: 110px;
     font-weight: bold;
 }
 
-.right p {
-    /* width: 200px; */
+.right p { }
+
+.funding {
+    display: flex;
+    align-items: center;
 }
 
-.right hr {
-    margin: 10px 0;
+.funding p {font-weight: bold; font-size: 20px;}
+.funding p:nth-child(3) {margin: 0 5px;}
+.funding p:nth-child(4) {color: #6a6a6a;}
+
+.minFund {
+    display: flex;
+    align-items: center;
 }
+
+.minFund p {
+    color: #B00E0E;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.right hr {margin: 10px 0;}
 
 .btn {
     cursor: pointer;
-    margin-bottom: 10px;
+    margin: 5px 0 0;
     padding: 10px 0;
     width: 200px;
     background-color: #3E3636;
     border-radius: 5px;
     color: #fff;
     font-weight: bold;
-    font-size: 15px;
+    font-size: 18px;
     letter-spacing: 2px;
     transition: 0.5s;
 }
@@ -74,3 +102,9 @@
 .btn:hover {
     background-color: #5e5252;
 }
+
+section hr {
+    margin: 30px 0;
+}
+
+/* 콘서트 내용 */
