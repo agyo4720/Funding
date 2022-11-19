@@ -49,10 +49,14 @@
 
 		<div class="categorie">
 			<ul>
-				<li><a href="#">카테고리1</a></li>
-				<li><a href="#">카테고리2</a></li>
-				<li><a href="#">카테고리3</a></li>
-				<li><a href="#">카테고리4</a></li>
+				<li>
+					<form>
+						<a th:each="cate : ${cList}" th:text="${cate.categorieName}"
+						  th:href="@{|?cate=${cate.id}&page=0|}"></a>
+						
+					</form>
+				</li>
+
 			</ul>
 		</div>
 
@@ -99,7 +103,27 @@
 			</div>
 			<hr/>
 		</div>
-
+		<!-- 페이징 -->
+			<div>
+				<div th:if="${!targetList.isEmpty()}">
+					<div th:if="${targetList.number > 0}">
+						<a th:href="@{|?cate=${cate}&page=${targetList.number-1}|}">
+							<span>뒤로</span>
+						</a>
+					</div>
+					<div th:each="page : ${#numbers.sequence(0,targetList.totalPages-1)}"
+					th:if="${targetList.number-3 < page and targetList.number+3 > page}">
+						<a th:classappend="${page == targetList.number} ? 'active'" th:text="${page+1}" 
+						th:href="@{|?cate=${cate}&page=${page}|}"></a>			
+					</div>
+					<div th:if="${targetList.number < targetList.totalPages-1}">
+						<a th:href="@{|?cate=${cate}&page=${targetList.number+1}|}">
+							<span>앞으로</span>
+						</a>
+					</div>
+				</div>
+			</div>
+			<!-- //페이징 -->
 		<a class="btn_create" href="fundTargetForm.html" th:href="@{/fundTarget/form}">펀딩 만들기</a>
     </section>
 </body>

@@ -47,6 +47,10 @@ public class FundBoardTarget {
 	
 	private LocalDateTime startDate;
 	
+	private LocalDateTime createDate;
+	
+	private int view;
+	
 	private Integer minFund;
 	
 	private Integer fundCurrent;

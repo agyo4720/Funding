@@ -53,7 +53,7 @@ public class FundBoardController {
 			return "/fundBoard/fundBoard_form";
 		}
 		
-		String time = fundBoardForm.getStartDate() + " " +fundBoardForm.getStartTime();
+		String time = fundBoardForm.getStartDate() + " " + fundBoardForm.getStartTime();
 		
 		this.fundBoardService.create(
 				fundBoardForm.getSubject(),
