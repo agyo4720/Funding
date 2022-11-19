@@ -41,6 +41,7 @@ public class PaymentController {
     private final PatmentService patmentService;
     private final String SECRET_KEY = "test_sk_JQbgMGZzorzl7aMN4D3l5E1em4dK";
 
+    
     @PostConstruct
     private void init() {
         restTemplate.setErrorHandler(new ResponseErrorHandler() {
@@ -127,13 +128,15 @@ public class PaymentController {
     //환불하기
     @RequestMapping("/pay/cancel")
     public String cancel (
-    		@RequestParam("paymentKey")String paymentKey,
-    		@RequestParam("cancelReason")String cancelReason)throws Exception {
-    	HttpRequest request = HttpRequest.newBuilder()
+    		@RequestParam String paymentKey,
+    		@RequestParam String cancelReason) throws Exception {
+    	paymentKey = "R1kZn04DxKBE92LAa5PVb591AaYzP37YmpXyJjg6OwzoeqdW";
+    	cancelReason = "걍";
+    		HttpRequest request = HttpRequest.newBuilder()
     		    .uri(URI.create("https://api.tosspayments.com/v1/payments/"+paymentKey+"/cancel"))
     		    .header("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()))
     		    .header("Content-Type", "application/json")
-    		    .method("POST", HttpRequest.BodyPublishers.ofString("{\"cancelReason\":\"{cancelReason}\"}"))
+    		    .method("POST", HttpRequest.BodyPublishers.ofString("{\"cancelReason\":\"" + cancelReason + "\"}"))
     		    .build();
     		HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
     		System.out.println(response.body());

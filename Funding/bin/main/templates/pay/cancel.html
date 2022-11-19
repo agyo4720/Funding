@@ -19,8 +19,8 @@
 	    <p>----------------------</p>
 	    <input type="text"  id="id1" placeholder="결제코드" th:field="*{paymentKey}"/>
 	    <input type="text"  id="id2" placeholder="환불사유" th:field="*{cancelReason}"/>
-	    <button id="cancel-button">환불하기</button>
     </form>
+	    <button id="cancel-button">환불하기</button>
 </section>
 
 <script>
@@ -32,6 +32,8 @@
         var json = {
         	paymentkey : a,
         	cancelReason : b,
+            successUrl: window.location.origin + "/pay/cancelSuccess",
+            failUrl: window.location.origin + "/pay/cancelFail",
         };
         
         tossPayments.requestPayment(json);
