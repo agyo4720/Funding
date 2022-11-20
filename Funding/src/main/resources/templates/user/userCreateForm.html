@@ -25,14 +25,6 @@
             </ul>
         </div>
 
-        <!-- 검색 -->
-        <div class="search">
-            <form action="#">
-                <input class="int_search" type="text">
-                <input class="btn_search" type="submit">
-            </form>
-        </div>
-
         <!-- 로그인 -->
         <div class="login">
             <ul>
@@ -43,8 +35,8 @@
     </header>
 
     <section>
-        <div id="title">
-            <h1>회원가입</h1>
+        <div class="title">
+            <h2>회원가입</h2>
         </div>
 
         <form>
@@ -139,7 +131,7 @@
                 <label for="address">주소</label>
                 <span class="int_addr1">
                     <input name="postCode" type="text" id="postCode" placeholder="우편 번호" readonly>
-                    <input type="text" class="btn_addr" onclick="btnPostCode()" value="우편번호 찾기">
+                    <input type="text" class="btn_addr" onclick="btnPostCode()" value="우편번호 찾기" readonly>
                 </span>
                 <span class="int_addr2">
                     <input name="address" type="text" id="addr" placeholder="주소" readonly>
@@ -190,6 +182,6 @@
         });
     </script>
 
-    <script src="../../static/js/userCreateForm.js"></script>
+    <script src="/js/userCreateForm.js"></script>
 </body>
 </html>

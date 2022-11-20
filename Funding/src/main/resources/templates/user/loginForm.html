@@ -25,14 +25,6 @@
             </ul>
         </div>
 
-        <!-- 검색 -->
-        <div class="search">
-            <form action="#">
-                <input class="int_search" type="text">
-                <input class="btn_search" type="submit">
-            </form>
-        </div>
-
         <!-- 로그인 -->
         <div class="login">
             <ul>
@@ -43,8 +35,8 @@
     </header>
 
     <section>
-        <div id="title">
-            <h1>로그인</h1>
+        <div class="title">
+            <h2>로그인</h2>
         </div>
 
         <form action="/login" method="post">
@@ -57,8 +49,8 @@
                 <input type="password" name="password">
             </div>
             <div class="sub_login">
-                <input id="login" class="btn_login" type="submit" value="로그인">
-                <button>비밀번호 찾기</button>
+                <input id="login" class="btn" type="submit" value="로그인">
+                <button class="btn">비밀번호 찾기</button>
                 <div class="btn_join">
                     <p>아직 회원이 아니십니까?</p>
                     <a href="../user/userCreateForm.html" th:href="@{/user/register}">회원가입</a>
