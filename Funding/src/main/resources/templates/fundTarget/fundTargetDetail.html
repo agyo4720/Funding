@@ -106,12 +106,12 @@
 
         <div class="con_comment">
             <div class="title">
-                <h2>기대평</h2>
+                <h2>댓글</h2>
             </div>
-            <div>
+            <div class="cmt_form">
                 <form th:action="@{|/answer/target/create/${fundBoardTarget.id}|}" method="POST">
-                    <input type="text" name="content" value=""/>
-                    <button type="submit">댓글 달기</button>
+                    <textarea class="int_cmt" name="" id="" cols="30" rows="3"></textarea>
+                    <button class="btn_cmt" type="submit">댓글 달기</button>
                 </form>
             </div>
             
@@ -122,5 +122,17 @@
             </div>
         </div>
         </section>
+        
+        <script>
+            var btn = document.querySelector('.btn_cmt');
+
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+            });
+
+            function test() {
+                word
+            }
+        </script>
     </body>
 </html>

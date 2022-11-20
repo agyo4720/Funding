@@ -111,4 +111,38 @@ section hr {
 .con_text {}
 
 /* 댓글 */
+.con_commet {}
 
+.cmt_form {
+    display: inline-block;
+}
+.cmt_form form {
+    margin-left: 20px;
+    width: 900px;
+}
+
+.int_cmt {
+    margin-bottom: 10px;
+    padding: 30px;
+    width: 100%;
+}
+
+.btn_cmt {
+    cursor: pointer;
+    float: right;
+    margin-right: -50px;
+    margin-bottom: 10px;
+    padding: 5px 0;
+    width: 100px;
+    background-color: #3E3636;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 15px;
+    letter-spacing: 2px;
+    transition: 0.5s;
+}
+
+.btn_cmt:hover {
+    background-color: #5e5252;
+}
