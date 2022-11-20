@@ -49,8 +49,11 @@ header {
 .logo {}
 
 .logo a {
+    cursor: pointer;
     font-size: 30px;
     font-weight: bold;
+    font-family: 'Do Hyeon', sans-serif;
+    letter-spacing: 2px;
 }
 
 /* 메뉴 */
@@ -65,18 +68,11 @@ header {
 }
 
 .menu ul li a {
-    font-size: 17px;
+    font-size: 20px;
     font-weight: bold;
-    font-family: 'Noto Sans KR', sans-serif;
+    font-family: 'Do Hyeon', sans-serif;
+    letter-spacing: 2px;
 }
-
-/* 검색 */
-/* .search {}
-
-.search form {
-    display: flex;
-    
-} */
 
 .search form .int_search {
     margin-right: 10px;
@@ -100,13 +96,14 @@ header {
 }
 
 .login ul li a {
-    font-size: 17px;
+    font-size: 20px;
     font-weight: bold;
-    font-family: 'Noto Sans KR', sans-serif;
+    font-family: 'Do Hyeon', sans-serif;
+    letter-spacing: 2px;
 }
 
 /* 타이틀 */
-#title {
+.title   {
     margin: 30px 0;
     font-size: 17px;
     letter-spacing: 3px;
