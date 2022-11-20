@@ -198,64 +198,17 @@
     <script src="/js/userCreateForm.js"></script>
     
     
-    <!-- ajax 이용한 아이디 중복검사, 유효성 검사 -->
+    <!-- ajax 이용한 아이디 중복검사, 정규표현식이용 유효성 검사 -->
 	<script>
 	        
 	    // 'checkBtn'라는 id를 가진 버튼 클릭 시 실행.
 	    $("#checkBtn").click(function(){
 	 
-	            // json 형식으로 데이터 set
-	            var params = {
-	                      username      : $("#username").val()
-	            }
+            // json 형식으로 데이터 set
+            var params = {
+              username      : $("#username").val()
+            }
 	                
-	            // ajax 통신
-	            $.ajax({
-	                type : "POST",            // HTTP method type(GET, POST) 형식이다.
-	                url : "/user/usernameCheck",      // 컨트롤러에서 대기중인 URL 주소이다.
-	                data : params,            // Json 형식의 데이터이다.
-	                success : function(res){ // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
-	                    // 응답코드 > 0000
-
-						if(res.code == "사용중인 아이디입니다"){
-							$("#idCheckResult").html(res.code);
-						}
-						if(res.code == "사용 가능한 ID 입니다"){
-							$('#form').attr( 'action' ,'/user/register' );
-							$('#form').attr( 'id' ,'formActive' );
-							$('#submitBtn').attr( 'type' ,'submit' );
-							$('#submitBtn').attr( 'onclick' ,'' );
-							
-						}
-					
-						
-	                    $("#usernameCheckResult").html(res.code);
-	                },
-	                error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
-	                    alert("통신 실패.")
-	                }
-	            });
-	            
-	            
-	    	let username = $('#username').val()
-	        let usernameCheck = /^[a-z0-9]+$/
-	        if (!usernameCheck.test(username) || username.length<6){
-				$(usernameCheckResult2).html('아이디는 영소문자,숫자로 구성된 6글자 이상으로 조합하시오.');
-	            $('#username').focus();
-	            return false
-	        }
-	            
-	            
-	            
-	        });
-	            
-	</script>
-	
-	
-	
-	<!-- 정규표현식으로 유효성 검사
-	<script>
-	    $('#form').on('submit',()=>{
 	    	let username = $('#username').val()
 	        let usernameCheck = /^[a-z0-9]+$/
 	        if (!usernameCheck.test(username) || username.length<6){
@@ -263,8 +216,64 @@
 	            $('#username').focus();
 	            return false
 	        }
-	    })
-	</script> -->
+	        
+           // ajax 통신
+            $.ajax({
+                type : "POST",            // HTTP method type(GET, POST) 형식이다.
+                url : "/user/usernameCheck",      // 컨트롤러에서 대기중인 URL 주소이다.
+                data : params,            // Json 형식의 데이터이다.
+                success : function(res){ // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
+                    // 응답코드 > 0000
+
+					if(res.code == "사용중인 아이디입니다"){
+						$("#idCheckResult").html(res.code);
+					}
+					if(res.code == "사용 가능한 ID 입니다"){
+						$('#form').attr( 'action' ,'/user/register' );
+						$('#form').attr( 'id' ,'formActive' );
+						$('#submitBtn').attr( 'type' ,'submit' );
+						$('#submitBtn').attr( 'onclick' ,'' );
+						
+					}
+				
+					
+                    $("#usernameCheckResult").html(res.code);
+                },
+                error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+                    alert("통신 실패.")
+                }
+            }); 
+        });
+	            
+	</script>
+	
+	
+	
+	<!-- 정규표현식으로 유효성 검사 -->
+	<script>
+		$('#form').on('submit',()=>{
+	    	let pwdval = $('#password1').val()
+	        let pwdokval = $('#password2').val()
+	        let pwdcheck = /^[a-zA-Z0-9]+$/
+	        if (!pwdcheck.test(pwdval) || pwdval.length<8){
+	        	alert('비밀번호는 영대소문자,숫자로 구성된 8글자 이상으로 조합하시오.')
+	        	$('#password1').focus()
+	        	return false
+	        } else {
+	        	if (pwdokval){
+	            	if (pwdval!==pwdokval){
+	                	alert('비밀번호가 일치하지 않습니다.')
+	                    $('#password1').focus()
+	                    return false
+	                } 
+	            } else {
+	            	alert('비밀번호확인을 입력하시오.')
+	                $('#password2').focus()
+	                return false
+	            }
+	        }
+	    }
+	</script>
     
     
 </body>
