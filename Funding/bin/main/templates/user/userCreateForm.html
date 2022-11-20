@@ -58,9 +58,10 @@
             <!-- 아이디 -->
             <div class="int int_userId">
                 <label for="id">아이디</label>
-                <input type="text" th:field="*{username}" name="username">
+                <input type="text" th:field="*{username}">
                 <input type="button" value="아이디 중복 확인" id="checkBtn">
-                <div id="idCheckResult"></div>
+                <div id="usernameCheckResult"></div>
+                <div id="usernameCheckResult2"></div>
             </div>
 
             <!-- 비밀번호 -->
@@ -79,6 +80,7 @@
             <div class="int int_name">
                 <label for="name">이름</label>
                 <input type="text" th:field="*{nickname}"/>
+                <div id="nicknameCheckResult"></div>
             </div>
 
 
@@ -196,7 +198,7 @@
     <script src="/js/userCreateForm.js"></script>
     
     
-    <!-- ajax 이용한 아이디 중복검사 -->
+    <!-- ajax 이용한 아이디 중복검사, 유효성 검사 -->
 	<script>
 	        
 	    // 'checkBtn'라는 id를 가진 버튼 클릭 시 실행.
@@ -210,13 +212,11 @@
 	            // ajax 통신
 	            $.ajax({
 	                type : "POST",            // HTTP method type(GET, POST) 형식이다.
-	                url : "/user/idCheck",      // 컨트롤러에서 대기중인 URL 주소이다.
+	                url : "/user/usernameCheck",      // 컨트롤러에서 대기중인 URL 주소이다.
 	                data : params,            // Json 형식의 데이터이다.
 	                success : function(res){ // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
 	                    // 응답코드 > 0000
-	                    if(res.code == "아이디는 최소 3 최대 25자 입니다"){
-							$("#idCheckResult").html(res.code);
-						}
+
 						if(res.code == "사용중인 아이디입니다"){
 							$("#idCheckResult").html(res.code);
 						}
@@ -229,30 +229,42 @@
 						}
 					
 						
-	                    $("#idCheckResult").html(res.code);
+	                    $("#usernameCheckResult").html(res.code);
 	                },
 	                error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
 	                    alert("통신 실패.")
 	                }
 	            });
+	            
+	            
+	    	let username = $('#username').val()
+	        let usernameCheck = /^[a-z0-9]+$/
+	        if (!usernameCheck.test(username) || username.length<6){
+				$(usernameCheckResult2).html('아이디는 영소문자,숫자로 구성된 6글자 이상으로 조합하시오.');
+	            $('#username').focus();
+	            return false
+	        }
+	            
+	            
+	            
 	        });
 	            
 	</script>
 	
 	
 	
-	<!-- 정규표현식으로 유효성 검사 -->
+	<!-- 정규표현식으로 유효성 검사
 	<script>
 	    $('#form').on('submit',()=>{
-	    	let idval = $('#userid').val()
-	        let idvalcheck = /^[a-z0-9]+$/
-	        if (!idvalcheck.test(idval) || idval.length<6){
-	        	alert('아이디는 영소문자,숫자로 구성된 6글자 이상으로 조합하시오.')
-	            $('#password1').focus()
+	    	let username = $('#username').val()
+	        let usernameCheck = /^[a-z0-9]+$/
+	        if (!usernameCheck.test(username) || username.length<6){
+				$(usernameCheckResult).html('아이디는 영소문자,숫자로 구성된 6글자 이상으로 조합하시오.');
+	            $('#username').focus();
 	            return false
 	        }
 	    })
-	</script>
+	</script> -->
     
     
 </body>

@@ -69,7 +69,7 @@ public class RegisterController {
 	}
 	
 	// id 중복검사
-	@PostMapping("/idCheck")
+	@PostMapping("/usernameCheck")
 	@ResponseBody
 	public Map<String, Object> idCheck(FundUser vo) {
 		
@@ -82,11 +82,7 @@ public class RegisterController {
 
         Optional<FundUser> FU = this.fundUserService.findByuserName(uid);
         Optional<FundArtist> FA = this.fundArtistService.findByuserName(uid);
-        
-        if(vo.getUsername().length()<3) {
-        	result.put("code", "아이디는 최소 3 최대 25자 입니다");
-        	return result;
-        }
+
         
         if(FU.isPresent()) {
         	result.put("code", "사용중인 아이디입니다");
