@@ -25,14 +25,6 @@
             </ul>
         </div>
 
-        <!-- 검색 -->
-        <!-- <div class="search">
-            <form action="#" method="get">
-                <input class="int_search" type="text">
-                <input class="btn_search" type="submit" value="검색">
-            </form>
-        </div> -->
-
         <!-- 로그인 -->
         <div class="login">
             <ul>
@@ -104,7 +96,7 @@
         <hr/>
         
         <div class="con_text">
-            <div id="title">
+            <div class="title">
                 <h2>콘서트 내용</h2>
             </div>
             <div th:text="${fundBoardTarget.content}">설명</div>
@@ -112,21 +104,23 @@
         
         <hr/>
 
-        <div>
-            댓글
+        <div class="con_comment">
+            <div class="title">
+                <h2>기대평</h2>
+            </div>
+            <div>
+                <form th:action="@{|/answer/target/create/${fundBoardTarget.id}|}" method="POST">
+                    <input type="text" name="content" value=""/>
+                    <button type="submit">댓글 달기</button>
+                </form>
+            </div>
+            
+            <div th:each="answer : ${aList}">
+                <div th:text="${answer.content}">댓글 내용</div>
+                <div th:text="${#temporals.format(answer.createDate, 'MM-dd HH:mm:ss')}">댓글 시간</div>
+                <div><a th:href="@{|/answer/delete/${answer.id}?location=target&id=${fundBoardTarget.id}|}">삭제</a></div>
+            </div>
         </div>
-        <div>
-            <form th:action="@{|/answer/target/create/${fundBoardTarget.id}|}" method="POST">
-                <input type="text" name="content" value=""/>
-                <button type="submit">댓글 달기</button>
-            </form>
-        </div>
-        
-        <div th:each="answer : ${aList}">
-            <div th:text="${answer.content}">댓글 내용</div>
-            <div th:text="${#temporals.format(answer.createDate, 'MM-dd HH:mm:ss')}">댓글 시간</div>
-            <div><a th:href="@{|/answer/delete/${answer.id}?location=target&id=${fundBoardTarget.id}|}">삭제</a></div>
-        </div>
-    </section>
-</body>
+        </section>
+    </body>
 </html>

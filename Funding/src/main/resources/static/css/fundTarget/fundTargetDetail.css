@@ -1,5 +1,5 @@
 section {
-    margin: 0 auto;
+    margin: 30px auto;
     width: 1000px;
 }
 
@@ -108,3 +108,7 @@ section hr {
 }
 
 /* 콘서트 내용 */
+.con_text {}
+
+/* 댓글 */
+
