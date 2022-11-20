@@ -60,7 +60,6 @@ public class FundBoardController {
 	@PostMapping("/create")
 	public String create(
 			@Valid FundBoardForm fundBoardForm,
-			//@RequestParam ("categorie") Integer id,
 			BindingResult bindingResult,
 			Model model) {
 		
@@ -74,7 +73,6 @@ public class FundBoardController {
 		
 		String time = fundBoardForm.getStartDate() + " " + fundBoardForm.getStartTime();
 		
-		//Categorie categorie = this.categorieService.findById(id);
 		
 		this.fundBoardService.create(
 				fundBoardForm.getCategorieName(),
@@ -105,5 +103,5 @@ public class FundBoardController {
 		return "/fundBoard/fundBoard_detail";
 	}
 	
-	// 2022/11/20 - 2 작업중
+	// 2022/11/20 - 3 작업중
 }

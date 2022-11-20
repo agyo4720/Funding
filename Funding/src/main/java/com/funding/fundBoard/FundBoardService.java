@@ -25,10 +25,10 @@ public class FundBoardService {
 	private final FundBoardRepository fundBoardRepository;
 	private final CategorieRepository categorieRepository;
 	
-//	// 펀드보드 리스트
-//	public List<FundBoard> findAll(){
-//		return this.fundBoardRepository.findAll();
-//	}
+	// 펀드보드 리스트
+	public List<FundBoard> findAll(){
+		return this.fundBoardRepository.findAll();
+	}
 	
 	// 미지정 펀드 작성
 	public void create(
