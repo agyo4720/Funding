@@ -52,7 +52,7 @@ public class CategorieController {
 		return "redirect:/categorie/list";
 	}
 	
-	// 2022/11/19 - 5 하이텐작업중(test1)
+	// 2022/11/19 - 5 하이텐작업중
 	
 	
 	

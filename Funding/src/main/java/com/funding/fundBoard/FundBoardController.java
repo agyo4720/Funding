@@ -101,5 +101,5 @@ public class FundBoardController {
 		return "/fundBoard/fundBoard_detail";
 	}
 	
-	// 2022/11/19 - 4 하이텐작업중
+	// 2022/11/20 - 1 작업중
 }
