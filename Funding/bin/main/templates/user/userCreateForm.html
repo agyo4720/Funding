@@ -254,7 +254,7 @@
 		$('#form').on('submit',()=>{
 	    	let pwdval = $('#password1').val()
 	        let pwdokval = $('#password2').val()
-	        let pwdcheck = /^[a-zA-Z0-9]+$/
+	        let pwdcheck =  /^[a-zA-Z0-9~!@#$%^&*()`_+?:;'"{}]{1,16}$/
 	        if (!pwdcheck.test(pwdval) || pwdval.length<8){
 	        	alert('비밀번호는 영대소문자,숫자로 구성된 8글자 이상으로 조합하시오.')
 	        	$('#password1').focus()
