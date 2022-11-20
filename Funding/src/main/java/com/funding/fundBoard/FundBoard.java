@@ -35,6 +35,8 @@ public class FundBoard {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;	// 고유번호
 	
+	private String CategorieName; // 카테고리 이름
+	
 	private String subject; // 제목
 	
 	private String content; // 내용

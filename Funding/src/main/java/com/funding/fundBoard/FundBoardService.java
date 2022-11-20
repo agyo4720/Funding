@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.funding.Categorie.Categorie;
+import com.funding.Categorie.CategorieRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 public class FundBoardService {
 
 	private final FundBoardRepository fundBoardRepository;
+	private final CategorieRepository categorieRepository;
 	
 //	// 펀드보드 리스트
 //	public List<FundBoard> findAll(){
@@ -30,6 +32,7 @@ public class FundBoardService {
 	
 	// 미지정 펀드 작성
 	public void create(
+			String categorieName,
 			String subject,
 			String content,
 			String place,
@@ -38,13 +41,16 @@ public class FundBoardService {
 			String fundDuration,
 			Integer minFund,
 			Integer fundAmount,
-			LocalDateTime createDate,
-			Categorie categorie) {
+			LocalDateTime createDate
+			) {
 		
 		FundBoard fundBoard = new FundBoard();
 		
+		Categorie categorie = this.categorieRepository.findByCategorieName(categorieName).get();
+		
 		DateTimeFormatter form = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 		
+		fundBoard.setCategorieName(categorieName);
 		fundBoard.setSubject(subject);
 		fundBoard.setContent(content);
 		fundBoard.setPlace(place);
@@ -59,7 +65,6 @@ public class FundBoardService {
 		fundBoard.setVote(0);
 		fundBoard.setStar(0);
 		fundBoard.setCreateDate(LocalDateTime.now());
-		fundBoard.setCategorie(categorie);
 		
 		this.fundBoardRepository.save(fundBoard);
 	}
