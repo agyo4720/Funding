@@ -7,9 +7,36 @@
 	<title>fundBoard_list</title>
 
 	<style>
+		*{padding: 0px; margin: 0px;}
+
+		#warp{
+			position: relative;
+			width: 100%;
+			height: 100vh;
+			background-color: beige;
+		}
+
+		.main{
+			position: absolute;
+			width: 100%;
+		}
+
+		.btn{
+			position: absolute;
+			right: 50px;
+			top: 60px;
+		}
+
+		.table{
+			position: absolute;
+			width: 100%;
+			top: 100px;
+		}
+
 		table{
             border: 1px solid #000;
             border-collapse: collapse;
+			width: 100%;
         }
 
         table thead{
@@ -27,6 +54,22 @@
             border: 1px solid black;
             color:black;
         }
+
+		.paging{
+			position: relative;
+			top: 250px;
+		}
+
+		.paging ul{
+			display: flex;
+			justify-content: space-evenly;
+		}
+
+		.paging ul li{
+			text-decoration: none;
+			list-style: none;
+		}
+		
 	</style>
 </head>
 <body>
@@ -36,50 +79,58 @@
 		</div>
 		
 		<div class="main">
-			<table>
-				<thead>
-					<tr>
-						<th>번호</th>
-						<th>카테고리</th>
-						<th>제목</th>
-						<th>내용</th>
-						<th>장소</th>
-						<th>공연 시작 일자</th>
-						<th>공연 시간</th>
-						<th>펀딩 기간</th>
-						<th>1인 최소 펀딩 금액</th>
-						<th>펀딩 목표 금액</th>
-						<th>펀딩 현재 금액</th>
-						<th>현재 모집 인원</th>
-						<th>펀딩 상태</th>
-						<th>별점 투표 수</th>
-						<th>별점 평균</th>
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="fundBoard , loop : ${fundBoardList}">
-						<td th:text="${loop.count}"></td>
-						<td th:text="${fundBoard.categorieName}"></td>
-						<td th:text="${fundBoard.subject}"></td>
-						<td th:text="${fundBoard.content}"></td>
-						<td th:text="${fundBoard.place}"></td>
-						<td th:text="${fundBoard.startDate}"></td>
-						<td th:text="${fundBoard.runtime}"></td>
-						<td th:text="${fundBoard.fundDuration}"></td>
-						<td th:text="${fundBoard.minFund}"></td>
-						<td th:text="${fundBoard.fundAmount}"></td>
-						<td th:text="${fundBoard.fundCurrent}"></td>
-						<td th:text="${fundBoard.currentMember}"></td>
-						<td th:text="${fundBoard.state}"></td>
-						<td th:text="${fundBoard.vote}"></td>
-						<td th:text="${fundBoard.star}"></td>
-						<td><a th:href="@{|/fundBoard/detail/${fundBoard.id}|}">자세히 보기</a></td>
-					</tr>
-				</tbody>
-			</table>
-			<!-- 페이징처리 시작 -->
-		    <div th:if="${!fundBoardList.isEmpty()}">
+
+			<div class="btn">
+				<a href="/fundBoard/create">등록하기</a>
+			</div>
+
+			<div class="table">
+				<table>
+					<thead>
+						<tr>
+							<th>번호</th>
+							<th>카테고리</th>
+							<th>제목</th>
+							<th>내용</th>
+							<th>장소</th>
+							<th>공연 시작 일자</th>
+							<th>공연 시간</th>
+							<th>펀딩 기간</th>
+							<th>1인 최소 펀딩 금액</th>
+							<th>펀딩 목표 금액</th>
+							<th>펀딩 현재 금액</th>
+							<th>현재 모집 인원</th>
+							<th>펀딩 상태</th>
+							<th>별점 투표 수</th>
+							<th>별점 평균</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="fundBoard , loop : ${fundBoardList}">
+							<td th:text="${loop.count}"></td>
+							<td th:text="${fundBoard.categorieName}"></td>
+							<td th:text="${fundBoard.subject}"></td>
+							<td th:text="${fundBoard.content}"></td>
+							<td th:text="${fundBoard.place}"></td>
+							<td th:text="${fundBoard.startDate}"></td>
+							<td th:text="${fundBoard.runtime}"></td>
+							<td th:text="${fundBoard.fundDuration}"></td>
+							<td th:text="${fundBoard.minFund}"></td>
+							<td th:text="${fundBoard.fundAmount}"></td>
+							<td th:text="${fundBoard.fundCurrent}"></td>
+							<td th:text="${fundBoard.currentMember}"></td>
+							<td th:text="${fundBoard.state}"></td>
+							<td th:text="${fundBoard.vote}"></td>
+							<td th:text="${fundBoard.star}"></td>
+							<td><a th:href="@{|/fundBoard/detail/${fundBoard.id}|}">자세히 보기</a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			
+			<!-- 페이징 시작 -->
+		    <div class="paging" th:if="${!fundBoardList.isEmpty()}">
 		        <ul>
 		            <li th:classappend="${!fundBoardList.hasPrevious} ? 'disabled'">
 		                <a th:href="@{|?page=${fundBoardList.number-1}|}">
@@ -98,8 +149,8 @@
 		            </li>
 		        </ul>
 		    </div>
-		    <!-- 페이징처리 끝 -->
-			<a href="/fundBoard/create">등록하기</a>
+		    <!-- 페이징 끝 -->
+		
 		</div>
 
 	</div>
