@@ -5,17 +5,28 @@ section {
 
 section label {
     display: inline-block;
-    width: 200px;
+    width: 130px;
     font-size: 15px;
     font-weight: bold;
 }
 
-.int {
-    margin: 10px 300px 10px 0;
-}
-
 .con {
     display: flex;
+}
+
+form {
+    margin: 0 auto;
+    width: 800px;
+}
+
+.int {
+    display: flex;
+    align-items: center;
+    margin: 10px 30px 0 0;
+}
+
+.int input {
+    height: 25px;
 }
 
 .image {
@@ -24,4 +35,12 @@ section label {
     background-color: #dedede;
 }
 
-button { }
+.sel_cate {
+    cursor: pointer;
+    width: 205px;
+    height: 27px;
+}
+
+.duration, .date, .time { cursor: pointer; display: inline-block; }
+
+.date { margin-right: 10px; }

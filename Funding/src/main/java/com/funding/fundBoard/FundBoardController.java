@@ -36,7 +36,7 @@ public class FundBoardController {
 		List<FundBoard> fundBoardList = this.fundBoardService.getFundBoard();
 		model.addAttribute("fundBoardList", fundBoardList);
 		
-		return "/fundBoard/fundBoard_list";
+		return "fundBoard/fundBoard_list";
 	}
 	
 	@GetMapping("/create")

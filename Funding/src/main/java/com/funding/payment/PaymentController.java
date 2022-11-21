@@ -77,7 +77,7 @@ public class PaymentController {
             model.addAttribute("orderId", successNode.get("orderId").asText());
             //successNode.get("virtualAccount").get("customerName").asText();
             String s = successNode.get("orderName").asText();
-            //String ss = successNode.get("virtualAccount").get("customerName").asText();
+//            String ss = successNode.get("virtualAccount").get("customerName").asText();
             log.info(successNode.toString());
             patmentService.savecreditinfo(paymentKey, orderId, amount, s);
             
