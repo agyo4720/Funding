@@ -11,7 +11,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class FundBoardForm {
-
 	
 	private String subject; // 제목
 	
