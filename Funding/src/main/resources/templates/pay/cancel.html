@@ -14,16 +14,29 @@
     <h3>카카오 티셔츠</h3>
     <span>100원</span>
     <p>----------------------</p>
-    <div><label><input type="radio" name="method" value="결제 취소" checked/>환불하기</label></div>
-    <p>----------------------</p>
-    <button id="cancel-button">환불하기</button>
+    <form action="result.html" th:action="@{/pay/cancelSuccess}" th:object="${callback}"  method="POST">
+	    <div><label><input type="radio" name="method" value="결제 취소" checked/>환불하기</label></div>
+	    <p>----------------------</p>
+	    <input type="text"  id="id1" placeholder="결제코드" />
+	    <input type="text"  id="id2" placeholder="환불사유" />
+    </form>
+	    <button id="cancel-button">환불하기</button>
 </section>
 
 <script>
     var button = document.getElementById("cancel-button");
     button.addEventListener("click", function () {
-        var loc = "http://localhost/pay/cancelFail";
-        location.href=loc;
+
+        var a = document.getElementById("id1").value;
+        var b = document.getElementById("id2").value;
+        var json = {
+        	paymentkey : a,
+        	cancelReason : b,
+            successUrl: window.location.origin + "/pay/cancelSuccess",
+            failUrl: window.location.origin + "/pay/cancelFail",
+        };
+        
+        tossPayments.requestPayment(json);
     });
 </script>
 </body>
