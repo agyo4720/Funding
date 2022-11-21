@@ -34,6 +34,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RequiredArgsConstructor
+@RequestMapping("/pay")
 @Controller
 public class PaymentController {
     private final RestTemplate restTemplate = new RestTemplate();
@@ -55,12 +56,12 @@ public class PaymentController {
     }
     
     
-    @RequestMapping("/pay/tossPay")
-    private String tossPay() {
-    	return "/pay/tossPay";
+    @RequestMapping("/tossPay")
+    public String tossPay() {
+    	return "pay/tossPay";
     }
     //결제성공
-    @RequestMapping("/pay/success")
+    @RequestMapping("/success")
     public String confirmPayment(
             @RequestParam String paymentKey, @RequestParam String orderId, @RequestParam int amount,
             Model model) throws Exception {
@@ -89,21 +90,21 @@ public class PaymentController {
             JsonNode failNode = responseEntity.getBody();
             model.addAttribute("message", failNode.get("message").asText());
             model.addAttribute("code", failNode.get("code").asText());
-            return "/pay/fail";
+            return "pay/fail";
         }
     }
     //결제실패
-    @RequestMapping("/pay/fail")
+    @RequestMapping("/fail")
     public String failPayment(@RequestParam String message, @RequestParam String code, Model model) {
         model.addAttribute("message", message);
         model.addAttribute("code", code);
-        return "/pay/fail";
+        return "pay/fail";
     }
     
     
     
     //조회하기
-    @GetMapping("/pay/lookup")
+    @GetMapping("/lookup")
     public String lookup() throws Exception {
     	HttpRequest request = HttpRequest.newBuilder()
     		    .uri(URI.create("https://api.tosspayments.com/v1/payments/R1kZn04DxKBE92LAa5PVb591AaYzP37YmpXyJjg6OwzoeqdW"))
@@ -114,18 +115,18 @@ public class PaymentController {
     		System.out.println(response.body());
     		
         log.info("%%%%%%%%%%%%%%%%%%%%%%"+response+"%%%%%%%%%%%%%%%%");
-            return "/pay/lookup";
+            return "pay/lookup";
     }
     //조회성공
-    @RequestMapping("/pay/lookupSuccess")
-    private String lookupSuccess() {
-    	return "/pay/lookupSuccess";
+    @RequestMapping("/lookupSuccess")
+    public String lookupSuccess() {
+    	return "pay/lookupSuccess";
     }
    
     
     //환불하기
-    @RequestMapping("/pay/cancel")
-    private String cancel()throws Exception {
+    @RequestMapping("/cancel")
+    public String cancel()throws Exception {
     	HttpRequest request = HttpRequest.newBuilder()
     		    .uri(URI.create("https://api.tosspayments.com/v1/payments/qKl56WYb7w4vZnjEJeQVxe2NvdZ2DrPmOoBN0k12dzgRG9px/cancel"))
     		    .header("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()))
@@ -155,22 +156,22 @@ public class PaymentController {
         }
     	*/
     		
-    	return "/pay/cancel";
+    	return "pay/cancel";
     }
     //환불성공
-    @RequestMapping("/pay/cancelSuccess")
+    @RequestMapping("/cancelSuccess")
     public String cancelSuccess()  {
-			return "/pay/cancelSuccess";
+			return "pay/cancelSuccess";
     }
     
     //환불실패
-    @RequestMapping("/pay/cancelFail")
+    @RequestMapping("/cancelFail")
     public String cancelFail( String message, String code, Model model) {
     	//model.addAttribute("message", "이미취소");
     	System.out.println(message);
         model.addAttribute("message", message);
         model.addAttribute("code", code);
-        return "/pay/cancelFail";
+        return "pay/cancelFail";
     }
     
 
