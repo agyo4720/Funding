@@ -1,41 +1,83 @@
-<div>
 
-	<td th:text="${fundBoard.subject}"></td>
-	<td th:text="${fundBoard.content}"></td>
-	<td th:text="${fundBoard.place}"></td>
-	<td th:text="${fundBoard.startDate}"></td>
-	<td th:text="${fundBoard.runtime}"></td>
-	<td th:text="${fundBoard.fundDuration}"></td>
-	<td th:text="${fundBoard.minFund}"></td>
-	<td th:text="${fundBoard.fundAmount}"></td>
-	<td th:text="${fundBoard.fundCurrent}"></td>
-	<td th:text="${fundBoard.currentMember}"></td>
-	<td th:text="${fundBoard.state}"></td>
 
-</div>
+<!-- 미지정 펀딩 디테일 -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Let's Funding</title>
+    <link rel="stylesheet" href="../../static/css/style.css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="../../static/css/main/home.css" th:href="@{/css/main/home.css}">
+</head>
+<body>
+    <!-- 홈페이지 상단 nav -->
+    <header>
+        <!-- 로고 -->
+        <div class="logo">
+            <a href="../main/home.html" th:href="@{/}">Let's Funding</a>
+        </div>
 
-<div>
-	<div>
-		<h2>댓글</h2>
-	</div>
-	<form th:action="@{|/fundBoard/answer/${fundBoard.id}|}" method="POST">
+        <!-- 메뉴 -->
+        <div class="menu">
+            <ul>
+                <li><a href="../fundTarget/fundTargetList.html" th:href="@{/fundTarget}">지정 펀딩</a></li>
+                <li><a href="../fundBoard/fundBoard_list.html" th:href="@{/fundBoard/list}">미지정 펀딩</a></li>
+            </ul>
+        </div>
+
+        <!-- 로그인 -->
+        <div class="login">
+            <ul>
+                <li><a href="../user/loginForm.html" th:href="@{/user/login}">로그인</a></li>
+                <li><a href="../user/userCreateForm.html" th:href="@{/user/register}">회원가입</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <section>
 		<div>
-			<lable for="content">댓글 작성</lable>
-			<input type="text" name="content" col="5" row="5">
+
+			<td th:text="${fundBoard.subject}"></td>
+			<td th:text="${fundBoard.content}"></td>
+			<td th:text="${fundBoard.place}"></td>
+			<td th:text="${fundBoard.startDate}"></td>
+			<td th:text="${fundBoard.runtime}"></td>
+			<td th:text="${fundBoard.fundDuration}"></td>
+			<td th:text="${fundBoard.minFund}"></td>
+			<td th:text="${fundBoard.fundAmount}"></td>
+			<td th:text="${fundBoard.fundCurrent}"></td>
+			<td th:text="${fundBoard.currentMember}"></td>
+			<td th:text="${fundBoard.state}"></td>
+		
 		</div>
+		
 		<div>
-			<button type="submit">등록하기</button>
+			<div>
+				<h2>댓글</h2>
+			</div>
+			<form th:action="@{|/fundBoard/answer/${fundBoard.id}|}" method="POST">
+				<div>
+					<lable for="content">댓글 작성</lable>
+					<input type="text" name="content" col="5" row="5">
+				</div>
+				<div>
+					<button type="submit">등록하기</button>
+				</div>
+			</form>
+			
 		</div>
-	</form>
-	
-</div>
-	<div>
-		<h2>댓글 내용</h2>
-	</div>
-	<div th:each="">
-	
-	</div>
-<div>
-	
-	
-</div>
+			<div>
+				<h2>댓글 내용</h2>
+			</div>
+			<div th:each="">
+			
+			</div>
+		<div>
+			
+			
+		</div>
+    </section>
+</body>
+</html>
