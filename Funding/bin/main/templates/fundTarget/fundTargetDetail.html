@@ -53,10 +53,10 @@
                 <h2 th:text="${fundBoardTarget.subject}">공연 이름</h2>
                 <div class="image">
 					<div th:if="${fundBoardTarget.imgPath != null}">
-						<img th:src="${fundBoardTarget.imgPath}" width="200" height="265">
+						<img th:src="${fundBoardTarget.imgPath}" width="250" height="300">
 					</div>
 					<div th:if="${fundBoardTarget.imgPath == null}">
-						<img th:src="|/fundTarget/img/${fundBoardTarget.id}|" width="200" height="265">
+						<img th:src="|/fundTarget/img/${fundBoardTarget.id}|" width="250" height="300">
 					</div>
                 </div>
             </div>
