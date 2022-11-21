@@ -32,8 +32,6 @@ import lombok.ToString;
 public class FundBoard {
 	
 	@Id
-//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "fundBoardId_seq")
-//	@SequenceGenerator(sequenceName = "fundBoardId_seq", allocationSize = 1, name = "fundBoardId_seq")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;	// 고유번호
 	
@@ -71,41 +69,19 @@ public class FundBoard {
 	private Categorie categorie; // 카테고리
 	
 	@OneToOne
-	private FundArtist fundArtistId; // 최종 선정된 공연자
+	private FundArtist fundArtist; // 최종 선정된 공연자
 	
-	@OneToMany(mappedBy = "", cascade = CascadeType.REMOVE) 
+	@OneToMany(mappedBy = "fundBoard", cascade = CascadeType.REMOVE) 
 	private List<FundList> fundList; // 펀딩한 유저 목록
 	
-	@OneToMany(mappedBy = "", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "fundBoard", cascade = CascadeType.REMOVE)
 	private List<FundArtistList> fundArtistList; // 신청한 공연자 목록
 	
-	@OneToMany(mappedBy = "", cascade = CascadeType.REMOVE)
-	private List<Answer> question; // 질문들
+	@OneToMany(mappedBy = "fundBoard", cascade = CascadeType.REMOVE)
+	private List<Answer> answer; // 질문들
 	
-	@OneToMany(mappedBy = "", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "fundBoard", cascade = CascadeType.REMOVE)
 	private List<AnswerAns> answerAns; // 답변들
 	// 제약 조건
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-	
-	
-	
-	
-	
-	
 	
 }

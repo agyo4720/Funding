@@ -1,6 +1,7 @@
 package com.funding.fundBoard;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,48 +16,45 @@ public class FundBoardService {
 
 	private final FundBoardRepository fundBoardRepository;
 	
-	// 펀딩 목록
-	public List<FundBoard> getFundBoard() {	
+	// 펀드보드 리스트
+	public List<FundBoard> getFundBoard(){
 		return this.fundBoardRepository.findAll();
 	}
 	
-	// 펀딩 작성
-	public void create(String subject,
-					   String content,
-					   String place,
-					   LocalDateTime startDate,
-					   String runtime,
-					   String state,
-					   String fundDuration,
-					   Integer minFund,
-					   Integer fundCurrent,
-					   Integer fundAmount,
-					   Integer currentMember,
-					   Integer vote,
-					   Integer star) {
+	// 미지정 펀드 작성
+	public void create(
+			String subject,
+			String content,
+			String place,
+			String startDate,
+			String runtime,
+			String fundDuration,
+			Integer minFund,
+			Integer fundAmount) {
 		
 		FundBoard fundBoard = new FundBoard();
+		
+		DateTimeFormatter form = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 		
 		fundBoard.setSubject(subject);
 		fundBoard.setContent(content);
 		fundBoard.setPlace(place);
-		fundBoard.setStartDate(startDate);
+		fundBoard.setStartDate(LocalDateTime.parse(startDate, form));
 		fundBoard.setRuntime(runtime);
-		fundBoard.setState(state);
 		fundBoard.setFundDuration(fundDuration);
 		fundBoard.setMinFund(minFund);
-		fundBoard.setFundCurrent(fundCurrent);
 		fundBoard.setFundAmount(fundAmount);
-		fundBoard.setCurrentMember(currentMember);
-		fundBoard.setVote(vote);
-		fundBoard.setStar(star);
+		fundBoard.setState("진행중");
+		fundBoard.setFundCurrent(0);
+		fundBoard.setCurrentMember(0);
+		fundBoard.setVote(0);
+		fundBoard.setStar(0);
 		
 		this.fundBoardRepository.save(fundBoard);
-		
 	}
 	
 	public FundBoard findById(Integer id) {
-		Optional<FundBoard> fundBoard = fundBoardRepository.findById(id);
+		Optional<FundBoard> fundBoard = this.fundBoardRepository.findById(id);
 		return fundBoard.get();
 	}
 	

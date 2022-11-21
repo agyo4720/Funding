@@ -47,11 +47,19 @@ public class FundBoardTarget {
 	
 	private LocalDateTime startDate;
 	
+	private LocalDateTime createDate;
+	
+	private int view;
+	
 	private Integer minFund;
 	
 	private Integer fundCurrent;
 	
 	private Integer fundAmount;
+	
+	private String imgPath;
+	
+	private String filePath;
 	
 	@ManyToOne
 	private FundUser fundUser;
