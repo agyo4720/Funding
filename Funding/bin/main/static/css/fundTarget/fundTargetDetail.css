@@ -1,6 +1,10 @@
 section {
-    margin: 30px auto;
+    margin: 30px auto 100px;
     width: 1000px;
+}
+
+.title {
+    margin-left: 30px;
 }
 
 /* con */
@@ -28,8 +32,8 @@ section {
 
 .image {
     margin-top: 10px;
-    width: 250px;
-    height: 300px;
+    width: 300px;
+    height: 350px;
     background-color: #dedede;
 }
 
@@ -89,7 +93,7 @@ section {
     cursor: pointer;
     margin: 5px 0 0;
     padding: 10px 0;
-    width: 200px;
+    width: 100%;
     background-color: #3E3636;
     border-radius: 5px;
     color: #fff;
@@ -117,22 +121,20 @@ section hr {
     display: inline-block;
 }
 .cmt_form form {
+    display: flex;
+    margin-bottom: 30px;
     margin-left: 20px;
-    width: 900px;
 }
 
 .int_cmt {
-    margin-bottom: 10px;
     padding: 30px;
-    width: 100%;
+    width: 790px;
+    margin-right: 10px;
 }
 
 .btn_cmt {
     cursor: pointer;
     float: right;
-    margin-right: -50px;
-    margin-bottom: 10px;
-    padding: 5px 0;
     width: 100px;
     background-color: #3E3636;
     border-radius: 5px;
@@ -145,4 +147,38 @@ section hr {
 
 .btn_cmt:hover {
     background-color: #5e5252;
+}
+
+.cmt_view {}
+
+.cmt {
+    margin: 0 auto;
+    width: 900px;
+    padding: 30px;
+    border: 1px solid #6a6a6a;
+    border-radius: 3px;
+}
+
+.cmt_head {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.cmt_head .id {
+    margin-right: 30px;
+    font-weight: bold;
+}
+
+.cmt_head .time {
+    color: #5e5252;
+    font-size: 14px;
+}
+
+.cmt_delete {
+    cursor: pointer;
+    margin-left: 30px;
+}
+.cmt_delete:hover {
+    text-decoration: underline;
 }

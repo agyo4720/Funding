@@ -36,12 +36,15 @@
 
     <section>
 		<div>
-			<form th:object="${targetForm}" method="post">
+            <form th:object="${targetForm}" method="post">
+                <div class="title">
+                    <h2>콘서트 등록하기</h2>
+                </div>
                 <div class="con">
                     <div class="con_detail">
                         <div class="int int_cate">
                             <label>카테고리</label>
-                            <select name="categorie">
+                            <select class="sel_cate" name="categorie">
                                 <option th:each="cate : ${cList}" th:value="${cate.id}" th:text="${cate.categoryName}"></option>
                             </select>
                         </div>
@@ -73,13 +76,13 @@
                         
                         <div class="int int_duration">
                             <label>펀딩 기간<br/>(오늘부터 시작)</label>
-                            <input type="date" th:field="*{fundDurationE}" max="" autocomplete="off">
+                            <input class="duration" type="date" th:field="*{fundDurationE}" max="" autocomplete="off">
                         </div>
                         
                         <div class="int int_start">
                             <label>공연 시작일</label>
-                            <input type="date" th:field="*{startDate}" value="" autocomplete="off">	
-                            <input type="time" th:field="*{startTime}" value="" autocomplete="off">	
+                            <input class="date" type="date" th:field="*{startDate}" value="" autocomplete="off">	
+                            <input class="time" type="time" th:field="*{startTime}" value="" autocomplete="off">	
                         </div>
                         
                         <div class="int int_minfund">
