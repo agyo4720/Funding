@@ -60,19 +60,22 @@ public class FundBoardController {
 	@PostMapping("/create")
 	public String create(
 			@Valid FundBoardForm fundBoardForm,
-			@RequestParam ("categorie") Integer id,
 			BindingResult bindingResult,
 			Model model) {
 		
 		if(bindingResult.hasErrors()) {
+			
+			List<Categorie> categorieList = this.categorieService.findAll();
+			model.addAttribute("categorieList", categorieList);
+			
 			return "/fundBoard/fundBoard_form";
 		}
 		
 		String time = fundBoardForm.getStartDate() + " " + fundBoardForm.getStartTime();
 		
-		Categorie categorie = this.categorieService.findById(id);
 		
 		this.fundBoardService.create(
+				fundBoardForm.getCategorieName(),
 				fundBoardForm.getSubject(),
 				fundBoardForm.getContent(),
 				fundBoardForm.getPlace(),
@@ -81,8 +84,7 @@ public class FundBoardController {
 				fundBoardForm.getFundDuration(),
 				fundBoardForm.getMinFund(),
 				fundBoardForm.getFundAmount(),
-				fundBoardForm.getCreateDate(),
-				categorie
+				fundBoardForm.getCreateDate()
 				);
 		
 		return "redirect:/fundBoard/list";
@@ -101,5 +103,5 @@ public class FundBoardController {
 		return "/fundBoard/fundBoard_detail";
 	}
 	
-	// 2022/11/20 - 1 작업
+	// 2022/11/20 - 4 작업중
 }
