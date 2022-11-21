@@ -14,11 +14,11 @@
     <h3>카카오 티셔츠</h3>
     <span>100원</span>
     <p>----------------------</p>
-    <form action="result.html" th:action="@{/pay/cancelSuccess}" th:object="${callback}"  method="POST">
+    <form action="result.html" th:action="@{/pay/cancel}" th:object="${callback}"  method="POST">
 	    <div><label><input type="radio" name="method" value="결제 취소" checked/>환불하기</label></div>
 	    <p>----------------------</p>
-	    <input type="text"  id="id1" placeholder="결제코드" />
-	    <input type="text"  id="id2" placeholder="환불사유" />
+	    <input type="text"  id="id1" placeholder="결제코드"  />
+	    <input type="text"  id="id2" placeholder="환불사유"  />
     </form>
 	    <button id="cancel-button">환불하기</button>
 </section>
@@ -37,6 +37,8 @@
         };
         
         tossPayments.requestPayment(json);
+        var loc = "http://localhost/pay/cancelSuccess";
+        location.href=loc;
     });
 </script>
 </body>
