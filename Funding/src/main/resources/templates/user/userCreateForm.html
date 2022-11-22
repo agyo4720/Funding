@@ -68,12 +68,14 @@
             <div class="int int_password">
                 <label for="password1">비밀번호</label>
                 <input type="password" th:field="*{password1}"/>
+                <div id="pwd1CheckResult"></div>
             </div>
 
             <!-- 비밀번호 확인 -->
             <div class="int int_pw_check">
                 <label for="password2">비밀번호 확인</label>
                 <input type="password" th:field="*{password2}"/>
+                <div id="pwd2CheckResult"></div>
             </div>
 
             <!-- 이름 -->
@@ -89,6 +91,7 @@
             <div class="int int_email">
                 <label for="email">이메일</label>
                 <input type="text" th:field="*{email}"/>
+                <div id="emailCheckResult"></div>
                 <div class="int_domain">
                     <p>@</p>
                     <select name="domain" id="sel_domain">
@@ -102,6 +105,7 @@
                     <!-- 직접 입력 input box -->
                     <input type="text" id="int_direct" th:field="*{domainDirect}"/>
                 </div>
+                <div id="DomainCheckResult"></div>
                 <button class="sub_email">인증번호 받기</button>
             </div>
 
@@ -249,32 +253,71 @@
 	
 	
 	
-	<!-- 정규표현식으로 유효성 검사 -->
+	<!-- 비밀번호 유효성 검사 -->
 	<script>
 		$('#form').on('submit',()=>{
 	    	let pwdval = $('#password1').val()
 	        let pwdokval = $('#password2').val()
 	        let pwdcheck =  /^[a-zA-Z0-9~!@#$%^&*()`_+?:;'"{}]{1,16}$/
 	        if (!pwdcheck.test(pwdval) || pwdval.length<8){
-	        	alert('비밀번호는 영대소문자,숫자로 구성된 8글자 이상으로 조합하시오.')
+				$('#pwd1CheckResult').html('비밀번호는 영대소문자,숫자로 구성된 8글자 이상으로 조합하시오.')
 	        	$('#password1').focus()
 	        	return false
 	        } else {
 	        	if (pwdokval){
 	            	if (pwdval!==pwdokval){
-	                	alert('비밀번호가 일치하지 않습니다.')
+						$('#pwd2CheckResult').html('비밀번호가 일치하지 않습니다.')
 	                    $('#password1').focus()
 	                    return false
 	                } 
 	            } else {
-	            	alert('비밀번호확인을 입력하시오.')
+					$('#pwd2CheckResult').html('비밀번호확인을 입력하시오.')
 	                $('#password2').focus()
 	                return false
 	            }
 	        }
 	    })
 	</script>
+	
+	<!-- 이름 유효성 검사 -->
+	<script>
+		$('#form').on('submit',()=>{
+	    	let nickname = $('#nickname').val()
+	        let nicknameCheck =  /^[가-힣]{2,4}$/
+	        if (!nicknameCheck.test(nickname)){
+				$('#nicknameCheckResult').html('한글 이름 2~4자 이내.')
+	        	$('#nickname').focus()
+	        	return false
+	        }
+	    })
+	</script>
+		
     
+    <!-- 이메일 유효성 검사 -->
+	<script>
+		$('#form').on('submit',()=>{
+	    	let email = $('#email').val()
+	        let emailCheck =  /^[a-zA-Z0-9]+$/ 
+	        if (!emailCheck.test(email)){
+				$('#emailCheckResult').html('이메일을 정확히 입력하세요.')
+	        	$('#email').focus()
+	        	return false
+	        }
+	    })
+	</script>
+		
+	<!-- 이메일 도메인 유효성 검사 -->
+	<script>
+		$('#form').on('submit',()=>{
+	    	let Domain = $('#sel_domain').val()
+	        let DomainCheck =  /^([a-z0-9\-]+\.)+[a-z]{2,6}$/
+	        if (!DomainCheck.test(Domain)){
+				$('#DomainCheckResult').html('도메인 주소를 정확히 입력하세요.')
+	        	$('#sel_domain').focus()
+	        	return false
+	        }
+	    })
+	</script>
     
 </body>
 </html>
