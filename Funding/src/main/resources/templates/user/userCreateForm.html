@@ -105,7 +105,7 @@
                     <!-- 직접 입력 input box -->
                     <input type="text" id="int_direct" th:field="*{domainDirect}"/>
                 </div>
-                <div id="DomainCheckResult"></div>
+                <div id="domainCheckResult"></div>
                 <button class="sub_email">인증번호 받기</button>
             </div>
 
@@ -156,6 +156,7 @@
                     <input name="addr3" type="text" id="detailAddr" placeholder="상세 주소">
                     <input name="addr4" type="text" id="extraAddr" placeholder="참고 항목" readonly>
                 </span>
+                <div id="addrCheckResult"></div>
             </div>
 
             <!-- 전화번호 -->
@@ -165,20 +166,21 @@
                     <p>010</p>
                     <input type="text" maxlength="16" placeholder="- 제외" th:field="*{mobile}"/>
                 </div>
+                <div id="mobileCheckResult"></div>
             </div>
 
              <!-- 멤버타입 -->
              <div class="int_role">
                 <div class="rad_user">
                     <label>유저</label>
-                    <input type="radio" name="role" value="user"/>
+                    <input type="radio" id="userRole1" name="role" value="user"/>
                 </div>
                 <div class="rad_artist">
                     <label>아티스트</label>
-                    <input type="radio" name="role" value="artist"/>
+                    <input type="radio" id="userRole2" name="role" value="artist"/>
                 </div>
             </div>
-            
+            <div id="userRoleCheckResult"></div>
             <input id="submitBtn" class="btn_join" type="button" onclick="alert('ID 중복 검사는 필수입니다')" value="가입하기"/>
         </form>
     </section>
@@ -219,6 +221,7 @@
 	        if (!usernameCheck.test(username) || username.length<6){
 				$(usernameCheckResult).html('아이디는 영소문자,숫자로 구성된 6글자 이상으로 조합하시오.');
 	            $('#username').focus();
+	            
 	            return false
 	        }
 	        
@@ -277,6 +280,7 @@
 	                return false
 	            }
 	        }
+	        $("div").remove("#pwd1CheckResult, #pwd2CheckResult")
 	    })
 	</script>
 	
@@ -290,6 +294,7 @@
 	        	$('#nickname').focus()
 	        	return false
 	        }
+	  	  $("div").remove("#nicknameCheckResult")
 	    })
 	</script>
 		
@@ -304,33 +309,90 @@
 	        	$('#email').focus()
 	        	return false
 	        }
+	        $("div").remove("#emailCheckResult")
 	    })
 	</script>
 		
 	<!-- 이메일 도메인 유효성 검사 -->
 	<script>
 		$('#form').on('submit',()=>{
-	    	let Domain = $('#sel_domain').val()
-	        let DomainCheck =  /^([a-z0-9\-]+\.)+[a-z]{2,6}$/
-	        if (!DomainCheck.test(Domain)){
-				$('#DomainCheckResult').html('도메인 주소를 정확히 입력하세요.')
+	    	let domain = $('#sel_domain').val()
+	        let domainCheck =  /^([a-z0-9\-]+\.)+[a-z]{2,6}$/
+	        if (!domainCheck.test(domain)){
+				$('#domainCheckResult').html('도메인 주소를 정확히 입력하세요.')
 	        	$('#sel_domain').focus()
 	        	return false
 	        }
+	        $("div").remove("#domainCheckResult")
 	    })
+	</script>
+	
+	<!-- 생년월일 검사 -->
+	<script>
+
 	</script>
 	
 	<!-- 성별 유효성 검사 -->
 	<script>
 		$('#form').on('submit',()=>{
 	    	let Domain = $('#sel_gender').val()
-	        if (!Domain == '남성' && !Domain == '여성'){
+	        if (Domain !== '남성' && Domain !== '여성'){
 				$('#genderCheckResult').html('성별을 선택하세요.')
 	        	$('#gender').focus()
 	        	return false
 	        }
+	        $("div").remove("#genderCheckResult")
 	    })
 	</script>
-    
+	
+	<!-- 주소 유효성 검사 -->
+	<script>
+		$('#form').on('submit',()=>{
+	    	let addr1 = $('#postCode').val()
+	    	let addr2 = $('#addr').val()
+	    	let addr3 = $('#detailAddr').val()
+	    	let addr4 = $('#extraAddr').val()
+	        if (!addr1 || !addr2 || !addr3 || !addr4){
+				$('#addrCheckResult').html('주소를 제대로 입력하세요.')
+	        	$('#detailAddr').focus()
+	        	return false
+	        }
+	        $("div").remove("#addrCheckResult")
+	    })
+	</script>
+	
+	<!-- 전화번호 유효성 검사 -->
+	<script>
+		$('#form').on('submit',()=>{
+	    	let mobile = $('#mobile').val()
+	        let mobileCheck =  /^\d{8}$/
+	        if (!mobileCheck.test(mobile)){
+				$('#mobileCheckResult').html('전화번호 8자리를 올바르게 입력하세요.')
+	        	$('#mobile').focus()
+	        	return false
+	        }
+	        $("div").remove("#mobileCheckResult")
+	    })
+	</script>
+	
+	<!-- 권한 유효성 검사 -->
+	<script>
+		$('#form').on('submit',()=>{
+	    	let userRole1 = $('#userRole1').val()
+	    	let userRole2 = $('#userRole2').val()
+	        if (userRole1 !== 'user'){
+					$('#userRoleCheckResult').html('사용자 타입을 선택하세요.')
+		        	$('#userRole1').focus()
+	        	return false
+	        }
+	        
+	        if (userRole2 !== 'artist'){
+					$('#userRoleCheckResult').html('사용자 타입을 선택하세요.')
+		        	$('#userRole1').focus()
+	        	return false
+	        }
+	        $("div").remove("#userRoleCheckResult")
+	    })
+	</script>
 </body>
 </html>
