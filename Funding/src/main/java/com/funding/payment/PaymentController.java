@@ -21,7 +21,6 @@ import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.ResponseErrorHandler;
@@ -42,6 +41,8 @@ public class PaymentController {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final PatmentService patmentService;
     private final String SECRET_KEY = "test_sk_JQbgMGZzorzl7aMN4D3l5E1em4dK";
+    private String paymentKey;
+    private String cancelReason;
 
     @PostConstruct
     private void init() {
@@ -55,6 +56,7 @@ public class PaymentController {
             }
         });
     }
+    
     
     
     @RequestMapping("/tossPay")
@@ -94,81 +96,78 @@ public class PaymentController {
             return "pay/fail";
         }
     }
-    //결제실패
-    @RequestMapping("/fail")
-    public String failPayment(@RequestParam String message, @RequestParam String code, Model model) {
-        model.addAttribute("message", message);
-        model.addAttribute("code", code);
-        return "pay/fail";
-    }
+    
+    
     
     
     
     //조회하기
-    @GetMapping("/lookup")
-    public String lookup() throws Exception {
+    @RequestMapping("/lookup")
+    public String lookup() {
+    	return "pay/lookup";
+    }
+    //조회성공
+    @RequestMapping("/lookupSuccess")
+    public String lookupSuccess(@RequestParam("paymentKey")String paymentKey) throws Exception  {
     	HttpRequest request = HttpRequest.newBuilder()
-    		    .uri(URI.create("https://api.tosspayments.com/v1/payments/R1kZn04DxKBE92LAa5PVb591AaYzP37YmpXyJjg6OwzoeqdW"))
+    			.uri(URI.create("https://api.tosspayments.com/v1/payments/"+paymentKey))
     		    .header("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()))
     		    .method("GET", HttpRequest.BodyPublishers.noBody())
     		    .build();
     		HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
     		System.out.println(response.body());
-    		
-        log.info("%%%%%%%%%%%%%%%%%%%%%%"+response+"%%%%%%%%%%%%%%%%");
-            return "pay/lookup";
+        	
+    		if(response.statusCode() == 200) {
+    			return "redirect:/pay/lookupSuccess";
+    		}else {
+    			return "redirect:/pay/lookupFail";
+    		}
+        //return "pay/lookupSuccess";
     }
-    //조회성공
-    @RequestMapping("/lookupSuccess")
-    public String lookupSuccess() {
-    	return "pay/lookupSuccess";
+    //조회실패
+    @RequestMapping("/lookupFail")
+    public String lookupFail( String message, String code, Model model) {
+        model.addAttribute("message", message);
+        model.addAttribute("code", code);
+        return "pay/lookupFail";
     }
+    
+    
+    
+    
+    
+    
    
     
     
-    //private final CallbackPayload callback;
-    private String paymentKey = "R1kZn04DxKBE92LAa5PVb591AaYzP37YmpXyJjg6OwzoeqdW";
-    private String cancelReason = "걍";
-    
-    @GetMapping("/cancel")
-    public void cancel() {
-    	log.info("!!!!!!!!!!!!!"+this.paymentKey+"!!@@##");
-    }
-    
+
     //환불하기
-    @PostMapping("/cancel")
-    public String cancel(CallbackPayload callback,
-    		@RequestParam String paymentKey,
-    		@RequestParam String cancelReason) throws Exception{
-    	//paymentKey = "R1kZn04DxKBE92LAa5PVb591AaYzP37YmpXyJjg6OwzoeqdW";
-    	//cancelReason = "걍";
-    	this.paymentKey = paymentKey;
-    	this.cancelReason = cancelReason;
-    	log.info("!!!!!!!!!!!!!"+this.paymentKey);
-    	return "pay/cancel";
+    @RequestMapping("/cancel")
+    public String cancel(String paymentKey, String cancelReason) throws Exception{
+    	HttpRequest request = HttpRequest.newBuilder()
+		    .uri(URI.create("https://api.tosspayments.com/v1/payments/"+paymentKey+"/cancel"))
+		    .header("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()))
+		    .header("Content-Type", "application/json")
+		    .method("POST", HttpRequest.BodyPublishers.ofString("{\"cancelReason\":\"" + cancelReason + "\"}"))
+		    .build();
+		HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+    		System.out.println(response.body());
+    	
+		if(response.statusCode() == 200) {
+			return "redirect:/pay/cancelSuccess";
+		}else {
+			return "redirect:/pay/cancelFail";
+		}
     }
-    
-    
+
     //환불성공
     @RequestMapping("/cancelSuccess")
-    public String cancelSuccess() throws Exception {
-    	log.info("!!!!!!!!!!!!!"+this.paymentKey+"#########");
-    		HttpRequest request = HttpRequest.newBuilder()
-    		    .uri(URI.create("https://api.tosspayments.com/v1/payments/"+this.paymentKey+"/cancel"))
-    		    .header("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()))
-    		    .header("Content-Type", "application/json")
-    		    .method("POST", HttpRequest.BodyPublishers.ofString("{\"cancelReason\":\"" + this.cancelReason + "\"}"))
-    		    .build();
-    		HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-    		System.out.println(response.body());
-    		log.info("%%%%%%%%%%%%%%%%%%%%%%"+response+"%%%%%%%%%%%%%%%%");
+    public String cancelSuccess(){
 			return "/pay/cancelSuccess";
     }
     //환불실패
     @RequestMapping("/cancelFail")
     public String cancelFail( String message, String code, Model model) {
-    	//model.addAttribute("message", "이미취소");
-    	System.out.println(message);
         model.addAttribute("message", message);
         model.addAttribute("code", code);
         return "pay/cancelFail";

@@ -14,11 +14,11 @@
     <h3>카카오 티셔츠</h3>
     <span>100원</span>
     <p>----------------------</p>
-    <form action="result.html" th:action="@{/pay/cancel}" th:object="${callback}"  method="POST">
+    <form action="result.html" th:action="@{/pay/cancel}" method="GET">
 	    <div><label><input type="radio" name="method" value="결제 취소" checked/>환불하기</label></div>
 	    <p>----------------------</p>
-	    <input type="text"  id="id1" placeholder="결제코드"  />
-	    <input type="text"  id="id2" placeholder="환불사유"  />
+	    <input type="text"  id="paymentKey" placeholder="결제코드" name="paymentKey" />
+	    <input type="text"  id="cancelReason" placeholder="환불사유" name="cancelReason" />
     </form>
 	    <button id="cancel-button">환불하기</button>
 </section>
@@ -27,18 +27,15 @@
     var button = document.getElementById("cancel-button");
     button.addEventListener("click", function () {
 
-        var a = document.getElementById("id1").value;
-        var b = document.getElementById("id2").value;
+    	var a = document.getElementById("paymentKey").value;
+        var b = document.getElementById("cancelReason").value;
         var json = {
         	paymentkey : a,
         	cancelReason : b,
-            successUrl: window.location.origin + "/pay/cancelSuccess",
-            failUrl: window.location.origin + "/pay/cancelFail",
         };
+        console.log(json);
+        location.href = '/pay/cancel?paymentKey=' + a + '&cancelReason='+b;
         
-        tossPayments.requestPayment(json);
-        var loc = "http://localhost/pay/cancelSuccess";
-        location.href=loc;
     });
 </script>
 </body>
