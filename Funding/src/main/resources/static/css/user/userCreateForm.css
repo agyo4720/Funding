@@ -12,6 +12,7 @@ section .int label {
     margin-bottom: 5px;
     width: 100%;
     font-size: 15px;
+    font-weight: bold;
 }
 
 section .int input {
@@ -64,9 +65,7 @@ section select {
     margin-right: 5px;
 }
 
-.bir:last-child {
-    margin-right: 0;
-}
+.bir:last-child {margin-right: 0;}
 
 /* 주소 */
 .int_addr1 {
@@ -105,11 +104,9 @@ section select {
     width: 332px;
 }
 
-.mobile p { width: 50px; }
+.mobile p {width: 50px;}
 
-.mobile input {
-    width: 100%;
-}
+.mobile input {width: 100%;}
 
 /* 유저, 아티스트 */
 .int_role {
