@@ -53,7 +53,6 @@ public class AnswerController {
 		return String.format("redirect:/fundTarget/detail/%s", id);
 	}
 	
-	
 	@RequestMapping("/fundBoard/create/{id}")
 	public String createFundBoardAnswer(
 			@RequestParam("content")String content,

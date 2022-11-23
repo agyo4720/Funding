@@ -46,7 +46,6 @@ public class FundBoardService {
 		
 		FundBoard fundBoard = new FundBoard();
 		
-		
 		Categorie categorie = this.categorieRepository.findByCategorieName(categorieName).get();
 		
 		DateTimeFormatter form = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -66,7 +65,6 @@ public class FundBoardService {
 		fundBoard.setVote(0);
 		fundBoard.setStar(0);
 		fundBoard.setCreateDate(LocalDateTime.now());
-		fundBoard.setCategorie(categorie);
 		
 		this.fundBoardRepository.save(fundBoard);
 	}
@@ -83,21 +81,9 @@ public class FundBoardService {
 		List<Sort.Order> sorts = new ArrayList<>();
 		sorts.add(Sort.Order.desc("createDate"));
 		
-		Pageable pageable = PageRequest.of(page, 3, Sort.by(sorts));
+		Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
 		
 		return this.fundBoardRepository.findAll(pageable);
 	}
-	
-	// id로 펀드리스트 찾기
-	public Page<FundBoard> findByCategorieId(Integer page, Categorie id){
-		
-		List<Sort.Order> sorts = new ArrayList<>();
-		sorts.add(Sort.Order.desc("createDate"));
-		
-		Pageable pageable = PageRequest.of(page, 3, Sort.by(sorts));
-		
-		return this.fundBoardRepository.findByCategorie(pageable, id);
-	}
-	
 	
 }
