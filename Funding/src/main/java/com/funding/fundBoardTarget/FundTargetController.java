@@ -75,12 +75,11 @@ public class FundTargetController {
 	@PostMapping("/form")
 	private String create(@Valid TargetForm targetForm,BindingResult bindingResult,
 			@RequestParam("categorie")Integer cid, @RequestParam(value="imgPath", defaultValue = "x")String imgPath
-			,@RequestParam(value="file", defaultValue = "x")MultipartFile files, Model model, Principal principal) throws IllegalStateException, IOException {
+			,@RequestParam(value="file", defaultValue = "x")MultipartFile files, Model model) throws IllegalStateException, IOException {
 		
 		String startTime = targetForm.getStartDate();
 		Categorie categorie = categorieService.findById(cid);
 		List<Categorie> cList = categorieService.findAll();
-		Optional<FundUser> user = fundUserService.findByuserName(principal.getName());
 		
 		if(imgPath.equals("x") && files.isEmpty()) {
 			bindingResult.reject("noImgError", "이미지를 선택해 주세요");
