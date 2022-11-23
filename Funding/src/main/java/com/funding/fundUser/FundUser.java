@@ -7,6 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+import com.funding.fundBoardTarget.FundBoardTarget;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -30,6 +33,9 @@ public class FundUser {
 	private String gender;			// 성별
 	private Date birth;				// 생년월일
 	private String role;			// 권한등급
+	
+	@ManyToOne
+	private FundBoardTarget fundBoardTarget;
 	
 //	private List<FundBoard> FundBoard;
 //	private List<Payment> Payment;
