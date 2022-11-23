@@ -82,10 +82,10 @@ public class FundBoard {
 	private List<FundArtistList> fundArtistList; // 신청한 공연자 목록
 	
 	@OneToMany(mappedBy = "fundBoard", cascade = CascadeType.REMOVE)
-	private List<Answer> answerList; // 질문들
+	private List<Answer> answer; // 질문들
 	
 	@OneToMany(mappedBy = "fundBoard", cascade = CascadeType.REMOVE)
-	private List<AnswerAns> answerAnsList; // 답변들
+	private List<AnswerAns> answerAns; // 답변들
 	// 제약 조건
 	
 }
