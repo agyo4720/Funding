@@ -12,6 +12,9 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,7 +23,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.ResponseErrorHandler;
@@ -41,8 +43,6 @@ public class PaymentController {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final PatmentService patmentService;
     private final String SECRET_KEY = "test_sk_JQbgMGZzorzl7aMN4D3l5E1em4dK";
-    private String paymentKey;
-    private String cancelReason;
 
     @PostConstruct
     private void init() {
@@ -99,77 +99,89 @@ public class PaymentController {
     
     
     
-    
-    
     //조회하기
     @RequestMapping("/lookup")
     public String lookup() {
     	return "pay/lookup";
     }
     //조회성공
-    @RequestMapping("/lookupSuccess")
-    public String lookupSuccess(@RequestParam("paymentKey")String paymentKey) throws Exception  {
+    @RequestMapping("/lookupRquest")
+    public String lookupRquest(@RequestParam("paymentKey")String paymentKey,Model model) throws Exception  {
     	HttpRequest request = HttpRequest.newBuilder()
     			.uri(URI.create("https://api.tosspayments.com/v1/payments/"+paymentKey))
     		    .header("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()))
     		    .method("GET", HttpRequest.BodyPublishers.noBody())
     		    .build();
     		HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-    		System.out.println(response.body());
-        	
-    		if(response.statusCode() == 200) {
-    			return "redirect:/pay/lookupSuccess";
-    		}else {
-    			return "redirect:/pay/lookupFail";
-    		}
-        //return "pay/lookupSuccess";
-    }
-    //조회실패
-    @RequestMapping("/lookupFail")
-    public String lookupFail( String message, String code, Model model) {
-        model.addAttribute("message", message);
-        model.addAttribute("code", code);
-        return "pay/lookupFail";
-    }
-    
-    
-    
-    
-    
-    
-   
-    
-    
 
+    		//문자열을 json형태 변환
+    		JSONParser parser = new JSONParser();
+    		Object obj = parser.parse(response.body());
+    		JSONObject jsonObj = (JSONObject)obj;
+
+    		if(response.statusCode() == 200) {//요청응답코드 200=성공
+    			String orderName = (String)jsonObj.get("orderName");//상품명
+    			String orderId = (String)jsonObj.get("orderId");//주문번호
+    			String status = (String)jsonObj.get("status");//상태
+    			
+    			Object easyPay = jsonObj.get("easyPay");
+    			JSONObject j = (JSONObject)easyPay;
+    			String amount = j.get("amount").toString();//결제금액
+    			
+    			model.addAttribute("orderName",orderName);
+    			model.addAttribute("orderId",orderId);
+    			model.addAttribute("amount",amount);
+    			model.addAttribute("status",status);
+    			return "/pay/lookupSuccess";
+    		}else {
+    			String message = (String)jsonObj.get("message");
+    			String code = (String)jsonObj.get("code");
+    			model.addAttribute("message",message);
+    			model.addAttribute("code",code);
+    			return "/pay/lookupFail";
+    		}
+    }
+    
+    
+    
     //환불하기
     @RequestMapping("/cancel")
-    public String cancel(String paymentKey, String cancelReason) throws Exception{
-    	HttpRequest request = HttpRequest.newBuilder()
-		    .uri(URI.create("https://api.tosspayments.com/v1/payments/"+paymentKey+"/cancel"))
-		    .header("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()))
-		    .header("Content-Type", "application/json")
-		    .method("POST", HttpRequest.BodyPublishers.ofString("{\"cancelReason\":\"" + cancelReason + "\"}"))
-		    .build();
-		HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-    		System.out.println(response.body());
-    	
-		if(response.statusCode() == 200) {
-			return "redirect:/pay/cancelSuccess";
-		}else {
-			return "redirect:/pay/cancelFail";
-		}
+    public String cancel() {
+    	return "/pay/cancel";
     }
-
     //환불성공
-    @RequestMapping("/cancelSuccess")
-    public String cancelSuccess(){
-			return "/pay/cancelSuccess";
-    }
-    //환불실패
-    @RequestMapping("/cancelFail")
-    public String cancelFail( String message, String code, Model model) {
-        model.addAttribute("message", message);
-        model.addAttribute("code", code);
-        return "pay/cancelFail";
+    @RequestMapping("/cancelRquest")
+    public String cancelRquest(@RequestParam("paymentKey")String paymentKey, 
+    		@RequestParam("cancelReason")String cancelReason, Model model)throws Exception{
+    		HttpRequest request = HttpRequest.newBuilder()
+    		    .uri(URI.create("https://api.tosspayments.com/v1/payments/"+paymentKey+"/cancel"))
+    		    .header("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()))
+    		    .header("Content-Type", "application/json")
+    		    .method("POST", HttpRequest.BodyPublishers.ofString("{\"cancelReason\":\"" + cancelReason + "\"}"))
+    		    .build();
+    		HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+    		
+    		JSONParser parser = new JSONParser();
+    		Object obj = parser.parse(response.body());
+    		log.info("^^^^^^^^^^^^^"+response.body()+"^^^^^^^^");
+    		JSONObject jsonObj = (JSONObject)obj;
+        	
+    		if(response.statusCode() == 200) {
+    			String orderName = (String)jsonObj.get("orderName");//상품명
+    			String orderId = (String)jsonObj.get("orderId");//주문번호
+    			String totalAmount = jsonObj.get("totalAmount").toString();//금액
+
+    			model.addAttribute("orderName",orderName);
+    			model.addAttribute("orderId",orderId);
+    			model.addAttribute("totalAmount",totalAmount);
+    			model.addAttribute("cancelReason",cancelReason);
+    			return "/pay/cancelSuccess";
+    		}else {
+    			String message = (String)jsonObj.get("message");
+    			String code = (String)jsonObj.get("code");
+    			model.addAttribute("message",message);
+    			model.addAttribute("code",code);
+    			return "/pay/cancelFail";
+    		}
     }
 }

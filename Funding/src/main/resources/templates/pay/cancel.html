@@ -14,29 +14,16 @@
     <h3>카카오 티셔츠</h3>
     <span>100원</span>
     <p>----------------------</p>
-    <form action="result.html" th:action="@{/pay/cancel}" method="GET">
-	    <div><label><input type="radio" name="method" value="결제 취소" checked/>환불하기</label></div>
+    <form th:action="@{/pay/cancelRquest}" method="GET">
+	    <div><label><input type="radio" name="method" value="환불하기" checked/>환불하기</label></div>
 	    <p>----------------------</p>
-	    <input type="text"  id="paymentKey" placeholder="결제코드" name="paymentKey" />
-	    <input type="text"  id="cancelReason" placeholder="환불사유" name="cancelReason" />
+	    <input type="text"  id="paymentKey" placeholder="결제코드" name="paymentKey" value="" />
+	    <input type="text"  id="cancelReason" placeholder="환불사유" name="cancelReason" value="" />
+	    <button id="cancel-button" type="submit">환불하기</button>
     </form>
-	    <button id="cancel-button">환불하기</button>
 </section>
 
 <script>
-    var button = document.getElementById("cancel-button");
-    button.addEventListener("click", function () {
-
-    	var a = document.getElementById("paymentKey").value;
-        var b = document.getElementById("cancelReason").value;
-        var json = {
-        	paymentkey : a,
-        	cancelReason : b,
-        };
-        console.log(json);
-        location.href = '/pay/cancel?paymentKey=' + a + '&cancelReason='+b;
-        
-    });
 </script>
 </body>
 </html>
