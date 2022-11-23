@@ -56,6 +56,11 @@ public class AnswerService {
 		return aList;
 	}
 	
+	public List<Answer> findByFundBoard(FundBoard fundBoard){
+		List<Answer> answerList = this.answerRepository.findByFundBoard(fundBoard);
+		return answerList;
+	}
+	
 	
 	
 }

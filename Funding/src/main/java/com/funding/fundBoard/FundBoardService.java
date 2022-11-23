@@ -2,10 +2,18 @@ package com.funding.fundBoard;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import com.funding.Categorie.Categorie;
+import com.funding.Categorie.CategorieRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -15,14 +23,16 @@ import lombok.RequiredArgsConstructor;
 public class FundBoardService {
 
 	private final FundBoardRepository fundBoardRepository;
+	private final CategorieRepository categorieRepository;
 	
 	// 펀드보드 리스트
-	public List<FundBoard> getFundBoard(){
+	public List<FundBoard> findAll(){
 		return this.fundBoardRepository.findAll();
 	}
 	
 	// 미지정 펀드 작성
 	public void create(
+			String categorieName,
 			String subject,
 			String content,
 			String place,
@@ -30,12 +40,18 @@ public class FundBoardService {
 			String runtime,
 			String fundDuration,
 			Integer minFund,
-			Integer fundAmount) {
+			Integer fundAmount,
+			LocalDateTime createDate
+			) {
 		
 		FundBoard fundBoard = new FundBoard();
 		
+		
+		Categorie categorie = this.categorieRepository.findByCategorieName(categorieName).get();
+		
 		DateTimeFormatter form = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 		
+		fundBoard.setCategorieName(categorieName);
 		fundBoard.setSubject(subject);
 		fundBoard.setContent(content);
 		fundBoard.setPlace(place);
@@ -49,13 +65,39 @@ public class FundBoardService {
 		fundBoard.setCurrentMember(0);
 		fundBoard.setVote(0);
 		fundBoard.setStar(0);
+		fundBoard.setCreateDate(LocalDateTime.now());
+		fundBoard.setCategorie(categorie);
 		
 		this.fundBoardRepository.save(fundBoard);
 	}
 	
+	// id로 펀드보드 찾기
 	public FundBoard findById(Integer id) {
 		Optional<FundBoard> fundBoard = this.fundBoardRepository.findById(id);
 		return fundBoard.get();
 	}
+	
+	// 펀드보드 리스트(페이징)
+	public Page<FundBoard> findAll(Integer page){
+		
+		List<Sort.Order> sorts = new ArrayList<>();
+		sorts.add(Sort.Order.desc("createDate"));
+		
+		Pageable pageable = PageRequest.of(page, 3, Sort.by(sorts));
+		
+		return this.fundBoardRepository.findAll(pageable);
+	}
+	
+	// id로 펀드리스트 찾기
+	public Page<FundBoard> findByCategorieId(Integer page, Categorie id){
+		
+		List<Sort.Order> sorts = new ArrayList<>();
+		sorts.add(Sort.Order.desc("createDate"));
+		
+		Pageable pageable = PageRequest.of(page, 3, Sort.by(sorts));
+		
+		return this.fundBoardRepository.findByCategorie(pageable, id);
+	}
+	
 	
 }
