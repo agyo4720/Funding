@@ -31,7 +31,6 @@ public class RegisterController {
 	// 회원가입 폼 요청
 	@GetMapping("/register")
 	public String registerForm(RegisterValidation registerValidation) {
-		
 		return "user/userCreateForm";
 	}
 	
@@ -47,16 +46,7 @@ public class RegisterController {
             bindingResult.reject("passwordInCorrect", 
                     "2개의 패스워드가 일치하지 않습니다.");
             return "user/userCreateForm";
-        }
-		
-//		try {
-//			this.fundUserService.register(vo);
-//			return "main/home";
-//		}catch(Exception err) {
-//			this.fundArtistService.register(vo);
-//			return "main/home";
-//		}
-        
+        }        
         
 		if(vo.getRole().equals("user")) {
 			this.fundUserService.register(vo);
