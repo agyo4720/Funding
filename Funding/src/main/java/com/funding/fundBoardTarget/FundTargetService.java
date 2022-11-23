@@ -38,7 +38,6 @@ public class FundTargetService {
 			String imgPath
 			) {
 		
-		DateTimeFormatter form = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 		
 		FundBoardTarget target = new FundBoardTarget();
 		target.setSubject(subject);
@@ -49,7 +48,7 @@ public class FundTargetService {
 		target.setStatus("진행중");
 		target.setFundDurationS(LocalDate.now());
 		target.setFundDurationE(LocalDate.parse(fundDurationE, DateTimeFormatter.ISO_DATE));
-		target.setStartDate(LocalDateTime.parse(startTime, form));
+		target.setStartDate(LocalDateTime.parse(startTime));
 		target.setCreateDate(LocalDateTime.now());
 		target.setMinFund(minFund);
 		target.setFundCurrent(0);

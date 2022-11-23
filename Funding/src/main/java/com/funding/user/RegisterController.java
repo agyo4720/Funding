@@ -1,5 +1,9 @@
 package com.funding.user;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -7,8 +11,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.funding.fundArtist.FundArtist;
 import com.funding.fundArtist.FundArtistService;
+import com.funding.fundUser.FundUser;
 import com.funding.fundUser.FundUserService;
 
 import lombok.RequiredArgsConstructor;
@@ -18,12 +25,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class RegisterController {
 
-	private FundUserService fundUserService;
-	private FundArtistService fundArtistService;
+	private final FundUserService fundUserService;
+	private final FundArtistService fundArtistService;
 	
 	// 회원가입 폼 요청
 	@GetMapping("/register")
-	public String registerForm(RegisterValidation vo) {
+	public String registerForm(RegisterValidation registerValidation) {
 		
 		return "user/userCreateForm";
 	}
@@ -33,23 +40,63 @@ public class RegisterController {
 	public String register(@Valid RegisterValidation vo, BindingResult bindingResult) {
 		
 		if(bindingResult.hasErrors()) {
-			return "userCreateForm";
+			return "user/userCreateForm";
 		}
 		
         if (!vo.getPassword1().equals(vo.getPassword2())) {
             bindingResult.reject("passwordInCorrect", 
                     "2개의 패스워드가 일치하지 않습니다.");
-            return "signup_form";
+            return "user/userCreateForm";
         }
 		
-		
+//		try {
+//			this.fundUserService.register(vo);
+//			return "main/home";
+//		}catch(Exception err) {
+//			this.fundArtistService.register(vo);
+//			return "main/home";
+//		}
+        
+        
 		if(vo.getRole().equals("user")) {
 			this.fundUserService.register(vo);
 		}else if(vo.getRole().equals("artist")){
 			this.fundArtistService.register(vo);
 		}
 		
+		return "redirect:/user/login";
 		
-		return "home";
+	}
+	
+	// id 중복검사
+	@PostMapping("/usernameCheck")
+	@ResponseBody
+	public Map<String, Object> idCheck(FundUser vo) {
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+        System.out.println(vo.getUsername());
+        
+        String uid = vo.getUsername();
+        
+
+        Optional<FundUser> FU = this.fundUserService.findByuserName(uid);
+        Optional<FundArtist> FA = this.fundArtistService.findByuserName(uid);
+
+        
+        if(FU.isPresent()) {
+        	result.put("code", "사용중인 아이디입니다");
+        	return result;
+        }
+        
+        if(FA.isPresent()) {
+        	result.put("code", "사용중인 아이디입니다");
+        	return result;
+        }
+        
+        
+        // 응답 데이터 셋팅
+        result.put("code", "사용 가능한 ID 입니다");
+        return result;
 	}
 }

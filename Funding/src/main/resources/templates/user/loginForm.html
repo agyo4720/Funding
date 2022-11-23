@@ -21,16 +21,8 @@
         <div class="menu">
             <ul>
                 <li><a href="../fundTarget/fundTargetList.html" th:href="@{/fundTarget}">지정 펀딩</a></li>
-                <li><a href="#">미지정 펀딩</a></li>
+                <li><a href="../fundBoard/fundBoard_list.html" th:href="@{/fundBoard/list}">미지정 펀딩</a></li>
             </ul>
-        </div>
-
-        <!-- 검색 -->
-        <div class="search">
-            <form action="#">
-                <input class="int_search" type="text">
-                <input class="btn_search" type="submit">
-            </form>
         </div>
 
         <!-- 로그인 -->
@@ -43,18 +35,18 @@
     </header>
 
     <section>
-        <div id="title">
-            <h1>로그인</h1>
+        <div class="title">
+            <h2>로그인</h2>
         </div>
 
-        <form action="/login" method="post">
+        <form action="/user/login" method="post">
             <div class="int int_id">
                 <label for="id">아이디</label>
-                <input type="text" name="username">
+                <input id="id" type="text" name="username">
             </div>
             <div class="int int_pw">
                 <label for="pw">비밀번호</label>
-                <input type="password" name="password">
+                <input id="pw" type="password" name="password">
             </div>
             <div class="sub_login">
                 <input id="login" class="btn" type="submit" value="로그인">
