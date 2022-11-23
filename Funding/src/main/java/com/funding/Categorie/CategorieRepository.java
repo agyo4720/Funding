@@ -9,4 +9,5 @@ public interface CategorieRepository extends JpaRepository<Categorie, Integer>{
 	// 카테고리 이름 조회
 	Optional<Categorie> findByCategorieName(String categorieName);
 	
+	
 }

@@ -21,12 +21,16 @@
 		<div class="main">
 
 			<form th:object="${fundBoardForm}" method="POST">
-			
-				<label for="categorieName">카테고리</label>
-				<select th:field="*{categorieName}">
-					<option value="">카테고리 선택</option>
-					<option th:each="categorie : ${categorieList}" th:text="${categorie.categorieName}" th:value="${categorie.categorieName}"></option>
-				</select>
+				<div>
+					<label for="categorieName">카테고리</label>
+					<select th:field="*{categorieName}">
+						<option value="">카테고리 선택</option>
+						<option th:each="categorie : ${categorieList}"
+								th:text="${categorie.categorieName}"
+								th:value="${categorie.categorieName}">
+						</option>
+					</select>
+				</div>
 				<div>
 					<label for="subject">제목</label>
 					<input type="text" th:field="*{subject}">
