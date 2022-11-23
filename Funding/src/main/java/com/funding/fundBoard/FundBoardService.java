@@ -85,5 +85,6 @@ public class FundBoardService {
 		
 		return this.fundBoardRepository.findAll(pageable);
 	}
+
 	
 }

@@ -103,7 +103,6 @@ public class FundBoardController {
 		return "/fundBoard/fundBoard_detail";
 	}
 	
-<<<<<<< HEAD
 	// id값으로 카테고리 정열
 	@RequestMapping("/categorie/{id}")
 	public String categorie(
@@ -125,8 +124,4 @@ public class FundBoardController {
 	// 2022/11/23 - 1 작업중
 	
 	
-	
-=======
-	// 2022/11/20 - 4 작업중
->>>>>>> parent of 82cdd28 (2022/11/23 - 1 작업중)
 }
