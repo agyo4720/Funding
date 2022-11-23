@@ -173,7 +173,7 @@
              <div class="int_role">
                 <div class="rad_user">
                     <label>유저</label>
-                    <input type="radio" id="userRole1" name="role" value="user"/>
+                    <input type="radio" id="userRole1" name="role" value="user" checked/>
                 </div>
                 <div class="rad_artist">
                     <label>아티스트</label>
@@ -286,7 +286,21 @@
 	
 	<!-- 이름 유효성 검사 -->
 	<script>
-		$('#form').on('submit',()=>{
+	$('#nickname').focusout(function() {
+		
+		let nickname = $('#nickname').val()
+        let nicknameCheck =  /^[가-힣]{2,4}$/
+        if (!nicknameCheck.test(nickname)){
+			$('#nicknameCheckResult').html('한글 이름 2~4자 이내.')
+        	return false
+        }
+        $('#nicknameCheckResult').html('')
+		
+	});
+	
+	
+		
+	/*	$('#form').on('submit',()=>{
 	    	let nickname = $('#nickname').val()
 	        let nicknameCheck =  /^[가-힣]{2,4}$/
 	        if (!nicknameCheck.test(nickname)){
@@ -295,22 +309,21 @@
 	        	return false
 	        }
 	  	  $("div").remove("#nicknameCheckResult")
-	    })
+	    }) */
 	</script>
 		
     
     <!-- 이메일 유효성 검사 -->
 	<script>
-		$('#form').on('submit',()=>{
-	    	let email = $('#email').val()
-	        let emailCheck =  /^[a-zA-Z0-9]+$/ 
-	        if (!emailCheck.test(email)){
-				$('#emailCheckResult').html('이메일을 정확히 입력하세요.')
-	        	$('#email').focus()
-	        	return false
-	        }
-	        $("div").remove("#emailCheckResult")
-	    })
+		$('#email').focusout(function() {	
+		    	let email = $('#email').val()
+		        let emailCheck =  /^[a-zA-Z0-9]+$/ 
+		        if (!emailCheck.test(email)){
+					$('#emailCheckResult').html('이메일을 정확히 입력하세요.')
+		        	return false
+		        }
+		        $("div").remove("#emailCheckResult")
+		});
 	</script>
 		
 	<!-- 이메일 도메인 유효성 검사 -->
@@ -319,7 +332,7 @@
 	    	let domain = $('#sel_domain').val()
 	        let domainCheck =  /^([a-z0-9\-]+\.)+[a-z]{2,6}$/
 	        if (!domainCheck.test(domain)){
-				$('#domainCheckResult').html('도메인 주소를 정확히 입력하세요.')
+				$('#domainCheckResult').html('도메인 주소를 선택하세요.')
 	        	$('#sel_domain').focus()
 	        	return false
 	        }
@@ -363,7 +376,7 @@
 	
 	<!-- 전화번호 유효성 검사 -->
 	<script>
-		$('#form').on('submit',()=>{
+		$('#mobile').focusout(function() {	
 	    	let mobile = $('#mobile').val()
 	        let mobileCheck =  /^\d{8}$/
 	        if (!mobileCheck.test(mobile)){
@@ -372,25 +385,20 @@
 	        	return false
 	        }
 	        $("div").remove("#mobileCheckResult")
-	    })
+			});
 	</script>
 	
 	<!-- 권한 유효성 검사 -->
 	<script>
 		$('#form').on('submit',()=>{
-	    	let userRole1 = $('#userRole1').val()
-	    	let userRole2 = $('#userRole2').val()
-	        if (userRole1 !== 'user'){
-					$('#userRoleCheckResult').html('사용자 타입을 선택하세요.')
-		        	$('#userRole1').focus()
-	        	return false
-	        }
+	        let roleVal = $("input[name='role']:checked").val();
 	        
-	        if (userRole2 !== 'artist'){
+	        if (roleVal !== 'user' && roleVal !== 'artist'){
 					$('#userRoleCheckResult').html('사용자 타입을 선택하세요.')
 		        	$('#userRole1').focus()
 	        	return false
 	        }
+			
 	        $("div").remove("#userRoleCheckResult")
 	    })
 	</script>
