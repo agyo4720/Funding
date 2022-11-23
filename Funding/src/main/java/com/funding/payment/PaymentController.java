@@ -85,7 +85,7 @@ public class PaymentController {
             JsonNode successNode = responseEntity.getBody();
             model.addAttribute("orderId", successNode.get("orderId").asText());
             String s = successNode.get("orderName").asText();
-            String ss = successNode.get("transactionKey").asText();
+            String ss = successNode.get("status").asText();
             patmentService.savecreditinfo(paymentKey, orderId, amount, s, ss);
             return "/pay/success";
         } else {
