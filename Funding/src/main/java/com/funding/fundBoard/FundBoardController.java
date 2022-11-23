@@ -116,7 +116,6 @@ public class FundBoardController {
 			@PathVariable("id") Integer id,
 			Model model) {
 		
-		
 		List<Categorie> categorieList = this.categorieService.findAll();
 		model.addAttribute("categorieList", categorieList);
 		
