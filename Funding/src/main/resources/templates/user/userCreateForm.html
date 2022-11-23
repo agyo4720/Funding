@@ -329,6 +329,13 @@
 	    	let domain = $('#sel_domain').val()
 	    	let domainDirect = $('#int_direct').val()
 	        let domainCheck =  /^([a-z0-9\-]+\.)+[a-z]{2,6}$/
+	        
+	        if(domain==='direct'){
+				console.log("ddddddd")
+				$('#int_direct').attr('value',domainDirect)
+				console.log(domainDirect)
+			}
+	        
 	        console.log('111')
 	        if (!domainCheck.test(domain)){
 				 console.log('222')
@@ -350,7 +357,6 @@
 		$('#year').focusout(function() {	
 		    	let yyyy = $('#year').val()
 		        let yearCheck =  /^(19[0-9][0-9]|20\d{2})$/ 
-		        console.log(yyyy)
 		        if (!yearCheck.test(yyyy)){
 					$('#birthCheckResult').html('생년월일을 정확히 입력하세요.')
 		        	return false
@@ -362,7 +368,6 @@
 		$('#day').focusout(function() {	
 		    	let dd = $('#day').val()
 		        let dayCheck =  /^(0[1-9]|[1-2][0-9]|3[0-1])$/ 
-		        console.log(dd)
 		        
 		        if (!dayCheck.test(dd)){
 					$('#birthCheckResult').html('생년월일을 정확히 입력하세요.')
