@@ -1,5 +1,6 @@
 package com.funding.fundUser;
 
+import java.sql.Date;
 import java.util.Optional;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,16 +23,22 @@ public class FundUserService {
 		
 		fundUser.setUsername(vo.getUsername());
 		fundUser.setPassword(passwordEncoder.encode(vo.getPassword1()));
-		fundUser.setEmail(vo.getEmail());
+		fundUser.setNickname(vo.getNickname());
+		fundUser.setEmail(vo.getEmail()+"@"+vo.getDomain());
 		fundUser.setMobile(vo.getMobile());
+		fundUser.setAddress(vo.getAddr1()+vo.getAddr2()+vo.getAddr3()+vo.getAddr4());
+		fundUser.setGender(vo.getGender());
+		fundUser.setBirth(Date.valueOf(vo.getYear()+"-"+vo.getMonth()+"-"+vo.getDay()));	
 		fundUser.setRole("user");
 		
 		this.fundUserRepository.save(fundUser);
 	}
 	
-	public FundUser findByuserName(String username) {
+	// userName 으로 계정정보 찾기
+	public Optional<FundUser> findByuserName(String username) {
 		Optional<FundUser> fundUser = fundUserRepository.findByusername(username);
-		return fundUser.get();
+		return fundUser;
 	}
+	
 	
 }

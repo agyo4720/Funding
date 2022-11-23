@@ -13,7 +13,7 @@
     <!-- 홈페이지 상단 nav -->
     <header>
         <!-- 로고 -->
-        <div class="logo">
+        <div class="logo">	
             <a href="../main/home.html" th:href="@{/}">Let's Funding</a>
         </div>
 
@@ -39,46 +39,55 @@
             <h2>회원가입</h2>
         </div>
 
-        <form>
+
+        <form id="form" th:object="${registerValidation}" method="post">
+        
+        <!-- 에러 확인인데 js로 다 처리해서 사용안함
+		<div th:if="${#fields.hasAnyErrors()}">
+		    <div th:each="err : ${#fields.allErrors()}" th:text="${err}" />
+		</div>
+		-->
+		
             <!-- 아이디 -->
             <div class="int int_userId">
                 <label for="id">아이디</label>
-                <input type="text"/>
+                <input type="text" th:field="*{username}">
+                <input type="button" value="아이디 중복 확인" id="checkBtn">
+                <div id="usernameCheckResult"></div>
+                <div id="usernameCheckResult2"></div>
             </div>
 
             <!-- 비밀번호 -->
             <div class="int int_password">
-                <label for="password">비밀번호</label>
-                <input type="password"/>
+                <label for="password1">비밀번호</label>
+                <input type="password" th:field="*{password1}"/>
+                <div id="pwd1CheckResult"></div>
             </div>
 
             <!-- 비밀번호 확인 -->
             <div class="int int_pw_check">
-                <label for="password_check">비밀번호 확인</label>
-                <input type="password"/>
+                <label for="password2">비밀번호 확인</label>
+                <input type="password" th:field="*{password2}"/>
+                <div id="pwd2CheckResult"></div>
             </div>
 
             <!-- 이름 -->
             <div class="int int_name">
                 <label for="name">이름</label>
-                <input type="text"/>
+                <input type="text" th:field="*{nickname}"/>
+                <div id="nicknameCheckResult"></div>
             </div>
 
-            <!-- 닉네임 -->
-            <!-- 중복확인 -->
-            <div class="int int_nickname">
-                <label for="nickname">닉네임</label>
-                <input type="text"/>
-            </div>
 
             <!-- 이메일 -->
             <!-- 인증하기도 추가 -->
             <div class="int int_email">
                 <label for="email">이메일</label>
-                <input type="text"/>
+                <input type="text" th:field="*{email}"/>
+                <div id="emailCheckResult"></div>
                 <div class="int_domain">
                     <p>@</p>
-                    <select name="sel_domain" id="sel_domain">
+                    <select name="domain" id="sel_domain">
                         <option value="">선택하기</option>
                         <option value="gmail.com">gmail.com</option>
                         <option value="naver.com">naver.com</option>
@@ -87,8 +96,9 @@
                         <option value="direct" class="direct">직접 입력</option>
                     </select>
                     <!-- 직접 입력 input box -->
-                    <input type="text" id="int_direct" name="int_direct"/>
+                    <input type="text" id="int_direct" th:field="*{domainDirect}"/>
                 </div>
+                <div id="domainCheckResult"></div>
                 <button class="sub_email">인증번호 받기</button>
             </div>
 
@@ -96,8 +106,8 @@
             <div class="int int_birth">
                 <label for="birth">생년월일</label>
                 <div class="bir_wrap">
-                    <input class="bir" type="text" placeholder="년(4)"/>
-                    <select class="bir" name="sel_birth_mm" id="sel_birth_mm">
+                    <input class="bir" type="text" th:field="*{year}" placeholder="년(4)"/>
+                    <select class="bir" name="month" id="sel_birth_mm">
                         <option value="">선택하기</option>
                         <option value="01">1</option>
                         <option value="02">2</option>
@@ -112,32 +122,35 @@
                         <option value="11">11</option>
                         <option value="12">12</option>
                     </select>
-                    <input class="bir" type="text" placeholder="일"/>
+                    <input class="bir" type="text" th:field="*{day}" placeholder="일"/>
                 </div>
+                <div id="birthCheckResult"></div>
             </div>
 
             <!-- 성별 -->
             <div class="int int_gender">
                 <label for="gender">성별</label>
-                <select name="sel_gender" id="sel_gender">
+                <select name="gender" id="sel_gender">
                     <option value="">선택하기</option>
                     <option value="남성">남성</option>
                     <option value="여성">여성</option>
                 </select>
+                <div id="genderCheckResult"></div>
             </div>
 
             <!-- 주소 -->
             <div class="int int_address">
                 <label for="address">주소</label>
                 <span class="int_addr1">
-                    <input name="postCode" type="text" id="postCode" placeholder="우편 번호" readonly>
-                    <input type="text" class="btn_addr" onclick="btnPostCode()" value="우편번호 찾기" readonly>
+                    <input name="addr1" type="text" id="postCode" placeholder="우편 번호" readonly>
+                    <input type="text" class="btn_addr" onclick="btnPostCode()" value="우편번호 찾기">
                 </span>
                 <span class="int_addr2">
-                    <input name="address" type="text" id="addr" placeholder="주소" readonly>
-                    <input name="detailAddress" type="text" id="detailAddr" placeholder="상세 주소">
-                    <input name="extraAddress" type="text" id="extraAddr" placeholder="참고 항목" readonly>
+                    <input name="addr2" type="text" id="addr" placeholder="주소" readonly>
+                    <input name="addr3" type="text" id="detailAddr" placeholder="상세 주소">
+                    <input name="addr4" type="text" id="extraAddr" placeholder="참고 항목" readonly>
                 </span>
+                <div id="addrCheckResult"></div>
             </div>
 
             <!-- 전화번호 -->
@@ -145,23 +158,24 @@
                 <label for="mobile">전화번호</label>
                 <div class="mobile">
                     <p>010</p>
-                    <input type="text" maxlength="16" placeholder="- 제외"/>
+                    <input type="text" maxlength="16" placeholder="- 제외" th:field="*{mobile}"/>
                 </div>
+                <div id="mobileCheckResult"></div>
             </div>
 
              <!-- 멤버타입 -->
              <div class="int_role">
                 <div class="rad_user">
                     <label>유저</label>
-                    <input type="radio" name="role" value="user"/>
+                    <input type="radio" id="userRole1" name="role" value="user" checked/>
                 </div>
                 <div class="rad_artist">
                     <label>아티스트</label>
-                    <input type="radio" name="role" value="artist"/>
+                    <input type="radio" id="userRole2" name="role" value="artist"/>
                 </div>
             </div>
-            
-            <input class="btn_join" type="submit" value="가입하기"/>
+            <div id="userRoleCheckResult"></div>
+            <input id="submitBtn" class="btn_join" type="button" onclick="alert('ID 중복 검사는 필수입니다')" value="가입하기"/>
         </form>
     </section>
     
@@ -183,5 +197,244 @@
     </script>
 
     <script src="/js/userCreateForm.js"></script>
+    
+    
+    <!-- ajax 이용한 아이디 중복검사, 정규표현식이용 유효성 검사 -->
+	<script>
+	        
+	    // 'checkBtn'라는 id를 가진 버튼 클릭 시 실행.
+	    $("#checkBtn").click(function(){
+	 
+            // json 형식으로 데이터 set
+            var params = {
+              username      : $("#username").val()
+            }
+	                
+	    	let username = $('#username').val()
+	        let usernameCheck = /^[a-z0-9]+$/
+	        if (!usernameCheck.test(username) || username.length<6){
+				$(usernameCheckResult).html('아이디는 영소문자,숫자로 구성된 6글자 이상으로 조합하시오.');
+	            $('#username').focus();
+	            
+	            return false
+	        }
+	        
+           // ajax 통신
+            $.ajax({
+                type : "POST",            // HTTP method type(GET, POST) 형식이다.
+                url : "/user/usernameCheck",      // 컨트롤러에서 대기중인 URL 주소이다.
+                data : params,            // Json 형식의 데이터이다.
+                success : function(res){ // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
+                    // 응답코드 > 0000
+
+					if(res.code == "사용중인 아이디입니다"){
+						$("#idCheckResult").html(res.code);
+					}
+					if(res.code == "사용 가능한 ID 입니다"){
+						$('#form').attr( 'action' ,'/user/register' );
+						$('#form').attr( 'id' ,'formActive' );
+						$('#submitBtn').attr( 'type' ,'submit' );
+						$('#submitBtn').attr( 'onclick' ,'' );
+						
+					}
+				
+					
+                    $("#usernameCheckResult").html(res.code);
+                },
+                error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+                    alert("통신 실패.")
+                }
+            }); 
+        });
+	            
+	</script>
+	
+
+	<!-- 비밀번호 유효성 검사 -->
+	<script>
+		$('#password1').focusout(function() {
+	    	let pwdval = $('#password1').val()
+	        let pwdcheck =  /^[a-zA-Z0-9~!@#$%^&*()`_+?:;'"{}]{1,16}$/
+		
+	        if (!pwdcheck.test(pwdval) || pwdval.length<8){
+				$('#pwd1CheckResult').html('비밀번호는 영대소문자,숫자로 구성된 8글자 이상으로 조합하시오.')
+	        	return false
+	        }
+	        $("#pwd1CheckResult").html('')
+		});
+	
+		$('#password2').focusout(function() {
+			let pwdval = $('#password1').val()
+	        let pwdokval = $('#password2').val()
+	    
+        	if (pwdokval){
+            	if (pwdval!==pwdokval){
+					$('#pwd2CheckResult').html('비밀번호가 일치하지 않습니다.')
+                    return false
+                } 
+	            } else {
+					$('#pwd2CheckResult').html('비밀번호확인을 입력하시오.')
+	                return false
+	            }
+	        
+	        $("#pwd2CheckResult").html('')
+		});
+	</script>
+	
+	<!-- 이름 유효성 검사 -->
+	<script>
+	$('#nickname').focusout(function() {
+		
+		let nickname = $('#nickname').val()
+        let nicknameCheck =  /^[가-힣]{2,4}$/
+        if (!nicknameCheck.test(nickname)){
+			$('#nicknameCheckResult').html('한글 이름 2~4자 이내.')
+        	return false
+        }
+        $('#nicknameCheckResult').html('')
+		
+	});
+	
+	
+		
+	/*	$('#form').on('submit',()=>{
+	    	let nickname = $('#nickname').val()
+	        let nicknameCheck =  /^[가-힣]{2,4}$/
+	        if (!nicknameCheck.test(nickname)){
+				$('#nicknameCheckResult').html('한글 이름 2~4자 이내.')
+	        	$('#nickname').focus()
+	        	return false
+	        }
+	  	  $("div").remove("#nicknameCheckResult")
+	    }) */
+	</script>
+		
+    
+    <!-- 이메일 유효성 검사 -->
+	<script>
+		$('#email').focusout(function() {	
+		    	let email = $('#email').val()
+		        let emailCheck =  /^[a-zA-Z0-9]+$/ 
+		        if (!emailCheck.test(email)){
+					$('#emailCheckResult').html('이메일을 정확히 입력하세요.')
+		        	return false
+		        }
+		        $('#emailCheckResult').html('')
+		});
+	</script>
+		
+	<!-- 이메일 도메인 유효성 검사 -->
+	<script>
+		$('#form').on('submit',()=>{
+	    	let domain = $('#sel_domain').val()
+	        let domainCheck =  /^([a-z0-9\-]+\.)+[a-z]{2,6}$/
+	        if (!domainCheck.test(domain)){
+				$('#domainCheckResult').html('도메인 주소를 선택하세요.')
+	        	$('#sel_domain').focus()
+	        	return false
+	        }
+	        $('#domainCheckResult').html('')
+	    })
+	</script>
+	
+	<!-- 생년월일 검사 -->
+	<script>
+		$('#year').focusout(function() {	
+		    	let yyyy = $('#year').val()
+		        let yearCheck =  /^(19[0-9][0-9]|20\d{2})$/ 
+		        console.log(yyyy)
+		        if (!yearCheck.test(yyyy)){
+					$('#birthCheckResult').html('생년월일을 정확히 입력하세요.')
+		        	return false
+		        }
+		        
+		        $('#birthCheckResult').html('')
+		});
+		
+		$('#day').focusout(function() {	
+		    	let dd = $('#day').val()
+		        let dayCheck =  /^(0[1-9]|[1-2][0-9]|3[0-1])$/ 
+		        console.log(dd)
+		        
+		        if (!dayCheck.test(dd)){
+					$('#birthCheckResult').html('생년월일을 정확히 입력하세요.')
+		        	return false
+		        }
+		        
+		        $('#birthCheckResult').html('')
+		});
+	</script>
+	
+	<!-- 성별 유효성 검사 -->
+	<script>
+		$('#form').on('submit',()=>{
+	    	let gender = $('#sel_gender').val()
+	        if (gender !== '남성' && gender !== '여성'){
+				$('#genderCheckResult').html('성별을 선택하세요.')
+	        	$('#gender').focus()
+	        	return false
+	        }
+	        $('#genderCheckResult').html('')
+	    })
+	    
+	    $('#sel_gender').focusout(function() {	
+			let gender = $('#sel_gender').val()
+	        if (gender == '남성' || gender == '여성'){
+				$('#genderCheckResult').html('')
+	        }
+		});
+	</script>
+	
+	<!-- 주소 유효성 검사 -->
+	<script>
+		$('#form').on('submit',()=>{
+	    	let addr1 = $('#postCode').val()
+	    	let addr2 = $('#addr').val()
+	    	let addr3 = $('#detailAddr').val()
+	    	let addr4 = $('#extraAddr').val()
+	        if (!addr1 || !addr2 || !addr3 || !addr4){
+				$('#addrCheckResult').html('주소를 빠짐없이 입력하세요.')
+	        	return false
+	        }
+	        $('#addrCheckResult').html('')
+	    })
+	    
+	    $('#detailAddr').focusout(function() {
+			let addr3 = $('#detailAddr').val()
+			if(!addr3){
+				$('#addrCheckResult').html('상세 주소를 입력하세요.')
+	        	return false
+			}
+			$('#addrCheckResult').html('')
+		})
+	    
+	</script>
+	
+	<!-- 전화번호 유효성 검사 -->
+	<script>
+		$('#mobile').focusout(function() {	
+	    	let mobile = $('#mobile').val()
+	        let mobileCheck =  /^\d{8}$/
+	        if (!mobileCheck.test(mobile)){
+				$('#mobileCheckResult').html('전화번호 8자리를 올바르게 입력하세요.')
+	        	return false
+	        }
+	        $('#mobileCheckResult').html('')
+			});
+	</script>
+	
+	<!-- 권한 유효성 검사 -->
+	<script>
+		$('#form').on('submit',()=>{
+	        let roleVal = $("input[name='role']:checked").val();
+	        
+	        if (roleVal !== 'user' && roleVal !== 'artist'){
+					$('#userRoleCheckResult').html('사용자 타입을 선택하세요.')
+	        	return false
+	        }
+	        
+			$('#userRoleCheckResult').html('')
+	    })
+	</script>
 </body>
 </html>
