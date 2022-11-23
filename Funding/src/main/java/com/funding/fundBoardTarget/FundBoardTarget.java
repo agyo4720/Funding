@@ -15,7 +15,7 @@ import javax.persistence.OneToMany;
 import com.funding.Categorie.Categorie;
 import com.funding.answer.Answer;
 import com.funding.answerAns.AnswerAns;
-import com.funding.fundList.FundList;
+import com.funding.fundTargetList.FundTargetList;
 import com.funding.fundUser.FundUser;
 
 import lombok.Getter;
@@ -68,8 +68,9 @@ public class FundBoardTarget {
 	@ManyToOne
 	private Categorie categorie;
 	
+	//ManyToMany 대체
 	@OneToMany(mappedBy = "fundBoardTarget", cascade = CascadeType.REMOVE)
-	private List<FundList> fundList;
+	private List<FundTargetList> fundTargetList;
 	
 	//댓글 목록
 	@OneToMany(mappedBy = "fundBoardTarget", cascade = CascadeType.REMOVE)
@@ -79,7 +80,6 @@ public class FundBoardTarget {
 	@OneToMany(mappedBy = "fundBoardTarget", cascade = CascadeType.REMOVE)
 	private List<AnswerAns> answerAnsList;
 	
-	@OneToMany(mappedBy = "fundBoardTarget", cascade = CascadeType.REMOVE)
-	private List<FundUser> fundUserList;
+	
 	
 }

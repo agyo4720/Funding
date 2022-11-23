@@ -37,39 +37,7 @@
     <section>
 		<div>
 			<form th:object="${targetForm}" method="post" enctype="multipart/form-data">
-<<<<<<< HEAD
-				<div>카테고리</div>
-				<select name="categorie">
-					<option th:each="cate : ${cList}" th:value="${cate.id}" th:text="${cate.categorieName}"></option>
-				</select>
-				<div>제목</div>
-				<input class="subject" type="text" th:field="*{subject}" autocomplete="off">
-				<div class="errorList" style="display: none"></div>
-				<div>내용</div>
-				<input class="content" type="text" th:field="*{content}" autocomplete="off">
-				<div class="errorList" style="display: none"></div>
-				<div>공연자</div>
-				<input class="aertiest" type="text" name="Aertiest" value="" autocomplete="off">
-				<div class="errorList" style="display: none"></div>
-				<div>장소</div>
-				<input class="place" type="text" th:field="*{place}" autocomplete="off">
-				<div class="errorList" style="display: none"></div>
-				<div>공연 런타임</div>
-				<input class="runtime" type=number th:field="*{runtime}" autocomplete="off" placeholder="분 단위 입력">
-				<div class="errorList" style="display: none"></div>
-				<div>펀딩 기간(오늘부터 시작)</div>
-				<input class="fundDurationE" onchage="aaa" type="date" th:min="${nowTime}" th:field="*{fundDurationE}" autocomplete="off">
-				<div class="errorList" style="display: none"></div>
-				<div>공연 시작일</div>
-				<input class="startDate" type="datetime-local" th:field="*{startDate}" value="" autocomplete="off">	
-				<div class="errorList" style="display: none" ></div>
-				<div>최소 펀딩 금액</div>
-				<input class="minFund" type="number" th:field="*{minFund}" value="" autocomplete="off">
-				<div class="errorList" style="display: none"></div>
-				<div>총 펀딩금액</div>
-				<input class="fundAmount" type="number" th:field="*{fundAmount}" value="" autocomplete="off">
-				<div class="errorList" style="display: none"></div>
-=======
+
 				<div class="title">
 					<h2>지정 펀딩</h2>
 				</div>
@@ -81,43 +49,50 @@
 				</div>
 				<div class="int int_title">
 					<label for="title">제목</label>
-					<input id="title" type="text" th:field="*{subject}" autocomplete="off">
+					<input class="subject" id="title" type="text" th:field="*{subject}" autocomplete="off">
+					<div class="errorList" style="display: none"></div>
 				</div>
 				<div class="int int_artist">
 					<label for="artist">공연자</label>
-					<input id="artist" type="text" name="Aertiest" value="" autocomplete="off">
+					<input class="aertiest" id="artist" type="text" name="Aertiest" value="" autocomplete="off">
+					<div class="errorList" style="display: none"></div>
 				</div>
 				<div class="int int_place">
 					<label for="place">장소</label>
-					<input id="place" type="text" th:field="*{place}" autocomplete="off">
+					<input class="place" id="place" type="text" th:field="*{place}" autocomplete="off">
+					<div class="errorList" style="display: none"></div>
 				</div>
 				<div class="int int_runtime">
 					<label for="runtime">공연 런타임</label>
-					<input id="runtime" type="text" th:field="*{runtime}" autocomplete="off" placeholder="분 단위 입력">
+					<input class="runtime" id="runtime" type="text" th:field="*{runtime}" autocomplete="off" placeholder="분 단위 입력">
+					<div class="errorList" style="display: none"></div>
 				</div>
 				<div class="int int_period">
 					<label for="duration">펀딩 기간 <span>(오늘부터 시작)</span></label>
-					<input id="duration" type="date" th:field="*{fundDurationE}" max="" autocomplete="off">
-					
+					<input class="fundDurationE" id="duration" type="date" th:field="*{fundDurationE}" th:min="${nowTime}" autocomplete="off">
+					<div class="errorList" style="display: none"></div>
 				</div>
 				<div class="int int_date">
 					<label for="date">공연일</label>
-					<input id="date" type="date" th:field="*{startDate}" value="" autocomplete="off">	
-					<input type="time" th:field="*{startTime}" value="" autocomplete="off">	
+					<input id="date" class="startDate" type="datetime-local" th:field="*{startDate}" value="" autocomplete="off">	
+					<div class="errorList" style="display: none" ></div>
 				</div>
 				<div class="int int_minfund">
 					<label for="minFund">최소 펀딩 금액</label>
-					<input id="minFund" type="number" th:field="*{minFund}" value="" autocomplete="off">
+					<input class="minFund" id="minFund" type="number" th:field="*{minFund}" value="" autocomplete="off">
+					<div class="errorList" style="display: none"></div>
 				</div>
 				<div class="int int_amountFund">
 					<label for="fundAmount">총 펀딩금액</label>
-					<input id="fundAmount" type="number" th:field="*{fundAmount}" value="" autocomplete="off">
+					<input class="fundAmount" id="fundAmount" type="number" th:field="*{fundAmount}" value="" autocomplete="off">
+					<div class="errorList" style="display: none"></div>
 				</div>
 				<div class="int int_content">
 					<label for="content">콘서트 내용</label>
-					<input id="content" type="text" th:field="*{content}" autocomplete="off">
+					<input class="content" id="content" type="text" th:field="*{content}" autocomplete="off">
+					<div class="errorList" style="display: none"></div>
 				</div>
->>>>>>> a3fa3ffc0a7a198529b4d3662988997430a1a64a
+
 				
 				<label for="image">대표 이미지</label>
 				<!-- 대표이미지 선택 -->
@@ -145,11 +120,7 @@
 				</div>
 				<!-- //이미지 아무것도 선택 안하면 에러 출력 -->
 
-<<<<<<< HEAD
-				<button id="btn" type="submit">만들기</button>
-=======
-				<button type="submit">작성 완료</button>
->>>>>>> a3fa3ffc0a7a198529b4d3662988997430a1a64a
+				<button id="btn" type="submit">작성 완료</button>
 			</form>
             
 		</div>
