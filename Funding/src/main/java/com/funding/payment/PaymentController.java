@@ -12,7 +12,6 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.http.HttpEntity;
