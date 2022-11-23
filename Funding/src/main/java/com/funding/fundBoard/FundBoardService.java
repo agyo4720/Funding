@@ -85,12 +85,6 @@ public class FundBoardService {
 		
 		return this.fundBoardRepository.findAll(pageable);
 	}
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
->>>>>>> parent of 82cdd28 (2022/11/23 - 1 작업중)
-=======
->>>>>>> parent of 82cdd28 (2022/11/23 - 1 작업중)
 	
 }
