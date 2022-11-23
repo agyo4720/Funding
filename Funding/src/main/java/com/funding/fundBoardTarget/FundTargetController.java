@@ -1,8 +1,11 @@
 package com.funding.fundBoardTarget;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
+import java.security.Principal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -25,6 +28,8 @@ import com.funding.Categorie.CategorieService;
 import com.funding.answer.Answer;
 import com.funding.answer.AnswerService;
 import com.funding.file.FileService;
+import com.funding.fundUser.FundUser;
+import com.funding.fundUser.FundUserService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,12 +44,29 @@ public class FundTargetController {
 	private final CategorieService categorieService;
 	private final AnswerService answerService;
 	private final FileService fileService;
+	private final FundUserService fundUserService;
 	
 	//글 작성폼 불러오기
 	@GetMapping("/form")
-	private String form(TargetForm targetForm, Model model) {
+	private String form(TargetForm targetForm, Model model,Principal principal) {
 		List<Categorie> cList = categorieService.findAll();
+		
+		//유저 확인 로직(현재는 권한 기능 없으니 임시로 열어둠)
+		if(principal != null) {
+			
+			log.info("현재 유저 이름 :" + principal.getName());
+			Optional<FundUser> user = fundUserService.findByuserName(principal.getName());
+			log.info("현재 유저 :" + user.get());
+			if(user.isEmpty()) {
+				return "/fundTarget/notUser";
+			}
+		}
+		
+		
+		String nowTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		
 		model.addAttribute("cList",cList);
+		model.addAttribute("nowTime", nowTime);
 		return "/fundTarget/fundTargetForm";
 	}
 	
@@ -55,7 +77,7 @@ public class FundTargetController {
 			@RequestParam("categorie")Integer cid, @RequestParam(value="imgPath", defaultValue = "x")String imgPath
 			,@RequestParam(value="file", defaultValue = "x")MultipartFile files, Model model) throws IllegalStateException, IOException {
 		
-		String startTime = targetForm.getStartDate() + " " +  targetForm.getStartTime();
+		String startTime = targetForm.getStartDate();
 		Categorie categorie = categorieService.findById(cid);
 		List<Categorie> cList = categorieService.findAll();
 		

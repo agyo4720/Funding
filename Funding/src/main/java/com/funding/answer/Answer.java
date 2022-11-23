@@ -39,8 +39,8 @@ public class Answer {
 	private FundBoardTarget fundBoardTarget;
 	
 	@ManyToOne
-	private FundUser fundUserId;
+	private FundUser fundUser;
 	
-	@OneToMany(mappedBy = "answerId", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "answer", cascade = CascadeType.REMOVE)
 	private List<AnswerAns> answerAnsList;
 }

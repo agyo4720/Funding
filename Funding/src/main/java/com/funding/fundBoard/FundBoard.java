@@ -35,6 +35,8 @@ public class FundBoard {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;	// 고유번호
 	
+	private String CategorieName; // 카테고리 이름
+	
 	private String subject; // 제목
 	
 	private String content; // 내용
@@ -61,6 +63,8 @@ public class FundBoard {
 	
 	private Integer star; // 별점 평균
 	
+	private LocalDateTime createDate;
+	
 	// 제약 조건
 	@ManyToOne
 	private FundUser fundUser; // 작성자 유저
@@ -78,10 +82,10 @@ public class FundBoard {
 	private List<FundArtistList> fundArtistList; // 신청한 공연자 목록
 	
 	@OneToMany(mappedBy = "fundBoard", cascade = CascadeType.REMOVE)
-	private List<Answer> answer; // 질문들
+	private List<Answer> answerList; // 질문들
 	
 	@OneToMany(mappedBy = "fundBoard", cascade = CascadeType.REMOVE)
-	private List<AnswerAns> answerAns; // 답변들
+	private List<AnswerAns> answerAnsList; // 답변들
 	// 제약 조건
 	
 }

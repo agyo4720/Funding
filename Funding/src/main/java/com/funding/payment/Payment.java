@@ -39,10 +39,10 @@ public class Payment {
 	
 	@ManyToOne
 //	@Column(name = "fundUser_id")
-	private FundUser fundUser_id; //고객이름
+	private FundUser fundUser; //고객이름
 	
 	@ManyToOne
 //	@Column(name = "fundBoard_id")
-	private FundBoard fundBoard_id; //공연이름
+	private FundBoard fundBoard; //공연이름
 	
 }
