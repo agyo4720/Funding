@@ -33,6 +33,7 @@ public class FundArtistService {
 		fundArtist.setLikeCount(0);
 		
 		this.fundArtistRepository.save(fundArtist);
+		System.out.println("@@@@@@@@@아티스트 회원가입 성공");
 	}
 	
 	// userName 으로 계정정보 찾기

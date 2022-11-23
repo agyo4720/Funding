@@ -32,6 +32,7 @@ public class FundUserService {
 		fundUser.setRole("user");
 		
 		this.fundUserRepository.save(fundUser);
+		System.out.println("@@@@@@@@@펀드유저 회원가입 성공");
 	}
 	
 	// userName 으로 계정정보 찾기
