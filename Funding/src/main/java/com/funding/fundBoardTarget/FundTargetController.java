@@ -2,6 +2,8 @@ package com.funding.fundBoardTarget;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -44,7 +46,11 @@ public class FundTargetController {
 	@GetMapping("/form")
 	private String form(TargetForm targetForm, Model model) {
 		List<Categorie> cList = categorieService.findAll();
+		
+		String nowTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		
 		model.addAttribute("cList",cList);
+		model.addAttribute("nowTime", nowTime);
 		return "/fundTarget/fundTargetForm";
 	}
 	
@@ -55,7 +61,8 @@ public class FundTargetController {
 			@RequestParam("categorie")Integer cid, @RequestParam(value="imgPath", defaultValue = "x")String imgPath
 			,@RequestParam(value="file", defaultValue = "x")MultipartFile files, Model model) throws IllegalStateException, IOException {
 		
-		String startTime = targetForm.getStartDate() + " " +  targetForm.getStartTime();
+		String startTime = targetForm.getStartDate();
+		log.info(startTime);
 		Categorie categorie = categorieService.findById(cid);
 		List<Categorie> cList = categorieService.findAll();
 		

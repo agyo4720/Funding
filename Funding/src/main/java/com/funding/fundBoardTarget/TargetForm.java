@@ -29,9 +29,7 @@ public class TargetForm {
 	private String fundDurationE;
 	
 	private String startDate;
-	
-	private String StartTime;
-	
+		
 	private Integer minFund;
 	
 	private Integer fundAmount;

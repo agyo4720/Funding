@@ -48,7 +48,7 @@ public class FundBoardController {
 		Page<FundBoard> fundBoardList = this.fundBoardService.findAll(page);
 		model.addAttribute("fundBoardList", fundBoardList);
 		
-		return "/fundBoard/fundBoard_list";
+		return "fundBoard/fundBoard_list";
 	}
 	
 	// 미지정 펀드 작성

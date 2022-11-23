@@ -21,17 +21,9 @@
         <div class="menu">
             <ul>
                 <li><a href="../fundTarget/fundTargetList.html" th:href="@{/fundTarget}">지정 펀딩</a></li>
-                <li><a href="#">미지정 펀딩</a></li>
+                <li><a href="../fundBoard/fundBoard_list.html" th:href="@{/fundBoard/list}">미지정 펀딩</a></li>
             </ul>
         </div>
-
-        <!-- 검색 -->
-        <!-- <div class="search">
-            <form action="#" method="get">
-                <input class="int_search" type="text">
-                <input class="btn_search" type="submit" value="검색">
-            </form>
-        </div> -->
 
         <!-- 로그인 -->
         <div class="login">
@@ -44,48 +36,106 @@
 
     <section>
 		<div>
-<<<<<<< HEAD
-			
-		
 			<form th:object="${targetForm}" method="post" enctype="multipart/form-data">
+<<<<<<< HEAD
 				<div>카테고리</div>
 				<select name="categorie">
 					<option th:each="cate : ${cList}" th:value="${cate.id}" th:text="${cate.categorieName}"></option>
 				</select>
 				<div>제목</div>
-				<input type="text" th:field="*{subject}" autocomplete="off">
+				<input class="subject" type="text" th:field="*{subject}" autocomplete="off">
+				<div class="errorList" style="display: none"></div>
 				<div>내용</div>
-				<input type="text" th:field="*{content}" autocomplete="off">
+				<input class="content" type="text" th:field="*{content}" autocomplete="off">
+				<div class="errorList" style="display: none"></div>
 				<div>공연자</div>
-				<input type="text" name="Aertiest" value="" autocomplete="off">
+				<input class="aertiest" type="text" name="Aertiest" value="" autocomplete="off">
+				<div class="errorList" style="display: none"></div>
 				<div>장소</div>
-				<input type="text" th:field="*{place}" autocomplete="off">
+				<input class="place" type="text" th:field="*{place}" autocomplete="off">
+				<div class="errorList" style="display: none"></div>
 				<div>공연 런타임</div>
-				<input type="text" th:field="*{runtime}" autocomplete="off" placeholder="분 단위 입력">
+				<input class="runtime" type=number th:field="*{runtime}" autocomplete="off" placeholder="분 단위 입력">
+				<div class="errorList" style="display: none"></div>
 				<div>펀딩 기간(오늘부터 시작)</div>
-				<input type="date" th:field="*{fundDurationE}" max="" autocomplete="off">
+				<input class="fundDurationE" onchage="aaa" type="date" th:min="${nowTime}" th:field="*{fundDurationE}" autocomplete="off">
+				<div class="errorList" style="display: none"></div>
 				<div>공연 시작일</div>
-				<input type="date" th:field="*{startDate}" value="" autocomplete="off">	
-				<input type="time" th:field="*{startTime}" value="" autocomplete="off">	
+				<input class="startDate" type="datetime-local" th:field="*{startDate}" value="" autocomplete="off">	
+				<div class="errorList" style="display: none" ></div>
 				<div>최소 펀딩 금액</div>
-				<input type="number" th:field="*{minFund}" value="" autocomplete="off">
+				<input class="minFund" type="number" th:field="*{minFund}" value="" autocomplete="off">
+				<div class="errorList" style="display: none"></div>
 				<div>총 펀딩금액</div>
-				<input type="number" th:field="*{fundAmount}" value="" autocomplete="off">
+				<input class="fundAmount" type="number" th:field="*{fundAmount}" value="" autocomplete="off">
+				<div class="errorList" style="display: none"></div>
+=======
+				<div class="title">
+					<h2>지정 펀딩</h2>
+				</div>
+				<div class="int int_cate">
+					<label for="category">카테고리</label>
+					<select name="categorie">
+						<option th:each="cate : ${cList}" th:value="${cate.id}" th:text="${cate.categorieName}"></option>
+					</select>
+				</div>
+				<div class="int int_title">
+					<label for="title">제목</label>
+					<input id="title" type="text" th:field="*{subject}" autocomplete="off">
+				</div>
+				<div class="int int_artist">
+					<label for="artist">공연자</label>
+					<input id="artist" type="text" name="Aertiest" value="" autocomplete="off">
+				</div>
+				<div class="int int_place">
+					<label for="place">장소</label>
+					<input id="place" type="text" th:field="*{place}" autocomplete="off">
+				</div>
+				<div class="int int_runtime">
+					<label for="runtime">공연 런타임</label>
+					<input id="runtime" type="text" th:field="*{runtime}" autocomplete="off" placeholder="분 단위 입력">
+				</div>
+				<div class="int int_period">
+					<label for="duration">펀딩 기간 <span>(오늘부터 시작)</span></label>
+					<input id="duration" type="date" th:field="*{fundDurationE}" max="" autocomplete="off">
+					
+				</div>
+				<div class="int int_date">
+					<label for="date">공연일</label>
+					<input id="date" type="date" th:field="*{startDate}" value="" autocomplete="off">	
+					<input type="time" th:field="*{startTime}" value="" autocomplete="off">	
+				</div>
+				<div class="int int_minfund">
+					<label for="minFund">최소 펀딩 금액</label>
+					<input id="minFund" type="number" th:field="*{minFund}" value="" autocomplete="off">
+				</div>
+				<div class="int int_amountFund">
+					<label for="fundAmount">총 펀딩금액</label>
+					<input id="fundAmount" type="number" th:field="*{fundAmount}" value="" autocomplete="off">
+				</div>
+				<div class="int int_content">
+					<label for="content">콘서트 내용</label>
+					<input id="content" type="text" th:field="*{content}" autocomplete="off">
+				</div>
+>>>>>>> a3fa3ffc0a7a198529b4d3662988997430a1a64a
 				
+				<label for="image">대표 이미지</label>
 				<!-- 대표이미지 선택 -->
-				<div>
-					<input type="radio" name="imgPath" value="https://cdn.huffingtonpost.kr/news/photo/202101/105466_198431.jpeg"> 
-					<img src="https://cdn.huffingtonpost.kr/news/photo/202101/105466_198431.jpeg" alt="이미지1"
-					width="100" heigth="100">
-					<input type="radio" name="imgPath" value="https://en.pimg.jp/066/591/114/1/66591114.jpg"> 
-					<img src="https://en.pimg.jp/066/591/114/1/66591114.jpg" alt="이미지1"
-					width="100" heigth="100">
+				<div class="int_image">
+					<input id="rad1" type="radio" name="imgPath" value="https://cdn.huffingtonpost.kr/news/photo/202101/105466_198431.jpeg"> 
+						<label for="rad1"><img src="https://cdn.huffingtonpost.kr/news/photo/202101/105466_198431.jpeg" alt="이미지1"
+						width="100" heigth="100"></label>
+					<input id="rad2" type="radio" name="imgPath" value="https://en.pimg.jp/066/591/114/1/66591114.jpg"> 
+					<label for="rad2">
+						<img src="https://en.pimg.jp/066/591/114/1/66591114.jpg" alt="이미지1"
+						width="100" heigth="100">
+					</label>
 				</div>
 				<!-- //대표이미지 선택 -->
 				
 				<!-- 파일 업로드 -->
-				<div>
-					<input type="file" multiple="multiple" name="file">
+				<div class="int_file">
+					<input type="file" multiple="multiple" name="file" />
 				</div>
 				<!-- //파일 업로드 -->
 				
@@ -95,10 +145,142 @@
 				</div>
 				<!-- //이미지 아무것도 선택 안하면 에러 출력 -->
 
-				<button type="submit">만들기</button>
+<<<<<<< HEAD
+				<button id="btn" type="submit">만들기</button>
+=======
+				<button type="submit">작성 완료</button>
+>>>>>>> a3fa3ffc0a7a198529b4d3662988997430a1a64a
 			</form>
             
 		</div>
     </section>
+    
+<script>
+	var btn = document.querySelector('#btn');
+	var valid = false
+	let fundTime
+	
+	let error = document.querySelectorAll(".errorList")
+	
+	let subject = document.querySelector('.subject');
+	let content = document.querySelector('.content');
+	let aertiest = document.querySelector('.aertiest');
+	let place = document.querySelector('.place');
+	let runtime = document.querySelector('.runtime');
+	let fundDurationE = document.querySelector('.fundDurationE');
+	let startDate = document.querySelector('.startDate');
+	let minFund = document.querySelector('.minFund');
+	let fundAmount = document.querySelector('.fundAmount');
+	
+	
+	
+	btn.addEventListener('click', function(e) {
+		let count = 0;
+		for(i=0; i < error.length ; i++){
+			if(error[i].style.display == 'none'){
+				count += 1
+			}
+		}
+		
+		if(count == error.length){
+			valid = true
+		}
+		
+		if(valid){
+			
+		}else{
+		    e.preventDefault();
+		}
+	});
+	
+	subject.addEventListener('focusout',checkSub)
+	content.addEventListener('focusout',checkCon)
+	aertiest.addEventListener('focusout',checkAertiest)
+	place.addEventListener('focusout',checkPlace)
+	runtime.addEventListener('focusout',checkRuntime)
+	fundDurationE.addEventListener('focusout',checkFundDurationE)
+	startDate.addEventListener('focusout',checkStartDate)
+	minFund.addEventListener('focusout',checkMinFund)
+	fundAmount.addEventListener('focusout',checkFundAmount)
+
+	
+	
+	function checkSub(){
+		if(subject.value === ""){
+			error[0].innerHTML='빈칸이에용.'
+			error[0].style.display='block'
+		}else{
+			error[0].style.display='none'
+		}
+	}
+	function checkCon(){
+		if(content.value === ""){
+			error[1].innerHTML='빈칸이에용.'
+			error[1].style.display='block'
+		}else{
+			error[1].style.display='none'
+		}
+	}
+	function checkAertiest(){
+		if(aertiest.value === ""){
+			error[2].innerHTML='빈칸이에용.'
+			error[2].style.display='block'
+		}else{
+			error[2].style.display='none'
+		}
+	}
+	function checkPlace(){
+		if(place.value === ""){
+			error[3].innerHTML='빈칸이에용.'
+			error[3].style.display='block'
+		}else{
+			error[3].style.display='none'
+		}
+	}
+	function checkRuntime(){
+		if(runtime.value === ""){
+			error[4].innerHTML='숫자입력해줘용.'
+			error[4].style.display='block'
+		}else{
+			error[4].style.display='none'
+		}
+	}
+	function checkFundDurationE(){
+		if(fundDurationE.value === ""){
+			error[5].innerHTML='빈칸이에용.'
+			error[5].style.display='block'
+		}else{
+			error[5].style.display='none'
+			fundTime = document.querySelector('.fundDurationE').value
+			fundTime += 'T00:00'
+			startDate.min = fundTime
+		}
+	}
+	function checkStartDate(){
+		if(startDate.value === ""){
+			error[6].innerHTML='빈칸이에용.'
+			error[6].style.display='block'
+		}else{
+			error[6].style.display='none'
+		}
+	}
+	function checkMinFund(){
+		if(minFund.value === ""){
+			error[7].innerHTML='빈칸이에용.'
+			error[7].style.display='block'
+		}else{
+			error[7].style.display='none'
+		}
+	}
+	function checkFundAmount(){
+		if(fundAmount.value === ""){
+			error[8].innerHTML='빈칸이에용.'
+			error[8].style.display='block'
+		}else{
+			error[8].style.display='none'
+		}
+	}
+
+</script>
 </body>
 </html>

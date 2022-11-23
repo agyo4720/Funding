@@ -21,17 +21,9 @@
         <div class="menu">
             <ul>
                 <li><a href="../fundTarget/fundTargetList.html" th:href="@{/fundTarget}">지정 펀딩</a></li>
-                <li><a href="#">미지정 펀딩</a></li>
+                <li><a href="../fundBoard/fundBoard_list.html" th:href="@{/fundBoard/list}">미지정 펀딩</a></li>
             </ul>
         </div>
-
-        <!-- 검색 -->
-        <!-- <div class="search">
-            <form action="#" method="get">
-                <input class="int_search" type="text">
-                <input class="btn_search" type="submit" value="검색">
-            </form>
-        </div> -->
 
         <!-- 로그인 -->
         <div class="login">
@@ -43,6 +35,7 @@
     </header>
 
     <section>
+        <!-- 콘서트 정보 -->
         <div class="con">
             <div class="left">
                 <div class="cate">
@@ -53,10 +46,10 @@
                 <h2 th:text="${fundBoardTarget.subject}">공연 이름</h2>
                 <div class="image">
 					<div th:if="${fundBoardTarget.imgPath != null}">
-						<img th:src="${fundBoardTarget.imgPath}" width="200" height="265">
+						<img th:src="${fundBoardTarget.imgPath}" width="300" height="350">
 					</div>
 					<div th:if="${fundBoardTarget.imgPath == null}">
-						<img th:src="|/fundTarget/img/${fundBoardTarget.id}|" width="200" height="265">
+						<img th:src="|/fundTarget/img/${fundBoardTarget.id}|" width="300" height="350">
 					</div>
                 </div>
             </div>
@@ -70,7 +63,7 @@
                 </div>
                 <div class="view">
                     <label for="startDate">공연일</label>
-                    <p th:text="${fundBoardTarget.startDate}">공연일</p>
+                    <p th:text="${#temporals.format(fundBoardTarget.startDate, 'yyyy-MM-dd HH:mm')}">공연일</p>
                 </div>
                 <div class="view">
                     <label for="place">공연장</label>
@@ -108,21 +101,66 @@
             </div>
         </div>
 
-        <div th:text="${fundBoardTarget.content}">설명</div>
+        <hr/>
 
-        <div>댓글</div>
-        <div>
-            <form th:action="@{|/answer/target/create/${fundBoardTarget.id}|}" method="POST">
-                <input type="text" name="content" value=""/>
-                <button type="submit">댓글 달기</button>
-            </form>
+        <!-- <nav id="navbar-example2" class="navbar bg-light px-3 mb-3">
+            <ul class="nav nav-pills">
+                <li class="nav-item">
+                    <a class="nav-link" href="#scrollspyHeading1">First</a>
+                </li>
+            </ul>
+            <ul class="nav nav-pills">
+                <li class="nav-item">
+                    <a class="nav-link" href="#scrollspyHeading2">Second</a>
+                </li>
+            </ul>
+        </nav> -->
+        
+        <!-- 콘서트 내용 -->
+        <div class="con_text">
+            <div class="title">
+                <h2>콘서트 내용</h2>
+            </div>
+            <div th:text="${fundBoardTarget.content}">설명</div>
         </div>
         
-        <div th:each="answer : ${aList}">
-            <div th:text="${answer.content}">댓글 내용</div>
-            <div th:text="${#temporals.format(answer.createDate, 'MM-dd HH:mm:ss')}">댓글 시간</div>
-            <div><a th:href="@{|/answer/delete/${answer.id}?location=target&id=${fundBoardTarget.id}|}">삭제</a></div>
+        <hr/>
+
+        <!-- 댓글 -->
+        <div class="con_comment">
+            <div class="title">
+                <h2>댓글</h2>
+            </div>
+            <div class="cmt_form">
+                <form th:action="@{|/answer/target/create/${fundBoardTarget.id}|}" method="POST">
+                    <textarea class="int_cmt" placeholder="내용을 입력하세요."></textarea>
+                    <button class="btn_cmt" type="submit">등록</button>
+                </form>
+            </div>
+            
+            <div class="cmt_view" th:each="answer : ${aList}">
+                <div class="cmt">
+                    <div class="cmt_head">
+                        <p class="id" th:text="${answer.fundUserId.id}">아이디</p>
+                        <p class="time" th:text="${#temporals.format(answer.createDate, 'yyyy-MM-dd HH:mm')}">2022-11-21 10:25</p>
+                        <a class="cmt_delete" th:href="@{|/answer/delete/${answer.id}?location=target&id=${fundBoardTarget.id}|}">삭제</a>
+                    </div>
+                    <p th:text="${answer.content}">댓글 내용</p>
+                </div>
+            </div>
         </div>
-    </section>
-</body>
+        </section>
+        
+        <script>
+            var btn = document.querySelector('.btn_cmt');
+
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+            });
+
+            function test() {
+                word
+            }
+        </script>
+    </body>
 </html>

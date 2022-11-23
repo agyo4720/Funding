@@ -20,18 +20,10 @@
         <!-- 메뉴 -->
         <div class="menu">
             <ul>
-                <li><a href="../fundTarget/fundTargetList.html" th:href="@{/fundTarget}">지정 펀딩</a></li>
-                <li><a href="#">미지정 펀딩</a></li>
+				<li><a href="../fundTarget/fundTargetList.html" th:href="@{/fundTarget}">지정 펀딩</a></li>
+                <li><a href="../fundBoard/fundBoard_list.html" th:href="@{/fundBoard/list}">미지정 펀딩</a></li>
             </ul>
         </div>
-
-        <!-- 검색 -->
-        <!-- <div class="search">
-            <form action="#" method="get">
-                <input class="int_search" type="text">
-                <input class="btn_search" type="submit" value="검색">
-            </form>
-        </div> -->
 
         <!-- 로그인 -->
         <div class="login">
@@ -91,7 +83,7 @@
 						
 						<div class="view">
 							<label for="startDate">공연일</label>
-							<p th:text="${target.startDate}">공연 시작</p>
+							<p th:text="${#temporals.format(target.startDate, 'yyyy-MM-dd HH:mm')}">공연 시작</p>
 						</div>
 						
 						<div class="view">
@@ -109,26 +101,26 @@
 			<hr/>
 		</div>
 		<!-- 페이징 -->
-			<div>
-				<div th:if="${!targetList.isEmpty()}">
-					<div th:if="${targetList.number > 0}">
-						<a th:href="@{|?cate=${cate}&page=${targetList.number-1}|}">
-							<span>뒤로</span>
-						</a>
-					</div>
-					<div th:each="page : ${#numbers.sequence(0,targetList.totalPages-1)}"
-					th:if="${targetList.number-3 < page and targetList.number+3 > page}">
-						<a th:classappend="${page == targetList.number} ? 'active'" th:text="${page+1}" 
-						th:href="@{|?cate=${cate}&page=${page}|}"></a>			
-					</div>
-					<div th:if="${targetList.number < targetList.totalPages-1}">
-						<a th:href="@{|?cate=${cate}&page=${targetList.number+1}|}">
-							<span>앞으로</span>
-						</a>
-					</div>
+		<div>
+			<div th:if="${!targetList.isEmpty()}">
+				<div th:if="${targetList.number > 0}">
+					<a th:href="@{|?cate=${cate}&page=${targetList.number-1}|}">
+						<span>뒤로</span>
+					</a>
+				</div>
+				<div th:each="page : ${#numbers.sequence(0,targetList.totalPages-1)}"
+				th:if="${targetList.number-3 < page and targetList.number+3 > page}">
+					<a th:classappend="${page == targetList.number} ? 'active'" th:text="${page+1}" 
+					th:href="@{|?cate=${cate}&page=${page}|}"></a>
+				</div>
+				<div th:if="${targetList.number < targetList.totalPages-1}">
+					<a th:href="@{|?cate=${cate}&page=${targetList.number+1}|}">
+						<span>앞으로</span>
+					</a>
 				</div>
 			</div>
-			<!-- //페이징 -->
+		</div>
+		<!-- //페이징 -->
 		<a class="btn_create" href="fundTargetForm.html" th:href="@{/fundTarget/form}">펀딩 만들기</a>
     </section>
 </body>
