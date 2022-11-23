@@ -78,7 +78,6 @@
                 <div id="nicknameCheckResult"></div>
             </div>
 
-
             <!-- 이메일 -->
             <!-- 인증하기도 추가 -->
             <div class="int int_email">
@@ -143,7 +142,7 @@
                 <label for="address">주소</label>
                 <span class="int_addr1">
                     <input name="addr1" type="text" id="postCode" placeholder="우편 번호" readonly>
-                    <input type="text" class="btn_addr" onclick="btnPostCode()" value="우편번호 찾기">
+                    <input type="text" class="btn_addr" onclick="btnPostCode()" value="우편번호 찾기" readonly>
                 </span>
                 <span class="int_addr2">
                     <input name="addr2" type="text" id="addr" placeholder="주소" readonly>
@@ -184,6 +183,8 @@
     <!-- 카카오 우편번호 API -->
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     
+    <script src="/js/userCreateForm.js"></script>
+    
     <script>
         $(function() {
             $("#sel_domain").change(function() {
@@ -196,9 +197,6 @@
         });
     </script>
 
-    <script src="/js/userCreateForm.js"></script>
-    
-    
     <!-- ajax 이용한 아이디 중복검사, 정규표현식이용 유효성 검사 -->
 	<script>
 	        

@@ -35,7 +35,7 @@ public class SecurityConfig {
         // 로그인 주소
         .and()
         .formLogin()
-        .loginPage("/login")
+        .loginPage("/user/login")
         .defaultSuccessUrl("/")
         
         

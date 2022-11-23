@@ -64,7 +64,7 @@ public class RegisterController {
 			this.fundArtistService.register(vo);
 		}
 		
-		return "main/home";
+		return "redirect:/user/login";
 		
 	}
 	
