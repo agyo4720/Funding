@@ -107,7 +107,7 @@
                 <div class="bir_wrap">
                     <input class="bir" type="text" th:field="*{year}" placeholder="년(4)"/>
                     <select class="bir" name="month" id="sel_birth_mm">
-                        <option value="">선택하기</option>
+                        <option value="none">선택하기</option>
                         <option value="01">1</option>
                         <option value="02">2</option>
                         <option value="03">3</option>
@@ -233,7 +233,7 @@
 						$('#form').attr( 'id' ,'formActive' );
 						$('#submitBtn').attr( 'type' ,'submit' );
 						$('#submitBtn').attr( 'onclick' ,'' );
-						
+						$('#username').attr('readonly','');
 					}
 				
 					
@@ -261,7 +261,7 @@
 	        $("#pwd1CheckResult").html('')
 		});
 		
-		$('#form').on('submit',()=>{
+		$('#form').on('submit', function() {
 			let pwdval = $('#password1').val()
 	        let pwdcheck =  /^[a-zA-Z0-9~!@#$%^&*()`_+?:;'"{}]{1,16}$/
 		
@@ -290,7 +290,7 @@
 	        $("#pwd2CheckResult").html('')
 		});
 		
-		$('#form').on('submit',()=>{
+		$('#form').on('submit', function() {
 			let pwdval = $('#password1').val()
 	        let pwdokval = $('#password2').val()
 	    
@@ -323,7 +323,7 @@
         $('#nicknameCheckResult').html('')
 	});
 	
-	$('#form').on('submit',()=>{
+	$('#form').on('submit', function() {
 		let nickname = $('#nickname').val()
         let nicknameCheck =  /^[가-힣]{2,4}$/
         if (!nicknameCheck.test(nickname)){
@@ -361,12 +361,23 @@
 		        $('#emailCheckResult').html('')
 		});
 		
+		$('#form').on('submit', function() {	
+		    	let email = $('#email').val()
+		        let emailCheck =  /^[a-zA-Z0-9]+$/ 
+		        if (!emailCheck.test(email)){
+					$('#emailCheckResult').html('이메일을 정확히 입력하세요.')
+					$('#email').focus()
+		        	return false
+		        }
+		        $('#emailCheckResult').html('')
+		});
+		
 		
 	</script>
 		
 	<!-- 이메일 도메인 유효성 검사 -->
 	<script>
-		$('#form').on('submit',()=>{
+		$('#form').on('submit', function() {
 	    	let domain = $('#sel_domain').val()
 	    	let domainDirect = $('#int_direct').val()
 	        let domainCheck =  /^([a-z0-9\-]+\.)+[a-z]{2,6}$/
@@ -406,9 +417,40 @@
 		        $('#birthCheckResult').html('')
 		});
 		
+		
+		$('#form').on('submit', function() {	
+		    	let yyyy = $('#year').val()
+		        let yearCheck =  /^(19[0-9][0-9]|20\d{2})$/ 
+		        
+		        if (!yearCheck.test(yyyy)){
+					$('#birthCheckResult').html('생년월일을 정확히 입력하세요.')
+					$('#year').focus()
+		        	return false
+		        }
+		        
+		        let dd = $('#day').val()
+		        let dayCheck =  /^([1-9]|[1-2][0-9]|3[0-1])$/ 
+		        
+		        if (!dayCheck.test(dd)){
+					$('#birthCheckResult').html('생년월일을 정확히 입력하세요.')
+					$('#day').focus()
+		        	return false
+		        }
+		        
+		        let mm = $('#sel_birth_mm').val()
+		        
+		        if(mm === 'none'){
+					$('#birthCheckResult').html('생년월일을 정확히 입력하세요.')
+					$('#sel_birth_mm').focus()
+		        	return false
+				}
+		        
+		        $('#birthCheckResult').html('')
+		});
+		
 		$('#day').focusout(function() {	
 		    	let dd = $('#day').val()
-		        let dayCheck =  /^(0[1-9]|[1-2][0-9]|3[0-1])$/ 
+		        let dayCheck =  /^([1-9]|[1-2][0-9]|3[0-1])$/ 
 		        
 		        if (!dayCheck.test(dd)){
 					$('#birthCheckResult').html('생년월일을 정확히 입력하세요.')
@@ -417,11 +459,12 @@
 		        
 		        $('#birthCheckResult').html('')
 		});
+
 	</script>
 	
 	<!-- 성별 유효성 검사 -->
 	<script>
-		$('#form').on('submit',()=>{
+		$('#form').on('submit', function() {
 	    	let gender = $('#sel_gender').val()
 	        if (gender !== '남성' && gender !== '여성'){
 				$('#genderCheckResult').html('성별을 선택하세요.')
@@ -441,12 +484,13 @@
 	
 	<!-- 주소 유효성 검사 -->
 	<script>
-		$('#form').on('submit',()=>{
+		$('#form').on('submit', function() {
 	    	let addr1 = $('#postCode').val()
 	    	let addr2 = $('#addr').val()
 	    	let addr3 = $('#detailAddr').val()
 	    	let addr4 = $('#extraAddr').val()
-	        if (!addr1 || !addr2 || !addr3){
+	    	
+	        if (addr1.length < 2){
 				$('#addrCheckResult').html('주소를 빠짐없이 입력하세요.')
 	        	return false
 	        }
@@ -460,6 +504,15 @@
 	        	return false
 			}
 			$('#addrCheckResult').html('')
+		})
+		
+		$('#form').on('submit', function() {
+			let addr3 = $('#detailAddr').val()
+			if(!addr3){
+				$('#addrCheckResult').html('상세 주소를 입력하세요.')
+				$('#detailAddr').focus()
+	        	return false
+			}
 		})
 	    
 	</script>
@@ -475,6 +528,18 @@
 	        }
 	        $('#mobileCheckResult').html('')
 			});
+			
+			$('#form').on('submit', function() {
+		    	let mobile = $('#mobile').val()
+		        let mobileCheck =  /^\d{8}$/
+		        if (!mobileCheck.test(mobile)){
+					$('#mobileCheckResult').html('전화번호 8자리를 올바르게 입력하세요.')
+					$('#mobile').focus()
+		        	return false
+		        }
+		        $('#mobileCheckResult').html('')
+  			  });
+			
 	</script>
 	
 	<!-- 권한 유효성 검사 -->
