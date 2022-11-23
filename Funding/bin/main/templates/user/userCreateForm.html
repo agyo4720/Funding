@@ -92,7 +92,7 @@
                         <option value="naver.com">naver.com</option>
                         <option value="nate.com">nate.com</option>
                         <option value="kakao.com">kakao.com</option>
-                        <option value="direct" class="direct">직접 입력</option>
+                        <option id="directVal" value="direct" class="direct">직접 입력</option>
                     </select>
                     <!-- 직접 입력 input box -->
                     <input type="text" id="int_direct"/>
@@ -332,8 +332,8 @@
 	        
 	        if(domain==='direct'){
 				console.log("ddddddd")
-				$('#int_direct').attr('value',domainDirect)
-				console.log(domainDirect)
+				$('#directVal').attr('value',domainDirect)
+				console.log($('#directVal').val)
 			}
 	        
 	        console.log('111')
