@@ -1,5 +1,8 @@
 package com.funding.fundArtist;
 
+import java.sql.Date;
+import java.util.Optional;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,10 +23,21 @@ public class FundArtistService {
 		
 		fundArtist.setUsername(vo.getUsername());
 		fundArtist.setPassword(passwordEncoder.encode(vo.getPassword1()));
-		fundArtist.setEmail(vo.getEmail());
+		fundArtist.setNickname(vo.getNickname());
+		fundArtist.setEmail(vo.getEmail()+vo.getDomain());
 		fundArtist.setMobile(vo.getMobile());
+		fundArtist.setAddress(vo.getAddr1()+vo.getAddr2()+vo.getAddr3()+vo.getAddr4());
+		fundArtist.setGender(vo.getGender());
+		fundArtist.setBirth(Date.valueOf(vo.getYear()+"-"+vo.getMonth()+"-"+vo.getDay()));
 		fundArtist.setRole("artist");
+		fundArtist.setLikeCount(0);
 		
 		this.fundArtistRepository.save(fundArtist);
+	}
+	
+	// userName 으로 계정정보 찾기
+	public Optional<FundArtist> findByuserName(String username) {
+		Optional<FundArtist> fundArtist = fundArtistRepository.findByusername(username);
+		return fundArtist;
 	}
 }
