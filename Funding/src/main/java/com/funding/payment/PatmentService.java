@@ -23,7 +23,6 @@ public class PatmentService {
 	
 	public void savecreditinfo(String paymentKey, String orederId, int amount, String orderName,
 			String transactionKey) {
-		List<Payment> pList = new ArrayList<>(); //고객이 계정삭제하면 사라지는 리스트
 		
 		CallbackPayload cp = new CallbackPayload(); //결제성공 시 정보
 		cp.setCustomerName("이토페2");
@@ -45,5 +44,9 @@ public class PatmentService {
 		sale.setTransactionKey(transactionKey);
 		sList.add(sale);
 		saleRepository.save(sale);
+		
+		List<Payment> pList = new ArrayList<>(); //고객이 보는 테이블
+		Payment payment = new Payment();
+		payment.set
 	}
 }
