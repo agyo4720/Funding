@@ -65,6 +65,7 @@ public class FundBoardService {
 		fundBoard.setVote(0);
 		fundBoard.setStar(0);
 		fundBoard.setCreateDate(LocalDateTime.now());
+		fundBoard.setCategorie(categorie);
 		
 		this.fundBoardRepository.save(fundBoard);
 	}
@@ -81,10 +82,23 @@ public class FundBoardService {
 		List<Sort.Order> sorts = new ArrayList<>();
 		sorts.add(Sort.Order.desc("createDate"));
 		
-		Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
+		Pageable pageable = PageRequest.of(page, 3, Sort.by(sorts));
 		
 		return this.fundBoardRepository.findAll(pageable);
 	}
+	
+	// 펀드보드 카테고리 리스트
+	public Page<FundBoard> findByCategorie(Integer page, Categorie categorie){
+		
+		List<Sort.Order> sorts = new ArrayList<>();
+		sorts.add(Sort.Order.desc("createDate"));
+		
+		Pageable pageable = PageRequest.of(page, 3, Sort.by(sorts));
+		
+		return this.fundBoardRepository.findByCategorie(pageable, categorie);
+	}
+	
+	
 
 	
 }

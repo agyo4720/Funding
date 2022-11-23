@@ -14,9 +14,11 @@
 		    height: 400px;
 		    background-color: beige;
 		    margin: 50px;
-			
 		}
 		
+		a{
+			margin-right:20px;
+		}
 	</style>
 </head>
 <body>
@@ -29,7 +31,12 @@
 
 			<div>
 				<ul>
-					<li><a>링크</a></li>
+					<li>
+						<a th:each="categorie, loop : ${categorieList}"
+						   th:text="${categorie.categorieName}"
+						   th:href="@{|/fundBoard/categorie/${categorie.id}|}">
+						</a>
+					</li>
 				</ul>
 			</div>
 			
