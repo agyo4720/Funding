@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import lombok.RequiredArgsConstructor;
 
@@ -36,8 +37,18 @@ public class SecurityConfig {
         .and()
         .formLogin()
         .loginPage("/user/login")
-        .defaultSuccessUrl("/");
+        .defaultSuccessUrl("/")
         
+        // 로그아웃
+        .and()
+        .logout()
+        .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
+        .logoutSuccessUrl("/")
+        .invalidateHttpSession(true)
+        
+        
+        
+                ;
         return http.build();
     }
     
