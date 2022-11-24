@@ -3,7 +3,7 @@ package com.funding.Categorie;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.data.domain.Page;
+
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -47,7 +47,6 @@ public class CategorieService {
 		Optional<Categorie> categorie = this.categorieRepository.findById(id);
 		this.categorieRepository.delete(categorie.get());
 	}
-
 	
 	
 }

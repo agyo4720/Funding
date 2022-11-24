@@ -39,10 +39,9 @@
 		<div>
 
 			<h2>펀딩 등록</h2>
-			
+
 			<form th:object="${fundBoardForm}" method="POST">
 				<div>
-=======
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -53,7 +52,7 @@
 
 	<style>
 
-        
+
 	</style>
 </head>
 <body>
@@ -62,26 +61,21 @@
 
 		<div class="header">
 			<h2>펀딩 작성</h2>
-		</div>	
+		</div>
 		<div class="main">
 
 			<form th:object="${fundBoardForm}" method="POST">
+
+				<label for="categorieName">카테고리</label>
+				<select th:field="*{categorieName}">
+					<option value="">카테고리 선택</option>
+					<option th:each="categorie : ${categorieList}" th:text="${categorie.categorieName}" th:value="${categorie.categorieName}"></option>
+				</select>
 				<div>
-					<label for="categorieName">카테고리</label>
-					<select th:field="*{categorieName}">
-						<option value="">카테고리 선택</option>
-						<option th:each="categorie : ${categorieList}"
-								th:text="${categorie.categorieName}"
-								th:value="${categorie.categorieName}">
-						</option>
-					</select>
-				</div>
-				<div>
->>>>>>> d0c9576d4cdd982911862a357dad6c3f46e223b3
 					<label for="subject">제목</label>
 					<input type="text" th:field="*{subject}">
 				</div>
-				
+
 				<div>
 					<label for="content">내용</label>
 					<input type="text" th:field="*{content}">
@@ -110,23 +104,11 @@
 				<div>
 					<label for="fundAmount">펀딩 목표 금액</label>
 					<input type="number" th:field="*{fundAmount}">
-<<<<<<< HEAD
 				</div>
 				<button type="submit">등록하기</button>
 			</form>
-			
+
 		</div>
     </section>
 </body>
 </html>
-=======
-				</div>		
-				<button type="submit">등록하기</button>
-			</form>
-
-
-		</div>
-
-	</div>
-	
->>>>>>> d0c9576d4cdd982911862a357dad6c3f46e223b3
