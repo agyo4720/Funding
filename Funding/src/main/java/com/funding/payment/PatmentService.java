@@ -1,16 +1,14 @@
 package com.funding.payment;
 
-import java.net.URI;
-import java.net.http.HttpHeaders;
-import java.nio.charset.StandardCharsets;
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.transaction.Transactional;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+
+import com.funding.fundUser.FundUser;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,20 +17,21 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class PatmentService {
 	private final SaleRepository saleRepository;
+	private final CancelsRepository cancelsRepository;
 	
 	//지정공연 결제
-	public void targetSaveinfo(String paymentKey, String orederId, int amount, String orderName,String status) {
+	public void targetSaveinfo(String paymentKey, String orederId, int amount, String orderName,String status, Optional<FundUser> FU) {
 		CallbackPayload cp = new CallbackPayload(); //정보
-		cp.setFundUser("이토페2"); 
+		cp.setFundUser(FU.get().getNickname()); 
 		cp.setOrderName(orderName);
 		cp.setAmount(amount);
 		cp.setOrderId(orederId);
 		cp.setPaymentKey(paymentKey);
 		cp.setStatus(status);
 		
-		List<Sale> sList = new ArrayList<>(); //고객이 계정삭제해도 결제내역은 남아있는 리스트
+		List<Sale> sList = new ArrayList<>(); //결제내역 리스트
 		Sale sale = new Sale();
-		sale.setFundUser("이토페2");
+		sale.setFundUser(FU.get().getNickname());
 		sale.setFundBoardTarget(orderName);
 		sale.setPayMoney(amount);
 		sale.setOrederId(orederId);
@@ -43,7 +42,26 @@ public class PatmentService {
 	}
 	
 	//미지정공연 결제
-	public void saveinfo() {}
+	public void saveinfo(String paymentKey, String orederId, int amount, String orderName,String status, Optional<FundUser> FU) {
+		CallbackPayload cp = new CallbackPayload(); //정보
+		cp.setFundUser(FU.get().getNickname()); 
+		cp.setOrderName(orderName);
+		cp.setAmount(amount);
+		cp.setOrderId(orederId);
+		cp.setPaymentKey(paymentKey);
+		cp.setStatus(status);
+		
+		List<Sale> sList = new ArrayList<>(); //결제내역 리스트
+		Sale sale = new Sale();
+		sale.setFundUser(FU.get().getNickname());
+		sale.setFundBoard(orderName);
+		sale.setPayMoney(amount);
+		sale.setOrederId(orederId);
+		sale.setPayCode(paymentKey);
+		sale.setPayDate(LocalDateTime.now());
+		sList.add(sale);
+		saleRepository.save(sale);
+	}
 	
 	//환불
 	public void cancelInfo() {}
