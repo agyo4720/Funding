@@ -28,7 +28,7 @@
 			}
 			,success : function(result){
 				$.each(result, function(index, item){					
-					$('.alert').after("<a href=\"" + item.url + "\">" + item.content + "</a>")
+					$('.alert').after("<br><a href=\"" + item.url + "\">" + item.content + "</a></br>")
 				})
 			}
 		})
