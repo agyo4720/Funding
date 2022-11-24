@@ -13,6 +13,6 @@ public interface FundBoardRepository extends JpaRepository<FundBoard, Integer>{
 	
 	public Page<FundBoard> findAll(Pageable pageable);
 
-	public Page<FundBoard> findByCategorie(Pageable page, Categorie categorie);
+	public Page<FundBoard> findByCategorie(Pageable pageable, Categorie categorie);
 
 }

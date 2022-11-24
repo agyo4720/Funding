@@ -35,7 +35,7 @@ public class FundBoardController {
 	private final FundArtistService fundArtistService;
 	private final AnswerService answerService;
 	
-	// 미지정 펀드 리스트
+	// 미지정 펀드 리스트(페이징)
 	@RequestMapping("/list")
 	public String list(
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
@@ -137,7 +137,7 @@ public class FundBoardController {
 		return String.format("redirect:/fundBoard/detail/%s", id);
 	}
 	
-	//2022/11/23 - 5 작업중
+	//2022/11/24 - 작업시작
 	
 	
 }
