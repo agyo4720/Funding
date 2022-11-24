@@ -14,6 +14,6 @@ public class CallbackPayload {
 	private String orderId; //주문번호
 	private String paymentKey; //결제완료키
 	private String status; //상태
-    
+	
     private String cancelReason; //취소사유
 }

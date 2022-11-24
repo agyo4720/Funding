@@ -19,7 +19,6 @@ import com.funding.fundArtist.FundArtist;
 import com.funding.fundArtistList.FundArtistList;
 import com.funding.fundList.FundList;
 import com.funding.fundUser.FundUser;
-import com.funding.payment.Payment;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -84,8 +83,6 @@ public class FundBoard {
 	@OneToMany(mappedBy = "fundBoard", cascade = CascadeType.REMOVE)
 	private List<AnswerAns> answerAns; // 답변들
 	
-	@OneToMany(mappedBy = "fundBoard", cascade = CascadeType.REMOVE)
-	private List<Payment> payment; // 답변들
 	// 제약 조건
 	
 }
