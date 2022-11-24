@@ -45,15 +45,12 @@ public class SecurityConfig {
         .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
         .logoutSuccessUrl("/")
         .invalidateHttpSession(true)
-        
-        
-        
                 ;
+        
+        
         return http.build();
     }
-    
-    
-    
+        
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
