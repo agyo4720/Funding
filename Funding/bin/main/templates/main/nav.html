@@ -1,0 +1,32 @@
+<!-- html -->
+<link rel="stylesheet" href="../../static/css/style.css" th:href="@{/css/style.css}">
+
+<header>
+    <!-- 로고 -->
+    <div class="logo">
+        <a href="../main/home.html" th:href="@{/}">Let's Funding</a>
+    </div>
+    
+    <!-- 메뉴 -->
+    <div class="menu">
+        <ul>
+            <li><a href="../fundTarget/fundTargetList.html" th:href="@{/fundTarget}">지정 펀딩</a></li>
+            <li><a href="../fundBoard/fundBoard_list.html" th:href="@{/fundBoard/list}">미지정 펀딩</a></li>
+        </ul>
+    </div>
+    
+    <!-- 로그인 -->
+    <div class="login">
+        <ul>
+            <li><a href="../user/loginForm.html" sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인</a></li>
+            <li><a href="#" sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a></li>
+            <li><a href="../user/userCreateForm.html" sec:authorize="isAnonymous()" th:href="@{/user/register}">회원가입</a></li>
+        </ul>
+        <div sec:authorize="isAuthenticated()">
+            <ul class="nav_user" th:each="user: ${userData}">
+                <li class="user_name" th:text="${user.nickname}"></li>
+                <li class="user_role" th:text="${user.role}"></li>
+            </ul>
+        </div>
+    </div>
+</header>
