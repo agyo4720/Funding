@@ -20,7 +20,8 @@ public class PatmentService {
 	private final CancelsRepository cancelsRepository;
 	
 	//지정공연 결제
-	public void targetSaveinfo(String paymentKey, String orederId, int amount, String orderName,String status, Optional<FundUser> FU) {
+	public void targetSaveinfo(String paymentKey, String orederId, int amount, String orderName,String status, 
+			Optional<FundUser> FU) {
 		CallbackPayload cp = new CallbackPayload(); //정보
 		cp.setFundUser(FU.get().getNickname()); 
 		cp.setOrderName(orderName);
@@ -42,7 +43,8 @@ public class PatmentService {
 	}
 	
 	//미지정공연 결제
-	public void saveinfo(String paymentKey, String orederId, int amount, String orderName,String status, Optional<FundUser> FU) {
+	public void saveinfo(String paymentKey, String orederId, int amount, String orderName,String status, 
+			Optional<FundUser> FU) {
 		CallbackPayload cp = new CallbackPayload(); //정보
 		cp.setFundUser(FU.get().getNickname()); 
 		cp.setOrderName(orderName);
