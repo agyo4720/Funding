@@ -35,6 +35,13 @@
                 <li><a href="../user/userCreateForm.html" sec:authorize="isAnonymous()" th:href="@{/user/register}">회원가입</a></li>
             </ul>
         </div>
+        <div sec:authorize="isAuthenticated()">
+	        <div th:each="user: ${userData}">
+	        	<li th:text="|아이디 : ${user.username}|"></li>
+	        	<li th:text="|이름 : ${user.nickname}|"></li>
+	        	<li th:text="|권한 : ${user.role}|"></li>
+	        </div>
+        </div>
     </header>
 
     <section>
