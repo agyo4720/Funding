@@ -32,6 +32,7 @@
 <body>
 	<div id="warp">
 		<div class="main">
+			
 			<!--섹션1 시작-->
 			<div class="section1">
 				<table>
@@ -74,24 +75,46 @@
 				</table>
 			</div>
 			<!--섹션1 끝-->
-
+			
 			<!--섹션2 시작-->
+			<div>
+				<div>
+					<h3>미지정 펀딩 참여하기</h3>
+				</div>
+				
+				<form th:action="@{|/fundBoard/request/${fundBoard.id}|}" method="POST">
+					<div>
+						<label for="minFund">펀딩 금액 등록</label>
+						<input type="number" id="minFund" name="minFund">
+					</div>
+					<div>
+						<label for="star">별점 등록</label>
+						<input type="number" id="star" name="star">
+					</div>
+					<div>
+						<button type="submit">참여하기</button>
+					</div>
+				</form>
+			</div>
+			<!--섹션2 끝-->
+			
+			<!--섹션3 시작-->
 			<div class="section2">
 				<div th:each="answer : ${answerList}">
 					<div th:text="${answer.content}">댓글 내용</div>
 					<div th:text="${#temporals.format(answer.createDate, 'MM-dd HH:mm:ss')}">댓글 시간</div>
 				</div>
 			</div>
-			<!--섹션2 끝-->
+			<!--섹션3 끝-->
 			
-			<!--섹션3 시작-->
+			<!--섹션4 시작-->
 			<div class="section3">
-				<form th:action="@{|/answer/fundBoard/create/${fundBoard.id}|}" method="POST">
+				<form th:action="@{|/answer/fundBoard/create/${fundBoard.id}|}" method="GET">
 					<input type="text" name="content" value="">
 					<button type="submit">댓글 달기</button>
 				</form>
 			</div>
-			<!--섹션3 끝-->
+			<!--섹션4 끝-->
 		</div>
 	</div>
 	

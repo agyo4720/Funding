@@ -105,7 +105,7 @@ public class FundBoardController {
 		return "/fundBoard/fundBoard_detail";
 	}
 	
-	
+	// id로 카테고리 리스트 가져오기
 	@RequestMapping("/categorie/{id}")
 	public String categorie(
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
@@ -123,7 +123,21 @@ public class FundBoardController {
 		return "/fundBoard/fundBoard_list";
 	}
 	
-	//2022/11/23 - 4 작업중
+	// 미지정 펀드 펀딩하기
+	@RequestMapping("/request/{id}")
+	public String request(
+			@PathVariable("id") Integer id,
+			@RequestParam("minFund") Integer minFund,
+			@RequestParam("star") Integer star,
+			Model model) {
+		
+		FundBoard fundBoard = this.fundBoardService.findById(id);
+		this.fundBoardService.create(minFund, star);
+		
+		return String.format("redirect:/fundBoard/detail/%s", id);
+	}
+	
+	//2022/11/23 - 5 작업중
 	
 	
 }

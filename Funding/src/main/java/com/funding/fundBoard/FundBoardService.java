@@ -98,6 +98,18 @@ public class FundBoardService {
 		return this.fundBoardRepository.findByCategorie(pageable, categorie);
 	}
 	
+	// 미지정 펀드 참여하기
+	public void create(Integer minFund, Integer star) {
+		
+		FundBoard fundBoard = new FundBoard();
+		
+		fundBoard.getMinFund();
+		fundBoard.getStar();
+		fundBoard.setMinFund(fundBoard.getMinFund() + minFund);
+		fundBoard.setStar(fundBoard.getStar() + star);
+
+		this.fundBoardRepository.save(fundBoard);
+	}
 	
 
 	
