@@ -17,7 +17,6 @@ import com.funding.fundBoard.FundBoard;
 import com.funding.fundBoardTarget.FundBoardTarget;
 import com.funding.fundList.FundList;
 import com.funding.fundTargetList.FundTargetList;
-import com.funding.payment.Payment;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -45,8 +44,6 @@ public class FundUser {
 	@OneToMany(mappedBy = "fundUser", cascade = CascadeType.REMOVE)
 	private List<FundBoard> FundBoard;
 
-	@OneToMany(mappedBy = "fundUser", cascade = CascadeType.REMOVE)
-	private List<Payment> Payment;
 
 	@OneToMany(mappedBy = "fundUser", cascade = CascadeType.REMOVE)
 	private List<Answer> Answer;
