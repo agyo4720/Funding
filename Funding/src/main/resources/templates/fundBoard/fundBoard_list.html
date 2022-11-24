@@ -84,7 +84,6 @@
     </section>
 </body>
 </html>
-=======
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -95,14 +94,17 @@
 
 	<style>
 		*{padding: 0px; margin: 0px;}
-		
+
 		.section{
 			width: 300px;
-    		height: 400px;
-    		background-color: beige;
-    		margin: 30px;
-			}
-		
+		    height: 400px;
+		    background-color: beige;
+		    margin: 50px;
+		}
+
+		a{
+			margin-right:20px;
+		}
 	</style>
 </head>
 <body>
@@ -110,14 +112,10 @@
 		<div class="header">
 			<h2>펀딩 작성</h2>
 		</div>
-		
+
 		<div class="main">
 
-			<div class="btn">
-				<a href="/fundBoard/create">등록하기</a>
-			</div>
-			
-			<div class="categorie">
+			<div>
 				<ul>
 					<li>
 						<a th:each="categorie, loop : ${categorieList}"
@@ -128,14 +126,15 @@
 				</ul>
 			</div>
 
-		
+			<div>
+				<a href="/fundBoard/create">등록하기</a>
+			</div>
 
 			<div class="section" th:each="fundBoard , loop : ${fundBoardList}">
 				<span th:text="${fundBoard.subject}"></span>
-				<span th:text="${fundBoard.content}"></span>
-				<a><a th:href="@{|/fundBoard/detail/${fundBoard.id}|}">자세히 보기</a></a>
+				<a th:href="@{|/fundBoard/detail/${fundBoard.id}|}">자세히 보기</a>
 			</div>
-			
+
 			<!-- 페이징 시작 -->
 		    <div class="paging" th:if="${!fundBoardList.isEmpty()}">
 		        <ul>
@@ -157,12 +156,10 @@
 		        </ul>
 		    </div>
 		    <!-- 페이징 끝 -->
-		
+
 		</div>
 
 	</div>
-	
+
 </body>
 </html>
-
->>>>>>> d0c9576d4cdd982911862a357dad6c3f46e223b3

@@ -26,11 +26,11 @@ import lombok.Setter;
 @Setter
 @Entity
 public class FundUser {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;				// 고유번호
-	
+
 	@Column(unique=true)
 	private String username;		// 아이디
 	private String password;		// 비밀번호
@@ -41,24 +41,24 @@ public class FundUser {
 	private String gender;			// 성별
 	private Date birth;				// 생년월일
 	private String role;			// 권한등급
-	
+
 	@OneToMany(mappedBy = "fundUser", cascade = CascadeType.REMOVE)
 	private List<FundBoard> FundBoard;
-	
+
 	@OneToMany(mappedBy = "fundUser", cascade = CascadeType.REMOVE)
 	private List<Payment> Payment;
-	
+
 	@OneToMany(mappedBy = "fundUser", cascade = CascadeType.REMOVE)
 	private List<Answer> Answer;
-	
+
 	@OneToMany(mappedBy = "fundUser", cascade = CascadeType.REMOVE)
 	private List<AnswerAns> AnswerAns;
-	
+
 	@OneToMany(mappedBy = "fundUser", cascade = CascadeType.REMOVE)
 	private List<FundList> FundList;
-	
+
 	@OneToMany(mappedBy = "fundUser", cascade = CascadeType.REMOVE)
 	private List<FundTargetList> fundTargetList;
-	
+
 
 }
