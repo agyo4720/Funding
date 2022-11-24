@@ -137,7 +137,7 @@ public class FundBoardController {
 		return String.format("redirect:/fundBoard/detail/%s", id);
 	}
 	
-	//2022/11/24 - 작업시작
+	// 2022/11/24 - 작업시작
 	
 	
 }
