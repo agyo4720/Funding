@@ -5,7 +5,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title>Let's Funding</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../../static/css/style.css" th:href="@{/css/style.css}">
     <link rel="stylesheet" href="../../static/css/fundTarget/fundTargetForm.css" th:href="@{/css/fundTarget/fundTargetForm.css}">
 </head>
@@ -89,7 +93,7 @@
 				</div>
 				<div class="int int_content">
 					<label for="content">콘서트 내용</label>
-					<input class="content" id="content" type="text" th:field="*{content}" autocomplete="off">
+					<textarea class="content" id="summernote" th:field="*{content}" autocomplete="off"></textarea>
 					<div class="errorList" style="display: none"></div>
 				</div>
 
@@ -125,8 +129,13 @@
             
 		</div>
     </section>
-    
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
 <script>
+// 유효성 검사 부분
 	var btn = document.querySelector('#btn');
 	var valid = false
 	let fundTime
@@ -251,6 +260,62 @@
 			error[8].style.display='none'
 		}
 	}
+// --유효성 검사 끝
+
+
+// 썸머노트 부분
+$(document).ready(function() {
+	$('#summernote').summernote({
+		height: 300,
+		width: 600,
+		lang: "ko-KR",
+		toolbar: [
+			    // [groupName, [list of button]]
+		    ['fontname', ['fontname']],
+		    ['fontsize', ['fontsize']],
+		    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+		    ['color', ['forecolor','color']],
+		    ['table', ['table']],
+		    ['para', ['ul', 'ol', 'paragraph']],
+		    ['height', ['height']],
+		    ['insert',['picture','link','video']],
+		    ['view', ['fullscreen', 'help']]
+		  ],
+		fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
+		fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
+		,callbacks: {	
+			onImageUpload : function(files) {
+				uploadSummernoteImageFile(files[0],this);
+			}
+			
+		}
+	})
+	
+})
+
+// 썸머노트 이미지 업로드
+function uploadSummernoteImageFile(file, editor) {
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		
+		data = new FormData();
+		data.append("file", file);
+		$.ajax({
+			data : data,
+			type : "POST",
+			url : "/file/summernote/file",
+			contentType : false,
+			processData : false,
+			beforeSend : function(xhr){
+				xhr.setRequestHeader(header, token);
+			},
+			success : function(data) {
+            	//항상 업로드된 파일의 url이 있어야 한다.
+				$(editor).summernote('editor.insertImage', data);
+			}
+		});
+	}
+
 
 </script>
 </body>
