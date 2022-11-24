@@ -99,7 +99,9 @@
 						</div>
 						
 						<div>
-							<div th:text="|글 등록한 사람 : ${target.fundUser.nickname}|"></div>
+							<div th:if="${target.fundUser.nickname != null}">
+								<div th:text="|글 등록한 사람 : ${target.fundUser.nickname}|"></div>
+							</div>
 						</div>
 					</div>
 				</div>

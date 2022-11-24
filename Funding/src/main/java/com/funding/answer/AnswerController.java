@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.funding.alert.AlertService;
 import com.funding.fundArtist.FundArtist;
 import com.funding.fundArtist.FundArtistService;
 import com.funding.fundBoard.FundBoard;
@@ -29,6 +30,7 @@ public class AnswerController {
 	private final FundTargetService fundTargetService;
 	private final FundUserService fundUserService;
 	private final FundArtistService fundArtistService;
+	private final AlertService alertService;
 	
 	
 	//댓글 삭제
@@ -43,7 +45,7 @@ public class AnswerController {
 	}
 	
 	
-	//댓글 생성,id는 부모글 id
+	//미지정 댓글 생성,id는 부모글 id
 	@RequestMapping("board/create/{id}")
 	public void createBoardAnswer(@RequestParam("content")String content, @PathVariable("id")Integer id) {
 		FundBoard fundBoard = fundBoardService.findById(id);
@@ -51,7 +53,7 @@ public class AnswerController {
 		
 	}
 	
-	//댓글 생성,id는 부모글 id
+	//지정 댓글 생성,id는 부모글 id
 	@RequestMapping("target/create/{id}")
 	public String createTargetAnswer(@RequestParam("content")String content, @PathVariable("id")Integer id
 			,Principal principal) {
@@ -63,10 +65,11 @@ public class AnswerController {
 		if(user.isEmpty()) {
 			Optional<FundArtist> artiest = fundArtistService.findByuserName(principal.getName());
 			answerService.createTargetAnswerArt(content, fundBoardTarget, artiest.get());
+			alertService.answerAlertTarget(fundBoardTarget, principal);
 			return String.format("redirect:/fundTarget/detail/%s", id);
 		}
 		
-		
+		alertService.answerAlertTarget(fundBoardTarget, principal);
 		answerService.createTargetAnswerUser(content, fundBoardTarget, user.get());
 		return String.format("redirect:/fundTarget/detail/%s", id);
 	}
