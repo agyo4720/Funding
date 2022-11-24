@@ -25,16 +25,20 @@ public class HomeController {
 	@RequestMapping("/")
 	public String home(Model model, Principal principal) {
 		
-//	 Optional<FundUser> fundUser =  this.fundUserService.findByuserName(principal.getName());
-//	 Optional<FundArtist> fundArtist = this.fundArtistService.findByuserName(principal.getName());
-//	 
-//	 if(fundUser.isPresent()) {
-//		 model.addAttribute("userData",fundUser);
-//	 }
-//	 
-//	 if(fundArtist.isPresent()) {
-//		 model.addAttribute("userData",fundArtist);
-//	 }
+	
+	 if(principal != null) {
+		 Optional<FundUser> fundUser =  this.fundUserService.findByuserName(principal.getName());
+		 Optional<FundArtist> fundArtist = this.fundArtistService.findByuserName(principal.getName());
+		 
+		 if(fundUser.isPresent()) {
+			 model.addAttribute("userData",fundUser.get());
+		 }
+		 
+		 if(fundArtist.isPresent()) {
+			 model.addAttribute("userData",fundArtist.get());
+		 }
+	 }
+	 
 	 
 	 
 		return "main/home";
