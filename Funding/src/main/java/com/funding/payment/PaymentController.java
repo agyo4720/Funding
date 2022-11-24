@@ -76,11 +76,11 @@ public class PaymentController {
 	//지정 결제
     @RequestMapping("/tossPayTar/{id}")
     public String tossPayTar(Principal principal, Model model, @PathVariable("id")Integer id) {
-		FundBoardTarget fundBoardTarget = fundTargetService.findById(id);//지정공연 번호
-		model.addAttribute("fundBoardTarget", fundBoardTarget);
+		FundBoardTarget fundBoardTarget = fundTargetService.findById(id);
+		model.addAttribute("fundBoardTarget", fundBoardTarget);//지정공연 번호
 
-		Optional<FundUser> FU = this.fundUserRepository.findByusername(principal.getName());//로그인중인 정보
-		model.addAttribute("userData",FU.get());
+		Optional<FundUser> FU = this.fundUserRepository.findByusername(principal.getName());
+		model.addAttribute("userData",FU.get());//로그인중인 정보
     	return "pay/tossPayTar";
     }
     //지정 결제성공
@@ -111,7 +111,6 @@ public class PaymentController {
             
             String orderName = successNode.get("orderName").asText();
             String status = successNode.get("status").asText();
-            
         	patmentService.targetSaveinfo(paymentKey, orderId, amount, orderName, status,FU);
             return "/pay/success";
         } else {
@@ -128,11 +127,11 @@ public class PaymentController {
     //미지정 결제
     @RequestMapping("/tossPay/{id}")
     public String tossPay(Principal principal, Model model, @PathVariable("id")Integer id) {
-		FundBoard fundBoard = fundBoardService.findById(id);//지정공연 번호
-		model.addAttribute("fundBoard", fundBoard);
+		FundBoard fundBoard = fundBoardService.findById(id);
+		model.addAttribute("fundBoard", fundBoard);//미지정공연 번호
 
 		Optional<FundUser> FU = this.fundUserRepository.findByusername(principal.getName());//로그인중인 정보
-		model.addAttribute("userData",FU.get());
+		model.addAttribute("userData",FU.get());//로그인정보
     	return "pay/tossPay";
     }
     //미지정 결제성공
@@ -163,7 +162,6 @@ public class PaymentController {
             
             String orderName = successNode.get("orderName").asText();
             String status = successNode.get("status").asText();
-
         	patmentService.saveinfo(paymentKey, orderId, amount, orderName, status,FU);
             return "/pay/success";
         } else {
@@ -191,7 +189,6 @@ public class PaymentController {
     		    .method("GET", HttpRequest.BodyPublishers.noBody())
     		    .build();
     		HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-    		log.info("!!!!!!!!!"+response.body()+"!!!!!!!!");
 
     		//문자열을 json형태 변환
     		JSONParser parser = new JSONParser();
@@ -199,14 +196,14 @@ public class PaymentController {
     		JSONObject jsonObj = (JSONObject)obj;
 
     		if(response.statusCode() == 200) {//요청응답코드 200=성공
-    			String orderName = (String)jsonObj.get("orderName");//상품명
-    			String status = (String)jsonObj.get("status");//상태
-    			String totalAmount = jsonObj.get("totalAmount").toString();//금액
+    			String orderName = (String)jsonObj.get("orderName");
+    			String status = (String)jsonObj.get("status");
+    			String totalAmount = jsonObj.get("totalAmount").toString();
     			
-    			model.addAttribute("orderName",orderName);
-    			model.addAttribute("orderId",orderId);
-    			model.addAttribute("amount",totalAmount);
-    			model.addAttribute("status",status);
+    			model.addAttribute("orderName",orderName);//상품명
+    			model.addAttribute("orderId",orderId);//주문번호
+    			model.addAttribute("amount",totalAmount);//금액
+    			model.addAttribute("status",status);//상태
     			return "/pay/lookupSuccess";
     		}else {
     			String message = (String)jsonObj.get("message");
@@ -228,7 +225,7 @@ public class PaymentController {
     //환불성공
     @RequestMapping("/cancelRquest")
     public String cancelRquest(@RequestParam("paymentKey")String paymentKey, 
-    		@RequestParam("cancelReason")String cancelReason, Model model)throws Exception{
+    		@RequestParam("cancelReason")String cancelReason, Model model, Principal principal)throws Exception{
     		HttpRequest request = HttpRequest.newBuilder()
     		    .uri(URI.create("https://api.tosspayments.com/v1/payments/"+paymentKey+"/cancel"))
     		    .header("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()))
@@ -239,18 +236,21 @@ public class PaymentController {
     		
     		JSONParser parser = new JSONParser();
     		Object obj = parser.parse(response.body());
-    		log.info("^^^^^^^^^^^^^"+response.body()+"^^^^^^^^");
     		JSONObject jsonObj = (JSONObject)obj;
         	
     		if(response.statusCode() == 200) {
-    			String orderName = (String)jsonObj.get("orderName");//상품명
-    			String orderId = (String)jsonObj.get("orderId");//주문번호
-    			String totalAmount = jsonObj.get("totalAmount").toString();//금액
+    			String orderName = (String)jsonObj.get("orderName");
+    			String orderId = (String)jsonObj.get("orderId");
+    			String totalAmount = jsonObj.get("totalAmount").toString();
 
-    			model.addAttribute("orderName",orderName);
-    			model.addAttribute("orderId",orderId);
-    			model.addAttribute("totalAmount",totalAmount);
-    			model.addAttribute("cancelReason",cancelReason);
+    			model.addAttribute("orderName",orderName);//상품명
+    			model.addAttribute("orderId",orderId);//주문번호
+    			model.addAttribute("totalAmount",totalAmount);//금액
+    			model.addAttribute("cancelReason",cancelReason);//환불사유
+    			
+    			principal.getName();
+    			Optional<FundUser> FU =  fundUserRepository.findByusername(principal.getName());
+    			patmentService.cancelInfo(orderId, Integer.valueOf(totalAmount).intValue(), orderName, cancelReason, FU);
     			return "/pay/cancelSuccess";
     		}else {
     			String message = (String)jsonObj.get("message");
@@ -270,12 +270,13 @@ public class PaymentController {
 		Optional<FundUser> FU =  fundUserRepository.findByusername(principal.getName());
 		
 		//결제리스트 불러오기
-		List<Sale> sList = saleRepository.findByFundUser(FU.get());
+		List<Sale> sList = saleRepository.findByFundUser(FU.get().getNickname());
 		model.addAttribute("sList",sList);
-		
+
 		//환불리스트 불러오기
-		List<Cancels> cList = cancelsRepository.findByFundUser(FU.get());
-		model.addAttribute("sList",sList);
-		return "confirm";
+		List<Cancels> cList = cancelsRepository.findByFundUser(FU.get().getNickname());
+		model.addAttribute("cList",cList);
+		
+		return "/pay/confirm";
 	}
 }

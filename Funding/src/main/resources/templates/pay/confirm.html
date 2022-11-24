@@ -27,36 +27,33 @@
 		</tr>
 	</table>
 	
-	
+	 
 	<table border="1">
 		<tr>
 			<th align="center" width="160">닉네임</th>
-			<th align="center" width="160">지정공연제목</th>
-			<th align="center" width="160">미지정공연제목</th>
+			<th align="center" width="160">공연제목</th>
 			<th align="center" width="160">가격</th>
 			<th align="center" width="160">주문번호</th>
-			<th align="center" width="160">상태</th>
 			<th align="center" width="160">환불사유</th>
 			<th align="center" width="160">환불날짜</th>
 		</tr>
 		<tr th:each="list : ${cList}">
 			<td align="center" th:text="${list.fundUser}">닉네임</td>
-			<td align="center" th:text="${list.fundBoardTarget}">지정공연제목</td>
-			<td align="center" th:text="${list.fundBoard}">미지정공연제목</td>
+			<td align="center" th:text="${list.orderName}">공연제목</td>
 			<td align="center" th:text="${list.payMoney}">가격</td>
-			<td align="center" th:text="${list.orederId}">주문번호</td>
-			<td align="center" th:text="${list.status}">상태</td>
+			<td align="center" th:text="${list.orderId}">주문번호</td>
 			<td align="center" th:text="${list.cancelReason}">환불사유</td>
 			<td align="center" th:text="${list.canceledAt}">환불날짜</td>
 		</tr>
 	</table>
+	 
 	
 	
     <div class="cancel">
-        <button onclick="location.href='/pay/cancel'">환불하기</button>
+        <a href="/pay/cancel">환불하기</a>
     </div>
-    <div class="home"">
-        <button onclick="location.href='/'">홈페이지</button>
+    <div class="home">
+        <a href="/">홈페이지</a>
     </div>
 	<script>
 	</script>

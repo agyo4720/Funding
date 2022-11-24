@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.funding.fundUser.FundUser;
 
 public interface SaleRepository extends JpaRepository<Sale,Integer> {
-	List<Sale> findByFundUser(FundUser user);
+	List<Sale> findByFundUser(String nickname);
 }

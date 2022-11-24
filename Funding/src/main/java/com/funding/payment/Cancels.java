@@ -30,15 +30,16 @@ public class Cancels {
 	@Column(name = "cancelReason")
 	private String cancelReason; //환불사유
 	
+	@Column(name = "orderId")
+	private String orderId; //주문번호
+	
 	@Column(name = "payMoney")
 	private Integer payMoney; //환불금액
 	
 	@Column(name = "fundUser")
 	private String fundUser; //고객이름
 	
-	@Column(name = "fundBoard")
-	private String fundBoard; //미지정 공연이름
+	@Column(name = "orderName")
+	private String orderName; //공연이름
 	
-	@Column(name = "fundBoardTarget")
-	private String fundBoardTarget; //지정 공연이름
 }

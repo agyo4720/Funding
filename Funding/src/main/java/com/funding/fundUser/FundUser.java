@@ -57,5 +57,4 @@ public class FundUser {
 	@OneToMany(mappedBy = "fundUser", cascade = CascadeType.REMOVE)
 	private List<FundTargetList> fundTargetList;
 
-
 }

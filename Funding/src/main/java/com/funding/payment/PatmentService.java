@@ -66,5 +66,16 @@ public class PatmentService {
 	}
 	
 	//환불
-	public void cancelInfo() {}
+	public void cancelInfo(String orederId, int totalAmount, String orderName, String cancelReason, Optional<FundUser> FU) {
+		List<Cancels> cList = new ArrayList<>(); //결제내역 리스트
+		Cancels cancel = new Cancels();
+		cancel.setFundUser(FU.get().getNickname());
+		cancel.setOrderName(orderName);
+		cancel.setPayMoney(totalAmount);
+		cancel.setOrderId(orederId);
+		cancel.setCancelReason(cancelReason);
+		cancel.setCanceledAt(LocalDateTime.now());
+		cList.add(cancel);
+		cancelsRepository.save(cancel);
+	}
 }
