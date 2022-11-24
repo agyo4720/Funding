@@ -61,15 +61,15 @@ public class AnswerController {
 		FundBoardTarget fundBoardTarget = fundTargetService.findById(id);
 		
 		Optional<FundUser> user = fundUserService.findByuserName(principal.getName());
-		
+		// 아티스트 일때  저장
 		if(user.isEmpty()) {
 			Optional<FundArtist> artiest = fundArtistService.findByuserName(principal.getName());
 			answerService.createTargetAnswerArt(content, fundBoardTarget, artiest.get());
-			alertService.answerAlertTarget(fundBoardTarget, principal);
+			alertService.answerAlertTarget(fundBoardTarget, principal, content);
 			return String.format("redirect:/fundTarget/detail/%s", id);
 		}
-		
-		alertService.answerAlertTarget(fundBoardTarget, principal);
+		// 유저 일 때
+		alertService.answerAlertTarget(fundBoardTarget, principal, content);
 		answerService.createTargetAnswerUser(content, fundBoardTarget, user.get());
 		return String.format("redirect:/fundTarget/detail/%s", id);
 	}

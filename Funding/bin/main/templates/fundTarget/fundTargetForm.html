@@ -8,35 +8,20 @@
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title>Let's Funding</title>
+
+	<!-- BootStrap -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
 	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../static/css/style.css" th:href="@{/css/style.css}">
+
+	<!-- CSS -->
     <link rel="stylesheet" href="../../static/css/fundTarget/fundTargetForm.css" th:href="@{/css/fundTarget/fundTargetForm.css}">
+
+	<!-- favicon -->
+    <link rel="shortcut icon" href="/img/favicon/ms-icon-310x310.png" type="image/x-icon" />
 </head>
 <body>
     <!-- 홈페이지 상단 nav -->
-    <header>
-        <!-- 로고 -->
-        <div class="logo">
-            <a href="../main/home.html" th:href="@{/}">Let's Funding</a>
-        </div>
-
-        <!-- 메뉴 -->
-        <div class="menu">
-            <ul>
-                <li><a href="../fundTarget/fundTargetList.html" th:href="@{/fundTarget}">지정 펀딩</a></li>
-                <li><a href="../fundBoard/fundBoard_list.html" th:href="@{/fundBoard/list}">미지정 펀딩</a></li>
-            </ul>
-        </div>
-
-        <!-- 로그인 -->
-        <div class="login">
-            <ul>
-                <li><a href="../user/loginForm.html" th:href="@{/user/login}">로그인</a></li>
-                <li><a href="../user/userCreateForm.html" th:href="@{/user/register}">회원가입</a></li>
-            </ul>
-        </div>
-    </header>
+    <header th:replace="/main/nav"></header>
 
     <section>
 		<div>
