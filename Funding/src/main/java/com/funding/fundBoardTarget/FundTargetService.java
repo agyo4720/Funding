@@ -14,6 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.funding.Categorie.Categorie;
+import com.funding.fundUser.FundUser;
 
 import lombok.RequiredArgsConstructor;
 
@@ -35,7 +36,8 @@ public class FundTargetService {
 			Integer minFund,
 			Integer fundAmount,
 			Categorie categorie,
-			String imgPath
+			String imgPath,
+			FundUser user
 			) {
 		
 		
@@ -55,6 +57,7 @@ public class FundTargetService {
 		target.setFundAmount(fundAmount);
 		target.setCategorie(categorie);
 		target.setImgPath(imgPath);
+		target.setFundUser(user);
 		
 		fundTargetRepository.save(target);
 	}
@@ -71,10 +74,10 @@ public class FundTargetService {
 			Integer minFund,
 			Integer fundAmount,
 			Categorie categorie,
-			String filePath
+			String filePath,
+			FundUser user
 			) {
 		
-		DateTimeFormatter form = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 		
 		FundBoardTarget target = new FundBoardTarget();
 		target.setSubject(subject);
@@ -85,13 +88,14 @@ public class FundTargetService {
 		target.setStatus("진행중");
 		target.setFundDurationS(LocalDate.now());
 		target.setFundDurationE(LocalDate.parse(fundDurationE, DateTimeFormatter.ISO_DATE));
-		target.setStartDate(LocalDateTime.parse(startTime, form));
+		target.setStartDate(LocalDateTime.parse(startTime));
 		target.setCreateDate(LocalDateTime.now());
 		target.setMinFund(minFund);
 		target.setFundCurrent(0);
 		target.setFundAmount(fundAmount);
 		target.setCategorie(categorie);
 		target.setFilePath(filePath);
+		target.setFundUser(user);
 		
 		fundTargetRepository.save(target);
 	}
