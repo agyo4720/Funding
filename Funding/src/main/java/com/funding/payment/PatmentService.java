@@ -19,31 +19,32 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class PatmentService {
 	private final SaleRepository saleRepository;
-	private final PaymentRepository paymentRepository;
 	
-	public void savecreditinfo(String paymentKey, String orederId, int amount, String orderName,
-			String transactionKey) {
-		List<Payment> pList = new ArrayList<>(); //고객이 계정삭제하면 사라지는 리스트
-		
-		CallbackPayload cp = new CallbackPayload(); //결제성공 시 정보
-		cp.setCustomerName("이토페2");
+	//지정공연 결제
+	public void targetSaveinfo(String paymentKey, String orederId, int amount, String orderName,String status) {
+		CallbackPayload cp = new CallbackPayload(); //정보
+		cp.setFundUser("이토페2"); 
 		cp.setOrderName(orderName);
 		cp.setAmount(amount);
 		cp.setOrderId(orederId);
 		cp.setPaymentKey(paymentKey);
-		cp.setTransactionKey(transactionKey);
-		
+		cp.setStatus(status);
 		
 		List<Sale> sList = new ArrayList<>(); //고객이 계정삭제해도 결제내역은 남아있는 리스트
 		Sale sale = new Sale();
-		sale.setFundUser_id("이토페2");
-		sale.setFundBoard_id(orderName);
+		sale.setFundUser("이토페2");
+		sale.setFundBoardTarget(orderName);
 		sale.setPayMoney(amount);
 		sale.setOrederId(orederId);
 		sale.setPayCode(paymentKey);
 		sale.setPayDate(LocalDateTime.now());
-		sale.setTransactionKey(transactionKey);
 		sList.add(sale);
 		saleRepository.save(sale);
 	}
+	
+	//미지정공연 결제
+	public void saveinfo() {}
+	
+	//환불
+	public void cancelInfo() {}
 }

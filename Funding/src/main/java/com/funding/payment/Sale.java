@@ -27,21 +27,24 @@ public class Sale {
 	@Column(name = "payCode")
 	private String payCode; //결제완료키(환불할때 필요)
 	
-	@Column(name = "transactionKey")
-	private String transactionKey; //거래조회시 필요
-	
 	@Column(name = "payDate")
 	private LocalDateTime payDate; //결제날짜
-	
-	@Column(name = "orederId")
-	private String orederId; //주문번호
 	
 	@Column(name = "payMoney")
 	private Integer payMoney; //결제금액
 	
-	@Column(name = "fundUser_id")
-	private String fundUser_id; //고객이름
+	@Column(name = "orederId")
+	private String orederId; //주문번호
 	
-	@Column(name = "fundBoard_id")
-	private String fundBoard_id; //공연이름
+	@Column(name = "status")
+	private String status; //상태
+	
+	@Column(name = "fundUser")
+	private String fundUser; //고객이름
+	
+	@Column(name = "fundBoard")
+	private String fundBoard; //미지정 공연이름
+	
+	@Column(name = "fundBoardTarget")
+	private String fundBoardTarget; //지정 공연이름
 }
