@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.funding.Categorie.Categorie;
 import com.funding.Categorie.CategorieService;
+import com.funding.alert.AlertService;
 import com.funding.answer.Answer;
 import com.funding.answer.AnswerService;
 import com.funding.file.FileService;
@@ -45,6 +46,8 @@ public class FundTargetController {
 	private final AnswerService answerService;
 	private final FileService fileService;
 	private final FundUserService fundUserService;
+	private final AlertService alertService;
+	
 	
 	//글 작성폼 불러오기
 	@GetMapping("/form")
@@ -163,9 +166,14 @@ public class FundTargetController {
 	
 	//디테일 창으로
 	@RequestMapping("/detail/{id}")
-	public String showDetail(Model model, @PathVariable("id")Integer id) {
+	public String showDetail(Model model, @PathVariable("id")Integer id,Integer alertId) {
 		FundBoardTarget fundBoardTarget = fundTargetService.findById(id);
 		List<Answer> aList = answerService.findByFundBoardTarget(fundBoardTarget);
+		
+		//알림삭제
+		if(alertId != null) {
+			alertService.deleteAlert(alertId);
+		}
 		
 		model.addAttribute("aList", aList);
 		model.addAttribute("fundBoardTarget", fundBoardTarget);

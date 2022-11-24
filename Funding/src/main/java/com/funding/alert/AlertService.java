@@ -25,13 +25,10 @@ public class AlertService {
 	
 	
 	//지정펀딩에 댓글 생성시 알림 등록
-	public void answerAlertTarget(FundBoardTarget fundBoardTarget, Principal principal) {
+	public void answerAlertTarget(FundBoardTarget fundBoardTarget, Principal principal, String content) {
 		Optional<FundUser> user = fundUserService.findByuserName(principal.getName());
 		if(user.isEmpty()) {
 			Optional<FundArtist> artist = fundArtistService.findByuserName(principal.getName());
-			
-			String content = fundBoardTarget.getSubject() + "의 글에서 " + artist.get().getNickname() +
-					"님이 댓글을 달았습니다.";
 			
 			String url = "/fundTarget/detail/" + fundBoardTarget.getId();
 			
@@ -46,8 +43,6 @@ public class AlertService {
 			
 			return;
 		}
-		String content = fundBoardTarget.getSubject() + "의 글에서 " + user.get().getNickname() +
-				"님이 댓글을 달았습니다.";
 		
 		String url = "/fundTarget/detail/" + fundBoardTarget.getId();
 		
@@ -64,13 +59,11 @@ public class AlertService {
 
 	
 	//미지정펀딩에 댓글 생성시 알림 등록
-	public void answerAlertBoard(FundBoard fundBoard, Principal principal) {
+	public void answerAlertBoard(FundBoard fundBoard, Principal principal, String content) {
 		Optional<FundUser> user = fundUserService.findByuserName(principal.getName());
 		if(user.isEmpty()) {
 			Optional<FundArtist> artist = fundArtistService.findByuserName(principal.getName());
 			
-			String content = "[" + fundBoard.getSubject() + "] 글에 (" + artist.get().getNickname() +
-					")님이 댓글을 달았습니다.";
 			
 			String url = "/fundBoard/detail/" + fundBoard.getId();
 			
@@ -85,9 +78,7 @@ public class AlertService {
 			
 			return;
 		}
-	
-		String content = "[" +fundBoard.getSubject() + "]글에 (" + user.get().getNickname() +
-				")님이 댓글을 달았습니다.";
+
 		
 		String url = "/fundBoard/detail/" + fundBoard.getId();
 		
@@ -106,5 +97,16 @@ public class AlertService {
 		List<Alert> aList = alertRepository.findByHostUser(user);
 		return aList;
 	}
+	
+	public List<Alert> findByHostArtist(FundArtist art){
+		List<Alert> aList = alertRepository.findByHostArtist(art);
+		return aList;
+	}
+	
+	public void deleteAlert(Integer id) {
+		Optional<Alert> alert = alertRepository.findById(id);
+		alertRepository.delete(alert.get());
+	}
+
 		
 }
