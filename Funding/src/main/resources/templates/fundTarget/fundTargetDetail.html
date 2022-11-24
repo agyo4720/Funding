@@ -39,11 +39,11 @@
         <div class="con">
             <div class="left">
                 <div class="cate">
-                    <a href="../fundTarget/fundTargetList.html">
-                        <p>지정 펀딩 > 카테고리1</p>
+                    <a href="/fundTarget">
+                        <p th:text="|지정펀딩 > ${fundBoardTarget.categorie.categorieName}|">지정 펀딩 > 카테고리1</p>
                     </a>
                 </div>
-                <h2 th:text="${fundBoardTarget.subject}">공연 이름</h2>
+                <h2 th:text="|${fundBoardTarget.subject}(${fundBoardTarget.fundUser.nickname})|">공연 이름+글쓴이</h2>
                 <div class="image">
 					<div th:if="${fundBoardTarget.imgPath != null}">
 						<img th:src="${fundBoardTarget.imgPath}" width="300" height="350">
@@ -121,7 +121,7 @@
             <div class="title">
                 <h2>콘서트 내용</h2>
             </div>
-            <div th:text="${fundBoardTarget.content}">설명</div>
+            <div th:utext="${fundBoardTarget.content}">설명</div>
         </div>
         
         <hr/>
@@ -133,7 +133,7 @@
             </div>
             <div class="cmt_form">
                 <form th:action="@{|/answer/target/create/${fundBoardTarget.id}|}" method="POST">
-                    <textarea class="int_cmt" placeholder="내용을 입력하세요."></textarea>
+                    <textarea class="int_cmt" name="content" placeholder="내용을 입력하세요."></textarea>
                     <button class="btn_cmt" type="submit">등록</button>
                 </form>
             </div>
@@ -141,7 +141,7 @@
             <div class="cmt_view" th:each="answer : ${aList}">
                 <div class="cmt">
                     <div class="cmt_head">
-                        <p class="id" th:text="${answer.fundUserId.id}">아이디</p>
+                        <p class="id" th:text="${answer.fundUser.nickname}">아이디</p>
                         <p class="time" th:text="${#temporals.format(answer.createDate, 'yyyy-MM-dd HH:mm')}">2022-11-21 10:25</p>
                         <a class="cmt_delete" th:href="@{|/answer/delete/${answer.id}?location=target&id=${fundBoardTarget.id}|}">삭제</a>
                     </div>
@@ -150,17 +150,6 @@
             </div>
         </div>
         </section>
-        
-        <script>
-            var btn = document.querySelector('.btn_cmt');
 
-            btn.addEventListener('click', function(e) {
-                e.preventDefault();
-            });
-
-            function test() {
-                word
-            }
-        </script>
     </body>
 </html>

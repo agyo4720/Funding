@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="../../static/css/fundTarget/fundTargetList.css" th:href="@{/css/fundTarget/fundTargetList.css}">
 </head>
 <body>
+	<div>
+		<nav th:replace="/sidebar/sidebar"></nav>
+	</div>
     <!-- 홈페이지 상단 nav -->
     <header>
         <!-- 로고 -->
@@ -72,7 +75,6 @@
 							<h3 th:text="${target.subject}">공연 이름</h3>
 						</a>
 						<p class="view" th:text="${target.artiest}">아티스트</p>
-						<p class="view" th:text="${target.content}">간단한 설명</p>
 					</div>
 	
 					<div class="con_detail">
@@ -94,6 +96,10 @@
 						<div class="view">
 							<label for="fundDurationS">펀딩 기간</label>
 							<p th:text="${target.fundDurationS} + ' ~ ' + ${target.fundDurationE}">펀딩 기간</p>
+						</div>
+						
+						<div>
+							<div th:text="|글 등록한 사람 : ${target.fundUser.nickname}|"></div>
 						</div>
 					</div>
 				</div>
