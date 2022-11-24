@@ -34,6 +34,8 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.funding.fundBoard.FundBoard;
+import com.funding.fundBoard.FundBoardService;
 import com.funding.fundBoardTarget.FundBoardTarget;
 import com.funding.fundBoardTarget.FundTargetService;
 import com.funding.fundUser.FundUser;
@@ -52,6 +54,7 @@ public class PaymentController {
     private final PatmentService patmentService;
     private final String SECRET_KEY = "test_sk_JQbgMGZzorzl7aMN4D3l5E1em4dK";
     private final FundTargetService fundTargetService;
+    private final FundBoardService fundBoardService;
     private final FundUserRepository fundUserRepository;
     private final CancelsRepository cancelsRepository;
     private final SaleRepository saleRepository;
@@ -87,21 +90,34 @@ public class PaymentController {
 	}
     
 
+	//지정결제
     @RequestMapping("/tossPay/{id}")
-    public String tossPay(Principal principal, Model model, @PathVariable("id")Integer id) {
-		FundBoardTarget fundBoardTarget = fundTargetService.findById(id);
+    public String tossPayTar(Principal principal, Model model, @PathVariable("id")Integer id) {
+		FundBoardTarget fundBoardTarget = fundTargetService.findById(id);//지정공연 번호
 		model.addAttribute("fundBoardTarget", fundBoardTarget);
-		
-		
-		Optional<FundUser> FU = this.fundUserRepository.findByusername(principal.getName());
+
+		Optional<FundUser> FU = this.fundUserRepository.findByusername(principal.getName());//로그인중인 정보
 		model.addAttribute("userData",FU.get());
     	return "pay/tossPay";
     }
+    
+    //미지정결제
+    @RequestMapping("/tossPay/{id}")
+    public String tossPay(Principal principal, Model model, @PathVariable("id")Integer id) {
+		FundBoard fundBoard = fundBoardService.findById(id);//지정공연 번호
+		model.addAttribute("fundBoard", fundBoard);
+
+		Optional<FundUser> FU = this.fundUserRepository.findByusername(principal.getName());//로그인중인 정보
+		model.addAttribute("userData",FU.get());
+    	return "pay/tossPay";
+    }
+    
+    
     //결제성공
     @RequestMapping("/success")
     public String confirmPayment(
             @RequestParam String paymentKey, @RequestParam String orderId, @RequestParam int amount,
-            Model model) throws Exception {
+            Model model, Principal principal) throws Exception {
     	
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()));
@@ -113,17 +129,20 @@ public class PaymentController {
         
         HttpEntity<String> request = new HttpEntity<>(objectMapper.writeValueAsString(payloadMap), headers);
 
+        Optional<FundUser> FU = this.fundUserRepository.findByusername(principal.getName());//로그인중인 정보
+        
         ResponseEntity<JsonNode> responseEntity = restTemplate.postForEntity(
                 "https://api.tosspayments.com/v1/payments/" + paymentKey, request, JsonNode.class);
         if (responseEntity.getStatusCode() == HttpStatus.OK) {
             JsonNode successNode = responseEntity.getBody();
-            model.addAttribute("balanceAmount", successNode.get("balanceAmount").asText());
-            model.addAttribute("orderName", successNode.get("orderName").asText());
-            model.addAttribute("orderId", successNode.get("orderId").asText());
+            model.addAttribute("balanceAmount", successNode.get("balanceAmount").asText());//금액
+            model.addAttribute("orderName", successNode.get("orderName").asText());//공연이름
+            model.addAttribute("orderId", successNode.get("orderId").asText());//주문번호
             
-            String s = successNode.get("orderName").asText();
-            String ss = successNode.get("status").asText();
-            patmentService.targetSaveinfo(paymentKey, orderId, amount, s, ss);
+            String orderName = successNode.get("orderName").asText();
+            String status = successNode.get("status").asText();
+
+            patmentService.targetSaveinfo(paymentKey, orderId, amount, orderName, status,FU);
             return "/pay/success";
         } else {
             JsonNode failNode = responseEntity.getBody();
