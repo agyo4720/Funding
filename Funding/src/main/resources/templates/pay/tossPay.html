@@ -11,8 +11,8 @@
 <section>
     <h1>펀딩하기</h1>
     <!--  <img src="/images/toss-tee.png" style="max-width: 100%" /> -->
-    <h2 th:text="|공연 이름: ${fundBoardTarget.subject}|"></h2>    
-    <input type="number" id="num" th:vaule="${fundBoardTarget.minFund}" />
+    <h2 th:text="|공연 이름: ${fundBoard.subject}|"></h2>    
+    <input type="number" id="num" th:vaule="${fundBoard.minFund}" />
     <p>----------------------</p>
     <div><label><input type="radio" name="method" value="카드" checked/>신용카드</label></div>
     <div><label><input type="radio" name="method" value="휴대폰"/>휴대폰</label></div>
@@ -32,9 +32,9 @@
         var paymentData = {
             amount: amount,
             orderId: orderId,
-            orderName: '[[${fundBoardTarget.subject}]]',
+            orderName: '[[${fundBoard.subject}]]',
             customerName: '[[${userData.nickname}]]',
-            successUrl: window.location.origin + "/pay/success",
+            successUrl: window.location.origin + "/pay/success1",
             failUrl: window.location.origin + "/pay/fail",
         };
         tossPayments.requestPayment(method, paymentData);

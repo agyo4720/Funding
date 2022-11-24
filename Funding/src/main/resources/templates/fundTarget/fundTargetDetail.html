@@ -96,7 +96,7 @@
                         <label for="minFund">최소 펀딩 금액</label>
                         <p th:text="${fundBoardTarget.minFund}">100,000원</p>
                     </div>
-                    <button class="btn" th:onclick="'location.href=\''+ @{|/pay/tossPay/${fundBoardTarget.id}|} + '\''">펀딩하기</button>
+                    <button class="btn" th:onclick="'location.href=\''+ @{|/pay/tossPayTar/${fundBoardTarget.id}|} + '\''">펀딩하기</button>
                     
                 </div>
             </div>

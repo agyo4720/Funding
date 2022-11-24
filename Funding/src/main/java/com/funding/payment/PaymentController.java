@@ -71,37 +71,61 @@ public class PaymentController {
             }
         });
     }
-    
-    
-	//결제목록
-	@GetMapping("/confirm")
-	public String confirm(Principal principal, Model model) throws Exception{
-		principal.getName();
-		Optional<FundUser> FU =  fundUserRepository.findByusername(principal.getName());
-		
-		//결제리스트 불러오기
-		List<Sale> sList = saleRepository.findByFundUser(FU.get());
-		model.addAttribute("sList",sList);
-		
-		//환불리스트 불러오기
-		List<Cancels> cList = cancelsRepository.findByFundUser(FU.get());
-		model.addAttribute("sList",sList);
-		return "confirm";
-	}
-    
 
-	//지정결제
-    @RequestMapping("/tossPay/{id}")
+    
+	//지정 결제
+    @RequestMapping("/tossPayTar/{id}")
     public String tossPayTar(Principal principal, Model model, @PathVariable("id")Integer id) {
 		FundBoardTarget fundBoardTarget = fundTargetService.findById(id);//지정공연 번호
 		model.addAttribute("fundBoardTarget", fundBoardTarget);
 
 		Optional<FundUser> FU = this.fundUserRepository.findByusername(principal.getName());//로그인중인 정보
 		model.addAttribute("userData",FU.get());
-    	return "pay/tossPay";
+    	return "pay/tossPayTar";
+    }
+    //지정 결제성공
+    @RequestMapping("/success")
+    public String confirmPayment(
+            @RequestParam String paymentKey, @RequestParam String orderId, @RequestParam int amount,
+            Model model, Principal principal, String where) throws Exception {
+    	
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()));
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        Map<String, String> payloadMap = new HashMap<>();
+        payloadMap.put("orderId", orderId);
+        payloadMap.put("amount", String.valueOf(amount));
+        
+        HttpEntity<String> request = new HttpEntity<>(objectMapper.writeValueAsString(payloadMap), headers);
+
+        Optional<FundUser> FU = this.fundUserRepository.findByusername(principal.getName());//로그인중인 정보
+        
+        ResponseEntity<JsonNode> responseEntity = restTemplate.postForEntity(
+                "https://api.tosspayments.com/v1/payments/" + paymentKey, request, JsonNode.class);
+        if (responseEntity.getStatusCode() == HttpStatus.OK) {
+            JsonNode successNode = responseEntity.getBody();
+            model.addAttribute("balanceAmount", successNode.get("balanceAmount").asText());//금액
+            model.addAttribute("orderName", successNode.get("orderName").asText());//공연이름
+            model.addAttribute("orderId", successNode.get("orderId").asText());//주문번호
+            
+            String orderName = successNode.get("orderName").asText();
+            String status = successNode.get("status").asText();
+            
+        	patmentService.targetSaveinfo(paymentKey, orderId, amount, orderName, status,FU);
+            return "/pay/success";
+        } else {
+            JsonNode failNode = responseEntity.getBody();
+            model.addAttribute("message", failNode.get("message").asText());
+            model.addAttribute("code", failNode.get("code").asText());
+            return "pay/fail";
+        }
     }
     
-    //미지정결제
+    
+    
+    
+    //미지정 결제
     @RequestMapping("/tossPay/{id}")
     public String tossPay(Principal principal, Model model, @PathVariable("id")Integer id) {
 		FundBoard fundBoard = fundBoardService.findById(id);//지정공연 번호
@@ -111,11 +135,9 @@ public class PaymentController {
 		model.addAttribute("userData",FU.get());
     	return "pay/tossPay";
     }
-    
-    
-    //결제성공
-    @RequestMapping("/success")
-    public String confirmPayment(
+    //미지정 결제성공
+    @RequestMapping("/success1")
+    public String confirmPayment1(
             @RequestParam String paymentKey, @RequestParam String orderId, @RequestParam int amount,
             Model model, Principal principal) throws Exception {
     	
@@ -142,7 +164,7 @@ public class PaymentController {
             String orderName = successNode.get("orderName").asText();
             String status = successNode.get("status").asText();
 
-            patmentService.targetSaveinfo(paymentKey, orderId, amount, orderName, status,FU);
+        	patmentService.saveinfo(paymentKey, orderId, amount, orderName, status,FU);
             return "/pay/success";
         } else {
             JsonNode failNode = responseEntity.getBody();
@@ -151,6 +173,7 @@ public class PaymentController {
             return "pay/fail";
         }
     }
+    
     
     
     
@@ -196,6 +219,7 @@ public class PaymentController {
     
     
     
+    
     //환불하기
     @RequestMapping("/cancel")
     public String cancel() {
@@ -236,4 +260,22 @@ public class PaymentController {
     			return "/pay/cancelFail";
     		}
     }
+    
+
+    
+	//결제목록
+	@GetMapping("/confirm")
+	public String confirm(Principal principal, Model model) throws Exception{
+		principal.getName();
+		Optional<FundUser> FU =  fundUserRepository.findByusername(principal.getName());
+		
+		//결제리스트 불러오기
+		List<Sale> sList = saleRepository.findByFundUser(FU.get());
+		model.addAttribute("sList",sList);
+		
+		//환불리스트 불러오기
+		List<Cancels> cList = cancelsRepository.findByFundUser(FU.get());
+		model.addAttribute("sList",sList);
+		return "confirm";
+	}
 }
