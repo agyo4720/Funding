@@ -1,72 +1,68 @@
-<!-- 미지정 펀딩 작성 -->
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Let's Funding</title>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>fundBoard_form</title>
 
-	<!-- CSS -->
-    <link rel="stylesheet" href="../../static/css/fundBoard/fundBoard_form.css" th:href="@{/css/fundBoard/fundBoard_form.css}">
+	<style>
 
-	<!-- favicon -->
-    <link rel="shortcut icon" href="img/favicon/ms-icon-310x310.png" type="image/x-icon" />
+        
+	</style>
 </head>
 <body>
-    <!-- 홈페이지 상단 nav -->
-    <header th:replace="/main/nav"></header>
 
-    <div class="title">
-		<h2>펀딩 작성</h2>
-	</div>
-	<div class="main">
+	<div id="warp">
 
-		<form th:object="${fundBoardForm}" method="POST">
+		<div class="header">
+			<h2>펀딩 작성</h2>
+		</div>	
+		<div class="main">
 
-			<label for="categorieName">카테고리</label>
-			<select th:field="*{categorieName}">
-				<option value="">카테고리 선택</option>
-				<option th:each="categorie : ${categorieList}" th:text="${categorie.categorieName}" th:value="${categorie.categorieName}"></option>
-			</select>
-			<div>
-				<label for="subject">제목</label>
-				<input type="text" th:field="*{subject}">
-			</div>
-
-			<div>
-				<label for="content">내용</label>
-				<input type="text" th:field="*{content}">
-			</div>
-			<div>
-				<label for="place">장소</label>
-				<input type="text" th:field="*{place}">
-			</div>
-			<div>
-				<label for="startDate">공연 시작 일자</label>
-				<input type="date" th:field="*{startDate}">
-				<input type="time" th:field="*{startTime}">
-			</div>
-			<div>
-				<label for="runtime">공연 시간</label>
-				<input type="text" th:field="*{runtime}">
-			</div>
-			<div>
-				<label for="fundDuration">펀딩 기간</label>
-				<input type="text" th:field="*{fundDuration}">
-			</div>
-			<div>
-				<label for="minFund">1인 최소 펀딩 금액</label>
-				<input type="number" th:field="*{minFund}">
-			</div>
-			<div>
-				<label for="fundAmount">펀딩 목표 금액</label>
-				<input type="number" th:field="*{fundAmount}">
-			</div>
-			<button type="submit">등록하기</button>
-		</form>
-
-	</div>
-
+			<form th:object="${fundBoardForm}" method="POST">
+			
+				<label for="categorieName">카테고리</label>
+				<select th:field="*{categorieName}">
+					<option value="">카테고리 선택</option>
+					<option th:each="categorie : ${categorieList}" th:text="${categorie.categorieName}" th:value="${categorie.categorieName}"></option>
+				</select>
+				<div>
+					<label for="subject">제목</label>
+					<input type="text" th:field="*{subject}">
+				</div>
+				<div>
+					<label for="content">내용</label>
+					<input type="text" th:field="*{content}">
+				</div>
+				<div>
+					<label for="place">장소</label>
+					<input type="text" th:field="*{place}">
+				</div>
+				<div>
+					<label for="startDateTime">공연 시작 일자</label>
+					<input type="datetime-local" th:field="*{startDateTime}">
+				</div>
+				<div>
+					<label for="fundDuration">펀딩 기간</label>
+					<input type="date" th:field="*{fundDuration}">
+				</div>
+				<div>
+					<label for="runtime">공연 시간</label>
+					<input type="number" th:field="*{runtime}">
+				</div>
+				<div>
+					<label for="minFund">1인 최소 펀딩 금액</label>
+					<input type="number" th:field="*{minFund}">
+				</div>
+				<div>
+					<label for="fundAmount">펀딩 목표 금액</label>
+					<input type="number" th:field="*{fundAmount}">
+				</div>
+				<button type="submit">등록하기</button>
+			</form>
+			
+		</div>
+    </section>
 </body>
 </html>
