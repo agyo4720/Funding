@@ -1,12 +1,16 @@
 package com.funding;
 
+import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 import java.util.Optional;
+
+import javax.mail.MessagingException;
 
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.funding.fundArtist.FundArtist;
 import com.funding.fundArtist.FundArtistService;
@@ -14,6 +18,7 @@ import com.funding.fundBoardTarget.FundBoardTarget;
 import com.funding.fundBoardTarget.FundTargetService;
 import com.funding.fundUser.FundUser;
 import com.funding.fundUser.FundUserService;
+import com.funding.user.mailValidation.EmailService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -47,4 +52,17 @@ public class HomeController {
 		model.addAttribute("page", page);
 		return "main/home";
 	}
+	
+	
+	
+	// 이메일 인증 테스트
+	private final EmailService emailService;
+	
+	@RequestMapping("/email")
+	@ResponseBody
+	public void emailTest() throws UnsupportedEncodingException, MessagingException {
+		String name = "ldh8640@gmail.com";
+		emailService.sendEmail(name);
+	}
+	
 }
