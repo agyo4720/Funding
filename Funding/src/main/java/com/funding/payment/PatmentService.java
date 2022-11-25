@@ -10,8 +10,9 @@ import org.springframework.stereotype.Service;
 import com.funding.fundUser.FundUser;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
-
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class PatmentService {
@@ -64,7 +65,8 @@ public class PatmentService {
 	
 	//지정환불
 	public void tarCancelInfo(String orederId, int totalAmount, String orderName, String cancelReason, 
-			Optional<FundUser> FU) {
+			Optional<FundUser> FU, String paymentKey) {
+		log.info("paymentKey: "+paymentKey);
 		List<Cancels> cList = new ArrayList<>(); //결제내역 리스트
 		Cancels cancel = new Cancels();
 		cancel.setFundUser(FU.get().getNickname());
@@ -76,12 +78,31 @@ public class PatmentService {
 		cList.add(cancel);
 		cancelsRepository.save(cancel);
 		
-
+		List<Sale> sList = saleRepository.findBypayCode(paymentKey);
+		log.info("sList: "+sList.toString());
+		
+		sList.get(0).getCheckin();
+		log.info("sList1: "+sList.get(0).getCheckin());
+		
 		/*
-		sale.setId(FU.get().getId());
+		//형변환
+		Sale sale = (Sale) sList;
+		sale.setCheckin("a");
+		sList.set(0, sale.);
+		log.info("2sList: "+sList.toString());
+		log.info("sList2: "+sale);
+		
+		//값넣기
 		sale.setCheckin("환불");
-		sList.add(sale);
+		log.info("sale: "+sale);
+		
+		//값들어갔는지
+		sale.getCheckin();
+		log.info("sale1: "+sale.getCheckin());
+		
+		//저장했는지
 		saleRepository.save(sale);
+		log.info("!!!sList: "+sList.toString());
 		*/
 	}
 	
