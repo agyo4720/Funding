@@ -20,7 +20,7 @@ public class PatmentService {
 	private final CancelsRepository cancelsRepository;
 	
 	//지정공연 결제
-	public void targetSaveinfo(String paymentKey, String orederId, int amount, String orderName,String status, 
+	public void targetSaveinfo(String paymentKey, String orederId, int amount, String orderName, 
 			Optional<FundUser> FU) {
 		CallbackPayload cp = new CallbackPayload(); //정보
 		cp.setFundUser(FU.get().getNickname()); 
@@ -28,7 +28,6 @@ public class PatmentService {
 		cp.setAmount(amount);
 		cp.setOrderId(orederId);
 		cp.setPaymentKey(paymentKey);
-		cp.setStatus(status);
 		
 		List<Sale> sList = new ArrayList<>(); //결제내역 리스트
 		Sale sale = new Sale();
@@ -37,14 +36,13 @@ public class PatmentService {
 		sale.setPayMoney(amount);
 		sale.setOrederId(orederId);
 		sale.setPayCode(paymentKey);
-		sale.setStatus(status);
 		sale.setPayDate(LocalDateTime.now());
 		sList.add(sale);
 		saleRepository.save(sale);
 	}
 	
 	//미지정공연 결제
-	public void saveinfo(String paymentKey, String orederId, int amount, String orderName,String status, 
+	public void saveinfo(String paymentKey, String orederId, int amount, String orderName, 
 			Optional<FundUser> FU) {
 		CallbackPayload cp = new CallbackPayload(); //정보
 		cp.setFundUser(FU.get().getNickname()); 
@@ -52,7 +50,6 @@ public class PatmentService {
 		cp.setAmount(amount);
 		cp.setOrderId(orederId);
 		cp.setPaymentKey(paymentKey);
-		cp.setStatus(status);
 		
 		List<Sale> sList = new ArrayList<>(); //결제내역 리스트
 		Sale sale = new Sale();
@@ -61,7 +58,6 @@ public class PatmentService {
 		sale.setPayMoney(amount);
 		sale.setOrederId(orederId);
 		sale.setPayCode(paymentKey);
-		sale.setStatus(status);
 		sale.setPayDate(LocalDateTime.now());
 		sList.add(sale);
 		saleRepository.save(sale);

@@ -111,8 +111,7 @@ public class PaymentController {
             model.addAttribute("orderId", successNode.get("orderId").asText());//주문번호
             
             String orderName = successNode.get("orderName").asText();
-            String status = successNode.get("status").asText();
-        	patmentService.targetSaveinfo(paymentKey, orderId, amount, orderName, status,FU);
+        	patmentService.targetSaveinfo(paymentKey, orderId, amount, orderName, FU);
             return "/pay/success";
         } else {
             JsonNode failNode = responseEntity.getBody();
@@ -163,8 +162,7 @@ public class PaymentController {
             model.addAttribute("status", successNode.get("status").asText());//상태
             
             String orderName = successNode.get("orderName").asText();
-            String status = successNode.get("status").asText();
-        	patmentService.saveinfo(paymentKey, orderId, amount, orderName, status,FU);
+        	patmentService.saveinfo(paymentKey, orderId, amount, orderName, FU);
             return "/pay/success";
         } else {
             JsonNode failNode = responseEntity.getBody();
