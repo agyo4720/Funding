@@ -62,13 +62,36 @@ public class PatmentService {
 		saleRepository.save(sale);
 	}
 	
-	//환불
+	//지정환불
+	public void tarCancelInfo(String orederId, int totalAmount, String orderName, String cancelReason, 
+			Optional<FundUser> FU) {
+		List<Cancels> cList = new ArrayList<>(); //결제내역 리스트
+		Cancels cancel = new Cancels();
+		cancel.setFundUser(FU.get().getNickname());
+		cancel.setFundBoardTarget(orderName);
+		cancel.setPayMoney(totalAmount);
+		cancel.setOrderId(orederId);
+		cancel.setCancelReason(cancelReason);
+		cancel.setCanceledAt(LocalDateTime.now());
+		cList.add(cancel);
+		cancelsRepository.save(cancel);
+		
+		List<Sale> sList = new ArrayList<>();
+		Sale sale = new Sale();
+		sale.setFundUser(FU.get().getId().toString());
+		sale.setCheck("환불");
+		sList.add(sale);
+		saleRepository.save(sale);
+	}
+	
+	
+	//미지정환불
 	public void cancelInfo(String orederId, int totalAmount, String orderName, String cancelReason, 
 			Optional<FundUser> FU) {
 		List<Cancels> cList = new ArrayList<>(); //결제내역 리스트
 		Cancels cancel = new Cancels();
 		cancel.setFundUser(FU.get().getNickname());
-		cancel.setOrderName(orderName);
+		cancel.setFundBoard(orderName);
 		cancel.setPayMoney(totalAmount);
 		cancel.setOrderId(orederId);
 		cancel.setCancelReason(cancelReason);

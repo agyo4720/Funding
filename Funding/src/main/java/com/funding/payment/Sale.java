@@ -47,4 +47,7 @@ public class Sale {
 	
 	@Column(name = "fundBoardTarget")
 	private String fundBoardTarget; //지정 공연이름
+	
+	@Column(name = "check")
+	private String check; //환불했는지 확인
 }
