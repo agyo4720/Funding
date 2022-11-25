@@ -1,16 +1,13 @@
 package com.funding.payment;
 
-import java.net.URI;
-import java.net.http.HttpHeaders;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.transaction.Transactional;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+
+import com.funding.fundUser.FundUser;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,31 +16,64 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class PatmentService {
 	private final SaleRepository saleRepository;
-	private final PaymentRepository paymentRepository;
+	private final CancelsRepository cancelsRepository;
 	
-	public void savecreditinfo(String paymentKey, String orederId, int amount, String orderName,
-			String transactionKey) {
-		List<Payment> pList = new ArrayList<>(); //고객이 계정삭제하면 사라지는 리스트
-		
-		CallbackPayload cp = new CallbackPayload(); //결제성공 시 정보
-		cp.setCustomerName("이토페2");
+	//지정공연 결제
+	public void targetSaveinfo(String paymentKey, String orederId, int amount, String orderName, 
+			Optional<FundUser> FU) {
+		CallbackPayload cp = new CallbackPayload(); //정보
+		cp.setFundUser(FU.get().getNickname()); 
 		cp.setOrderName(orderName);
 		cp.setAmount(amount);
 		cp.setOrderId(orederId);
 		cp.setPaymentKey(paymentKey);
-		cp.setTransactionKey(transactionKey);
 		
-		
-		List<Sale> sList = new ArrayList<>(); //고객이 계정삭제해도 결제내역은 남아있는 리스트
+		List<Sale> sList = new ArrayList<>(); //결제내역 리스트
 		Sale sale = new Sale();
-		sale.setFundUser_id("이토페2");
-		sale.setFundBoard_id(orderName);
+		sale.setFundUser(FU.get().getNickname());
+		sale.setFundBoardTarget(orderName);
 		sale.setPayMoney(amount);
 		sale.setOrederId(orederId);
 		sale.setPayCode(paymentKey);
 		sale.setPayDate(LocalDateTime.now());
-		sale.setTransactionKey(transactionKey);
 		sList.add(sale);
 		saleRepository.save(sale);
+	}
+	
+	//미지정공연 결제
+	public void saveinfo(String paymentKey, String orederId, int amount, String orderName, 
+			Optional<FundUser> FU) {
+		CallbackPayload cp = new CallbackPayload(); //정보
+		cp.setFundUser(FU.get().getNickname()); 
+		cp.setOrderName(orderName);
+		cp.setAmount(amount);
+		cp.setOrderId(orederId);
+		cp.setPaymentKey(paymentKey);
+		
+		List<Sale> sList = new ArrayList<>(); //결제내역 리스트
+		Sale sale = new Sale();
+		sale.setFundUser(FU.get().getNickname());
+		sale.setFundBoard(orderName);
+		sale.setPayMoney(amount);
+		sale.setOrederId(orederId);
+		sale.setPayCode(paymentKey);
+		sale.setPayDate(LocalDateTime.now());
+		sList.add(sale);
+		saleRepository.save(sale);
+	}
+	
+	//환불
+	public void cancelInfo(String orederId, int totalAmount, String orderName, String cancelReason, 
+			Optional<FundUser> FU) {
+		List<Cancels> cList = new ArrayList<>(); //결제내역 리스트
+		Cancels cancel = new Cancels();
+		cancel.setFundUser(FU.get().getNickname());
+		cancel.setOrderName(orderName);
+		cancel.setPayMoney(totalAmount);
+		cancel.setOrderId(orederId);
+		cancel.setCancelReason(cancelReason);
+		cancel.setCanceledAt(LocalDateTime.now());
+		cList.add(cancel);
+		cancelsRepository.save(cancel);
 	}
 }

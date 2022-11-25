@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>구매하기</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <!--<link rel="stylesheet" href="/stylesheets/style.css" />-->
+</head>
+<body>
+<section>
+    <h1>펀딩하기</h1>
+    <!--  <img src="/images/toss-tee.png" style="max-width: 100%" /> -->
+    <h2 th:text="|공연 이름: ${fundBoardTarget.subject}|"></h2>    
+    <input type="number" id="num" th:vaule="${fundBoardTarget.minFund}" />
+    <p>----------------------</p>
+    <div><label><input type="radio" name="method" value="카드" checked/>신용카드</label></div>
+    <div><label><input type="radio" name="method" value="휴대폰"/>휴대폰</label></div>
+    <div><label><input type="radio" name="method" value="문화상품권"/>상품권</label></div>
+    <div><label><input type="radio" name="method" value="가상계좌"/>계좌</label></div>
+    <p>----------------------</p>
+    <button id="payment-button">결제하기</button>
+</section>
+    <div class="confirm">
+        <a href="/pay/confirm">목록</a>
+    </div>
+    <div class="home">
+        <a href="/">홈</a>
+    </div>
+<script src="https://js.tosspayments.com/v1"></script> <!-- 토스결제창 불러오기  -->
+<script>
+    var tossPayments = TossPayments("test_ck_OALnQvDd2VJjgjj4daVMj7X41mNW");
+    var button = document.getElementById("payment-button");
+    var orderId = new Date().getTime();
+    button.addEventListener("click", function () {
+    	var amount=document.querySelector('#num').value;
+        var method = document.querySelector('input[name=method]:checked').value; // "카드" 혹은 "휴대폰" 혹은 "상품권"
+        var paymentData = {
+            amount: amount,
+            orderId: orderId,
+            orderName: '[[${fundBoardTarget.subject}]]',
+            customerName: '[[${userData.nickname}]]',
+            successUrl: window.location.origin + "/pay/success",
+            failUrl: window.location.origin + "/pay/fail",
+        };
+        tossPayments.requestPayment(method, paymentData);
+    });
+
+</script>
+</body>
+</html>

@@ -6,33 +6,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Let's Funding</title>
-    <link rel="stylesheet" href="../../static/css/style.css" th:href="@{/css/style.css}">
+
+	<!-- CSS -->
     <link rel="stylesheet" href="../../static/css/fundTarget/fundTargetList.css" th:href="@{/css/fundTarget/fundTargetList.css}">
+
+	<!-- favicon -->
+    <link rel="shortcut icon" href="/img/favicon/ms-icon-310x310.png" type="image/x-icon" />
 </head>
 <body>
+	<div>
+		<nav th:replace="/sidebar/sidebar"></nav>
+	</div>
+	
     <!-- 홈페이지 상단 nav -->
-    <header>
-        <!-- 로고 -->
-        <div class="logo">
-            <a href="../main/home.html" th:href="@{/}">Let's Funding</a>
-        </div>
-
-        <!-- 메뉴 -->
-        <div class="menu">
-            <ul>
-				<li><a href="../fundTarget/fundTargetList.html" th:href="@{/fundTarget}">지정 펀딩</a></li>
-                <li><a href="../fundBoard/fundBoard_list.html" th:href="@{/fundBoard/list}">미지정 펀딩</a></li>
-            </ul>
-        </div>
-
-        <!-- 로그인 -->
-        <div class="login">
-            <ul>
-                <li><a href="../user/loginForm.html" th:href="@{/user/login}">로그인</a></li>
-                <li><a href="../user/userCreateForm.html" th:href="@{/user/register}">회원가입</a></li>
-            </ul>
-        </div>
-    </header>
+    <header th:replace="/main/nav"></header>
 
     <section>
 		<div id="title">
@@ -72,7 +59,6 @@
 							<h3 th:text="${target.subject}">공연 이름</h3>
 						</a>
 						<p class="view" th:text="${target.artiest}">아티스트</p>
-						<p class="view" th:text="${target.content}">간단한 설명</p>
 					</div>
 	
 					<div class="con_detail">
@@ -94,6 +80,12 @@
 						<div class="view">
 							<label for="fundDurationS">펀딩 기간</label>
 							<p th:text="${target.fundDurationS} + ' ~ ' + ${target.fundDurationE}">펀딩 기간</p>
+						</div>
+						
+						<div>
+							<div th:if="${target.fundUser.nickname != null}">
+								<div th:text="|글 등록한 사람 : ${target.fundUser.nickname}|"></div>
+							</div>
 						</div>
 					</div>
 				</div>

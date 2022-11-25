@@ -6,44 +6,27 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Let's Funding</title>
-    <link rel="stylesheet" href="../../static/css/style.css" th:href="@{/css/style.css}">
+
+    <!-- CSS -->
     <link rel="stylesheet" href="../../static/css/fundTarget/fundTargetDetail.css" th:href="@{/css/fundTarget/fundTargetDetail.css}">
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="/img/favicon/ms-icon-310x310.png" type="image/x-icon" />
 </head>
 <body>
     <!-- 홈페이지 상단 nav -->
-    <header>
-        <!-- 로고 -->
-        <div class="logo">
-            <a href="../main/home.html" th:href="@{/}">Let's Funding</a>
-        </div>
-
-        <!-- 메뉴 -->
-        <div class="menu">
-            <ul>
-                <li><a href="../fundTarget/fundTargetList.html" th:href="@{/fundTarget}">지정 펀딩</a></li>
-                <li><a href="../fundBoard/fundBoard_list.html" th:href="@{/fundBoard/list}">미지정 펀딩</a></li>
-            </ul>
-        </div>
-
-        <!-- 로그인 -->
-        <div class="login">
-            <ul>
-                <li><a href="../user/loginForm.html" th:href="@{/user/login}">로그인</a></li>
-                <li><a href="../user/userCreateForm.html" th:href="@{/user/register}">회원가입</a></li>
-            </ul>
-        </div>
-    </header>
+    <header th:replace="/main/nav"></header>
 
     <section>
         <!-- 콘서트 정보 -->
         <div class="con">
             <div class="left">
                 <div class="cate">
-                    <a href="../fundTarget/fundTargetList.html">
-                        <p>지정 펀딩 > 카테고리1</p>
+                    <a href="/fundTarget">
+                        <p th:text="|지정펀딩 > ${fundBoardTarget.categorie.categorieName}|">지정 펀딩 > 카테고리1</p>
                     </a>
                 </div>
-                <h2 th:text="${fundBoardTarget.subject}">공연 이름</h2>
+                <h2 th:text="|${fundBoardTarget.subject}(${fundBoardTarget.fundUser.nickname})|">공연 이름+글쓴이</h2>
                 <div class="image">
 					<div th:if="${fundBoardTarget.imgPath != null}">
 						<img th:src="${fundBoardTarget.imgPath}" width="300" height="350">
@@ -96,7 +79,8 @@
                         <label for="minFund">최소 펀딩 금액</label>
                         <p th:text="${fundBoardTarget.minFund}">100,000원</p>
                     </div>
-                    <button class="btn">펀딩하기</button>
+                    <button class="btn" th:onclick="'location.href=\''+ @{|/pay/tossPayTar/${fundBoardTarget.id}|} + '\''">펀딩하기</button>
+                    
                 </div>
             </div>
         </div>
@@ -121,7 +105,7 @@
             <div class="title">
                 <h2>콘서트 내용</h2>
             </div>
-            <div th:text="${fundBoardTarget.content}">설명</div>
+            <div th:utext="${fundBoardTarget.content}">설명</div>
         </div>
         
         <hr/>
@@ -133,7 +117,7 @@
             </div>
             <div class="cmt_form">
                 <form th:action="@{|/answer/target/create/${fundBoardTarget.id}|}" method="POST">
-                    <textarea class="int_cmt" placeholder="내용을 입력하세요."></textarea>
+                    <textarea class="int_cmt" name="content" placeholder="내용을 입력하세요."></textarea>
                     <button class="btn_cmt" type="submit">등록</button>
                 </form>
             </div>
@@ -141,7 +125,7 @@
             <div class="cmt_view" th:each="answer : ${aList}">
                 <div class="cmt">
                     <div class="cmt_head">
-                        <p class="id" th:text="${answer.fundUserId.id}">아이디</p>
+                        <p class="id" th:text="${answer.fundUser.nickname}">아이디</p>
                         <p class="time" th:text="${#temporals.format(answer.createDate, 'yyyy-MM-dd HH:mm')}">2022-11-21 10:25</p>
                         <a class="cmt_delete" th:href="@{|/answer/delete/${answer.id}?location=target&id=${fundBoardTarget.id}|}">삭제</a>
                     </div>
@@ -150,17 +134,6 @@
             </div>
         </div>
         </section>
-        
-        <script>
-            var btn = document.querySelector('.btn_cmt');
 
-            btn.addEventListener('click', function(e) {
-                e.preventDefault();
-            });
-
-            function test() {
-                word
-            }
-        </script>
     </body>
 </html>

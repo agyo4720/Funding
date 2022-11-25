@@ -9,10 +9,10 @@
 </head>
 <body>
 <section>
-    <h1>구매하기</h1>
+    <h1>펀딩하기</h1>
     <!--  <img src="/images/toss-tee.png" style="max-width: 100%" /> -->
-    <h3>카카오 티셔츠</h3>
-    <span>100원</span>
+    <h2 th:text="|공연 이름: ${fundBoard.subject}|"></h2>    
+    <input type="number" id="num" th:vaule="${fundBoard.minFund}" />
     <p>----------------------</p>
     <div><label><input type="radio" name="method" value="카드" checked/>신용카드</label></div>
     <div><label><input type="radio" name="method" value="휴대폰"/>휴대폰</label></div>
@@ -21,19 +21,26 @@
     <p>----------------------</p>
     <button id="payment-button">결제하기</button>
 </section>
+    <div class="confirm">
+        <a href="/pay/confirm">목록</a>
+    </div>
+    <div class="home">
+        <a href="/">홈</a>
+    </div>
 <script src="https://js.tosspayments.com/v1"></script> <!-- 토스결제창 불러오기  -->
 <script>
     var tossPayments = TossPayments("test_ck_OALnQvDd2VJjgjj4daVMj7X41mNW");
     var button = document.getElementById("payment-button");
     var orderId = new Date().getTime();
     button.addEventListener("click", function () {
+    	var amount=document.querySelector('#num').value;
         var method = document.querySelector('input[name=method]:checked').value; // "카드" 혹은 "휴대폰" 혹은 "상품권"
         var paymentData = {
-            amount: 100,
+            amount: amount,
             orderId: orderId,
-            orderName: "카카오 티셔츠",
-            customerName: "이토페3",
-            successUrl: window.location.origin + "/pay/success",
+            orderName: '[[${fundBoard.subject}]]',
+            customerName: '[[${userData.nickname}]]',
+            successUrl: window.location.origin + "/pay/success1",
             failUrl: window.location.origin + "/pay/fail",
         };
         tossPayments.requestPayment(method, paymentData);

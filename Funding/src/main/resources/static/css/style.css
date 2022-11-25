@@ -85,14 +85,14 @@ header {
 }
 
 /* 로그인, 회원가입 */
-.login {}
+.login { display: flex; }
 
-.login ul { display: flex; }
+.login ul { display: flex; align-items: center; }
 
-.login ul li {}
+.login ul li { }
 
 .login ul li:first-child {
-    margin-right: 20px;
+    margin-right: 10px;
 }
 
 .login ul li a {
@@ -100,6 +100,22 @@ header {
     font-weight: bold;
     font-family: 'Do Hyeon', sans-serif;
     letter-spacing: 2px;
+}
+
+.nav_user {
+    cursor: default;
+    display: flex;
+    align-items: center;
+    margin-left: 30px;
+    font-weight: bold;
+}
+
+.user_role {
+    padding: 5px 10px;
+    background: rgb(103, 103, 103);
+    color: #ffff;
+    border-radius: 30px;
+    text-transform: uppercase;
 }
 
 /* 타이틀 */

@@ -5,24 +5,24 @@
     <meta charset="utf-8"/>
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <!--<link rel="stylesheet" href="/stylesheets/style.css" />-->
 </head>
 <body>
 <section>
     <h1>환불하기</h1>
-    <!--  <img src="/images/toss-tee.png" style="max-width: 100%" /> -->
-    <h3>카카오 티셔츠</h3>
-    <span>100원</span>
     <p>----------------------</p>
     <form th:action="@{/pay/cancelRquest}" method="GET">
 	    <div><label><input type="radio" name="method" value="환불하기" checked/>환불하기</label></div>
 	    <p>----------------------</p>
-	    <input type="text"  id="paymentKey" placeholder="결제코드" name="paymentKey" value="" />
 	    <input type="text"  id="cancelReason" placeholder="환불사유" name="cancelReason" value="" />
 	    <button id="cancel-button" type="submit">환불하기</button>
     </form>
 </section>
-
+    <div class="confirm">
+        <a href="/pay/confirm">목록</a>
+    </div>
+    <div class="home">
+        <a href="/">홈</a>
+    </div>
 <script>
 </script>
 </body>

@@ -1,7 +1,13 @@
 package com.funding.alert;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface AlertRepository extends JpaRepository<Alert, Integer>{
+import com.funding.fundArtist.FundArtist;
+import com.funding.fundUser.FundUser;
 
+public interface AlertRepository extends JpaRepository<Alert, Integer>{
+	public List<Alert> findByHostUser(FundUser user);
+	public List<Alert> findByHostArtist(FundArtist art);
 }

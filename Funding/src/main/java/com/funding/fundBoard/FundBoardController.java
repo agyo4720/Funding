@@ -1,12 +1,11 @@
 package com.funding.fundBoard;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -36,22 +35,21 @@ public class FundBoardController {
 	private final FundArtistService fundArtistService;
 	private final AnswerService answerService;
 	
-	// 미지정 펀드 리스트
+	// 미지정 펀드 리스트(페이징)
 	@RequestMapping("/list")
 	public String list(
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			Model model) {
 		
-		List<Categorie> categorieList = this.categorieService.findAll();
-		model.addAttribute("categorieList", categorieList);
-		
 		Page<FundBoard> fundBoardList = this.fundBoardService.findAll(page);
 		model.addAttribute("fundBoardList", fundBoardList);
+		
+		List<Categorie> categorieList = this.categorieService.findAll();
+		model.addAttribute("categorieList", categorieList);
 		
 		return "fundBoard/fundBoard_list";
 	}
 	
-	// 미지정 펀드 작성
 	@GetMapping("/create")
 	public String create(FundBoardForm fundBoardForm, Model model) {
 		
@@ -61,7 +59,6 @@ public class FundBoardController {
 		return "/fundBoard/fundBoard_form";
 	}
 	
-	// 미지정 펀드 작성
 	@PostMapping("/create")
 	public String create(
 			@Valid FundBoardForm fundBoardForm,
@@ -96,7 +93,6 @@ public class FundBoardController {
 		
 	}
 	
-	// 미저정펀드 디테일
 	@RequestMapping("/detail/{id}")
 	public String detail(@PathVariable ("id") Integer id, Model model) {
 		
@@ -109,27 +105,39 @@ public class FundBoardController {
 		return "/fundBoard/fundBoard_detail";
 	}
 	
-	// id값으로 카테고리 정열
+	// id로 카테고리 리스트 가져오기
 	@RequestMapping("/categorie/{id}")
 	public String categorie(
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@PathVariable("id") Integer id,
 			Model model) {
 		
+		Categorie categorie = this.categorieService.findById(id);
+		
+		Page<FundBoard> fundBoardList = this.fundBoardService.findByCategorie(page, categorie);
+		model.addAttribute("fundBoardList", fundBoardList);
 		
 		List<Categorie> categorieList = this.categorieService.findAll();
 		model.addAttribute("categorieList", categorieList);
 		
-		Categorie categorie = this.categorieService.findById(id);
-		
-		Page<FundBoard> fundBoardList = this.fundBoardService.findByCategorieId(page, categorie);
-		model.addAttribute("fundBoardList", fundBoardList);
-		
 		return "/fundBoard/fundBoard_list";
 	}
 	
-	// 2022/11/23 - 1 작업중
+	// 미지정 펀드 펀딩하기
+	@RequestMapping("/request/{id}")
+	public String request(
+			@PathVariable("id") Integer id,
+			@RequestParam("minFund") Integer minFund,
+			@RequestParam("star") Integer star,
+			Model model) {
+		
+		FundBoard fundBoard = this.fundBoardService.findById(id);
+		this.fundBoardService.create(minFund, star);
+		
+		return String.format("redirect:/fundBoard/detail/%s", id);
+	}
 	
+	// 2022/11/24 - 작업시작
 	
 	
 }

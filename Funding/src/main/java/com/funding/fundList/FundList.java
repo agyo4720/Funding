@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 import com.funding.fundBoard.FundBoard;
+import com.funding.fundBoardTarget.FundBoardTarget;
 import com.funding.fundUser.FundUser;
 
 import lombok.Getter;
@@ -29,6 +30,7 @@ public class FundList {
 	@ManyToOne
 	private FundUser fundUser; // 누가 펀딩했는가?
 	
-	
+	@ManyToOne
+	private FundBoardTarget fundBoardTarget; // 지정펀딩
 	
 }

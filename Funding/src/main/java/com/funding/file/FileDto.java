@@ -21,11 +21,16 @@ public class FileDto {
 
 	private String newName;
 	
-	private String 	filePath;
+	private String 	savePath;
 	
-	public FileDto(String originName, String newName, String filePath) {
+	
+	public FileDto() {}
+	
+	public FileDto(String originName, String newName, String savePath) {
 		this.originName = originName;
 		this.newName = newName;
-		this.filePath = filePath;
+		this.savePath = savePath;
 	}
+	
+
 }

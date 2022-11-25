@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.funding.Categorie.Categorie;
 import com.funding.Categorie.CategorieService;
+import com.funding.alert.AlertService;
 import com.funding.answer.Answer;
 import com.funding.answer.AnswerService;
 import com.funding.file.FileService;
@@ -45,6 +46,8 @@ public class FundTargetController {
 	private final AnswerService answerService;
 	private final FileService fileService;
 	private final FundUserService fundUserService;
+	private final AlertService alertService;
+	
 	
 	//글 작성폼 불러오기
 	@GetMapping("/form")
@@ -56,7 +59,6 @@ public class FundTargetController {
 			
 			log.info("현재 유저 이름 :" + principal.getName());
 			Optional<FundUser> user = fundUserService.findByuserName(principal.getName());
-			log.info("현재 유저 :" + user.get());
 			if(user.isEmpty()) {
 				return "/fundTarget/notUser";
 			}
@@ -75,11 +77,11 @@ public class FundTargetController {
 	@PostMapping("/form")
 	private String create(@Valid TargetForm targetForm,BindingResult bindingResult,
 			@RequestParam("categorie")Integer cid, @RequestParam(value="imgPath", defaultValue = "x")String imgPath
-			,@RequestParam(value="file", defaultValue = "x")MultipartFile files, Model model) throws IllegalStateException, IOException {
+			,@RequestParam(value="file", defaultValue = "x")MultipartFile files, Model model,Principal principal) throws IllegalStateException, IOException {
 		
 		String startTime = targetForm.getStartDate();
 		Categorie categorie = categorieService.findById(cid);
-		List<Categorie> cList = categorieService.findAll();
+		List<Categorie> cList = categorieService.findAll();		
 		
 		if(imgPath.equals("x") && files.isEmpty()) {
 			bindingResult.reject("noImgError", "이미지를 선택해 주세요");
@@ -89,6 +91,10 @@ public class FundTargetController {
 			model.addAttribute("cList",cList);
 			return "/fundTarget/fundTargetForm";
 		}
+		
+		Optional<FundUser> user = fundUserService.findByuserName(principal.getName());
+	
+	
 		
 		if(!imgPath.equals("x") && files.isEmpty()) {
 			fundTargetService.createimg(
@@ -102,7 +108,8 @@ public class FundTargetController {
 					targetForm.getMinFund(),
 					targetForm.getFundAmount(),
 					categorie,
-					imgPath
+					imgPath,
+					user.get()
 					);
 		}else if(!files.isEmpty()){
 			
@@ -119,7 +126,8 @@ public class FundTargetController {
 					targetForm.getMinFund(),
 					targetForm.getFundAmount(),
 					categorie,
-					savePath
+					savePath,
+					user.get()
 					);
 		}
 		
@@ -158,15 +166,21 @@ public class FundTargetController {
 	
 	//디테일 창으로
 	@RequestMapping("/detail/{id}")
-	public String showDetail(Model model, @PathVariable("id")Integer id) {
+	public String showDetail(Model model, @PathVariable("id")Integer id,Integer alertId) {
 		FundBoardTarget fundBoardTarget = fundTargetService.findById(id);
 		List<Answer> aList = answerService.findByFundBoardTarget(fundBoardTarget);
+		
+		//알림삭제
+		if(alertId != null) {
+			alertService.deleteAlert(alertId);
+		}
 		
 		model.addAttribute("aList", aList);
 		model.addAttribute("fundBoardTarget", fundBoardTarget);
 		return "/fundTarget/fundTargetDetail";
 	}
 	
+	//이미지 보이기
 	@GetMapping("/img/{id}")
 	@ResponseBody
 	public Resource showImg(@PathVariable("id")Integer id) throws IOException {
