@@ -8,4 +8,5 @@ import com.funding.fundUser.FundUser;
 
 public interface SaleRepository extends JpaRepository<Sale,Integer> {
 	List<Sale> findByFundUser(String nickname);
+	List<Sale> findByid(Integer id);
 }

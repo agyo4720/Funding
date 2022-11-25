@@ -37,6 +37,7 @@ public class PatmentService {
 		sale.setPayMoney(amount);
 		sale.setOrederId(orederId);
 		sale.setPayCode(paymentKey);
+		sale.setStatus(status);
 		sale.setPayDate(LocalDateTime.now());
 		sList.add(sale);
 		saleRepository.save(sale);
@@ -60,13 +61,15 @@ public class PatmentService {
 		sale.setPayMoney(amount);
 		sale.setOrederId(orederId);
 		sale.setPayCode(paymentKey);
+		sale.setStatus(status);
 		sale.setPayDate(LocalDateTime.now());
 		sList.add(sale);
 		saleRepository.save(sale);
 	}
 	
 	//환불
-	public void cancelInfo(String orederId, int totalAmount, String orderName, String cancelReason, Optional<FundUser> FU) {
+	public void cancelInfo(String orederId, int totalAmount, String orderName, String cancelReason, 
+			Optional<FundUser> FU) {
 		List<Cancels> cList = new ArrayList<>(); //결제내역 리스트
 		Cancels cancel = new Cancels();
 		cancel.setFundUser(FU.get().getNickname());

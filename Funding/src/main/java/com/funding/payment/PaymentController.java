@@ -105,6 +105,7 @@ public class PaymentController {
                 "https://api.tosspayments.com/v1/payments/" + paymentKey, request, JsonNode.class);
         if (responseEntity.getStatusCode() == HttpStatus.OK) {
             JsonNode successNode = responseEntity.getBody();
+            model.addAttribute("status", successNode.get("status").asText());//상태
             model.addAttribute("balanceAmount", successNode.get("balanceAmount").asText());//금액
             model.addAttribute("orderName", successNode.get("orderName").asText());//공연이름
             model.addAttribute("orderId", successNode.get("orderId").asText());//주문번호
@@ -159,6 +160,7 @@ public class PaymentController {
             model.addAttribute("balanceAmount", successNode.get("balanceAmount").asText());//금액
             model.addAttribute("orderName", successNode.get("orderName").asText());//공연이름
             model.addAttribute("orderId", successNode.get("orderId").asText());//주문번호
+            model.addAttribute("status", successNode.get("status").asText());//상태
             
             String orderName = successNode.get("orderName").asText();
             String status = successNode.get("status").asText();
@@ -219,7 +221,7 @@ public class PaymentController {
     
     //환불하기
     @RequestMapping("/cancel")
-    public String cancel() {
+    public String cancel()throws Exception {
     	return "/pay/cancel";
     }
     //환불성공
