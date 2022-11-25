@@ -13,7 +13,7 @@ font-family: 'Noto Sans KR', sans-serif;
     font-family: 'Noto Sans KR', sans-serif;
 }
 
-a { color: #000; text-decoration: none;}
+a {color: #000; text-decoration: none;}
 
 ul, li { list-style: none; }
 
@@ -45,6 +45,11 @@ header {
     padding: 20px 0;
 }
 
+header a {
+    
+    
+}
+
 /* 로고 */
 .logo {}
 
@@ -54,6 +59,9 @@ header {
     font-weight: bold;
     font-family: 'Do Hyeon', sans-serif;
     letter-spacing: 2px;
+
+    color: #000;
+    text-decoration: none;
 }
 
 /* 메뉴 */
@@ -61,7 +69,7 @@ header {
 
 .menu ul { display: flex; }
 
-.menu ul li {}
+.menu ul li {  }
 
 .menu ul li:first-child {
     margin-right: 20px;
@@ -72,6 +80,9 @@ header {
     font-weight: bold;
     font-family: 'Do Hyeon', sans-serif;
     letter-spacing: 2px;
+
+    color: #000;
+    text-decoration: none;
 }
 
 .search form .int_search {
@@ -89,7 +100,7 @@ header {
 
 .login ul { display: flex; align-items: center; }
 
-.login ul li { }
+.login ul li {}
 
 .login ul li:first-child {
     margin-right: 10px;
@@ -100,6 +111,9 @@ header {
     font-weight: bold;
     font-family: 'Do Hyeon', sans-serif;
     letter-spacing: 2px;
+
+    color: #000;
+    text-decoration: none;
 }
 
 .nav_user {

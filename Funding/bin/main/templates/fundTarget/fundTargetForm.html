@@ -32,20 +32,24 @@
 				<div class="title">
 					<h2>지정 펀딩</h2>
 				</div>
-				<div class="int int_cate">
-					<label for="category">카테고리</label>
-					<select name="categorie">
-						<option th:each="cate : ${cList}" th:value="${cate.id}" th:text="${cate.categorieName}"></option>
-					</select>
-				</div>
-				<div class="int int_title">
-					<label for="title">제목</label>
-					<input class="subject" id="title" type="text" th:field="*{subject}" autocomplete="off">
-					<div class="errorList" style="display: none"></div>
+
+				<div class="int">
+					<div class="int_m int_cate">
+						<label for="category">카테고리</label>
+						<select name="categorie">
+							<option th:each="cate : ${cList}" th:value="${cate.id}" th:text="${cate.categorieName}"></option>
+						</select>
+					</div>
+					
+					<div class="int_m int_title">
+						<label for="title">제목</label>
+						<input class="subject" id="title" type="text" th:field="*{subject}" autocomplete="off">
+						<div class="errorList" style="display: none"></div>
+					</div>
 				</div>
 				<div class="int int_artist">
 					<label for="artist">공연자</label>
-					<input class="aertiest" id="artist" type="text" name="Aertiest" value="" autocomplete="off">
+					<input class="artiest" id="artist" type="text" name="Aertiest" value="" autocomplete="off">
 					<div class="errorList" style="display: none"></div>
 				</div>
 				<div class="int int_place">
@@ -131,7 +135,7 @@
 	
 	let subject = document.querySelector('.subject');
 	let content = document.querySelector('.content');
-	let aertiest = document.querySelector('.aertiest');
+	let aertiest = document.querySelector('.artiest');
 	let place = document.querySelector('.place');
 	let runtime = document.querySelector('.runtime');
 	let fundDurationE = document.querySelector('.fundDurationE');

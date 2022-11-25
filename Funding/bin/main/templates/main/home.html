@@ -18,62 +18,24 @@
     <header th:replace="/main/nav"></header>
     
     <section>
-		<div>
-			<div class="list_form" th:each="target : ${page}">
-			<div class="con_list">
-				<a href="../fundTarget/fundTargetDetail.html" th:href="@{|/fundTarget/detail/${target.id}|}">
-					<div class="image">
-						<div th:if="${target.imgPath != null}">
-							<img th:src="${target.imgPath}" width="200" height="265">
-						</div>
-						<div th:if="${target.imgPath == null}">
-							<img th:src="|/fundTarget/img/${target.id}|" width="200" height="265">
-						</div>
-					</div>
-				</a>
-				<div class="con">
-					<div class="status">
-						<p th:text="${target.status}">상태</p>
-					</div>
-					
-					<div class="con_title">
-						<a href="../fundTarget/fundTargetDetail.html" th:href="@{|/fundTarget/detail/${target.id}|}">
-							<h3 th:text="${target.subject}">공연 이름</h3>
-						</a>
-						<p class="view" th:text="${target.artiest}">아티스트</p>
-					</div>
-	
-					<div class="con_detail">
-						<div class="view">
-							<label for="place">장소</label>
-							<p th:text="${target.place}">장소</p>
-						</div>
-						
-						<div class="view">
-							<label for="startDate">공연일</label>
-							<p th:text="${#temporals.format(target.startDate, 'yyyy-MM-dd HH:mm')}">공연 시작</p>
-						</div>
-						
-						<div class="view">
-							<label for="runtime">공연시간</label>
-							<p th:text="|${target.runtime}분|">공연시간</p>
-						</div>
-						
-						<div class="view">
-							<label for="fundDurationS">펀딩 기간</label>
-							<p th:text="${target.fundDurationS} + ' ~ ' + ${target.fundDurationE}">펀딩 기간</p>
-						</div>
-						
-						<div>
-							<div th:if="${target.fundUser.nickname != null}">
-								<div th:text="|글 등록한 사람 : ${target.fundUser.nickname}|"></div>
+		<!-- 지정펀딩 리스트 -->
+		<div class="sec">
+			<h2>최근 지정 펀딩 리스트</h2>
+			<div class="list">
+				<div class="list_form" th:each="target : ${page}">
+					<a class="con_list" href="../fundTarget/fundTargetDetail.html" th:href="@{|/fundTarget/detail/${target.id}|}">
+						<div class="image">
+							<div th:if="${target.imgPath != null}">
+								<img th:src="${target.imgPath}" width="200" height="265">
+							</div>
+							<div th:if="${target.imgPath == null}">
+								<img th:src="|/fundTarget/img/${target.id}|" width="200" height="265">
 							</div>
 						</div>
-					</div>
+						<h3 th:text="${target.subject}">공연 이름</h3>
+					</a>
 				</div>
 			</div>
-			<hr/>
-		</div>
 		</div>
     </section>
 </body>
