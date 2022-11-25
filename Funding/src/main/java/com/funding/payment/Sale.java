@@ -39,9 +39,6 @@ public class Sale {
 	@Column(name = "orederId")
 	private String orederId; //주문번호
 	
-	@Column(name = "status")
-	private String status; //상태
-	
 	@Column(name = "fundUser")
 	private String fundUser; //고객이름
 	
