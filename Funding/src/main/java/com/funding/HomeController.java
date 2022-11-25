@@ -58,10 +58,10 @@ public class HomeController {
 	// 이메일 인증 테스트
 	private final EmailService emailService;
 	
-	@RequestMapping("/email")
+	@RequestMapping("/emailAuth")
 	@ResponseBody
-	public void emailTest() throws UnsupportedEncodingException, MessagingException {
-		String name = "ldh8640@gmail.com";
+	public void emailTest(String email) throws UnsupportedEncodingException, MessagingException {
+		String name = email;
 		emailService.sendEmail(name);
 	}
 	

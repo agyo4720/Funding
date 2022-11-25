@@ -42,8 +42,6 @@ public class EmailService {
 	
 
 	
-//	@Value("${spring.mail.username}")
-//	private String id;
 	
 	//메일 양식 작성
 	public MimeMessage createEmailForm(String email) throws MessagingException, UnsupportedEncodingException {
@@ -55,7 +53,7 @@ public class EmailService {
 		
 		String setFrom = "zlwmdnlsl86@naver.com";
 		String toEmail = email; //받는 사람
-		String title = "하은교"; //메일 제목
+		String title = "Let's Funding 이메일 인증"; //메일 제목
 		
 
 		MimeMessage message = emailSender.createMimeMessage();

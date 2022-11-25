@@ -81,7 +81,9 @@
                     <input type="text" id="int_direct"/>
                 </div>
                 <div id="domainCheckResult"></div>
-                <button class="sub_email">인증번호 받기</button>
+                <input type="button" class="sub_email" id="sendEmailAuthcode" value="인증번호 받기">
+                <input type="text"></input>
+                <input type="button" class="sub_email" id="emailAutoCodeCheck" value="인증번호 확인">
             </div>
 
             <!-- 생년월일 -->
@@ -366,7 +368,6 @@
 	        let domainCheck =  /^([a-z0-9\-]+\.)+[a-z]{2,6}$/
 	        
 	        if(domain==='direct'){
-				console.log("ddddddd")
 				$('#directVal').attr('value',domainDirect)
 				console.log($('#directVal').val)
 			}
@@ -538,5 +539,43 @@
 			$('#userRoleCheckResult').html('')
 	    })
 	</script>
+	
+	<!-- 이메일 인증번호 발송 -->
+	<script>
+		$('#sendEmailAuthcode').click(function(){
+			let domain = $('#sel_domain').val()
+			let domainDirect = $('#int_direct').val()
+			
+			if(domain==='direct'){
+				$('#directVal').attr('value',domainDirect)
+			}
+			
+			$.ajax({
+	            url: '/emailAuth',
+	            data: {
+	                email: $('#email').val() + "@" +$('#sel_domain').val()
+	            },
+	            success:
+	                console.log('##인증번호 발송##')
+	            ,
+	            error: function(xhr) {
+	                console.log(xhr);
+	                alert(xhr.status + ':' + xhr.statusText);
+	            }
+	        })
+	        
+		})
+	</script>
+	
+	<!-- 이메일 인증번호 확인 -->
+	<script>
+		$('#emailAutoCodeCheck').click(function(){
+		
+		})
+	</script>
+	
+	
+	
+	
 </body>
 </html>
