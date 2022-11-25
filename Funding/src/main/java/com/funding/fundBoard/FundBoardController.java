@@ -1,7 +1,9 @@
 package com.funding.fundBoard;
 
 
+import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -20,6 +22,7 @@ import com.funding.Categorie.CategorieService;
 import com.funding.answer.Answer;
 import com.funding.answer.AnswerService;
 import com.funding.fundArtist.FundArtistService;
+import com.funding.fundUser.FundUser;
 import com.funding.fundUser.FundUserService;
 
 import lombok.RequiredArgsConstructor;
@@ -36,6 +39,7 @@ public class FundBoardController {
 	private final CategorieService categorieService;
 	private final FundArtistService fundArtistService;
 	private final AnswerService answerService;
+
 	
 	// 미지정 펀드 리스트(페이징)
 	@RequestMapping("/list")
@@ -67,6 +71,7 @@ public class FundBoardController {
 	public String create(
 			@Valid FundBoardForm fundBoardForm,
 			BindingResult bindingResult,
+			Principal principal,
 			Model model) {
 		
 		if(bindingResult.hasErrors()) {
@@ -77,9 +82,10 @@ public class FundBoardController {
 			return "/fundBoard/fundBoard_form";
 		}
 		
-		//String time = fundBoardForm.getStartDate() + " " + fundBoardForm.getStartTime();
+		// 날짜 데이터와 시간 데이터를 합쳐서 데이터 넣기
+		// String time = fundBoardForm.getStartDate() + " " + fundBoardForm.getStartTime();
 		
-		//log.info("받은 날짜 : " + fundBoardForm.getFundDuration());
+		Optional<FundUser> fundUser = this.fundUserService.findByuserName(principal.getName());
 		
 		this.fundBoardService.create(
 				fundBoardForm.getCategorieName(),
@@ -91,7 +97,8 @@ public class FundBoardController {
 				fundBoardForm.getRuntime(),
 				fundBoardForm.getMinFund(),
 				fundBoardForm.getFundAmount(),
-				fundBoardForm.getCreateDate()
+				fundBoardForm.getCreateDate(),
+				fundUser.get()
 				);
 		
 		return "redirect:/fundBoard/list";
@@ -143,7 +150,7 @@ public class FundBoardController {
 		return String.format("redirect:/fundBoard/detail/%s", id);
 	}
 	
-	// 2022/11/25 작업시작
+	// 2022/11/25 - 1 작업중
 
 	
 }

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import com.funding.Categorie.Categorie;
 import com.funding.Categorie.CategorieRepository;
+import com.funding.fundUser.FundUser;
 
 import lombok.RequiredArgsConstructor;
 
@@ -43,7 +44,8 @@ public class FundBoardService {
 			String runtime,
 			Integer minFund,
 			Integer fundAmount,
-			LocalDateTime createDate
+			LocalDateTime createDate,
+			FundUser fundUser
 			) {
 		
 		FundBoard fundBoard = new FundBoard();
@@ -68,6 +70,7 @@ public class FundBoardService {
 		fundBoard.setStar(0);
 		fundBoard.setCreateDate(LocalDateTime.now());
 		fundBoard.setCategorie(categorie);
+		fundBoard.setFundUser(fundUser);
 		
 		this.fundBoardRepository.save(fundBoard);
 	}
