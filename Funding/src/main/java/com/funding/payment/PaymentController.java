@@ -216,7 +216,6 @@ public class PaymentController {
     //환불하기
     @RequestMapping("/cancel")
     public String cancel(String paymentKey)throws Exception {
-    	log.info("~~~~~~"+paymentKey+"~~~~~~~~~");
     	this.paymentKey =  paymentKey;
     	return "/pay/cancel";
     }
@@ -224,7 +223,8 @@ public class PaymentController {
     @RequestMapping("/cancelRquest")
     public String cancelRquest(String paymentKey, 
     		@RequestParam("cancelReason")String cancelReason, Model model, Principal principal)throws Exception{
-    	paymentKey = this.paymentKey;
+    		paymentKey = this.paymentKey;
+    		
     		HttpRequest request = HttpRequest.newBuilder()
     		    .uri(URI.create("https://api.tosspayments.com/v1/payments/"+paymentKey+"/cancel"))
     		    .header("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()))
