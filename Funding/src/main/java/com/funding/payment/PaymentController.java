@@ -58,6 +58,7 @@ public class PaymentController {
     private final FundUserRepository fundUserRepository;
     private final CancelsRepository cancelsRepository;
     private final SaleRepository saleRepository;
+    private String paymentKey;
     
     @PostConstruct
     private void init() {
@@ -87,8 +88,7 @@ public class PaymentController {
     @RequestMapping("/success")
     public String confirmPayment(
             @RequestParam String paymentKey, @RequestParam String orderId, @RequestParam int amount,
-            Model model, Principal principal, String where) throws Exception {
-    	
+            Model model, Principal principal) throws Exception {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()));
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -176,15 +176,9 @@ public class PaymentController {
     
     
     
-    
     //조회하기
-    @RequestMapping("/lookup")
-    public String lookup() {
-    	return "pay/lookup";
-    }
-    //조회성공
     @RequestMapping("/lookupRquest")
-    public String lookupRquest(@RequestParam("orderId")String orderId,Model model) throws Exception  {
+    public String lookupRquest(String orderId,Model model) throws Exception  {
     	HttpRequest request = HttpRequest.newBuilder()
     			.uri(URI.create("https://api.tosspayments.com/v1/payments/orders/"+orderId))
     		    .header("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()))
@@ -218,16 +212,19 @@ public class PaymentController {
     
     
     
-    
+
     //환불하기
     @RequestMapping("/cancel")
-    public String cancel()throws Exception {
+    public String cancel(String paymentKey)throws Exception {
+    	log.info("~~~~~~"+paymentKey+"~~~~~~~~~");
+    	this.paymentKey =  paymentKey;
     	return "/pay/cancel";
     }
     //환불성공
     @RequestMapping("/cancelRquest")
-    public String cancelRquest(@RequestParam("paymentKey")String paymentKey, 
+    public String cancelRquest(String paymentKey, 
     		@RequestParam("cancelReason")String cancelReason, Model model, Principal principal)throws Exception{
+    	paymentKey = this.paymentKey;
     		HttpRequest request = HttpRequest.newBuilder()
     		    .uri(URI.create("https://api.tosspayments.com/v1/payments/"+paymentKey+"/cancel"))
     		    .header("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()))
