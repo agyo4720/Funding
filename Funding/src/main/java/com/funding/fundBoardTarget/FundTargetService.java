@@ -120,6 +120,7 @@ public class FundTargetService {
 		return targetList;
 	}
 	
+	//결재시 업데이트 됨
 	public void addTargetFund(FundBoardTarget fundBoardTarget) {
 		fundTargetRepository.save(fundBoardTarget);
 	}

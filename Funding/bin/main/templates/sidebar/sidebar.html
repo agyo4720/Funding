@@ -13,12 +13,13 @@
 	<div class="alert"></div>
 
 	<div>현재 펀딩중인 목록</div>
+	<div class="fundList"></div>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
 	$(document).ready(function(){
 		let user = $(".user").val()
 		if(user != null){
-			console.log('실행됨')
+			console.log('ajax 실행됨')
 			
 			let token = $("meta[name='_csrf']").attr("content");
 			let header = $("meta[name='_csrf_header']").attr("content");
@@ -37,6 +38,19 @@
 				}
 			})
 			
+			$.ajax({
+				url : '/show/fundList'
+				,data : "user=" + user
+				,beforeSend : function(xhr){
+					xhr.setRequestHeader(header, token);
+				}
+				,success : function(result){
+					$.each(result, function(index, item){					
+						$('.fundList').append("<br><a href=\"" + item.url + "\"><div>" + item.fundName + 
+								" 진행도 " + item.percent + "</div></a></br>")
+					})
+				}
+			})
 		}
 	})
 

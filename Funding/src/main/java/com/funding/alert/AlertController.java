@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.funding.fundArtist.FundArtist;
 import com.funding.fundArtist.FundArtistService;
+import com.funding.fundTargetList.FundTargetList;
+import com.funding.fundTargetList.FundTargetListService;
 import com.funding.fundUser.FundUser;
 import com.funding.fundUser.FundUserService;
 
@@ -26,9 +28,9 @@ public class AlertController {
 	private final AlertService alertService;
 	private final FundUserService fundUserService;
 	private final FundArtistService fundArtistService;
+	private final FundTargetListService fundTargetListService;
 	
-	
-	
+	//댓글 알림 불러오기
 	@RequestMapping("/show")
 	@ResponseBody
 	public List<HashMap<String, String>> showAlert(@RequestParam("user")String username) {
@@ -51,11 +53,9 @@ public class AlertController {
 			
 		}
 		
-		
-		
 
 		
-		//유저일 때
+		//유저일 때, 댓글 알림추가
 		List<Alert> aList = alertService.findByHostUser(user.get());
 		List<HashMap<String, String>> alretList = new ArrayList<>();
 		for(int i=0; i<aList.size(); i++) {

@@ -37,6 +37,7 @@ import com.funding.fundBoard.FundBoard;
 import com.funding.fundBoard.FundBoardService;
 import com.funding.fundBoardTarget.FundBoardTarget;
 import com.funding.fundBoardTarget.FundTargetService;
+import com.funding.fundTargetList.FundTargetListService;
 import com.funding.fundUser.FundUser;
 import com.funding.fundUser.FundUserRepository;
 
@@ -56,7 +57,8 @@ public class PaymentController {
     private final FundBoardService fundBoardService;
     private final FundUserRepository fundUserRepository;
     private final CancelsRepository cancelsRepository;
-    private final SaleRepository saleRepository;    
+    private final SaleRepository saleRepository;
+    private final FundTargetListService fundTargetListService;
     private String paymentKey;
     
     @PostConstruct
@@ -124,6 +126,9 @@ public class PaymentController {
         	add += amount;
         	targetPk.setFundCurrent(add);
         	fundTargetService.addTargetFund(targetPk);
+        	
+        	//유저의 현재 펀딩 목록 추가
+        	fundTargetListService.insertList(principal, targetPk);
         	
             return "/pay/success";
         } else {
