@@ -23,7 +23,7 @@
 			<td align="center" th:text="${list.fundBoardTarget}">지정공연제목</td>
 			<td align="center" th:text="${list.fundBoard}">미지정공연제목</td>
 			<td align="center" th:text="| ${list.payMoney}원|">가격</td>
-			<td align="center" th:text="| ${list.check}|">가격</td>
+			<td align="center" th:text="| ${list.checkin}|">가격</td>
 			<td align="center">
 				<button th:onclick="'location.href=\'' + @{/pay/lookupRquest(orderId=${list.orederId})} + '\''" type="submit">상품조회하기</button>
 			</td>

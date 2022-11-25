@@ -76,13 +76,16 @@ public class PatmentService {
 		cList.add(cancel);
 		cancelsRepository.save(cancel);
 		
-		List<Sale> sList = new ArrayList<>();
-		Sale sale = new Sale();
-		sale.setFundUser(FU.get().getId().toString());
-		sale.setCheck("환불");
+
+		/*
+		sale.setId(FU.get().getId());
+		sale.setCheckin("환불");
 		sList.add(sale);
 		saleRepository.save(sale);
+		*/
 	}
+	
+	
 	
 	
 	//미지정환불
