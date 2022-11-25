@@ -120,4 +120,8 @@ public class FundTargetService {
 		return targetList;
 	}
 	
+	public void addTargetFund(FundBoardTarget fundBoardTarget) {
+		fundTargetRepository.save(fundBoardTarget);
+	}
+	
 }
