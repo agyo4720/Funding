@@ -128,7 +128,6 @@
 	let error = document.querySelectorAll(".errorList")
 	
 	let subject = document.querySelector('.subject');
-	let content = document.querySelector('.content');
 	let aertiest = document.querySelector('.aertiest');
 	let place = document.querySelector('.place');
 	let runtime = document.querySelector('.runtime');
@@ -136,6 +135,7 @@
 	let startDate = document.querySelector('.startDate');
 	let minFund = document.querySelector('.minFund');
 	let fundAmount = document.querySelector('.fundAmount');
+	let content = document.querySelector('.content');
 	
 	
 	
@@ -159,7 +159,6 @@
 	});
 	
 	subject.addEventListener('focusout',checkSub)
-	content.addEventListener('focusout',checkCon)
 	aertiest.addEventListener('focusout',checkAertiest)
 	place.addEventListener('focusout',checkPlace)
 	runtime.addEventListener('focusout',checkRuntime)
@@ -167,7 +166,7 @@
 	startDate.addEventListener('focusout',checkStartDate)
 	minFund.addEventListener('focusout',checkMinFund)
 	fundAmount.addEventListener('focusout',checkFundAmount)
-
+	content.addEventListener('focusout',checkCon)
 	
 	
 	function checkSub(){
@@ -178,44 +177,36 @@
 			error[0].style.display='none'
 		}
 	}
-	function checkCon(){
-		if(content.value === ""){
+	function checkAertiest(){
+		if(aertiest.value === ""){
 			error[1].innerHTML='빈칸이에용.'
 			error[1].style.display='block'
 		}else{
 			error[1].style.display='none'
 		}
 	}
-	function checkAertiest(){
-		if(aertiest.value === ""){
+	function checkPlace(){
+		if(place.value === ""){
 			error[2].innerHTML='빈칸이에용.'
 			error[2].style.display='block'
 		}else{
 			error[2].style.display='none'
 		}
 	}
-	function checkPlace(){
-		if(place.value === ""){
-			error[3].innerHTML='빈칸이에용.'
+	function checkRuntime(){
+		if(runtime.value === ""){
+			error[3].innerHTML='숫자입력해줘용.'
 			error[3].style.display='block'
 		}else{
 			error[3].style.display='none'
 		}
 	}
-	function checkRuntime(){
-		if(runtime.value === ""){
-			error[4].innerHTML='숫자입력해줘용.'
+	function checkFundDurationE(){
+		if(fundDurationE.value === ""){
+			error[4].innerHTML='빈칸이에용.'
 			error[4].style.display='block'
 		}else{
 			error[4].style.display='none'
-		}
-	}
-	function checkFundDurationE(){
-		if(fundDurationE.value === ""){
-			error[5].innerHTML='빈칸이에용.'
-			error[5].style.display='block'
-		}else{
-			error[5].style.display='none'
 			fundTime = document.querySelector('.fundDurationE').value
 			fundTime += 'T00:00'
 			startDate.min = fundTime
@@ -223,22 +214,30 @@
 	}
 	function checkStartDate(){
 		if(startDate.value === ""){
+			error[5].innerHTML='빈칸이에용.'
+			error[5].style.display='block'
+		}else{
+			error[5].style.display='none'
+		}
+	}
+	function checkMinFund(){
+		if(minFund.value === ""){
 			error[6].innerHTML='빈칸이에용.'
 			error[6].style.display='block'
 		}else{
 			error[6].style.display='none'
 		}
 	}
-	function checkMinFund(){
-		if(minFund.value === ""){
+	function checkFundAmount(){
+		if(fundAmount.value === ""){
 			error[7].innerHTML='빈칸이에용.'
 			error[7].style.display='block'
 		}else{
 			error[7].style.display='none'
 		}
 	}
-	function checkFundAmount(){
-		if(fundAmount.value === ""){
+	function checkCon(){
+		if(content.value === ""){
 			error[8].innerHTML='빈칸이에용.'
 			error[8].style.display='block'
 		}else{
