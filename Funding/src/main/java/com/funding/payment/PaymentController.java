@@ -7,6 +7,7 @@ import java.net.http.HttpResponse;
 import java.security.Principal;
 import java.util.Base64;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -55,7 +56,7 @@ public class PaymentController {
     private final FundBoardService fundBoardService;
     private final FundUserRepository fundUserRepository;
     private final CancelsRepository cancelsRepository;
-    private final SaleRepository saleRepository;
+    private final SaleRepository saleRepository;    
     private String paymentKey;
     
     @PostConstruct
@@ -101,6 +102,7 @@ public class PaymentController {
         
         ResponseEntity<JsonNode> responseEntity = restTemplate.postForEntity(
                 "https://api.tosspayments.com/v1/payments/" + paymentKey, request, JsonNode.class);
+        
         if (responseEntity.getStatusCode() == HttpStatus.OK) {
             JsonNode successNode = responseEntity.getBody();
             model.addAttribute("status", successNode.get("status").asText());//상태
@@ -110,6 +112,19 @@ public class PaymentController {
             
             String orderName = successNode.get("orderName").asText();
         	patmentService.targetSaveinfo(paymentKey, orderId, amount, orderName, FU);
+        	
+        	//누적금액증가
+        	String tar = successNode.get("virtualAccount").get("customerName").toString();
+        	String target = tar.substring(tar.lastIndexOf('.')+1);
+        	target = target.replace("\"", "");
+        	log.info("target: "+target);	
+        	
+        	FundBoardTarget targetPk = fundTargetService.findById(Integer.parseInt(target));
+        	Integer add = targetPk.getFundCurrent();
+        	add += amount;
+        	targetPk.setFundCurrent(add);
+        	fundTargetService.addTargetFund(targetPk);
+        	
             return "/pay/success";
         } else {
             JsonNode failNode = responseEntity.getBody();
@@ -161,6 +176,21 @@ public class PaymentController {
             
             String orderName = successNode.get("orderName").asText();
         	patmentService.saveinfo(paymentKey, orderId, amount, orderName, FU);
+        	
+        	/*
+        	//누적금액증가
+        	String tar = successNode.get("virtualAccount").get("customerName").toString();
+        	String target = tar.substring(tar.lastIndexOf('.')+1);
+        	target = target.replace("\"", "");
+        	log.info("target: "+target);	
+        	
+        	FundBoardTarget targetPk = fundTargetService.findById(Integer.parseInt(target));
+        	Integer add = targetPk.getFundCurrent();
+        	add += amount;
+        	targetPk.setFundCurrent(add);
+        	fundTargetService.addTargetFund(targetPk);
+        	*/
+        	
             return "/pay/success";
         } else {
             JsonNode failNode = responseEntity.getBody();
@@ -232,7 +262,7 @@ public class PaymentController {
     		JSONParser parser = new JSONParser();
     		Object obj = parser.parse(response.body());
     		JSONObject jsonObj = (JSONObject)obj;
-        	
+        	log.info("jsonObj: "+jsonObj.toString());
     		if(response.statusCode() == 200) {
     			String orderName = (String)jsonObj.get("orderName");
     			String orderId = (String)jsonObj.get("orderId");
@@ -242,10 +272,25 @@ public class PaymentController {
     			model.addAttribute("orderId",orderId);//주문번호
     			model.addAttribute("totalAmount",totalAmount);//금액
     			model.addAttribute("cancelReason",cancelReason);//환불사유
-    			
     			principal.getName();
     			Optional<FundUser> FU =  fundUserRepository.findByusername(principal.getName());
     			patmentService.cancelInfo(orderId, Integer.valueOf(totalAmount).intValue(), orderName, cancelReason, FU);
+    			
+    			
+            	//누적금액감소
+    			JSONObject tar = (JSONObject) jsonObj.get("virtualAccount");
+    			String userAndTargetNo = (String)tar.get("customerName");
+
+            	String target = userAndTargetNo.substring(userAndTargetNo.lastIndexOf('.')+1);
+            	target = target.replace("\"", "");
+            	log.info("target: "+target);	
+            	
+            	FundBoardTarget targetPk = fundTargetService.findById(Integer.parseInt(target));
+            	Integer sub = targetPk.getFundCurrent();
+            	sub -= Integer.valueOf(totalAmount).intValue();
+            	targetPk.setFundCurrent(sub);
+            	fundTargetService.addTargetFund(targetPk);
+
     			return "/pay/cancelSuccess";
     		}else {
     			String message = (String)jsonObj.get("message");
