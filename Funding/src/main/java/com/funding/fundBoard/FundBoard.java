@@ -1,5 +1,6 @@
 package com.funding.fundBoard;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -43,13 +44,13 @@ public class FundBoard {
 	
 	private String place; // 장소
 	
-	private LocalDateTime startDate; // 공연 시작 일자
+	private LocalDateTime startDateTime; // 공연 시작 일자
+	
+	private LocalDate fundDuration; // 펀딩 기간
 	
 	private String runtime; // 공연 시간
 	
 	private String state; // 펀딩 상태
-	
-	private String fundDuration; // 펀딩 기간
 	
 	private Integer minFund; // 1인 최소 펀딩 금액
 	

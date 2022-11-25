@@ -1,8 +1,10 @@
 package com.funding.fundBoard;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,9 +38,9 @@ public class FundBoardService {
 			String subject,
 			String content,
 			String place,
-			String startDate,
-			String runtime,
+			String startDateTime,
 			String fundDuration,
+			String runtime,
 			Integer minFund,
 			Integer fundAmount,
 			LocalDateTime createDate
@@ -48,15 +50,15 @@ public class FundBoardService {
 		
 		Categorie categorie = this.categorieRepository.findByCategorieName(categorieName).get();
 		
-		DateTimeFormatter form = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		DateTimeFormatter form = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		
 		fundBoard.setCategorieName(categorieName);
 		fundBoard.setSubject(subject);
 		fundBoard.setContent(content);
 		fundBoard.setPlace(place);
-		fundBoard.setStartDate(LocalDateTime.parse(startDate, form));
+		fundBoard.setStartDateTime(LocalDateTime.parse(startDateTime));
+		fundBoard.setFundDuration(LocalDate.parse(fundDuration, form));
 		fundBoard.setRuntime(runtime);
-		fundBoard.setFundDuration(fundDuration);
 		fundBoard.setMinFund(minFund);
 		fundBoard.setFundAmount(fundAmount);
 		fundBoard.setState("진행중");

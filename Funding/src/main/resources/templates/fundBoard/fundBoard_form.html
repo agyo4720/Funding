@@ -31,7 +31,6 @@
 					<label for="subject">제목</label>
 					<input type="text" th:field="*{subject}">
 				</div>
-				
 				<div>
 					<label for="content">내용</label>
 					<input type="text" th:field="*{content}">
@@ -41,17 +40,16 @@
 					<input type="text" th:field="*{place}">
 				</div>
 				<div>
-					<label for="startDate">공연 시작 일자</label>
-					<input type="date" th:field="*{startDate}">
-					<input type="time" th:field="*{startTime}">
-				</div>
-				<div>
-					<label for="runtime">공연 시간</label>
-					<input type="text" th:field="*{runtime}">
+					<label for="startDateTime">공연 시작 일자</label>
+					<input type="datetime-local" th:field="*{startDateTime}">
 				</div>
 				<div>
 					<label for="fundDuration">펀딩 기간</label>
-					<input type="text" th:field="*{fundDuration}">
+					<input type="date" th:field="*{fundDuration}">
+				</div>
+				<div>
+					<label for="runtime">공연 시간</label>
+					<input type="number" th:field="*{runtime}">
 				</div>
 				<div>
 					<label for="minFund">1인 최소 펀딩 금액</label>

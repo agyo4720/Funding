@@ -23,7 +23,9 @@ import com.funding.fundArtist.FundArtistService;
 import com.funding.fundUser.FundUserService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor
 @Controller
 @RequestMapping("/fundBoard")
@@ -50,6 +52,7 @@ public class FundBoardController {
 		return "fundBoard/fundBoard_list";
 	}
 	
+	// 미지정 펀드 등록(GET)
 	@GetMapping("/create")
 	public String create(FundBoardForm fundBoardForm, Model model) {
 		
@@ -59,6 +62,7 @@ public class FundBoardController {
 		return "/fundBoard/fundBoard_form";
 	}
 	
+	// 미지정 펀드 등록(POST)
 	@PostMapping("/create")
 	public String create(
 			@Valid FundBoardForm fundBoardForm,
@@ -73,17 +77,18 @@ public class FundBoardController {
 			return "/fundBoard/fundBoard_form";
 		}
 		
-		String time = fundBoardForm.getStartDate() + " " + fundBoardForm.getStartTime();
+		//String time = fundBoardForm.getStartDate() + " " + fundBoardForm.getStartTime();
 		
+		//log.info("받은 날짜 : " + fundBoardForm.getFundDuration());
 		
 		this.fundBoardService.create(
 				fundBoardForm.getCategorieName(),
 				fundBoardForm.getSubject(),
 				fundBoardForm.getContent(),
 				fundBoardForm.getPlace(),
-				time,
-				fundBoardForm.getRuntime(),
+				fundBoardForm.getStartDateTime(),
 				fundBoardForm.getFundDuration(),
+				fundBoardForm.getRuntime(),
 				fundBoardForm.getMinFund(),
 				fundBoardForm.getFundAmount(),
 				fundBoardForm.getCreateDate()
@@ -93,6 +98,7 @@ public class FundBoardController {
 		
 	}
 	
+	// 미지정 펀드 답변등록
 	@RequestMapping("/detail/{id}")
 	public String detail(@PathVariable ("id") Integer id, Model model) {
 		
@@ -137,7 +143,7 @@ public class FundBoardController {
 		return String.format("redirect:/fundBoard/detail/%s", id);
 	}
 	
-	// 2022/11/24 - 작업시작
-	
+	// 2022/11/25 작업시작
+
 	
 }

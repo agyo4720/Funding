@@ -37,7 +37,6 @@
     <section>
 		<div>
 			<form th:object="${targetForm}" method="post" enctype="multipart/form-data">
-<<<<<<< HEAD
 				<div>카테고리</div>
 				<select name="categorie">
 					<option th:each="cate : ${cList}" th:value="${cate.id}" th:text="${cate.categorieName}"></option>
@@ -69,7 +68,7 @@
 				<div>총 펀딩금액</div>
 				<input class="fundAmount" type="number" th:field="*{fundAmount}" value="" autocomplete="off">
 				<div class="errorList" style="display: none"></div>
-=======
+
 				<div class="title">
 					<h2>지정 펀딩</h2>
 				</div>

@@ -25,10 +25,7 @@ public class FundBoardForm {
 	private String place; // 장소
 	
 	//@NotEmpty(message="공연 시작 일자는 필수항목입니다.")
-	private String startDate; // 공연 시작 일자
-	
-	//@NotEmpty(message="공연 시작 시간은 필수항목입니다.")
-	private String startTime; // 공연 시작 시간
+	private String startDateTime; // 공연 시작 일자
 	
 	//@NotEmpty(message="공연 시간은 필수항목입니다.")
 	private String runtime; // 공연 시간
