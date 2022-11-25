@@ -13,9 +13,8 @@
 			<th align="center" width="160">지정공연제목</th>
 			<th align="center" width="160">미지정공연제목</th>
 			<th align="center" width="160">가격</th>
-			<th align="center" width="160">주문번호</th>
-			<th align="center" width="160">상태</th>
-			<th align="center" width="160">코드</th>
+			<th align="center" width="160">상품조회하기</th>
+			<th align="center" width="160">환불하기</th>
 			<th align="center" width="160">결제날짜</th>
 		</tr>
 		<tr th:each="list : ${sList}">
@@ -26,7 +25,6 @@
 			<td align="center">
 				<button th:onclick="'location.href=\'' + @{/pay/lookupRquest(orderId=${list.orederId})} + '\''" type="submit">상품조회하기</button>
 			</td>
-			<td align="center" th:text="${list.status}">상태</td>
 			<td align="center">
 				<button th:onclick="'location.href=\'' + @{/pay/cancel(paymentKey=${list.payCode})} + '\''" type="submit">환불하기</button>
 			</td>
@@ -40,7 +38,6 @@
 			<th align="center" width="160">닉네임</th>
 			<th align="center" width="160">공연제목</th>
 			<th align="center" width="160">가격</th>
-			<th align="center" width="160">주문번호</th>
 			<th align="center" width="160">환불사유</th>
 			<th align="center" width="160">환불날짜</th>
 		</tr>
@@ -48,7 +45,6 @@
 			<td align="center" th:text="${list.fundUser}">닉네임</td>
 			<td align="center" th:text="${list.orderName}">공연제목</td>
 			<td align="center" th:text="| ${list.payMoney}원|">가격</td>
-			<td align="center" th:text="${list.orderId}">주문번호</td>
 			<td align="center" th:text="${list.cancelReason}">환불사유</td>
 			<td align="center" th:text="${list.canceledAt}">환불날짜</td>
 		</tr>

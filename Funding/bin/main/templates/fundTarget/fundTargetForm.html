@@ -11,8 +11,6 @@
 
 	<!-- BootStrap -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-
-	<!-- Summernote -->
 	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 
 	<!-- CSS -->
@@ -32,24 +30,20 @@
 				<div class="title">
 					<h2>지정 펀딩</h2>
 				</div>
-
-				<div class="int">
-					<div class="int_m int_cate">
-						<label for="category">카테고리</label>
-						<select name="categorie">
-							<option th:each="cate : ${cList}" th:value="${cate.id}" th:text="${cate.categorieName}"></option>
-						</select>
-					</div>
-					
-					<div class="int_m int_title">
-						<label for="title">제목</label>
-						<input class="subject" id="title" type="text" th:field="*{subject}" autocomplete="off">
-						<div class="errorList" style="display: none"></div>
-					</div>
+				<div class="int int_cate">
+					<label for="category">카테고리</label>
+					<select name="categorie">
+						<option th:each="cate : ${cList}" th:value="${cate.id}" th:text="${cate.categorieName}"></option>
+					</select>
+				</div>
+				<div class="int int_title">
+					<label for="title">제목</label>
+					<input class="subject" id="title" type="text" th:field="*{subject}" autocomplete="off">
+					<div class="errorList" style="display: none"></div>
 				</div>
 				<div class="int int_artist">
 					<label for="artist">공연자</label>
-					<input class="artiest" id="artist" type="text" name="Aertiest" value="" autocomplete="off">
+					<input class="aertiest" id="artist" type="text" name="Aertiest" value="" autocomplete="off">
 					<div class="errorList" style="display: none"></div>
 				</div>
 				<div class="int int_place">
@@ -69,7 +63,7 @@
 				</div>
 				<div class="int int_date">
 					<label for="date">공연일</label>
-					<input id="date" class="startDate" type="datetime-local" th:field="*{startDate}" value="" autocomplete="off">	
+					<input id="date" class="startDate" type="datetime-local" th:field="*{startDate}" value="" autocomplete="off">
 					<div class="errorList" style="display: none" ></div>
 				</div>
 				<div class="int int_minfund">
@@ -88,27 +82,27 @@
 					<div class="errorList" style="display: none"></div>
 				</div>
 
-				
+
 				<label for="image">대표 이미지</label>
 				<!-- 대표이미지 선택 -->
 				<div class="int_image">
-					<input id="rad1" type="radio" name="imgPath" value="https://cdn.huffingtonpost.kr/news/photo/202101/105466_198431.jpeg"> 
+					<input id="rad1" type="radio" name="imgPath" value="https://cdn.huffingtonpost.kr/news/photo/202101/105466_198431.jpeg">
 						<label for="rad1"><img src="https://cdn.huffingtonpost.kr/news/photo/202101/105466_198431.jpeg" alt="이미지1"
 						width="100" heigth="100"></label>
-					<input id="rad2" type="radio" name="imgPath" value="https://en.pimg.jp/066/591/114/1/66591114.jpg"> 
+					<input id="rad2" type="radio" name="imgPath" value="https://en.pimg.jp/066/591/114/1/66591114.jpg">
 					<label for="rad2">
 						<img src="https://en.pimg.jp/066/591/114/1/66591114.jpg" alt="이미지1"
 						width="100" heigth="100">
 					</label>
 				</div>
 				<!-- //대표이미지 선택 -->
-				
+
 				<!-- 파일 업로드 -->
 				<div class="int_file">
 					<input type="file" multiple="multiple" name="file" />
 				</div>
 				<!-- //파일 업로드 -->
-				
+
 				<!-- 이미지 아무것도 선택 안하면 에러 출력 -->
 				<div th:if="${#fields.hasAnyErrors()}">
 					<div th:each="err : ${#fields.allErrors()}" th:text="${err}"></div>
@@ -117,34 +111,34 @@
 
 				<button id="btn" type="submit">작성 완료</button>
 			</form>
-            
+
 		</div>
     </section>
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
+<script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
 <script>
 // 유효성 검사 부분
 	var btn = document.querySelector('#btn');
 	var valid = false
 	let fundTime
-	
+
 	let error = document.querySelectorAll(".errorList")
-	
+
 	let subject = document.querySelector('.subject');
-	let content = document.querySelector('.content');
-	let aertiest = document.querySelector('.artiest');
+	let aertiest = document.querySelector('.aertiest');
 	let place = document.querySelector('.place');
 	let runtime = document.querySelector('.runtime');
 	let fundDurationE = document.querySelector('.fundDurationE');
 	let startDate = document.querySelector('.startDate');
 	let minFund = document.querySelector('.minFund');
 	let fundAmount = document.querySelector('.fundAmount');
-	
-	
-	
+	let content = document.querySelector('.content');
+
+
+
 	btn.addEventListener('click', function(e) {
 		let count = 0;
 		for(i=0; i < error.length ; i++){
@@ -152,20 +146,19 @@
 				count += 1
 			}
 		}
-		
+
 		if(count == error.length){
 			valid = true
 		}
-		
+
 		if(valid){
-			
+
 		}else{
 		    e.preventDefault();
 		}
 	});
-	
+
 	subject.addEventListener('focusout',checkSub)
-	content.addEventListener('focusout',checkCon)
 	aertiest.addEventListener('focusout',checkAertiest)
 	place.addEventListener('focusout',checkPlace)
 	runtime.addEventListener('focusout',checkRuntime)
@@ -173,9 +166,9 @@
 	startDate.addEventListener('focusout',checkStartDate)
 	minFund.addEventListener('focusout',checkMinFund)
 	fundAmount.addEventListener('focusout',checkFundAmount)
+	content.addEventListener('focusout',checkCon)
 
-	
-	
+
 	function checkSub(){
 		if(subject.value === ""){
 			error[0].innerHTML='빈칸이에용.'
@@ -184,44 +177,36 @@
 			error[0].style.display='none'
 		}
 	}
-	function checkCon(){
-		if(content.value === ""){
+	function checkAertiest(){
+		if(aertiest.value === ""){
 			error[1].innerHTML='빈칸이에용.'
 			error[1].style.display='block'
 		}else{
 			error[1].style.display='none'
 		}
 	}
-	function checkAertiest(){
-		if(aertiest.value === ""){
+	function checkPlace(){
+		if(place.value === ""){
 			error[2].innerHTML='빈칸이에용.'
 			error[2].style.display='block'
 		}else{
 			error[2].style.display='none'
 		}
 	}
-	function checkPlace(){
-		if(place.value === ""){
-			error[3].innerHTML='빈칸이에용.'
+	function checkRuntime(){
+		if(runtime.value === ""){
+			error[3].innerHTML='숫자입력해줘용.'
 			error[3].style.display='block'
 		}else{
 			error[3].style.display='none'
 		}
 	}
-	function checkRuntime(){
-		if(runtime.value === ""){
-			error[4].innerHTML='숫자입력해줘용.'
+	function checkFundDurationE(){
+		if(fundDurationE.value === ""){
+			error[4].innerHTML='빈칸이에용.'
 			error[4].style.display='block'
 		}else{
 			error[4].style.display='none'
-		}
-	}
-	function checkFundDurationE(){
-		if(fundDurationE.value === ""){
-			error[5].innerHTML='빈칸이에용.'
-			error[5].style.display='block'
-		}else{
-			error[5].style.display='none'
 			fundTime = document.querySelector('.fundDurationE').value
 			fundTime += 'T00:00'
 			startDate.min = fundTime
@@ -229,22 +214,30 @@
 	}
 	function checkStartDate(){
 		if(startDate.value === ""){
+			error[5].innerHTML='빈칸이에용.'
+			error[5].style.display='block'
+		}else{
+			error[5].style.display='none'
+		}
+	}
+	function checkMinFund(){
+		if(minFund.value === ""){
 			error[6].innerHTML='빈칸이에용.'
 			error[6].style.display='block'
 		}else{
 			error[6].style.display='none'
 		}
 	}
-	function checkMinFund(){
-		if(minFund.value === ""){
+	function checkFundAmount(){
+		if(fundAmount.value === ""){
 			error[7].innerHTML='빈칸이에용.'
 			error[7].style.display='block'
 		}else{
 			error[7].style.display='none'
 		}
 	}
-	function checkFundAmount(){
-		if(fundAmount.value === ""){
+	function checkCon(){
+		if(content.value === ""){
 			error[8].innerHTML='빈칸이에용.'
 			error[8].style.display='block'
 		}else{
@@ -257,8 +250,8 @@
 // 썸머노트 부분
 $(document).ready(function() {
 	$('#summernote').summernote({
-		height: 400,
-		width: 700,
+		height: 300,
+		width: 600,
 		lang: "ko-KR",
 		toolbar: [
 			    // [groupName, [list of button]]
@@ -274,20 +267,21 @@ $(document).ready(function() {
 		  ],
 		fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
 		fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
-		,callbacks: {	
+		,callbacks: {
 			onImageUpload : function(files) {
 				uploadSummernoteImageFile(files[0],this);
 			}
+
 		}
 	})
-	
+
 })
 
 // 썸머노트 이미지 업로드
 function uploadSummernoteImageFile(file, editor) {
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
-		
+
 		data = new FormData();
 		data.append("file", file);
 		$.ajax({
@@ -305,6 +299,8 @@ function uploadSummernoteImageFile(file, editor) {
 			}
 		});
 	}
+
+
 </script>
 </body>
 </html>
