@@ -24,7 +24,7 @@
         <!-- 로그인 상태일 때 -->
         <div sec:authorize="isAuthenticated()">
             <ul class="nav_user" th:each="user: ${userData}">
-                <li><a href="#" th:href="@{/user/logout}">로그아웃</a></li>
+                <li><a href="#" sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a></li>
                 <li class="user_name" th:text="${user.nickname}"></li>
                 <li class="user_role" th:text="${user.role}"></li>
                 <li><a href="../pay/confirm.html" th:href="@{/pay/confirm}">결제</a></li>

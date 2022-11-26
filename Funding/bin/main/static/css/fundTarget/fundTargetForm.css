@@ -6,27 +6,19 @@ form {
     border-radius: 5px;
 }
 
-.int {
-    display: flex;
-    margin: 20px 0;
-}
-
-.int_m {display: flex;}
-
-.int_cate {margin-right: 20px;}
-
-.int_title input {width: 300px;}
+.int {margin: 20px 0;}
 
 section label {
     display: inline-block;
-    padding-right: 20px;
     margin-bottom: 5px;
+    width: 200px;
     font-size: 15px;
     font-weight: bold;
-    text-align: center;
 }
 
-section select {width: 150px; height: 30px;}
+section select {width: 300px; height: 30px;}
+
+section .int input {width: 380px; height: 30px;}
 
 section select, input[type=radio], img {cursor: pointer;}
 
@@ -37,22 +29,6 @@ section select, input[type=radio], img {cursor: pointer;}
 }
 
 #date { margin: 5px 0; }
-
-/* 썸머노트 */
-.note-toolbar {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-}
-
-.btn {
-    margin: 0;
-    padding: 2px 10px;
-}
-
-.note-btn-group {
-    display: flex;
-}
 
 /* 대표 이미지 선택 */
 .int_image, .int_file {
@@ -67,7 +43,6 @@ section select, input[type=radio], img {cursor: pointer;}
 /* 작성 완료 버튼 */
 section button {
     cursor: pointer;
-    outline: none;
     margin: 30px 0;
     padding: 10px 30px;
     width: 100%;
