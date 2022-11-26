@@ -18,12 +18,11 @@
     <header th:replace="/main/nav"></header>
     
     <section>
-		<!-- 지정펀딩 리스트 -->
-		<div class="sec">
-			<h2>최근 지정 펀딩 리스트</h2>
-			<div class="list">
-				<div class="list_form" th:each="target : ${page}">
-					<a class="con_list" href="../fundTarget/fundTargetDetail.html" th:href="@{|/fundTarget/detail/${target.id}|}">
+		<h2>지정 펀딩</h2>
+		<div class="sec_fund">
+			<div class="list_form" th:each="target : ${page}">
+				<div class="con_list">
+					<a href="../fundTarget/fundTargetDetail.html" th:href="@{|/fundTarget/detail/${target.id}|}">
 						<div class="image">
 							<div th:if="${target.imgPath != null}">
 								<img th:src="${target.imgPath}" width="200" height="265">
@@ -32,11 +31,15 @@
 								<img th:src="|/fundTarget/img/${target.id}|" width="200" height="265">
 							</div>
 						</div>
-						<h3 th:text="${target.subject}">공연 이름</h3>
+						<div class="con">
+							<h3 th:text="${target.subject}">공연 이름</h3>
+						</div>
 					</a>
 				</div>
 			</div>
 		</div>
+
+
     </section>
 </body>
 </html>
