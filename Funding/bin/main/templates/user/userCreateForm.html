@@ -224,10 +224,7 @@
 						$("#idCheckResult").html(res.code);
 					}
 					if(res.code == "사용 가능한 ID 입니다"){
-						$('#form').attr( 'action' ,'/user/register' );
-						$('#form').attr( 'id' ,'formActive' );
-						$('#submitBtn').attr( 'type' ,'submit' );
-						$('#submitBtn').attr( 'onclick' ,'' );
+						$('#submitBtn').attr( 'onclick','alert("이메일 인증은 필수입니다.")');
 						$('#username').attr('readonly','');
 					}
 				
@@ -552,6 +549,7 @@
 	
 	<!-- 이메일 인증번호 발송 -->
 	<script>
+		let emailAuthCode; // 발송한 인증번호 6자리
 		$('#sendEmailAuthcode').click(function(){
 			let domain = $('#sel_domain').val()
 			let domainDirect = $('#int_direct').val()
@@ -566,14 +564,34 @@
 	                email: $('#email').val() + "@" +$('#sel_domain').val()
 	            },
 	            success:
-	                console.log('##인증번호 발송##')
+	            	function(res){
+						emailAuthCode = res							
+						console.log(emailAuthCode)	
+		                console.log('##인증번호 발송##')
+					}
+	            	
 	            ,
 	            error: function(xhr) {
 	                console.log(xhr);
 	                alert(xhr.status + ':' + xhr.statusText);
 	            }
 	        })
-	        
+		})
+
+		//이메일 인증번호 확인
+		$('#emailAuthCodeCheck').click(function(){
+			let authCode = $('#emailAuthCode').val()
+			if(emailAuthCode === authCode){
+				$('#form').attr( 'action' ,'/user/register' );
+				$('#form').attr( 'id' ,'formActive' );
+				$('#submitBtn').attr( 'type' ,'submit' );
+				$('#submitBtn').attr( 'onclick' ,'' );
+				
+				alert("인증 되었습니다! ")
+			}
+			if(emailAuthCode !== authCode){
+				alert("인증 번호가 일치하지 않습니다.")
+			}
 		})
 	</script>
 	
