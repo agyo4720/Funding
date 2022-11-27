@@ -1,13 +1,7 @@
 .sidebar{
 	position: fixed;
-    padding: 20px;
 	width: 150px;
     height: 100%;
     right: 0px;
-    color: #fff;
-    background: #3b3b3b;
+    background-color: gray;
 }
-
-.sid_title {
-}
-
