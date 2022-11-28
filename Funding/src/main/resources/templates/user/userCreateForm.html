@@ -36,29 +36,31 @@
                 <label for="id">아이디</label>
                 <input type="text" th:field="*{username}">
             </div>
-                <div id="usernameCheckResult"></div>
-                <div id="usernameCheckResult2"></div>
-                <input class="btn_join" type="button" value="아이디 중복 확인" id="checkBtn">
+			<div class="error">
+				<p id="usernameCheckResult"></p>
+				<p id="usernameCheckResult2"></p>
+			</div>
+			<input class="btn_join" type="button" value="아이디 중복 확인" id="checkBtn">
 
             <!-- 비밀번호 -->
             <div class="int int_password">
                 <label for="password1">비밀번호</label>
                 <input type="password" th:field="*{password1}"/>
-                <div id="pwd1CheckResult"></div>
+                <p id="pwd1CheckResult" class="error"></p>
             </div>
 
             <!-- 비밀번호 확인 -->
             <div class="int int_pw_check">
                 <label for="password2">비밀번호 확인</label>
                 <input type="password" th:field="*{password2}"/>
-                <div id="pwd2CheckResult"></div>
+                <p id="pwd2CheckResult" class="error"></p>
             </div>
 
             <!-- 이름 -->
             <div class="int int_name">
                 <label for="name">이름</label>
                 <input type="text" th:field="*{nickname}"/>
-                <div id="nicknameCheckResult"></div>
+                <p id="nicknameCheckResult" class="error"></p>
             </div>
 
             <!-- 이메일 -->
@@ -66,7 +68,7 @@
             <div class="int int_email">
                 <label for="email">이메일</label>
                 <input type="text" th:field="*{email}"/>
-                <div id="emailCheckResult"></div>
+                <p id="emailCheckResult" class="error"></p>
                 <div class="int_domain">
                     <p>@</p>
                     <select name="domain" id="sel_domain">
@@ -80,9 +82,18 @@
                     <!-- 직접 입력 input box -->
                     <input type="text" id="int_direct"/>
                 </div>
-                <div id="domainCheckResult"></div>
-                <button class="sub_email">인증번호 받기</button>
-            </div>
+                <p id="domainCheckResult" class="error"></p>
+			</div>
+			<!-- 인증번호 check -->
+			<div class="email_check">
+				<div class="email_send">
+					<input type="button" class="sub_email" id="sendEmailAuthcode" value="인증번호 받기">
+				</div>
+				<div class="email_code">
+					<input type="text" class="sub_int_email" id="emailAuthCode"></input>
+					<input type="button" class="sub_email" id="emailAuthCodeCheck" value="인증번호 확인">
+				</div>
+			</div>
 
             <!-- 생년월일 -->
             <div class="int int_birth">
@@ -106,7 +117,7 @@
                     </select>
                     <input class="bir" type="text" th:field="*{day}" placeholder="일"/>
                 </div>
-                <div id="birthCheckResult"></div>
+                <p id="birthCheckResult" class="error"></p>
             </div>
 
             <!-- 성별 -->
@@ -116,8 +127,9 @@
                     <option value="">선택하기</option>
                     <option value="남성">남성</option>
                     <option value="여성">여성</option>
+					<option value="선택 안함">선택 안함</option>
                 </select>
-                <div id="genderCheckResult"></div>
+                <p id="genderCheckResult" class="error"></p>
             </div>
 
             <!-- 주소 -->
@@ -132,7 +144,7 @@
                     <input name="addr3" type="text" id="detailAddr" placeholder="상세 주소">
                     <input name="addr4" type="text" id="extraAddr" placeholder="참고 항목" readonly>
                 </span>
-                <div id="addrCheckResult"></div>
+                <p id="addrCheckResult" class="error"></p>
             </div>
 
             <!-- 전화번호 -->
@@ -142,7 +154,7 @@
                     <p>010</p>
                     <input type="text" maxlength="16" placeholder="- 제외" th:field="*{mobile}"/>
                 </div>
-                <div id="mobileCheckResult"></div>
+                <p id="mobileCheckResult" class="error"></p>
             </div>
 
              <!-- 멤버타입 -->
@@ -156,7 +168,7 @@
                     <input type="radio" id="userRole2" name="role" value="artist"/>
                 </div>
             </div>
-            <div id="userRoleCheckResult"></div>
+            <p id="userRoleCheckResult" class="error"></p>
             <input id="submitBtn" class="btn_join" type="button" onclick="alert('ID 중복 검사는 필수입니다')" value="가입하기"/>
         </form>
     </section>
@@ -194,7 +206,7 @@
 	    	let username = $('#username').val()
 	        let usernameCheck = /^[a-z0-9]+$/
 	        if (!usernameCheck.test(username) || username.length<6){
-				$(usernameCheckResult).html('아이디는 영소문자,숫자로 구성된 6글자 이상으로 조합하시오.');
+				$(usernameCheckResult).html('아이디는 영소문자,숫자로 구성된 6글자 이상으로<br/>조합하시오.');
 	            $('#username').focus();
 	            
 	            return false
@@ -212,10 +224,7 @@
 						$("#idCheckResult").html(res.code);
 					}
 					if(res.code == "사용 가능한 ID 입니다"){
-						$('#form').attr( 'action' ,'/user/register' );
-						$('#form').attr( 'id' ,'formActive' );
-						$('#submitBtn').attr( 'type' ,'submit' );
-						$('#submitBtn').attr( 'onclick' ,'' );
+						$('#submitBtn').attr( 'onclick','alert("이메일 인증은 필수입니다.")');
 						$('#username').attr('readonly','');
 					}
 				
@@ -366,7 +375,6 @@
 	        let domainCheck =  /^([a-z0-9\-]+\.)+[a-z]{2,6}$/
 	        
 	        if(domain==='direct'){
-				console.log("ddddddd")
 				$('#directVal').attr('value',domainDirect)
 				console.log($('#directVal').val)
 			}
@@ -538,5 +546,81 @@
 			$('#userRoleCheckResult').html('')
 	    })
 	</script>
+	
+	<!-- 이메일 인증번호 발송 -->
+	<script>
+		let emailAuthCode; // 발송한 인증번호 6자리
+		$('#sendEmailAuthcode').click(function(){
+			let domain = $('#sel_domain').val()
+			let domainDirect = $('#int_direct').val()
+			
+			if(domain==='direct'){
+				$('#directVal').attr('value',domainDirect)
+			}
+			
+			$.ajax({
+	            url: '/emailAuth',
+	            data: {
+	                email: $('#email').val() + "@" +$('#sel_domain').val()
+	            },
+	            success:
+	            	function(res){
+						emailAuthCode = res							
+						console.log(emailAuthCode)	
+		                console.log('##인증번호 발송##')
+		                
+		                var emailCheck = document.querySelector('.email_check');
+						var emailSend = document.querySelector('.email_send');
+						var emailCode = document.querySelector('.email_code');
+						
+						
+							$(emailSend).hide();
+							$(emailCode).show();
+		                
+					}
+	            	
+	            ,
+	            error: function(xhr) {
+	                console.log(xhr);
+	                alert(xhr.status + ':' + xhr.statusText);
+	            }
+	        })
+		})
+
+		var emailCode = document.querySelector('.email_code');
+
+		window.onload = function() {
+			$(emailCode).hide();
+		}
+
+
+		//이메일 인증번호 확인
+		$('#emailAuthCodeCheck').click(function(){
+			let authCode = $('#emailAuthCode').val()
+			if(emailAuthCode === authCode){
+				$('#form').attr( 'action' ,'/user/register' );
+				$('#form').attr( 'id' ,'formActive' );
+				$('#submitBtn').attr( 'type' ,'submit' );
+				$('#submitBtn').attr( 'onclick' ,'' );
+				$(emailCode).hide();
+				$(sel_domain).attr('disabled','disabled')
+				$(email).attr('readonly','readonly')
+						
+				
+				alert("인증 되었습니다! ")
+			}
+			if(emailAuthCode !== authCode){
+				console.log(emailAuthCode)
+				console.log(authCode)
+				alert("인증 번호가 일치하지 않습니다.")
+			}
+		})
+	</script>
+	
+		
+	
+	
+	
+	
 </body>
 </html>

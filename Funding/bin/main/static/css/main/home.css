@@ -1,0 +1,20 @@
+section h2 {
+    margin: 30px 60px;
+}
+
+.sec_fund {
+    display: flex;
+    justify-content: space-evenly;
+    width: 1000px;
+}
+
+.list_form {
+    padding: 20px;
+    width: 200px;
+    height: 300px;
+    border: 1px solid;
+    border-radius: 30px;
+    text-align: center;
+}
+
+.list_form h3 {margin-top: 10px;}

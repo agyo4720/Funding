@@ -1,7 +1,9 @@
 .sidebar{
 	position: fixed;
-	width: 150px;
+    padding: 20px;
+	width: 200px;
     height: 100%;
     right: 0px;
-    background-color: gray;
+    background-color: #353535;
+    color: #fff;
 }

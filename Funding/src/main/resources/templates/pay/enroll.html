@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>서브몰등록</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+</head>
+<body>
+<section>
+    <h1>서브몰등록</h1>
+    <p>----------------------</p>
+    <form th:action="@{/pay/enrollRquest}" method="GET">
+	    <input type="text"  id="subMallId" placeholder="서브몰ID" name="subMallId" value="" />
+	    <input type="text"  id="companyName" placeholder="상호명" name="companyName" value="" />
+	    <input type="text"  id="representativeName" placeholder="대표자명" name="representativeName" value="" />
+	    <input type="text"  id="businessNumber" placeholder="사업자등록번호" name="businessNumber" value="" />
+	    <input type="text"  id="accountNumber" placeholder="계좌번호" name="accountNumber" value="" />
+	    <input type="text"  id="bank" placeholder="은행" name="bank" value="" />
+	    <button id="enroll-button" type="submit">등록하기</button>
+    </form>
+</section>
+    <div class="home">
+        <a href="/">홈</a>
+    </div>
+<script>
+</script>
+</body>
+</html>
