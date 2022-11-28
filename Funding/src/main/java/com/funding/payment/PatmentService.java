@@ -2,6 +2,7 @@ package com.funding.payment;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,8 +11,9 @@ import org.springframework.stereotype.Service;
 import com.funding.fundUser.FundUser;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
-
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class PatmentService {
@@ -62,13 +64,36 @@ public class PatmentService {
 		saleRepository.save(sale);
 	}
 	
-	//환불
+	//지정환불
+	public void tarCancelInfo(String orederId, int totalAmount, String orderName, String cancelReason, 
+			Optional<FundUser> FU, String paymentKey) {
+		log.info("paymentKey: "+paymentKey);
+		List<Cancels> cList = new ArrayList<>(); //결제내역 리스트
+		Cancels cancel = new Cancels();
+		cancel.setFundUser(FU.get().getNickname());
+		cancel.setFundBoardTarget(orderName);
+		cancel.setPayMoney(totalAmount);
+		cancel.setOrderId(orederId);
+		cancel.setCancelReason(cancelReason);
+		cancel.setCanceledAt(LocalDateTime.now());
+		cList.add(cancel);
+		cancelsRepository.save(cancel);
+		
+		List<Sale> sList = saleRepository.findBypayCode(paymentKey);		
+		sList.get(0).setCheckin("환불");
+		saleRepository.saveAll(sList);
+	}
+	
+	
+	
+	
+	//미지정환불
 	public void cancelInfo(String orederId, int totalAmount, String orderName, String cancelReason, 
 			Optional<FundUser> FU) {
 		List<Cancels> cList = new ArrayList<>(); //결제내역 리스트
 		Cancels cancel = new Cancels();
 		cancel.setFundUser(FU.get().getNickname());
-		cancel.setOrderName(orderName);
+		cancel.setFundBoard(orderName);
 		cancel.setPayMoney(totalAmount);
 		cancel.setOrderId(orederId);
 		cancel.setCancelReason(cancelReason);
