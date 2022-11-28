@@ -3,23 +3,43 @@ section {
     width: 1200px;
 }
 
+/* 타이틀 */
+section .title {
+    margin: 10px auto;
+    width: 100px;
+}
+
 /* 카테고리 */
 .categorie {
-    margin: 50px 0;
-}
-
-.categorie ul {
     display: flex;
-    width: 400px;
-    margin: 0 auto;
+    justify-content: center;
+    margin: 30px auto;
+    width: 600px;
 }
 
-.categorie ul li {
+.categorie form a {
     margin-right: 30px;
+    font-size: 20px;
+    font-weight: bold;
+    transition: 0.5s;
 }
 
-.categorie ul li:last-child {
-    margin-right: 0;
+.categorie form a:hover {
+    color: #B00E0E;
+}
+
+.categorie form a::after {
+    content: "";
+    padding: 0 0.5px;
+    margin-left: 30px;
+    background: #6f6f6f;
+}
+
+.categorie form a:last-child {margin-right: 0;}
+
+.categorie form a:last-child::after {
+    padding: 0;
+    margin-left: 0;
 }
 
 /* 공연 리스트 Form */
@@ -91,6 +111,16 @@ section {
 
 .page a {
     padding: 5px 10px;
+    font-size: 22px;
+}
+
+.page a:hover {
+    text-decoration: underline;
+    text-underline-position: under;
+}
+
+.page .active {
+    color: #B00E0E;
 }
 
 /* 펀딩 만들기 버튼 */
