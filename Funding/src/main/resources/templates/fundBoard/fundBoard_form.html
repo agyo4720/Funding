@@ -41,12 +41,12 @@
 				</div>
 				<div>
 					<label for="subject">제목</label>
-					<input type="text" id="subject" th:field="*{subject}">
+					<input type="text" id="subject" th:field="*{subject}" placeholder="제목을 입력하세요.">
 					<span class="errors" style="display: none">에러출력</span>
 				</div>
 				<div>
 					<label for="place">장소</label>
-					<input type="text" id="place" th:field="*{place}">
+					<input type="text" id="place" th:field="*{place}" placeholder="장소를 입력하세요.">
 					<span class="errors" style="display: none">에러출력</span>
 				</div>
 				<div>
@@ -61,17 +61,17 @@
 				</div>
 				<div>
 					<label for="runtime">공연 시간</label>
-					<input type="number" id="runtime" th:field="*{runtime}">
+					<input type="number" id="runtime" th:field="*{runtime}" placeholder="분 단위로 입력 입력하세요.">
 					<span class="errors" style="display: none">에러출력</span>
 				</div>
 				<div>
 					<label for="minFund">1인 최소 펀딩 금액</label>
-					<input type="number" id="minFund" th:field="*{minFund}">
+					<input type="number" id="minFund" th:field="*{minFund}" placeholder="1인 최소 펀딩 금액을 입력하세요.">
 					<span class="errors" style="display: none">에러출력</span>
 				</div>
 				<div>
 					<label for="fundAmount">펀딩 목표 금액</label>
-					<input type="number" id="fundAmount" th:field="*{fundAmount}">
+					<input type="number" id="fundAmount" th:field="*{fundAmount}" placeholder="펀딩 목표 금액을 입력하세요.">
 					<span class="errors" style="display: none">에러출력</span>
 				</div>
 				
@@ -106,65 +106,67 @@
 	<script>
 		// 유효성 검사
 		var categorieName = document.querySelector('#categorieName'); 
-		var categorieName = document.querySelector('#subject');
-		var categorieName = document.querySelector('#place');
-		var categorieName = document.querySelector('#startDateTime');
-		var categorieName = document.querySelector('#fundDuration');
-		var categorieName = document.querySelector('#runtime');
-		var categorieName = document.querySelector('#minFund');
-		var categorieName = document.querySelector('#fundAmount');
-		var categorieName = document.querySelector('#summernote');
+		var subjec = document.querySelector('#subject');
+		var place = document.querySelector('#place');
+		var startDateTime = document.querySelector('#startDateTime');
+		var fundDuration = document.querySelector('#fundDuration');
+		var runtime = document.querySelector('#runtime');
+		var minFund = document.querySelector('#minFund');
+		var fundAmount = document.querySelector('#fundAmount');
+		var fundAmount = document.querySelector('#fundAmount');
+		var content = document.querySelector('#content');
 		
 		var errors = document.querySelectorAll('.errors');
 		
-		categorieName.addEventListener('focusout',checkCategorieName);
-		subject.addEventListener('focusout',checkSubject);
-		place.addEventListener('focusout',checkPlace);
-		startDateTime.addEventListener('focusout',checkStartDateTime);
-		fundDuration.addEventListener('focusout',checkFundDuration);
-		runtime.addEventListener('focusout',checkRuntime);
-		minFund.addEventListener('focusout',checkMinFund);
-		fundAmount.addEventListener('focusout',checkFundAmount);
-		summernote.addEventListener('focusout',checkSummernote);
+		categorieName.addEventListener('focusout', checkCategorieName);
+		subject.addEventListener('focusout', checkSubject);
+		place.addEventListener('focusout', checkPlace);
+		startDateTime.addEventListener('focusout', checkStartDateTime);
+		fundDuration.addEventListener('focusout', checkFundDuration);
+		runtime.addEventListener('focusout', checkRuntime);
+		minFund.addEventListener('focusout', checkMinFund);
+		fundAmount.addEventListener('focusout', checkFundAmount);
+		content.addEventListener('focusout', checkContent);
+		summernote.addEventListener('focusout', checkSummernote);
 		
 		function checkCategorieName(){
 			if(categorieName.value === ""){
-				errors[0].innerHTML='카테고리선택은 필수항목 입니다.'
-				errors[0].style.display='block'
+				errors[0].innerHTML='카테고리선택은 필수항목 입니다.';
+				errors[0].style.display='block';
 			}else{
-				errors[0].style.display='none'
+				errors[0].style.display='none';
 			}
 		}
 		
 		function checkSubject(){
-			if(categorieName.value === ""){
-				errors[1].innerHTML='제목은 필수항목 입니다.'
-				errors[1].style.display='block'
+			if(subjec.value === ""){
+				errors[1].innerHTML='제목은 필수항목 입니다.';
+				errors[1].style.display='block';
 			}else{
-				errors[1].style.display='none'
+				errors[1].style.display='none';
 			}
 		}
 		
 		function checkPlace(){
-			if(categorieName.value === ""){
-				errors[2].innerHTML='장소는 필수항목 입니다.'
-				errors[2].style.display='block'
+			if(place.value === ""){
+				errors[2].innerHTML='공연 장소는 필수항목 입니다.';
+				errors[2].style.display='block';
 			}else{
-				errors[2].style.display='none'
+				errors[2].style.display='none';
 			}
 		}
 		
 		function checkStartDateTime(){
-			if(categorieName.value === ""){
-				errors[3].innerHTML='공연 시작 일자는 필수항목 입니다.'
-				errors[3].style.display='block'
+			if(startDateTime.value === ""){
+				errors[3].innerHTML='공연 시작 일자는 필수항목 입니다.';
+				errors[3].style.display='block';
 			}else{
-				errors[3].style.display='none'
+				errors[3].style.display='none';
 			}
 		}
 		
 		function checkFundDuration(){
-			if(categorieName.value === ""){
+			if(fundDuration.value === ""){
 				errors[4].innerHTML='펀딩 기간은 필수항목 입니다.'
 				errors[4].style.display='block'
 			}else{
@@ -173,7 +175,7 @@
 		}
 		
 		function checkRuntime(){
-			if(categorieName.value === ""){
+			if(runtime.value === ""){
 				errors[5].innerHTML='공연 시간은 필수항목 입니다.'
 				errors[5].style.display='block'
 			}else{
@@ -181,16 +183,33 @@
 			}
 		}
 		
-		function checkRuntime(){
-			if(categorieName.value === ""){
-				errors[6].innerHTML='공연 시간은 필수항목 입니다.'
+		function checkMinFund(){
+			if(minFund.value === ""){
+				errors[6].innerHTML='1인 최소 펀딩 금액은 필수항목 입니다.'
 				errors[6].style.display='block'
 			}else{
 				errors[6].style.display='none'
 			}
 		}
 		
+		function checkFundAmount(){
+			if(fundAmount.value === ""){
+				errors[7].innerHTML='펀딩 목표 금액은 필수항목 입니다.'
+				errors[7].style.display='block'
+			}else{
+				errors[7].style.display='none'
+			}
+		}
 		
+		function checkContent(){
+			if(content.value === ""){
+				errors[8].innerHTML='펀딩 내용은 필수항목 입니다.'
+				errors[8].style.display='block'
+			}else{
+				errors[8].style.display='none'
+			}
+		}
+				
 	</script>
 	
 	
