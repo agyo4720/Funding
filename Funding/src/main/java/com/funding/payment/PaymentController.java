@@ -418,6 +418,7 @@ public class PaymentController {
 			HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
 			System.out.println(response.body());
     		if(response.statusCode() == 200) {//요청응답코드 200=성공
+    			patmentService.enrollInfo(subMallId, companyName, representativeName, businessNumber, bank, accountNumber);
     			return "/pay/enrollSuccess";
     		}else {
     			return "/pay/enrollFail";
@@ -431,7 +432,7 @@ public class PaymentController {
 			return "/pay/remit";
 	}
 	@RequestMapping("/remitRquest")
-	public String remitRquest(@RequestParam("subMallId")String subMallId, @RequestParam("payoutAmount")String payoutAmount,
+	public String remitRquest(@RequestParam("subMallId")String subMallId, @RequestParam("payoutAmount")Integer payoutAmount,
 			@RequestParam("payoutDate")String payoutDate) throws Exception {
 		HttpRequest request = HttpRequest.newBuilder()
 			    .uri(URI.create("https://api.tosspayments.com/v1/payouts/sub-malls/settlements"))
@@ -444,6 +445,7 @@ public class PaymentController {
 			HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
 			System.out.println(response.body());
     		if(response.statusCode() == 200) {//요청응답코드 200=성공
+    			patmentService.remitInfo(subMallId, payoutAmount, payoutDate);
     			return "/pay/remitSuccess";
     		}else {
     			return "/pay/remitFail";
