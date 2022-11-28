@@ -2,6 +2,7 @@ package com.funding.payment;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -78,32 +79,9 @@ public class PatmentService {
 		cList.add(cancel);
 		cancelsRepository.save(cancel);
 		
-		List<Sale> sList = saleRepository.findBypayCode(paymentKey);
-		log.info("sList: "+sList.toString());
-		
-		sList.get(0).getCheckin();
-		log.info("sList1: "+sList.get(0).getCheckin());
-		
-		/*
-		//형변환
-		Sale sale = (Sale) sList;
-		sale.setCheckin("a");
-		sList.set(0, sale.);
-		log.info("2sList: "+sList.toString());
-		log.info("sList2: "+sale);
-		
-		//값넣기
-		sale.setCheckin("환불");
-		log.info("sale: "+sale);
-		
-		//값들어갔는지
-		sale.getCheckin();
-		log.info("sale1: "+sale.getCheckin());
-		
-		//저장했는지
-		saleRepository.save(sale);
-		log.info("!!!sList: "+sList.toString());
-		*/
+		List<Sale> sList = saleRepository.findBypayCode(paymentKey);		
+		sList.get(0).setCheckin("환불");
+		saleRepository.saveAll(sList);
 	}
 	
 	
