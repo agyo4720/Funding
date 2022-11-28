@@ -60,9 +60,10 @@ public class HomeController {
 	
 	@RequestMapping("/emailAuth")
 	@ResponseBody
-	public void emailTest(String email) throws UnsupportedEncodingException, MessagingException {
-		String name = email;
-		emailService.sendEmail(name);
+	public String emailTest(String email) throws UnsupportedEncodingException, MessagingException {
+		String emailAuthCode = emailService.sendEmail(email);
+		
+		return emailAuthCode;
 	}
 	
 }
