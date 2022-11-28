@@ -90,7 +90,7 @@
 					<input type="button" class="sub_email" id="sendEmailAuthcode" value="인증번호 받기">
 				</div>
 				<div class="email_code">
-					<input type="text" class="sub_int_email"></input>
+					<input type="text" class="sub_int_email" id="emailAuthCode"></input>
 					<input type="button" class="sub_email" id="emailAuthCodeCheck" value="인증번호 확인">
 				</div>
 			</div>
@@ -568,6 +568,15 @@
 						emailAuthCode = res							
 						console.log(emailAuthCode)	
 		                console.log('##인증번호 발송##')
+		                
+		                var emailCheck = document.querySelector('.email_check');
+						var emailSend = document.querySelector('.email_send');
+						var emailCode = document.querySelector('.email_code');
+						
+						
+							$(emailSend).hide();
+							$(emailCode).show();
+		                
 					}
 	            	
 	            ,
@@ -578,6 +587,13 @@
 	        })
 		})
 
+		var emailCode = document.querySelector('.email_code');
+
+		window.onload = function() {
+			$(emailCode).hide();
+		}
+
+
 		//이메일 인증번호 확인
 		$('#emailAuthCodeCheck').click(function(){
 			let authCode = $('#emailAuthCode').val()
@@ -586,30 +602,22 @@
 				$('#form').attr( 'id' ,'formActive' );
 				$('#submitBtn').attr( 'type' ,'submit' );
 				$('#submitBtn').attr( 'onclick' ,'' );
+				$(emailCode).hide();
+				$(sel_domain).attr('disabled','disabled')
+				$(email).attr('readonly','readonly')
+						
 				
 				alert("인증 되었습니다! ")
 			}
 			if(emailAuthCode !== authCode){
+				console.log(emailAuthCode)
+				console.log(authCode)
 				alert("인증 번호가 일치하지 않습니다.")
 			}
 		})
 	</script>
 	
-	<!-- 이메일 인증번호 확인 -->
-	<script>
-		var emailCheck = document.querySelector('.email_check');
-		var emailSend = document.querySelector('.email_send');
-		var emailCode = document.querySelector('.email_code');
-
-		window.onload = function() {
-			$(emailCode).hide();
-
-			$(emailSend).click(function() {
-				$(emailSend).hide();
-				$(emailCode).show();
-			})
-		}
-	</script>
+		
 	
 	
 	
