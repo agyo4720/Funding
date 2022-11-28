@@ -374,6 +374,8 @@ public class PaymentController {
     }
     
     
+    
+    
 
     
 	//결제목록
@@ -391,5 +393,60 @@ public class PaymentController {
 		model.addAttribute("cList",cList);
 		
 		return "/pay/confirm";
+	}
+	
+	
+	
+	
+	//송금등록
+	@RequestMapping("/enroll")
+	public String enroll(){
+			return "/pay/enroll";
+	}
+	@RequestMapping("/enrollRquest")
+	public String enrollRquest(@RequestParam("subMallId")String subMallId, @RequestParam("companyName")String companyName,
+			@RequestParam("representativeName")String representativeName, @RequestParam("businessNumber")String businessNumber,
+			@RequestParam("bank")String bank, @RequestParam("accountNumber")String accountNumber,Model model) throws Exception {
+			HttpRequest request = HttpRequest.newBuilder()
+			    .uri(URI.create("https://api.tosspayments.com/v1/payouts/sub-malls"))
+    		    .header("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()))
+    		    .header("Content-Type", "application/json")
+			    .method("POST", HttpRequest.BodyPublishers.ofString("{\"subMallId\":\""+subMallId+"\","
+			    		+ "\"type\":\"CORPORATE\",\"companyName\":\""+companyName+"\",\"representativeName\":\""+representativeName+"\","
+			    		+ "\"businessNumber\":\""+businessNumber+"\",\"account\":{\"bank\":\""+bank+"\",\"accountNumber\":\""+accountNumber+"\"}}"))
+			    .build();
+			HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+			System.out.println(response.body());
+    		if(response.statusCode() == 200) {//요청응답코드 200=성공
+    			return "/pay/enrollSuccess";
+    		}else {
+    			return "/pay/enrollFail";
+    		}
+	}
+	
+	
+	//송금하기
+	@RequestMapping("/remit")
+	public String remit() {
+			return "/pay/remit";
+	}
+	@RequestMapping("/remitRquest")
+	public String remitRquest(@RequestParam("subMallId")String subMallId, @RequestParam("payoutAmount")String payoutAmount,
+			@RequestParam("payoutDate")String payoutDate) throws Exception {
+		HttpRequest request = HttpRequest.newBuilder()
+			    .uri(URI.create("https://api.tosspayments.com/v1/payouts/sub-malls/settlements"))
+    		    .header("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()))
+    		    .header("Content-Type", "application/json")
+			    .method("POST", HttpRequest.BodyPublishers.ofString("[{\"subMallId\":\""+subMallId+"\",\"payoutAmount\":"+payoutAmount+","
+			    		+ "\"payoutDate\":\""+payoutDate+"\"},{\"subMallId\":\""+subMallId+"\","
+			    		+ "\"payoutAmount\":"+payoutAmount+",\"payoutDate\":\""+payoutDate+"\"}]"))
+			    .build();
+			HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+			System.out.println(response.body());
+    		if(response.statusCode() == 200) {//요청응답코드 200=성공
+    			return "/pay/remitSuccess";
+    		}else {
+    			return "/pay/remitFail";
+    		}
 	}
 }
