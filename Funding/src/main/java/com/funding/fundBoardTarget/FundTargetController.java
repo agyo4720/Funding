@@ -30,7 +30,10 @@ import com.funding.answer.Answer;
 import com.funding.answer.AnswerService;
 import com.funding.file.FileService;
 import com.funding.fundUser.FundUser;
+import com.funding.fundUser.FundUserRepository;
 import com.funding.fundUser.FundUserService;
+import com.funding.payment.Sale;
+import com.funding.payment.SaleRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -163,7 +166,7 @@ public class FundTargetController {
 		}
 		
 	}
-	
+
 	//디테일 창으로
 	@RequestMapping("/detail/{id}")
 	public String showDetail(Model model, @PathVariable("id")Integer id,Integer alertId) {
