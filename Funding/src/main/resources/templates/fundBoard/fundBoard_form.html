@@ -82,6 +82,27 @@
 					<span class="errors" style="display: none">에러출력</span>
 				</div>
 				
+				<div class="int_image">
+					<div>
+						<label for="image">대표 이미지</label>
+					</div>
+					
+					<input id="rad1" type="radio" name="imgPath" value="https://cdn.pixabay.com/photo/2022/04/08/04/11/instrument-7118629_1280.jpg"> 
+					<label for="rad1">
+						<img src="https://cdn.pixabay.com/photo/2022/04/08/04/11/instrument-7118629_1280.jpg" alt="이미지1" width="100" heigth="100">
+					</label>
+
+					<input id="rad2" type="radio" name="imgPath" value="https://cdn.pixabay.com/photo/2020/01/31/07/53/man-4807395_1280.jpg"> 
+					<label for="rad2">
+						<img src="https://cdn.pixabay.com/photo/2020/01/31/07/53/man-4807395_1280.jpg" alt="이미지2" width="100" heigth="100">
+					</label>
+
+					<input id="rad3" type="radio" name="imgPath" value="https://cdn.pixabay.com/photo/2018/07/23/20/00/vinyl-3557749_1280.jpg"> 
+					<label for="rad3">
+						<img src="https://cdn.pixabay.com/photo/2018/07/23/20/00/vinyl-3557749_1280.jpg" alt="이미지3" width="100" heigth="100">
+					</label>
+				</div>
+				
 				<!-- 파일 업로드 -->
 				<div class="int_file">
 					<input type="file" multiple="multiple" name="file" />
@@ -104,7 +125,7 @@
 	
 	
 	<script>
-		// 유효성 검사
+		// 유효성 검사 시작
 		var categorieName = document.querySelector('#categorieName'); 
 		var subjec = document.querySelector('#subject');
 		var place = document.querySelector('#place');
@@ -209,14 +230,14 @@
 				errors[8].style.display='none'
 			}
 		}
-				
+		
+		// 유효성 검사 끝
 	</script>
 	
 	
 	
-	<script>
-	
-		// 썸머노트 부분
+	<script>	
+		// 썸머노트 시작
 		$(document).ready(function() {
 			$('#summernote').summernote({
 				height: 300,
@@ -266,6 +287,8 @@
 				}
 			});
 		}
+		
+		// 썸머 노트 끝
 	</script>
     
 </body>
