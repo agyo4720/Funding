@@ -10,7 +10,6 @@
 <section>
     <h1>펀딩하기</h1>
    	<input hidden th:value="${fundBoardTarget.id}" id="id" />
-   	<input hidden th:value="${userData.nickname}" id="user" />
     <h2 th:text="|공연 이름: ${fundBoardTarget.subject}|"></h2>    
     <input type="number" id="num" th:value="${fundBoardTarget.minFund}" />
     <p>----------------------</p>
@@ -32,13 +31,11 @@
 <script>
     var tossPayments = TossPayments("test_ck_OALnQvDd2VJjgjj4daVMj7X41mNW");
     var button = document.getElementById("payment-button");
-    var orderId = new Date().getTime();
     var minfund = document.querySelector('#num').value;
-    
-    var user = document.querySelector('#user').value;
+
+    var orderId = new Date().getTime();
     var pk = document.getElementById("id").value;
-    
-    var userAndPk = user + '.' + pk
+    var userAndPk = orderId + '-' + pk;
 
     button.addEventListener("click", function () {
         var method = document.querySelector('input[name=method]:checked').value; // "카드" 혹은 "휴대폰" 혹은 "상품권"
@@ -47,9 +44,9 @@
         if(parseInt(amount) >= parseInt(minfund)){
 	        var paymentData = {
 	            amount: amount,
-	            orderId: orderId,
+	            orderId: userAndPk,
 	            orderName: '[[${fundBoardTarget.subject}]]',
-	            customerName: userAndPk,
+	            customerName: '[[${userData.nickname}]]',
 	            successUrl: window.location.origin + "/pay/success",
 	            failUrl: window.location.origin + "/pay/fail",
 	        };

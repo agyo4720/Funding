@@ -37,10 +37,9 @@
     
     //var minfund = document.querySelector('#num').value;
     
-    //var user = document.querySelector('#user').value;
     //var pk = document.getElementById("id").value;
     
-    //var userAndPk = user + '.' + pk
+    //var userAndPk = orderId + '-' + pk;
 
     button.addEventListener("click", function () {
         var method = document.querySelector('input[name=method]:checked').value; // "카드" 혹은 "휴대폰" 혹은 "상품권"
@@ -49,7 +48,7 @@
     	//if(parseInt(amount) >= parseInt(minfund)){
 	        var paymentData = {
 	            amount: amount,
-	            orderId: orderId,
+	            orderId: userAndPk,
 	            orderName: '[[${fundBoard.subject}]]',
 	            customerName: '[[${userData.nickname}]]',
 	            successUrl: window.location.origin + "/pay/success1",

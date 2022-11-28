@@ -104,7 +104,7 @@ public class PaymentController {
         
         ResponseEntity<JsonNode> responseEntity = restTemplate.postForEntity(
                 "https://api.tosspayments.com/v1/payments/" + paymentKey, request, JsonNode.class);
-        
+        log.info("responseEntity: "+responseEntity);
         if (responseEntity.getStatusCode() == HttpStatus.OK) {
             JsonNode successNode = responseEntity.getBody();
             model.addAttribute("status", successNode.get("status").asText());//상태
@@ -116,8 +116,8 @@ public class PaymentController {
         	patmentService.targetSaveinfo(paymentKey, orderId, amount, orderName, FU);
         	
         	//누적금액증가
-        	String tar = successNode.get("virtualAccount").get("customerName").toString();
-        	String target = tar.substring(tar.lastIndexOf('.')+1);
+        	String tar = successNode.get("orderId").toString();
+        	String target = tar.substring(tar.lastIndexOf('-')+1);
         	target = target.replace("\"", "");
         	log.info("target: "+target);	
         	
@@ -184,8 +184,8 @@ public class PaymentController {
         	
         	/*
         	//누적금액증가
-        	String tar = successNode.get("virtualAccount").get("customerName").toString();
-        	String target = tar.substring(tar.lastIndexOf('.')+1);
+        	String tar = successNode.get("orderId").toString();
+        	String target = tar.substring(tar.lastIndexOf('-')+1);
         	target = target.replace("\"", "");
         	log.info("target: "+target);	
         	
@@ -283,12 +283,13 @@ public class PaymentController {
     			principal.getName();
     			Optional<FundUser> FU =  fundUserRepository.findByusername(principal.getName());
     			patmentService.tarCancelInfo(orderId, Integer.valueOf(totalAmount).intValue(), orderName, cancelReason, FU, paymentKey);
+
     			
             	//누적금액감소
-    			JSONObject tar = (JSONObject) jsonObj.get("virtualAccount");
-    			String userAndTargetNo = (String)tar.get("customerName");
+    			JSONObject tar = (JSONObject) jsonObj;
+    			String userAndTargetNo = (String)tar.get("orderId");
 
-            	String target = userAndTargetNo.substring(userAndTargetNo.lastIndexOf('.')+1);
+            	String target = userAndTargetNo.substring(userAndTargetNo.lastIndexOf('-')+1);
             	target = target.replace("\"", "");
             	log.info("target: "+target);	
             	
@@ -349,10 +350,10 @@ public class PaymentController {
     			patmentService.cancelInfo(orderId, Integer.valueOf(totalAmount).intValue(), orderName, cancelReason, FU);
     			/*
             	//누적금액감소
-    			JSONObject tar = (JSONObject) jsonObj.get("virtualAccount");
-    			String userAndTargetNo = (String)tar.get("customerName");
+    			JSONObject tar = (JSONObject) jsonObj;
+    			String userAndTargetNo = (String)tar.get("orderId");
 
-            	String target = userAndTargetNo.substring(userAndTargetNo.lastIndexOf('.')+1);
+            	String target = userAndTargetNo.substring(userAndTargetNo.lastIndexOf('-')+1);
             	target = target.replace("\"", "");
             	log.info("target: "+target);	
             	
