@@ -127,4 +127,11 @@ public class FundTargetService {
 		fundTargetRepository.save(fundBoardTarget);
 	}
 	
+	
+	//지정펀딩 삭제
+	public void delete(Integer id) {
+		Optional<FundBoardTarget> target = fundTargetRepository.findById(id);
+		fundTargetRepository.delete(target.get());
+	}
+	
 }

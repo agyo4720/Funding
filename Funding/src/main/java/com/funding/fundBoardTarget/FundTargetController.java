@@ -209,6 +209,11 @@ public class FundTargetController {
 	
 	
 	
-	
+	//지정펀딩 삭제
+	@RequestMapping("/delete/{id}")
+	public String deleteTarget(@PathVariable("id")Integer id) {
+		fundTargetService.delete(id);
+		return "redirect:/";
+	}
 	
 }
