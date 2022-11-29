@@ -43,14 +43,15 @@ public class AlertController {
 			List<HashMap<String, String>> alretList = new ArrayList<>();
 			for(int i=0; i<artList.size(); i++) {
 				HashMap<String, String> map = new HashMap<>();
+				map.put("alertId", artList.get(i).getId().toString());
 				map.put("username", artList.get(i).getHostUser().getUsername());
 				map.put("content", artList.get(i).getContent());
 				map.put("url", artList.get(i).getUrl());
+				map.put("type", artList.get(i).getWitchAlert());
 				alretList.add(map);
 				
 				return alretList;
 			}
-			
 		}
 		
 
@@ -64,6 +65,7 @@ public class AlertController {
 			map.put("username", aList.get(i).getHostUser().getUsername());
 			map.put("content", aList.get(i).getContent());
 			map.put("url", aList.get(i).getUrl());
+			map.put("type", aList.get(i).getWitchAlert());
 			alretList.add(map);
 		}
 		

@@ -79,7 +79,7 @@
                     </div>
                     <div class="view funding">
                         <label for="funding">펀딩금액</label>
-                        <p th:text="${#numbers.formatInteger(fundBoardTarget.fundCurrent, 3,'COMMA')+'원'}">7,600,000</p>
+                        <p th:text="${#numbers.formatInteger(fundBoardTarget.fundCurrent,1,'COMMA')+'원'}">7,600,000</p>
                         <p>/</p>
                         <p th:text="${#numbers.formatInteger(fundBoardTarget.fundAmount, 3,'COMMA')+'원'}">8,000,000</p>
                     </div>
@@ -145,7 +145,10 @@
                 </div>
             </div>
         </div>
-        </section>
+        <div>
+        	<a th:href="@{|/fundTarget/delete/${fundBoardTarget.id}|}">삭제</a>
+        </div>
+	</section>
 
-    </body>
+</body>
 </html>

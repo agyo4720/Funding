@@ -386,7 +386,8 @@ public class PaymentController {
 
 	//결제목록
 	@GetMapping("/loo/confirm")
-	public String confirm(Principal principal, Model model,@RequestParam(value = "page", defaultValue="0") int page) throws Exception{
+	public String confirm(Principal principal, Model model,@RequestParam(value = "page", defaultValue="0") int page,
+			@RequestParam(value = "pagee", defaultValue="0") int pagee) throws Exception{
 		principal.getName();
 		Optional<FundUser> FU =  fundUserRepository.findByusername(principal.getName());
 		
@@ -396,12 +397,13 @@ public class PaymentController {
 		model.addAttribute("page",page);
 
 		//환불리스트 불러오기
-		List<Cancels> cList = cancelsRepository.findByFundUser(FU.get().getNickname());
+		Page<Cancels> cList = patmentService.findByCan(pagee,FU.get().getNickname());
 		model.addAttribute("cList",cList);
-		
+		model.addAttribute("pagee",pagee);
 		return "/pay/loo/confirm";
 	}
 
+	
 	//송금등록
 	@RequestMapping("/rem/enroll")
 	public String enroll(){
@@ -428,7 +430,6 @@ public class PaymentController {
     			return "/pay/rem/enrollFail";
     		}
 	}
-	
 	
 	//송금하기
 	@RequestMapping("/rem/remit")
