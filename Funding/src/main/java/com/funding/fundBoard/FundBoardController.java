@@ -94,9 +94,9 @@ public class FundBoardController {
 		// 날짜 데이터와 시간 데이터를 합쳐서 데이터 넣기
 		// String time = fundBoardForm.getStartDate() + " " + fundBoardForm.getStartTime();
 		
-//		if(imgPath.equals("x") && files.isEmpty()) {
-//			bindingResult.reject("noImgError", "이미지를 선택해 주세요");
-//		}
+		if(imgPath.equals("x") && files.isEmpty()) {
+			bindingResult.reject("noImgError", "이미지를 선택해 주세요");
+		}
 		
 		if(bindingResult.hasErrors()) {
 			
