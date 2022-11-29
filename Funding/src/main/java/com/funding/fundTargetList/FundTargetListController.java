@@ -50,7 +50,7 @@ public class FundTargetListController {
 			HashMap<String, String> fmap = new HashMap<String, String>();
 			
 			//펀딩기간 만료시 알림
-			LocalDate d1 = LocalDate.parse("2022-12-02",DateTimeFormatter.ISO_DATE);
+			LocalDate d1 = LocalDate.parse("2022-12-05",DateTimeFormatter.ISO_DATE);
 			if(fList.get(i).getFundBoardTarget().getFundDurationE().isBefore(LocalDate.now()) &&
 					fList.get(i).getFundBoardTarget().getStatus().equals("진행중")) {
 				log.info("날짜 지났어용 : " + fList.get(i).getFundBoardTarget().getSubject());
