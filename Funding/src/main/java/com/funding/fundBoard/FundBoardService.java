@@ -34,8 +34,8 @@ public class FundBoardService {
 		return this.fundBoardRepository.findAll();
 	}
 	
-	// 미지정 펀드 작성
-	public void create(
+	// 미지정 펀드 작성(대표이미지로 작성)
+	public void createImg(
 			String categorieName,
 			String subject,
 			String content,
@@ -76,6 +76,50 @@ public class FundBoardService {
 		fundBoard.setFundUser(fundUser);
 		
 		this.fundBoardRepository.save(fundBoard);
+	}
+	
+	// 미지정 펀드 작성(첨부파일로 작성)
+	public void createFile(
+			String categorieName,
+			String subject,
+			String content,
+			String place,
+			String startDateTime,
+			String fundDuration,
+			String runtime,
+			Integer minFund,
+			Integer fundAmount,
+			LocalDateTime createDate,
+			String filePath,
+			FundUser fundUser) {
+		
+		FundBoard fundBoard = new FundBoard();
+		
+		Categorie categorie = this.categorieRepository.findByCategorieName(categorieName).get();
+		
+		DateTimeFormatter form = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		
+		fundBoard.setCategorieName(categorieName);
+		fundBoard.setSubject(subject);
+		fundBoard.setContent(content);
+		fundBoard.setPlace(place);
+		fundBoard.setStartDateTime(LocalDateTime.parse(startDateTime));
+		fundBoard.setFundDuration(LocalDate.parse(fundDuration, form));
+		fundBoard.setRuntime(runtime);
+		fundBoard.setMinFund(minFund);
+		fundBoard.setFundAmount(fundAmount);
+		fundBoard.setState("진행중");
+		fundBoard.setFundCurrent(0);
+		fundBoard.setCurrentMember(0);
+		fundBoard.setVote(0);
+		fundBoard.setStar(0);
+		fundBoard.setFilePath(filePath);
+		fundBoard.setCreateDate(LocalDateTime.now());
+		fundBoard.setCategorie(categorie);
+		fundBoard.setFundUser(fundUser);
+		
+		this.fundBoardRepository.save(fundBoard);
+		
 	}
 	
 	// id로 펀드보드 찾기
