@@ -72,16 +72,6 @@ section {
     align-items: center;
 }
 
-/* 프로그래스 */
-.progress {
-    height: 10px;
-}
-
-.progress-bar {
-    width: 40%;
-    height: 10px;
-}
-
 .funding p {font-weight: bold; font-size: 20px;}
 .funding p:nth-child(3) {margin: 0 5px;}
 .funding p:nth-child(4) {color: #6a6a6a;}

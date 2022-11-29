@@ -4,7 +4,7 @@ section {
 }
 
 /* 타이틀 */
-section .title {
+section .s_title {
     margin: 10px auto;
     width: 100px;
 }
