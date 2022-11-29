@@ -10,7 +10,8 @@
 <section>
     <h1>펀딩하기</h1>
    	<input hidden th:value="${fundBoardTarget.id}" id="id" />
-    <h2 th:text="|공연 이름: ${fundBoardTarget.subject}|"></h2>    
+    <h2 th:text="|공연 이름: ${fundBoardTarget.subject}|"></h2>
+    <h2 th:text="|금액: ${fundBoardTarget.fundAmount}|"></h2>    
     <input type="number" id="num" th:value="${fundBoardTarget.minFund}" />
     <p>----------------------</p>
     <div><label><input type="radio" name="method" value="카드" checked/>신용카드</label></div>
@@ -32,7 +33,7 @@
     var tossPayments = TossPayments("test_ck_OALnQvDd2VJjgjj4daVMj7X41mNW");
     var button = document.getElementById("payment-button");
     var minfund = document.querySelector('#num').value;
-
+    
     var orderId = new Date().getTime();
     var pk = document.getElementById("id").value;
     var userAndPk = orderId + '-' + pk;

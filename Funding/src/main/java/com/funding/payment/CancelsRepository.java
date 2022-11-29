@@ -9,5 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CancelsRepository extends JpaRepository<Cancels,Integer> {
 	List<Cancels> findByFundUser(String nickname);
-	//public Page<Cancels> findAll(Pageable pageable);
+	List<Cancels> findByid(Integer id);
+	public Page<Cancels> findByFundUser(String nickname,Pageable pageable);
 }
