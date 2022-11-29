@@ -81,6 +81,9 @@
 								<div th:text="|글 등록한 사람 : ${target.fundUser.nickname}|"></div>
 							</div>
 						</div>
+						<div>
+							<div th:text="|진행도 : ${target.fundCurrent * 100 / target.fundAmount}% |"></div>
+						</div>
 					</div>
 				</div>
 			</div>
