@@ -52,7 +52,7 @@
 					}
 					,success : function(result){
 						$.each(result, function(index, item){					
-							$('.fundList').append("<a href=\"" + item.url + "\"><div><br>" + item.status + "</br>" + 
+							$('.fundList').append("<a href=\"" + item.url + "\"><div>" + item.status + "</br>" + 
 									item.fundName + " 진행도 " + item.percent + "</div></a>")
 						})
 					}
