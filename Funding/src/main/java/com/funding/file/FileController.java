@@ -53,7 +53,7 @@ public class FileController {
 		String filePath = file.getSavePath();
 		
 		return new UrlResource("file:" + filePath);
+		
 	}
-	
 	
 }

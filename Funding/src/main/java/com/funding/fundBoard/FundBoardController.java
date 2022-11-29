@@ -2,6 +2,8 @@ package com.funding.fundBoard;
 
 
 import java.security.Principal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,6 +44,7 @@ public class FundBoardController {
 
 	
 	// 미지정 펀드 리스트(페이징)
+	// URL에 페이지 변수 page가 전달되지 않은 경우 디폴트 값으로 0이 되도록 설정
 	@RequestMapping("/list")
 	public String list(
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
@@ -62,6 +65,9 @@ public class FundBoardController {
 		
 		List<Categorie> categorieList = this.categorieService.findAll();
 		model.addAttribute("categorieList", categorieList);
+		
+		String nowTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		model.addAttribute("nowTime", nowTime);
 		
 		return "/fundBoard/fundBoard_form";
 	}
@@ -160,7 +166,7 @@ public class FundBoardController {
 		return "redirect:/fundBoard/list";
 	}
 	
-	// 2022/11/29 - 2 작업중
+	// 2022/11/29 - 3 작업중
 
 	
 }
