@@ -152,6 +152,7 @@ public class PaymentController {
     public String tossPay(Principal principal, Model model, @PathVariable("id")Integer id) {
 		FundBoard fundBoard = fundBoardService.findById(id);
 		model.addAttribute("fundBoard", fundBoard);//미지정공연 번호
+		log.info("fundBoard: "+fundBoard);
 
 		Optional<FundUser> FU = this.fundUserRepository.findByusername(principal.getName());//로그인중인 정보
 		model.addAttribute("userData",FU.get());//로그인정보
@@ -187,31 +188,27 @@ public class PaymentController {
             String orderName = successNode.get("orderName").asText();
         	patmentService.saveinfo(paymentKey, orderId, amount, orderName, FU);
         	
-        	/*
         	//누적금액증가
         	String tar = successNode.get("orderId").toString();
         	String target = tar.substring(tar.lastIndexOf('-')+1);
         	target = target.replace("\"", "");
         	log.info("target: "+target);	
         	
-        	FundBoardTarget targetPk = fundTargetService.findById(Integer.parseInt(target));
-        	Integer add = targetPk.getFundCurrent();
+        	FundBoard fundBoard = fundBoardService.findById(Integer.parseInt(target));
+        	Integer add = fundBoard.getFundCurrent();
         	add += amount;
-        	targetPk.setFundCurrent(add);
-        	fundTargetService.addTargetFund(targetPk);
-        	*/
+        	fundBoard.setFundCurrent(add);
+        	fundBoardService.addFundBoard(fundBoard);
         	
-            return "/pay/success";
+        	
+            return "/pay/success1";
         } else {
             JsonNode failNode = responseEntity.getBody();
             model.addAttribute("message", failNode.get("message").asText());
             model.addAttribute("code", failNode.get("code").asText());
-            return "pay/fail";
+            return "pay/fail1";
         }
     }
-    
-    
-    
     
     
     //조회하기
@@ -247,9 +244,6 @@ public class PaymentController {
     			return "/pay/loo/lookupFail";
     		}
     }
-    
-    
-    
     
 
     //지정환불하기
@@ -360,8 +354,8 @@ public class PaymentController {
     			model.addAttribute("cancelReason",cancelReason);//환불사유
     			principal.getName();
     			Optional<FundUser> FU =  fundUserRepository.findByusername(principal.getName());
-    			patmentService.cancelInfo(orderId, Integer.valueOf(totalAmount).intValue(), orderName, cancelReason, FU);
-    			/*
+    			patmentService.cancelInfo(orderId, Integer.valueOf(totalAmount).intValue(), orderName, cancelReason, FU,paymentKey);
+    			
             	//누적금액감소
     			JSONObject tar = (JSONObject) jsonObj;
     			String userAndTargetNo = (String)tar.get("orderId");
@@ -370,12 +364,16 @@ public class PaymentController {
             	target = target.replace("\"", "");
             	log.info("target: "+target);	
             	
-            	FundBoardTarget targetPk = fundTargetService.findById(Integer.parseInt(target));
-            	Integer sub = targetPk.getFundCurrent();
+            	FundBoard fundBoard = fundBoardService.findById(Integer.parseInt(target));
+            	Integer sub = fundBoard.getFundCurrent();
             	sub -= Integer.valueOf(totalAmount).intValue();
-            	targetPk.setFundCurrent(sub);
-            	fundTargetService.addTargetFund(targetPk);
-*/
+            	fundBoard.setFundCurrent(sub);
+            	
+            	Integer cMem = fundBoard.getCurrentMember();
+            	cMem--;
+            	fundBoard.setCurrentMember(cMem);
+            	fundBoardService.addFundBoard(fundBoard);
+
     			return "/pay/can/cancelSuccess";
     		}else {
     			String message = (String)jsonObj.get("message");
@@ -385,18 +383,12 @@ public class PaymentController {
     			return "/pay/can/cancelFail";
     		}
     }
-    
-    
-    
-    
 
-    
 	//결제목록
 	@GetMapping("/loo/confirm")
 	public String confirm(Principal principal, Model model,@RequestParam(value = "page", defaultValue="0") int page) throws Exception{
 		principal.getName();
 		Optional<FundUser> FU =  fundUserRepository.findByusername(principal.getName());
-		
 		
 		//결제리스트 불러오기
 		Page<Sale> sList = patmentService.findByFundUser(page,FU.get().getNickname());
@@ -409,21 +401,7 @@ public class PaymentController {
 		
 		return "/pay/loo/confirm";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	//송금등록
 	@RequestMapping("/rem/enroll")
 	public String enroll(){

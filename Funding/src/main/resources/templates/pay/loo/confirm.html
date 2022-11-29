@@ -39,7 +39,7 @@
 			</a>
 		</div>
 		<div th:each="page : ${#numbers.sequence(0,sList.totalPages-1)}"
-		th:if="${sList.number-3 < page and sList.number+3 > page}">
+		th:if="${sList.number-5 < page and sList.number+5 > page}">
 			<a th:classappend="${page == sList.number} ? 'active'" th:text="${page+1}" 
 			th:href="@{|?page=${page}|}"></a>
 		</div>
