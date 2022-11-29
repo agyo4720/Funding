@@ -5,6 +5,7 @@ import java.security.Principal;
 import java.util.Optional;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -66,4 +67,15 @@ public class HomeController {
 		return emailAuthCode;
 	}
 	
+	// 세션 테시트
+//	@RequestMapping("/test")
+//	public String sessionTest(HttpSession session, Principal principal) {
+//		
+//		Optional<FundUser> FU = fundUserService.findByuserName(principal.getName());
+//		
+//		session.setAttribute("user", FU.get());
+//		Object gg = session.getAttribute("user");
+//		System.out.println(gg);
+//		return "redirect:/";
+//	}
 }

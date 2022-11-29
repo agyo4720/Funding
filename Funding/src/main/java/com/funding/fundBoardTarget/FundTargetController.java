@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.core.io.Resource;
@@ -141,11 +142,17 @@ public class FundTargetController {
 	//글 목록 보기
 	@RequestMapping("")
 	public String showList(Model model,@RequestParam(value = "page", defaultValue="0") int page,
-			@RequestParam(value = "cate", defaultValue="0")Integer cateId) {
+			@RequestParam(value = "cate", defaultValue="0")Integer cateId, HttpSession httpSession) {
+		
+
 		//모든 카테고리 표시
 		if(cateId == 0) {
 			Page<FundBoardTarget> targetList = fundTargetService.findAll(page);
 			List<Categorie> cList = categorieService.findAll();	
+			
+			Object myInfo = httpSession.getAttribute("myInfo");
+			FundUser FU = (FundUser) myInfo;
+			model.addAttribute("userData", FU);
 			
 			model.addAttribute("page",page);
 			model.addAttribute("cate",cateId);
@@ -157,6 +164,10 @@ public class FundTargetController {
 			Categorie categorie = categorieService.findById(cateId);
 			Page<FundBoardTarget> targetList = fundTargetService.findByCategorie(categorie, page);
 			List<Categorie> cList = categorieService.findAll();	
+			
+			Object myInfo = httpSession.getAttribute("myInfo");
+			FundUser FU = (FundUser) myInfo;
+			model.addAttribute("userData", FU);
 			
 			model.addAttribute("page",page);
 			model.addAttribute("cate",cateId);

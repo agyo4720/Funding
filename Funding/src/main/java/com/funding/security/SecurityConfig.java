@@ -12,6 +12,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import com.funding.user.LoginSuccessHandler;
+
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -20,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfig {
 	
 	private final UserSecurityService userSecurityService;
+	private final LoginSuccessHandler loginSuccessHandler;
 	
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -38,6 +41,7 @@ public class SecurityConfig {
         .formLogin()
         .loginPage("/user/login")
         .defaultSuccessUrl("/")
+        .successHandler(loginSuccessHandler)
         
         // 로그아웃
         .and()

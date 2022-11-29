@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.data.domain.Page;
@@ -48,7 +49,11 @@ public class FundBoardController {
 	@RequestMapping("/list")
 	public String list(
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
-			Model model) {
+			Model model, HttpSession httpSession) {
+		
+		Object myInfo = httpSession.getAttribute("myInfo");
+		FundUser FU = (FundUser) myInfo;
+		model.addAttribute("userData", FU);
 		
 		Page<FundBoard> fundBoardList = this.fundBoardService.findAll(page);
 		model.addAttribute("fundBoardList", fundBoardList);
