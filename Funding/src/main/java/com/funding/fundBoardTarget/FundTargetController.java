@@ -29,6 +29,8 @@ import com.funding.alert.AlertService;
 import com.funding.answer.Answer;
 import com.funding.answer.AnswerService;
 import com.funding.file.FileService;
+import com.funding.fundTargetList.FundTargetList;
+import com.funding.fundTargetList.FundTargetListService;
 import com.funding.fundUser.FundUser;
 import com.funding.fundUser.FundUserRepository;
 import com.funding.fundUser.FundUserService;
@@ -45,6 +47,7 @@ import lombok.extern.slf4j.Slf4j;
 public class FundTargetController {
 
 	private final FundTargetService fundTargetService;
+	private final FundTargetListService fundTargetListService;
 	private final CategorieService categorieService;
 	private final AnswerService answerService;
 	private final FileService fileService;
@@ -172,12 +175,14 @@ public class FundTargetController {
 	public String showDetail(Model model, @PathVariable("id")Integer id,Integer alertId) {
 		FundBoardTarget fundBoardTarget = fundTargetService.findById(id);
 		List<Answer> aList = answerService.findByFundBoardTarget(fundBoardTarget);
+		List<FundTargetList> ftList = fundTargetListService.findByFUndBoardTarget(fundBoardTarget);
 		
 		//알림삭제
 		if(alertId != null) {
 			alertService.deleteAlert(alertId);
 		}
 		
+		model.addAttribute("ftList", ftList);
 		model.addAttribute("aList", aList);
 		model.addAttribute("fundBoardTarget", fundBoardTarget);
 		return "/fundTarget/fundTargetDetail";

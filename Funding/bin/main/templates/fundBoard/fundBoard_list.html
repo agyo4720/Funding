@@ -56,6 +56,7 @@
 			</div>
 
 			<div class="section" th:each="fundBoard , loop : ${fundBoardList}">
+				<img th:src="${fundBoard.imgPath}" width="300" height="300">
 				<span th:text="${fundBoard.subject}"></span>
 				<a th:href="@{|/fundBoard/detail/${fundBoard.id}|}">자세히 보기</a>
 			</div>

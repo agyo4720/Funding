@@ -210,7 +210,7 @@ public class PaymentController {
     
     
     //조회하기
-    @RequestMapping("/lookupRquest")
+    @RequestMapping("/loo/lookupRquest")
     public String lookupRquest(String orderId,Model model) throws Exception  {
     	HttpRequest request = HttpRequest.newBuilder()
     			.uri(URI.create("https://api.tosspayments.com/v1/payments/orders/"+orderId))
@@ -233,13 +233,13 @@ public class PaymentController {
     			model.addAttribute("orderId",orderId);//주문번호
     			model.addAttribute("amount",totalAmount);//금액
     			model.addAttribute("status",status);//상태
-    			return "/pay/lookupSuccess";
+    			return "/pay/loo/lookupSuccess";
     		}else {
     			String message = (String)jsonObj.get("message");
     			String code = (String)jsonObj.get("code");
     			model.addAttribute("message",message);
     			model.addAttribute("code",code);
-    			return "/pay/lookupFail";
+    			return "/pay/loo/lookupFail";
     		}
     }
     
@@ -248,13 +248,13 @@ public class PaymentController {
     
 
     //지정환불하기
-    @RequestMapping("/tarCancel")
+    @RequestMapping("/can/tarCancel")
     public String tarCancel(String paymentKey)throws Exception {
     	this.paymentKey =  paymentKey;
-    	return "/pay/tarCancel";
+    	return "/pay/can/tarCancel";
     }
     //지정환불성공
-    @RequestMapping("/tarCancelRquest")
+    @RequestMapping("/can/tarCancelRquest")
     public String tarCancelRquest(String paymentKey, 
     		@RequestParam("cancelReason")String cancelReason, Model model, Principal principal)throws Exception{
     		paymentKey = this.paymentKey;
@@ -299,13 +299,13 @@ public class PaymentController {
             	targetPk.setFundCurrent(sub);
             	fundTargetService.addTargetFund(targetPk);
 
-    			return "/pay/cancelSuccess";
+    			return "/pay/can/cancelSuccess";
     		}else {
     			String message = (String)jsonObj.get("message");
     			String code = (String)jsonObj.get("code");
     			model.addAttribute("message",message);
     			model.addAttribute("code",code);
-    			return "/pay/cancelFail";
+    			return "/pay/can/cancelFail";
     		}
     }
     
@@ -313,13 +313,13 @@ public class PaymentController {
     
     
     //미지정환불하기
-    @RequestMapping("/cancel")
+    @RequestMapping("/can/cancel")
     public String cancel(String paymentKey)throws Exception {
     	this.paymentKey =  paymentKey;
-    	return "/pay/cancel";
+    	return "/pay/can/cancel";
     }
     //미지정환불성공
-    @RequestMapping("/cancelRquest")
+    @RequestMapping("/can/cancelRquest")
     public String cancelRquest(String paymentKey, 
     		@RequestParam("cancelReason")String cancelReason, Model model, Principal principal)throws Exception{
     		paymentKey = this.paymentKey;
@@ -363,13 +363,13 @@ public class PaymentController {
             	targetPk.setFundCurrent(sub);
             	fundTargetService.addTargetFund(targetPk);
 */
-    			return "/pay/cancelSuccess";
+    			return "/pay/can/cancelSuccess";
     		}else {
     			String message = (String)jsonObj.get("message");
     			String code = (String)jsonObj.get("code");
     			model.addAttribute("message",message);
     			model.addAttribute("code",code);
-    			return "/pay/cancelFail";
+    			return "/pay/can/cancelFail";
     		}
     }
     
@@ -379,7 +379,7 @@ public class PaymentController {
 
     
 	//결제목록
-	@GetMapping("/confirm")
+	@GetMapping("/loo/confirm")
 	public String confirm(Principal principal, Model model) throws Exception{
 		principal.getName();
 		Optional<FundUser> FU =  fundUserRepository.findByusername(principal.getName());
@@ -392,18 +392,18 @@ public class PaymentController {
 		List<Cancels> cList = cancelsRepository.findByFundUser(FU.get().getNickname());
 		model.addAttribute("cList",cList);
 		
-		return "/pay/confirm";
+		return "/pay/loo/confirm";
 	}
 	
 	
 	
 	
 	//송금등록
-	@RequestMapping("/enroll")
+	@RequestMapping("/rem/enroll")
 	public String enroll(){
-			return "/pay/enroll";
+			return "/pay/rem/enroll";
 	}
-	@RequestMapping("/enrollRquest")
+	@RequestMapping("/rem/enrollRquest")
 	public String enrollRquest(@RequestParam("subMallId")String subMallId, @RequestParam("companyName")String companyName,
 			@RequestParam("representativeName")String representativeName, @RequestParam("businessNumber")String businessNumber,
 			@RequestParam("bank")String bank, @RequestParam("accountNumber")String accountNumber,Model model) throws Exception {
@@ -418,20 +418,21 @@ public class PaymentController {
 			HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
 			System.out.println(response.body());
     		if(response.statusCode() == 200) {//요청응답코드 200=성공
-    			return "/pay/enrollSuccess";
+    			patmentService.enrollInfo(subMallId, companyName, representativeName, businessNumber, bank, accountNumber);
+    			return "/pay/rem/enrollSuccess";
     		}else {
-    			return "/pay/enrollFail";
+    			return "/pay/rem/enrollFail";
     		}
 	}
 	
 	
 	//송금하기
-	@RequestMapping("/remit")
+	@RequestMapping("/rem/remit")
 	public String remit() {
-			return "/pay/remit";
+			return "/pay/rem/remit";
 	}
-	@RequestMapping("/remitRquest")
-	public String remitRquest(@RequestParam("subMallId")String subMallId, @RequestParam("payoutAmount")String payoutAmount,
+	@RequestMapping("/rem/remitRquest")
+	public String remitRquest(@RequestParam("subMallId")String subMallId, @RequestParam("payoutAmount")Integer payoutAmount,
 			@RequestParam("payoutDate")String payoutDate) throws Exception {
 		HttpRequest request = HttpRequest.newBuilder()
 			    .uri(URI.create("https://api.tosspayments.com/v1/payouts/sub-malls/settlements"))
@@ -444,9 +445,10 @@ public class PaymentController {
 			HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
 			System.out.println(response.body());
     		if(response.statusCode() == 200) {//요청응답코드 200=성공
-    			return "/pay/remitSuccess";
+    			patmentService.remitInfo(subMallId, payoutAmount, payoutDate);
+    			return "/pay/rem/remitSuccess";
     		}else {
-    			return "/pay/remitFail";
+    			return "/pay/rem/remitFail";
     		}
 	}
 }
