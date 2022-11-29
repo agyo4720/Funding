@@ -43,6 +43,10 @@ public class FundBoardForm {
 	//@NotEmpty(message="펀딩 목표믁액은 필수항목입니다.")
 	private Integer fundAmount; // 펀딩 목표 금액
 	
+	private String imgPath; // 이미지
+	
+	private String filePath; // 파일
+	
 //	private Integer currentMember; // 현재 모집 인원
 	
 //	private Integer vote; // 별점 투표 수

@@ -45,6 +45,7 @@ public class FundBoardService {
 			Integer minFund,
 			Integer fundAmount,
 			LocalDateTime createDate,
+			String imgPath,
 			FundUser fundUser
 			) {
 		
@@ -68,6 +69,7 @@ public class FundBoardService {
 		fundBoard.setCurrentMember(0);
 		fundBoard.setVote(0);
 		fundBoard.setStar(0);
+		fundBoard.setImgPath(imgPath);
 		fundBoard.setCreateDate(LocalDateTime.now());
 		fundBoard.setCategorie(categorie);
 		fundBoard.setFundUser(fundUser);
@@ -114,8 +116,7 @@ public class FundBoardService {
 		fundBoard.setStar(fundBoard.getStar() + star);
 
 		this.fundBoardRepository.save(fundBoard);
+		
 	}
-	
 
-	
 }
