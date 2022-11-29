@@ -1,6 +1,7 @@
 <!-- html -->
 <link rel="stylesheet" href="../../static/css/style.css" th:href="@{/css/style.css}">
-
+<!-- JQuery -->
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <header>
     <!-- 로고 -->
     <div class="logo">
@@ -29,6 +30,36 @@
                 <li class="user_role" th:text="${user.role}"></li>
                 <li><a href="../pay/confirm.html" th:href="@{/pay/loo/confirm}">결제</a></li>
             </ul>
+            
+            <div hidden sec:authorize="isAuthenticated()">
+    		  <input hidden id="myInfo" th:value="${#authentication.getPrincipal().getUsername()}"/>
+ 			</div>
         </div>
     </div>
 </header>
+
+
+<script>
+
+/*	$("#myInfo").ready(function(){
+		console.log("@@@@@"+$("#myInfo"))
+		  $.ajax({
+	            url: '/user/navMyInfo',
+	            data: {
+	                username: $('#myInfo').val()
+	            },
+	            success:
+	            	function(res){
+						console.log(res)
+					}
+					
+	            ,
+	            error: function(xhr) {
+	                console.log(xhr);
+	                alert(xhr.status + ':' + xhr.statusText);
+	            }
+	        })
+	});
+	
+	*/
+</script>

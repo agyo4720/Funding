@@ -28,13 +28,4 @@ public class LoginController {
 		return "user/loginForm";
 	}
 	
-	// 로그인 폼 요청 
-	@RequestMapping("/setSession")
-	public String setSession(HttpSession session, Principal principal) {
-		
-		Optional<FundUser> FU = fundUserService.findByuserName(principal.getName());
-		session.setAttribute("myInfo", FU.get());
-		
-		return "redirect:/";
-	}
 }
