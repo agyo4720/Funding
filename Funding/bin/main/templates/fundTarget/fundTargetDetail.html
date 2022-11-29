@@ -45,7 +45,7 @@
                 </div>
                 <div class="view">
                     <label for="writer">작성자</label>
-                    <p th:text="${fundBoardTarget.fundUser.nickname}">글쓴이</p>
+                    <p th:text="${fundBoardTarget.fundUser.username}">글쓴이</p>
                 </div>
                 <div class="view">
                     <label for="artist">아티스트</label>
@@ -91,8 +91,10 @@
                         <label for="minFund">최소 펀딩 금액</label>
                         <p th:text="${#numbers.formatInteger(fundBoardTarget.minFund, 3,'COMMA')+'원'}">100,000원</p>
                     </div>
-                   	<button th:if="${result == true}" class="btn" th:onclick="'location.href=\''+ @{|/pay/loo/confirm|} + '\''">환불하기</button>
-                   	<button th:if="${result == false}"class="btn" th:onclick="'location.href=\''+ @{|/pay/tossPayTar/${fundBoardTarget.id}|} + '\''">펀딩하기</button>
+                    <div sec:authorize="!hasRole('ROLE_ARTIST')">
+    	               	<button th:if="${result == true}" class="btn" th:onclick="'location.href=\''+ @{|/pay/loo/confirm|} + '\''">환불하기</button>
+	                   	<button th:if="${result == false}"class="btn" th:onclick="'location.href=\''+ @{|/pay/tossPayTar/${fundBoardTarget.id}|} + '\''">펀딩하기</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -137,7 +139,8 @@
             <div class="cmt_view" th:each="answer : ${aList}">
                 <div class="cmt">
                     <div class="cmt_head">
-                        <p class="id" th:text="${answer.fundUser.nickname}">아이디</p>
+                        <p class="id" th:text="${answer.fundUser} != null ? 
+                        ${answer.fundUser.username} : ${answer.fundArtist.username}">아이디</p>
                         <p class="time" th:text="${#temporals.format(answer.createDate, 'yyyy-MM-dd HH:mm')}">2022-11-21 10:25</p>
                         <a class="cmt_delete" th:href="@{|/answer/delete/${answer.id}?location=target&id=${fundBoardTarget.id}|}">삭제</a>
                     </div>
@@ -149,6 +152,21 @@
         	<a th:href="@{|/fundTarget/delete/${fundBoardTarget.id}|}">삭제</a>
         </div>
 	</section>
-
+	<script>
+		let answerBtn = document.querySelector('.btn_cmt')
+		answerBtn.addEventListener('click', checkAns)
+		
+		
+		//댓글 빈칸 금지
+		function checkAns(e){
+			var input = document.querySelector('.int_cmt').value
+			console.log(input)
+			if(input == ""){
+				e.preventDefault();
+				alert("빈칸은 안돼요")
+			}
+		}
+	
+	</script>
 </body>
 </html>

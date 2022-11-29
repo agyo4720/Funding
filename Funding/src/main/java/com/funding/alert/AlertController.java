@@ -44,7 +44,12 @@ public class AlertController {
 			for(int i=0; i<artList.size(); i++) {
 				HashMap<String, String> map = new HashMap<>();
 				map.put("alertId", artList.get(i).getId().toString());
-				map.put("username", artList.get(i).getHostUser().getUsername());
+				map.put("username", artList.get(i).getGuestUser() == null ? 
+						artList.get(i).getGuestArtist().getUsername() : artList.get(i).getGuestUser().getUsername());
+				//접속자와 댓글 생성자 같으면 출력 안함
+				if(art.get().getUsername().equals(map.get("username"))) {
+					continue;
+				}
 				map.put("content", artList.get(i).getContent());
 				map.put("url", artList.get(i).getUrl());
 				map.put("type", artList.get(i).getWitchAlert());
@@ -62,7 +67,12 @@ public class AlertController {
 		for(int i=0; i<aList.size(); i++) {
 			HashMap<String, String> map = new HashMap<>();
 			map.put("alertId", aList.get(i).getId().toString());
-			map.put("username", aList.get(i).getHostUser().getUsername());
+			map.put("username", aList.get(i).getGuestUser() == null ? 
+					aList.get(i).getGuestArtist().getUsername() : aList.get(i).getGuestUser().getUsername());
+			//접속자와 댓글 생성자 같으면 출력 안함
+			if(user.get().getUsername().equals(map.get("username"))) {
+				continue;
+			}
 			map.put("content", aList.get(i).getContent());
 			map.put("url", aList.get(i).getUrl());
 			map.put("type", aList.get(i).getWitchAlert());
