@@ -141,16 +141,16 @@ public class PatmentService {
 	
 	//fundAll
 	public Page<Sale> findByFundUser(int page,String user){
-		Pageable pageable = PageRequest.of(page, 3, Sort.by("payDate").descending());
+		Pageable pageable = PageRequest.of(page, 5, Sort.by("payDate").descending());
 		Page<Sale> sList = saleRepository.findByFundUser(user,pageable);
 		return sList;
 	}
-	/*
+	
 	//fundAll
-	public Page<Cancels> findByFundUserCan(int page1,String user){
-		Pageable pageable = PageRequest.of(page1, 3, Sort.by("canceledAt").descending());
-		Page<Cancels> cList = cancelsRepository.findByFundUserCan(user,pageable);
+	public Page<Cancels> findByCan(int pagee,String user){
+		Pageable pageable = PageRequest.of(pagee, 5, Sort.by("canceledAt").descending());
+		Page<Cancels> cList = cancelsRepository.findByFundUser(user,pageable);
 		return cList;
 	}
-	*/
+	
 }
