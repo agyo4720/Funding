@@ -43,7 +43,6 @@ public class FundBoardController {
 	private final FundBoardService fundBoardService;
 	private final FundUserService fundUserService;
 	private final CategorieService categorieService;
-	private final FundArtistService fundArtistService;
 	private final AnswerService answerService;
 	private final FileService fileService;
 
