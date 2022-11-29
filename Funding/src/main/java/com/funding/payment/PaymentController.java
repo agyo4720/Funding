@@ -403,6 +403,21 @@ public class PaymentController {
 		return "/pay/loo/confirm";
 	}
 
+//	  //삭제
+//	  curl --request POST \
+//	  --url https://api.tosspayments.com/v1/payouts/sub-malls/testmall100/delete \
+//	  --header 'Authorization: Basic dGVzdF9za196WExrS0V5cE5BcldtbzUwblgzbG1lYXhZRzVSOg=='
+//	HttpRequest request = HttpRequest.newBuilder()
+//		    .uri(URI.create("https://api.tosspayments.com/v1/payouts/sub-malls"))
+//		    .header("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()))
+//		    .header("Content-Type", "application/json")
+//		    .method("POST", HttpRequest.BodyPublishers.ofString("{\"subMallId\":\""+subMallId+"\","
+//		    		+ "\"type\":\"CORPORATE\",\"companyName\":\""+companyName+"\",\"representativeName\":\""+representativeName+"\","
+//		    		+ "\"businessNumber\":\""+businessNumber+"\",\"account\":{\"bank\":\""+bank+"\",\"accountNumber\":\""+accountNumber+"\"}}"))
+//		    .build();
+//		HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+	  
+	
 	
 	//송금등록
 	@RequestMapping("/rem/enroll")
@@ -431,6 +446,33 @@ public class PaymentController {
     		}
 	}
 	
+	//서브몰수정
+	@RequestMapping("/rem/revise")
+	public String revise(){
+			return "/pay/rem/revise";
+	}
+	//서브몰수정
+	@RequestMapping("/rem/reviseRequest")
+	public String reviseRequest(@RequestParam("subMallId")String subMallId,@RequestParam("bank")String bank,@RequestParam("companyName")String companyName,
+			@RequestParam("representativeName")String representativeName,@RequestParam("businessNumber")String businessNumber,@RequestParam("accountNumber")String accountNumber)throws Exception {
+		HttpRequest request = HttpRequest.newBuilder()
+			    .uri(URI.create("https://api.tosspayments.com/v1/payouts/sub-malls/"+subMallId))
+    		    .header("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()))
+    		    .header("Content-Type", "application/json")
+			    .method("POST", HttpRequest.BodyPublishers.ofString("{\"subMallId\":\""+subMallId+"\","
+			    		+ "\"type\":\"CORPORATE\",\"companyName\":\""+companyName+"\",\"representativeName\":\""+representativeName+"\","
+			    		+ "\"businessNumber\":\""+businessNumber+"\",\"account\":{\"bank\":\""+bank+"\",\"accountNumber\":\""+accountNumber+"\"}}"))
+			    .build();
+			HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+			System.out.println(response.body());
+    		if(response.statusCode() == 200) {//요청응답코드 200=성공
+    			patmentService.reviseInfo(subMallId, companyName, representativeName, businessNumber, bank, accountNumber);
+    			return "/pay/rem/reviseSuccess";
+    		}else {
+    			return "/pay/rem/reviseFail";
+    		}
+	}
+	
 	//송금하기
 	@RequestMapping("/rem/remit")
 	public String remit() {
@@ -456,4 +498,6 @@ public class PaymentController {
     			return "/pay/rem/remitFail";
     		}
 	}
+	
+	
 }
