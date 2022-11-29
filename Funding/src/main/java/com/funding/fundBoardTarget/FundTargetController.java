@@ -166,7 +166,7 @@ public class FundTargetController {
 			model.addAttribute("targetList", targetList);
 			return "fundTarget/fundTargetList";
 		}
-		
+
 	}
 
 	//디테일 창으로
