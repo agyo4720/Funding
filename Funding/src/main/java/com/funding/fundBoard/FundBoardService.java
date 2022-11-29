@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import com.funding.Categorie.Categorie;
 import com.funding.Categorie.CategorieRepository;
+import com.funding.fundBoardTarget.FundBoardTarget;
 import com.funding.fundUser.FundUser;
 
 import lombok.RequiredArgsConstructor;
@@ -122,6 +123,11 @@ public class FundBoardService {
 	// 미지정 펀드 삭제하기
 	public void delete(Integer id) {
 		this.fundBoardRepository.deleteById(id);
+	}
+	
+	//결재시 업데이트 됨
+	public void addFundBoard(FundBoard fundBoard) {
+		fundBoardRepository.save(fundBoard);
 	}
 
 }

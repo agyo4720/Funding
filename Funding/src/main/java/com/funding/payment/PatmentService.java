@@ -68,6 +68,7 @@ public class PatmentService {
 		sale.setPayCode(paymentKey);
 		sale.setPayDate(LocalDateTime.now());
 		sList.add(sale);
+		log.info("sList: "+sList);
 		saleRepository.save(sale);
 	}
 	
@@ -93,7 +94,7 @@ public class PatmentService {
 
 	//미지정환불
 	public void cancelInfo(String orederId, int totalAmount, String orderName, String cancelReason, 
-			Optional<FundUser> FU) {
+			Optional<FundUser> FU, String paymentKey) {
 		List<Cancels> cList = new ArrayList<>(); //결제내역 리스트
 		Cancels cancel = new Cancels();
 		cancel.setFundUser(FU.get().getNickname());
@@ -104,6 +105,10 @@ public class PatmentService {
 		cancel.setCanceledAt(LocalDateTime.now());
 		cList.add(cancel);
 		cancelsRepository.save(cancel);
+		
+		List<Sale> sList = saleRepository.findBypayCode(paymentKey);		
+		sList.get(0).setCheckin("환불");
+		saleRepository.saveAll(sList);
 	}
 	
 	//서브몰ID 등록
