@@ -7,6 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Let's Funding</title>
 
+    <!-- Bootstrap -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+
     <!-- CSS -->
     <link rel="stylesheet" href="../../static/css/fundTarget/fundTargetDetail.css" th:href="@{/css/fundTarget/fundTargetDetail.css}">
 
@@ -26,7 +29,7 @@
                         <p th:text="|지정펀딩 > ${fundBoardTarget.categorie.categorieName}|">지정 펀딩 > 카테고리1</p>
                     </a>
                 </div>
-                <h2 th:text="|${fundBoardTarget.subject}(${fundBoardTarget.fundUser.nickname})|">공연 이름+글쓴이</h2>
+                <h2 th:text="${fundBoardTarget.subject}">공연 이름</h2>
                 <div class="image">
 					<div th:if="${fundBoardTarget.imgPath != null}">
 						<img th:src="${fundBoardTarget.imgPath}" width="300" height="350">
@@ -39,6 +42,10 @@
             <div class="right">
                 <div class="status">
                     <div th:text="${fundBoardTarget.status}">상태</div>
+                </div>
+                <div class="view">
+                    <label for="writer">작성자</label>
+                    <p th:text="${fundBoardTarget.fundUser.nickname}">글쓴이</p>
                 </div>
                 <div class="view">
                     <label for="artist">아티스트</label>
@@ -60,6 +67,12 @@
                 <hr/>
 
                 <div>
+                    <div class="view">
+                        <!-- 프로그래스 -->
+                        <div class="progress" style="height: 10px">
+                            <div class="progress-bar" style="width: 40%; height: 10px"></div>
+                        </div>
+                    </div>
                     <div class="view">
                         <label for="duration">펀딩기간</label>
                         <p th:text="${fundBoardTarget.fundDurationS}
