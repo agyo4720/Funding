@@ -98,6 +98,7 @@ public class FundBoardController {
 				fundBoardForm.getMinFund(),
 				fundBoardForm.getFundAmount(),
 				fundBoardForm.getCreateDate(),
+				fundBoardForm.getImgPath(),
 				fundUser.get()
 				);
 		
@@ -150,7 +151,7 @@ public class FundBoardController {
 		return String.format("redirect:/fundBoard/detail/%s", id);
 	}
 	
-	// 2022/11/28 - 3 작업중
+	// 2022/11/29 - 1 작업중
 
 	
 }
