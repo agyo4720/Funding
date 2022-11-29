@@ -1,11 +1,8 @@
 package com.funding;
 
-import java.io.UnsupportedEncodingException;
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.Optional;
-
-import javax.mail.MessagingException;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -19,7 +16,6 @@ import com.funding.fundBoardTarget.FundBoardTarget;
 import com.funding.fundBoardTarget.FundTargetService;
 import com.funding.fundUser.FundUser;
 import com.funding.fundUser.FundUserService;
-import com.funding.user.mailValidation.EmailService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -55,27 +51,17 @@ public class HomeController {
 	}
 	
 	
-	
-	// 이메일 인증 테스트
-	private final EmailService emailService;
-	
-	@RequestMapping("/emailAuth")
+	// nav에 사용자 이름 출력
+	@RequestMapping("/user/navMyInfo")
 	@ResponseBody
-	public String emailTest(String email) throws UnsupportedEncodingException, MessagingException {
-		String emailAuthCode = emailService.sendEmail(email);
+	public HashMap<String, Object> navMyInfo(String username) {
+		FundUser FU = fundUserService.findByuserName(username).get();
+		HashMap<String, Object> user = new HashMap<>();
 		
-		return emailAuthCode;
+		user.put("userName", FU.getNickname());
+		user.put("userRole", FU.getRole());
+		
+		return user;
 	}
 	
-	// 세션 테시트
-//	@RequestMapping("/test")
-//	public String sessionTest(HttpSession session, Principal principal) {
-//		
-//		Optional<FundUser> FU = fundUserService.findByuserName(principal.getName());
-//		
-//		session.setAttribute("user", FU.get());
-//		Object gg = session.getAttribute("user");
-//		System.out.println(gg);
-//		return "redirect:/";
-//	}
 }

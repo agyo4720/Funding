@@ -30,6 +30,7 @@ import com.funding.alert.AlertService;
 import com.funding.answer.Answer;
 import com.funding.answer.AnswerService;
 import com.funding.file.FileService;
+import com.funding.fundArtist.FundArtist;
 import com.funding.fundUser.FundUser;
 import com.funding.fundUser.FundUserService;
 
@@ -147,9 +148,19 @@ public class FundTargetController {
 			Page<FundBoardTarget> targetList = fundTargetService.findAll(page);
 			List<Categorie> cList = categorieService.findAll();	
 			
-			Object myInfo = httpSession.getAttribute("myInfo");
-			FundUser FU = (FundUser) myInfo;
-			model.addAttribute("userData", FU);
+			try {
+				Object myInfo = httpSession.getAttribute("myInfo");
+				FundUser FU = (FundUser) myInfo;
+				if(FU.getRole().equals("user")) {
+					model.addAttribute("userData", FU);
+				}
+			}catch(Exception err) {
+				Object myInfo2 = httpSession.getAttribute("myInfo");
+				FundArtist FA = (FundArtist) myInfo2;
+				if(FA.getRole().equals("artist")) {
+					model.addAttribute("userData", FA);
+				}
+			}
 			
 			model.addAttribute("page",page);
 			model.addAttribute("cate",cateId);

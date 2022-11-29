@@ -22,6 +22,7 @@ import com.funding.Categorie.Categorie;
 import com.funding.Categorie.CategorieService;
 import com.funding.answer.Answer;
 import com.funding.answer.AnswerService;
+import com.funding.fundArtist.FundArtist;
 import com.funding.fundArtist.FundArtistService;
 import com.funding.fundUser.FundUser;
 import com.funding.fundUser.FundUserService;
@@ -48,9 +49,20 @@ public class FundBoardController {
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			Model model, HttpSession httpSession) {
 		
-		Object myInfo = httpSession.getAttribute("myInfo");
-		FundUser FU = (FundUser) myInfo;
-		model.addAttribute("userData", FU);
+		try {
+			Object myInfo = httpSession.getAttribute("myInfo");
+			FundUser FU = (FundUser) myInfo;
+			if(FU.getRole().equals("user")) {
+				model.addAttribute("userData", FU);
+			}
+		}catch(Exception err) {
+			Object myInfo2 = httpSession.getAttribute("myInfo");
+			FundArtist FA = (FundArtist) myInfo2;
+			if(FA.getRole().equals("artist")) {
+				model.addAttribute("userData", FA);
+			}
+		}
+		
 		
 		Page<FundBoard> fundBoardList = this.fundBoardService.findAll(page);
 		model.addAttribute("fundBoardList", fundBoardList);
