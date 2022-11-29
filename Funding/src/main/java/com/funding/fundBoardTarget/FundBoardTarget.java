@@ -53,7 +53,7 @@ public class FundBoardTarget {
 	
 	private LocalDateTime createDate;
 	
-	private int view;
+	private Integer view;
 	
 	private Integer minFund;
 	
@@ -62,7 +62,7 @@ public class FundBoardTarget {
 	private Integer fundAmount;
 	
 	@ColumnDefault("0")
-	private int currentMember;
+	private Integer currentMember;
 	
 	private String imgPath;
 	

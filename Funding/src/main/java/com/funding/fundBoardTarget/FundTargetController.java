@@ -32,10 +32,8 @@ import com.funding.file.FileService;
 import com.funding.fundTargetList.FundTargetList;
 import com.funding.fundTargetList.FundTargetListService;
 import com.funding.fundUser.FundUser;
-import com.funding.fundUser.FundUserRepository;
 import com.funding.fundUser.FundUserService;
 import com.funding.payment.Sale;
-import com.funding.payment.SaleRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

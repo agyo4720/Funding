@@ -80,7 +80,7 @@
                     </div>
                     <div class="view funding">
                         <label for="funding">펀딩금액</label>
-                        <p th:text="${fundBoardTarget.fundCurrent}">7,600,000</p>
+                        <p th:text="${#numbers.formatInteger(fundBoardTarget.fundCurrent, 3,'COMMA')+'원'}">7,600,000</p>
                         <p>/</p>
                         <p th:text="${#numbers.formatInteger(fundBoardTarget.fundAmount, 3,'COMMA')+'원'}">8,000,000</p>
                     </div>
@@ -90,7 +90,7 @@
                     </div>
                     <div class="view minFund">
                         <label for="minFund">최소 펀딩 금액</label>
-                        <p th:text="${fundBoardTarget.minFund}">100,000원</p>
+                        <p th:text="${#numbers.formatInteger(fundBoardTarget.minFund, 3,'COMMA')+'원'}">100,000원</p>
                     </div>
                    	<button th:if="${result == true}" class="btn" th:onclick="'location.href=\''+ @{|/pay/loo/confirm|} + '\''">환불하기</button>
                    	<button th:if="${result == false}"class="btn" th:onclick="'location.href=\''+ @{|/pay/tossPayTar/${fundBoardTarget.id}|} + '\''">펀딩하기</button>
@@ -98,7 +98,7 @@
             </div>
         </div>
 
-        <hr/>
+        
 
         <!-- <nav id="navbar-example2" class="navbar bg-light px-3 mb-3">
             <ul class="nav nav-pills">
