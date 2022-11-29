@@ -23,11 +23,11 @@
 			<td align="center" th:text="${list.fundBoard}">미지정공연제목</td>
 			<td align="center" th:text="| ${list.payMoney}원|">가격</td>
 			<td align="center">
-				<button th:onclick="'location.href=\'' + @{/pay/lookupRquest(orderId=${list.orederId})} + '\''" type="submit">상품조회하기</button>
+				<button th:onclick="'location.href=\'' + @{/pay/loo/lookupRquest(orderId=${list.orederId})} + '\''" type="submit">상품조회하기</button>
 			</td>
 			<td align="center">
-				<button th:if="${list.fundBoardTarget} != null and ${list.checkin} == null " th:onclick="'location.href=\'' + @{/pay/tarCancel(paymentKey=${list.payCode})} + '\''" type="submit">지정환불하기</button>
-				<button th:if="${list.fundBoard} != null and ${list.checkin} == null" th:onclick="'location.href=\'' + @{/pay/Cancel(paymentKey=${list.payCode})} + '\''" type="submit">미지정환불하기</button>
+				<button th:if="${list.fundBoardTarget} != null and ${list.checkin} == null " th:onclick="'location.href=\'' + @{/pay/can/tarCancel(paymentKey=${list.payCode})} + '\''" type="submit">지정환불하기</button>
+				<button th:if="${list.fundBoard} != null and ${list.checkin} == null" th:onclick="'location.href=\'' + @{/pay/can/cancel(paymentKey=${list.payCode})} + '\''" type="submit">미지정환불하기</button>
 			</td>
 			<td align="center" th:text="${list.payDate}">결제날짜</td>
 		</tr>

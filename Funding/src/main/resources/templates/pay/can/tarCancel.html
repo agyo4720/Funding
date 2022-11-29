@@ -10,7 +10,7 @@
 <section>
     <h1>환불하기</h1>
     <p>----------------------</p>
-    <form th:action="@{/pay/tarCancelRquest}" method="GET">
+    <form th:action="@{/pay/can/tarCancelRquest}" method="GET">
 	    <div><label><input type="radio" name="method" value="환불하기" checked/>환불하기</label></div>
 	    <p>----------------------</p>
 	    <input type="text"  id="cancelReason" placeholder="환불사유" name="cancelReason" value="" />
@@ -18,7 +18,7 @@
     </form>
 </section>
     <div class="confirm">
-        <a href="/pay/confirm">목록</a>
+        <a href="/pay/loo/confirm">목록</a>
     </div>
     <div class="home">
         <a href="/">홈</a>
