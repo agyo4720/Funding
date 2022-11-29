@@ -29,10 +29,15 @@ public class FundTargetListService {
 		fundTargetListRepository.save(fundTargetList);
 	}
 	
-	
-	public List<FundTargetList> findAll(FundUser user){
+	//유저로 펀드 리스트 부르기
+	public List<FundTargetList> findByFundUser(FundUser user){
 		List<FundTargetList> fList = fundTargetListRepository.findByFundUser(user);
 		return fList;
 	}
 	
+	//펀드글로 리스트 부르기
+	public List<FundTargetList> findByFUndBoardTarget(FundBoardTarget fundBoardTarget){
+		List<FundTargetList> fList = fundTargetListRepository.findByFundBoardTarget(fundBoardTarget);
+		return fList;
+	}
 }

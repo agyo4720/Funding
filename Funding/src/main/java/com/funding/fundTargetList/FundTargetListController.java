@@ -32,7 +32,7 @@ public class FundTargetListController {
 		
 		
 		//현재 펀딩목록 추가
-		List<FundTargetList> fList = fundTargetListService.findAll(user.get());
+		List<FundTargetList> fList = fundTargetListService.findByFundUser(user.get());
 		List<HashMap<String, String>> fundList = new ArrayList<>();
 		for(int i=0; i<fList.size(); i++) {
 			HashMap<String, String> fmap = new HashMap<String, String>();
