@@ -118,5 +118,10 @@ public class FundBoardService {
 		this.fundBoardRepository.save(fundBoard);
 		
 	}
+	
+	// 미지정 펀드 삭제하기
+	public void delete(Integer id) {
+		this.fundBoardRepository.deleteById(id);
+	}
 
 }

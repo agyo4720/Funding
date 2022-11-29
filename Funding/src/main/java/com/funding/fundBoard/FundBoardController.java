@@ -151,7 +151,16 @@ public class FundBoardController {
 		return String.format("redirect:/fundBoard/detail/%s", id);
 	}
 	
-	// 2022/11/29 - 1 작업중
+	// 미지정 펀드 삭제하기
+	@RequestMapping("/delete/{id}")
+	public String delete(@PathVariable("id") Integer id) {
+		
+		this.fundBoardService.delete(id);
+		
+		return "redirect:/fundBoard/list";
+	}
+	
+	// 2022/11/29 - 2 작업중
 
 	
 }
