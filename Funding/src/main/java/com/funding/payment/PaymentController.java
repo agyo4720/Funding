@@ -16,6 +16,7 @@ import javax.annotation.PostConstruct;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -33,6 +34,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.funding.Categorie.Categorie;
 import com.funding.fundBoard.FundBoard;
 import com.funding.fundBoard.FundBoardService;
 import com.funding.fundBoardTarget.FundBoardTarget;
@@ -391,13 +393,15 @@ public class PaymentController {
     
 	//결제목록
 	@GetMapping("/loo/confirm")
-	public String confirm(Principal principal, Model model) throws Exception{
+	public String confirm(Principal principal, Model model,@RequestParam(value = "page", defaultValue="0") int page) throws Exception{
 		principal.getName();
 		Optional<FundUser> FU =  fundUserRepository.findByusername(principal.getName());
 		
+		
 		//결제리스트 불러오기
-		List<Sale> sList = saleRepository.findByFundUser(FU.get().getNickname());
+		Page<Sale> sList = patmentService.findByFundUser(page,FU.get().getNickname());
 		model.addAttribute("sList",sList);
+		model.addAttribute("page",page);
 
 		//환불리스트 불러오기
 		List<Cancels> cList = cancelsRepository.findByFundUser(FU.get().getNickname());
@@ -405,6 +409,17 @@ public class PaymentController {
 		
 		return "/pay/loo/confirm";
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

@@ -5,8 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.funding.fundBoardTarget.FundBoardTarget;
 import com.funding.fundUser.FundUser;
 
 import lombok.RequiredArgsConstructor;
@@ -128,4 +133,19 @@ public class PatmentService {
 		rList.add(remit);
 		remitRepository.save(remit);
 	}
+	
+	//fundAll
+	public Page<Sale> findByFundUser(int page,String user){
+		Pageable pageable = PageRequest.of(page, 3, Sort.by("payDate").descending());
+		Page<Sale> sList = saleRepository.findByFundUser(user,pageable);
+		return sList;
+	}
+	/*
+	//fundAll
+	public Page<Cancels> findByFundUserCan(int page1,String user){
+		Pageable pageable = PageRequest.of(page1, 3, Sort.by("canceledAt").descending());
+		Page<Cancels> cList = cancelsRepository.findByFundUserCan(user,pageable);
+		return cList;
+	}
+	*/
 }

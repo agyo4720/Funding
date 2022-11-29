@@ -89,7 +89,7 @@ public class FundBoardService {
 		List<Sort.Order> sorts = new ArrayList<>();
 		sorts.add(Sort.Order.desc("createDate"));
 		
-		Pageable pageable = PageRequest.of(page, 3, Sort.by(sorts));
+		Pageable pageable = PageRequest.of(page, 1, Sort.by(sorts));
 		
 		return this.fundBoardRepository.findAll(pageable);
 	}
@@ -117,6 +117,11 @@ public class FundBoardService {
 
 		this.fundBoardRepository.save(fundBoard);
 		
+	}
+	
+	// 미지정 펀드 삭제하기
+	public void delete(Integer id) {
+		this.fundBoardRepository.deleteById(id);
 	}
 
 }

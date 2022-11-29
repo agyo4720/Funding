@@ -99,7 +99,6 @@ public class FundTargetController {
 		Optional<FundUser> user = fundUserService.findByuserName(principal.getName());
 	
 	
-		
 		if(!imgPath.equals("x") && files.isEmpty()) {
 			fundTargetService.createimg(
 					targetForm.getSubject(), 
@@ -165,7 +164,7 @@ public class FundTargetController {
 			model.addAttribute("targetList", targetList);
 			return "fundTarget/fundTargetList";
 		}
-		
+
 	}
 
 	//디테일 창으로
