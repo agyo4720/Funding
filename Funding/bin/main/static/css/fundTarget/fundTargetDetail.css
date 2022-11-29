@@ -115,7 +115,7 @@ section hr {
 /* 콘서트 내용 */
 .con_text {}
 
-/* 댓글 */
+/* 댓글 입력 */
 .con_commet {}
 
 .cmt_form {
@@ -124,12 +124,11 @@ section hr {
 .cmt_form form {
     display: flex;
     margin-bottom: 30px;
-    margin-left: 20px;
 }
 
 .int_cmt {
     padding: 30px;
-    width: 790px;
+    width: 890px;
     margin-right: 10px;
 }
 
@@ -150,19 +149,19 @@ section hr {
     background-color: #5e5252;
 }
 
+/* 댓글 보기 */
 .cmt_view {}
 
 .cmt {
-    margin: 0 auto;
-    width: 900px;
+    margin: 20px auto;
     padding: 30px;
+    width: 100%;
     border: 1px solid #6a6a6a;
     border-radius: 3px;
 }
 
 .cmt_head {
     display: flex;
-    align-items: center;
     margin-bottom: 10px;
 }
 
