@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import com.funding.Categorie.Categorie;
 import com.funding.Categorie.CategorieRepository;
-import com.funding.fundBoardTarget.FundBoardTarget;
 import com.funding.fundUser.FundUser;
 
 import lombok.RequiredArgsConstructor;
@@ -169,7 +167,7 @@ public class FundBoardService {
 		this.fundBoardRepository.deleteById(id);
 	}
 	
-	//결재시 업데이트 됨
+	// 결재시 업데이트
 	public void addFundBoard(FundBoard fundBoard) {
 		fundBoardRepository.save(fundBoard);
 	}

@@ -26,6 +26,7 @@ import com.funding.Categorie.Categorie;
 import com.funding.Categorie.CategorieService;
 import com.funding.answer.Answer;
 import com.funding.answer.AnswerService;
+import com.funding.file.FileService;
 import com.funding.fundArtist.FundArtistService;
 import com.funding.fundUser.FundUser;
 import com.funding.fundUser.FundUserService;
@@ -44,6 +45,7 @@ public class FundBoardController {
 	private final CategorieService categorieService;
 	private final FundArtistService fundArtistService;
 	private final AnswerService answerService;
+	private final FileService fileService;
 
 	
 	// 미지정 펀드 리스트(페이징)
@@ -92,9 +94,9 @@ public class FundBoardController {
 		// 날짜 데이터와 시간 데이터를 합쳐서 데이터 넣기
 		// String time = fundBoardForm.getStartDate() + " " + fundBoardForm.getStartTime();
 		
-		if(imgPath.equals("x") && files.isEmpty()) {
-			bindingResult.reject("noImgError", "이미지를 선택해 주세요");
-		}
+//		if(imgPath.equals("x") && files.isEmpty()) {
+//			bindingResult.reject("noImgError", "이미지를 선택해 주세요");
+//		}
 		
 		if(bindingResult.hasErrors()) {
 			
@@ -118,7 +120,26 @@ public class FundBoardController {
 					fundBoardForm.getMinFund(),
 					fundBoardForm.getFundAmount(),
 					fundBoardForm.getCreateDate(),
-					fundBoardForm.getImgPath(),
+					imgPath,
+					fundUser.get()
+					);
+			
+		}else if(!files.isEmpty()) {
+			
+			String savePath = fileService.saveFile(files);
+			
+			this.fundBoardService.createFile(
+					fundBoardForm.getCategorieName(),
+					fundBoardForm.getSubject(),
+					fundBoardForm.getContent(),
+					fundBoardForm.getPlace(),
+					fundBoardForm.getStartDateTime(),
+					fundBoardForm.getFundDuration(),
+					fundBoardForm.getRuntime(),
+					fundBoardForm.getMinFund(),
+					fundBoardForm.getFundAmount(),
+					fundBoardForm.getCreateDate(),
+					savePath,
 					fundUser.get()
 					);
 		}
@@ -181,7 +202,7 @@ public class FundBoardController {
 		return "redirect:/fundBoard/list";
 	}
 	
-	// 2022/11/29 - 4 작업중
+	// 2022/11/29 - 5 작업중
 
 	
 }
