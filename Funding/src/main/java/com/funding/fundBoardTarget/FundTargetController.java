@@ -101,7 +101,6 @@ public class FundTargetController {
 		Optional<FundUser> user = fundUserService.findByuserName(principal.getName());
 	
 	
-		
 		if(!imgPath.equals("x") && files.isEmpty()) {
 			fundTargetService.createimg(
 					targetForm.getSubject(), 

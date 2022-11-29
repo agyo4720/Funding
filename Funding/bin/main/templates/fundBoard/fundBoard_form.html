@@ -41,37 +41,37 @@
 				</div>
 				<div>
 					<label for="subject">제목</label>
-					<input type="text" id="subject" th:field="*{subject}" placeholder="제목을 입력하세요.">
+					<input type="text" id="subject" th:field="*{subject}" autocomplete="off" placeholder="제목을 입력하세요.">
 					<span class="errors" style="display: none">에러출력</span>
 				</div>
 				<div>
 					<label for="place">장소</label>
-					<input type="text" id="place" th:field="*{place}" placeholder="장소를 입력하세요.">
+					<input type="text" id="place" th:field="*{place}" autocomplete="off" placeholder="장소를 입력하세요.">
 					<span class="errors" style="display: none">에러출력</span>
 				</div>
 				<div>
 					<label for="startDateTime">공연 시작 일자</label>
-					<input type="datetime-local" id="startDateTime" th:field="*{startDateTime}">
+					<input type="datetime-local" id="startDateTime" th:field="*{startDateTime}" th:min="${nowTime}" autocomplete="off">
 					<span class="errors" style="display: none">에러출력</span>
 				</div>
 				<div>
 					<label for="fundDuration">펀딩 기간</label>
-					<input type="date" id="fundDuration" th:field="*{fundDuration}" th:min="${nowTime}">
+					<input type="date" id="fundDuration" th:field="*{fundDuration}" th:min="${nowTime}" autocomplete="off">
 					<span class="errors" style="display: none">에러출력</span>
 				</div>
 				<div>
 					<label for="runtime">공연 시간</label>
-					<input type="number" id="runtime" th:field="*{runtime}" placeholder="분 단위로 입력 입력하세요.">
+					<input type="number" id="runtime" th:field="*{runtime}" autocomplete="off" placeholder="분 단위로 입력 입력하세요.">
 					<span class="errors" style="display: none">에러출력</span>
 				</div>
 				<div>
 					<label for="minFund">1인 최소 펀딩 금액</label>
-					<input type="number" id="minFund" th:field="*{minFund}" placeholder="1인 최소 펀딩 금액을 입력하세요.">
+					<input type="number" id="minFund" th:field="*{minFund}" autocomplete="off" placeholder="1인 최소 펀딩 금액을 입력하세요.">
 					<span class="errors" style="display: none">에러출력</span>
 				</div>
 				<div>
 					<label for="fundAmount">펀딩 목표 금액</label>
-					<input type="number" id="fundAmount" th:field="*{fundAmount}" placeholder="펀딩 목표 금액을 입력하세요.">
+					<input type="number" id="fundAmount" th:field="*{fundAmount}" autocomplete="off" placeholder="펀딩 목표 금액을 입력하세요.">
 					<span class="errors" style="display: none">에러출력</span>
 				</div>
 				
@@ -309,6 +309,7 @@
 			});
 		}
 		// 썸머 노트 끝
+		
 	</script>
     
 </body>
