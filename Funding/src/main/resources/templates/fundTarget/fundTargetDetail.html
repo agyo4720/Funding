@@ -80,7 +80,7 @@
                         <p th:text="${fundBoardTarget.minFund}">100,000원</p>
                     </div>
                    	<button class="btn" th:onclick="'location.href=\''+ @{|/pay/tossPayTar/${fundBoardTarget.id}|} + '\''">펀딩하기</button>
-                   	<button class="btn" th:onclick="'location.href=\''+ @{|/pay/tarCancel|} + '\''">환불하기</button>
+                   	<button class="btn" th:onclick="'location.href=\''+ @{|/pay/loo/confirm|} + '\''">환불하기</button>
                 </div>
             </div>
         </div>
