@@ -121,16 +121,19 @@
 						</label>
 						<input id="radio5" type="radio" name="imgPath" value="https://cdn.pixabay.com/photo/2017/07/21/23/57/concert-2527495__340.jpg">
 					</div>
-					
-					
 				</div>
 				
-				
-				<!-- 파일 업로드
+				<!-- 파일 업로드 시작 -->
 				<div class="int_file">
 					<input type="file" multiple="multiple" name="file" />
 				</div>
-				-->
+				<!-- 파일 업로드 끝 -->
+				
+				<!-- 이미지 아무것도 선택 안하면 에러 출력 시작 -->
+				<div th:if="${#fields.hasAnyErrors()}">
+					<div th:each="err : ${#fields.allErrors()}" th:text="${err}"></div>
+				</div>
+				<!-- 이미지 아무것도 선택 안하면 에러 출력 끝 -->
 				
 				<div>
 					<button type="submit">등록하기</button>
