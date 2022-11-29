@@ -232,6 +232,9 @@
 		if(minFund.value === ""){
 			error[6].innerHTML='빈칸이에용.'
 			error[6].style.display='block'
+		}else if(parseInt(minFund.value) < parseInt(1000)){
+			error[6].innerHTML='1000원 이상해주세요.'
+			error[6].style.display='block'
 		}else{
 			error[6].style.display='none'
 		}

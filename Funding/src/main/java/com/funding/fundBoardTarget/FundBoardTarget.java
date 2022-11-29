@@ -61,7 +61,6 @@ public class FundBoardTarget {
 	
 	private Integer fundAmount;
 	
-	@ColumnDefault("0")
 	private Integer currentMember;
 	
 	private String imgPath;

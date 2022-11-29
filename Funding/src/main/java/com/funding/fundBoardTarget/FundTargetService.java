@@ -58,6 +58,7 @@ public class FundTargetService {
 		target.setCategorie(categorie);
 		target.setImgPath(imgPath);
 		target.setFundUser(user);
+		target.setCurrentMember(0);
 		
 		fundTargetRepository.save(target);
 	}
@@ -96,6 +97,7 @@ public class FundTargetService {
 		target.setCategorie(categorie);
 		target.setFilePath(filePath);
 		target.setFundUser(user);
+		target.setCurrentMember(0);
 		
 		fundTargetRepository.save(target);
 	}
