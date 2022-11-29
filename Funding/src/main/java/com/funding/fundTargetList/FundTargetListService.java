@@ -11,7 +11,10 @@ import com.funding.fundUser.FundUser;
 import com.funding.fundUser.FundUserService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class FundTargetListService {
@@ -39,5 +42,11 @@ public class FundTargetListService {
 	public List<FundTargetList> findByFUndBoardTarget(FundBoardTarget fundBoardTarget){
 		List<FundTargetList> fList = fundTargetListRepository.findByFundBoardTarget(fundBoardTarget);
 		return fList;
+	}
+	
+	public void delete(FundUser user, FundBoardTarget fundBoardTarget) {
+		List<FundTargetList> ftList = fundTargetListRepository.findByFundUserAndFundBoardTarget(user, fundBoardTarget);
+		log.info("삭제할 타겟 리스트 1개 : " + ftList.toString());
+		fundTargetListRepository.delete(ftList.get(0));
 	}
 }

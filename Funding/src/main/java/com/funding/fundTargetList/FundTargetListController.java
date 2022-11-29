@@ -23,7 +23,7 @@ public class FundTargetListController {
 	private final FundUserService fundUserService;
 	
 	
-	//지정펀딩 목록 불러오기
+	//지정펀딩 목록 불러오기(ajax)
 	@RequestMapping("/show/fundList")
 	@ResponseBody
 	public List<HashMap<String, String>> currentFundList(@RequestParam("user")String username) {

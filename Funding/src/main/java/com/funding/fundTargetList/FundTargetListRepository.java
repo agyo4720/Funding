@@ -10,4 +10,5 @@ import com.funding.fundUser.FundUser;
 public interface FundTargetListRepository extends JpaRepository<FundTargetList, Integer> {
 	public List<FundTargetList> findByFundUser(FundUser funduser);
 	public List<FundTargetList> findByFundBoardTarget(FundBoardTarget fundBoardTarget);
+	public List<FundTargetList> findByFundUserAndFundBoardTarget(FundUser funduser, FundBoardTarget fundBoardTarget);
 }

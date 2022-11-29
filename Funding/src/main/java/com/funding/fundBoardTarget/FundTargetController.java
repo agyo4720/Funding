@@ -172,7 +172,7 @@ public class FundTargetController {
 
 	//디테일 창으로
 	@RequestMapping("/detail/{id}")
-	public String showDetail(Model model, @PathVariable("id")Integer id,Integer alertId) {
+	public String showDetail(Model model, @PathVariable("id")Integer id,Integer alertId, Principal principal) {
 		FundBoardTarget fundBoardTarget = fundTargetService.findById(id);
 		List<Answer> aList = answerService.findByFundBoardTarget(fundBoardTarget);
 		List<FundTargetList> ftList = fundTargetListService.findByFUndBoardTarget(fundBoardTarget);
@@ -182,7 +182,19 @@ public class FundTargetController {
 			alertService.deleteAlert(alertId);
 		}
 		
-		model.addAttribute("ftList", ftList);
+		//펀딩 유무 확인
+		boolean result = false;
+		for(FundTargetList e : ftList) {
+			String username = e.getFundUser().getUsername();
+			String loginName = principal.getName();
+			if(username.equals(loginName)) {
+				result = true;
+			}
+		}
+		
+		
+		log.info("글로 추려낸 펀딩한 유저 목록 : " + ftList.toString());
+		model.addAttribute("result", result);
 		model.addAttribute("aList", aList);
 		model.addAttribute("fundBoardTarget", fundBoardTarget);
 		return "/fundTarget/fundTargetDetail";

@@ -115,7 +115,7 @@ public class PaymentController {
             String orderName = successNode.get("orderName").asText();
         	patmentService.targetSaveinfo(paymentKey, orderId, amount, orderName, FU);
         	
-        	//누적금액증가
+        	//누적금액증가, 사람 수 증가
         	String tar = successNode.get("orderId").toString();
         	String target = tar.substring(tar.lastIndexOf('-')+1);
         	target = target.replace("\"", "");
@@ -125,6 +125,9 @@ public class PaymentController {
         	Integer add = targetPk.getFundCurrent();
         	add += amount;
         	targetPk.setFundCurrent(add);
+        	Integer cMem = targetPk.getCurrentMember();
+        	cMem++;
+        	targetPk.setCurrentMember(cMem);
         	fundTargetService.addTargetFund(targetPk);
         	
         	//유저의 현재 펀딩 목록 추가
@@ -285,7 +288,7 @@ public class PaymentController {
     			patmentService.tarCancelInfo(orderId, Integer.valueOf(totalAmount).intValue(), orderName, cancelReason, FU, paymentKey);
 
     			
-            	//누적금액감소
+            	//누적금액감소, 인원 감소
     			JSONObject tar = (JSONObject) jsonObj;
     			String userAndTargetNo = (String)tar.get("orderId");
 
@@ -297,7 +300,15 @@ public class PaymentController {
             	Integer sub = targetPk.getFundCurrent();
             	sub -= Integer.valueOf(totalAmount).intValue();
             	targetPk.setFundCurrent(sub);
+            	
+            	Integer cMem = targetPk.getCurrentMember();
+            	cMem--;
+            	targetPk.setCurrentMember(cMem);
             	fundTargetService.addTargetFund(targetPk);
+            	
+            	
+            	//지정리스트 삭제
+            	fundTargetListService.delete(FU.get(), targetPk);
 
     			return "/pay/can/cancelSuccess";
     		}else {

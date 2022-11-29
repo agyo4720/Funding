@@ -73,14 +73,14 @@
                     </div>
                     <div class="view">
                         <label for="count">현재 인원</label>
-                        <p>76명</p>
+                        <p th:text="${fundBoardTarget.CurrentMember}">76명</p>
                     </div>
                     <div class="view minFund">
                         <label for="minFund">최소 펀딩 금액</label>
                         <p th:text="${fundBoardTarget.minFund}">100,000원</p>
                     </div>
-                   	<button class="btn" th:onclick="'location.href=\''+ @{|/pay/tossPayTar/${fundBoardTarget.id}|} + '\''">펀딩하기</button>
-                   	<button class="btn" th:onclick="'location.href=\''+ @{|/pay/loo/confirm|} + '\''">환불하기</button>
+                   	<button th:if="${result == true}" class="btn" th:onclick="'location.href=\''+ @{|/pay/loo/confirm|} + '\''">환불하기</button>
+                   	<button th:if="${result == false}"class="btn" th:onclick="'location.href=\''+ @{|/pay/tossPayTar/${fundBoardTarget.id}|} + '\''">펀딩하기</button>
                 </div>
             </div>
         </div>
