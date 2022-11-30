@@ -139,18 +139,46 @@ public class PatmentService {
 		remitRepository.save(remit);
 	}
 	
-	//fundAll
+	//서브몰ID 수정
+	public void reviseInfo(String subMallId, String companyName, String representativeName, 
+			String businessNumber, String bank, String accountNumber) {
+		List<Enroll> eList = enrollRepository.findBysubMallId(subMallId);
+		log.info("eList: "+eList);
+		eList.get(0).setSubMallId(subMallId);
+		eList.get(0).setCompanyName(companyName);
+		eList.get(0).setRepresentativeName(representativeName);
+		eList.get(0).setBusinessNumber(businessNumber);
+		eList.get(0).setBank(bank);
+		eList.get(0).setAccountNumber(accountNumber);
+		enrollRepository.saveAll(eList);
+	}
+	
+	//서브몰ID 삭제
+	public void deletionInfo(String subMallId) {
+		List<Enroll> eList = enrollRepository.findBysubMallId(subMallId);
+		log.info("eList: "+eList);
+		eList.get(0).setSubMallId(subMallId);
+		enrollRepository.deleteAll(eList);
+	}	
+	
+	
+	//결제리스트 페이징
 	public Page<Sale> findByFundUser(int page,String user){
 		Pageable pageable = PageRequest.of(page, 5, Sort.by("payDate").descending());
 		Page<Sale> sList = saleRepository.findByFundUser(user,pageable);
 		return sList;
 	}
-	
-	//fundAll
+	//환불리스트 페이징
 	public Page<Cancels> findByCan(int pagee,String user){
 		Pageable pageable = PageRequest.of(pagee, 5, Sort.by("canceledAt").descending());
 		Page<Cancels> cList = cancelsRepository.findByFundUser(user,pageable);
 		return cList;
 	}
 	
+	//송금리스트 페이징
+	public Page<Remit> findBysubMallId(int page,String subMallId){
+		Pageable pageable = PageRequest.of(page, 5, Sort.by("payoutDate").descending());
+		Page<Remit> rList = remitRepository.findBysubMallId(subMallId,pageable);
+		return rList;
+	}
 }

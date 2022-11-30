@@ -55,11 +55,21 @@ public class HomeController {
 	@RequestMapping("/user/navMyInfo")
 	@ResponseBody
 	public HashMap<String, Object> navMyInfo(String username) {
-		FundUser FU = fundUserService.findByuserName(username).get();
+		Optional<FundUser> FU = fundUserService.findByuserName(username);
+		Optional<FundArtist> FA = fundArtistService.findByuserName(username);
 		HashMap<String, Object> user = new HashMap<>();
 		
-		user.put("userName", FU.getNickname());
-		user.put("userRole", FU.getRole());
+		if(FU.isPresent()) {
+			user.put("userName", FU.get().getNickname());
+			user.put("userRole", FU.get().getRole());
+			
+			return user;
+		}else if(FA.isPresent()) {
+			user.put("userName", FA.get().getNickname());
+			user.put("userRole", FA.get().getRole());
+			
+			return user;
+		}
 		
 		return user;
 	}

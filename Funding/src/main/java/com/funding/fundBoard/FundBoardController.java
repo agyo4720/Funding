@@ -29,6 +29,7 @@ import com.funding.answer.AnswerService;
 import com.funding.file.FileService;
 import com.funding.fundArtist.FundArtist;
 import com.funding.fundArtist.FundArtistService;
+
 import com.funding.fundUser.FundUser;
 import com.funding.fundUser.FundUserService;
 
@@ -53,21 +54,8 @@ public class FundBoardController {
 	@RequestMapping("/list")
 	public String list(
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
-			Model model, HttpSession httpSession) {
+			Model model) {
 		
-		try {
-			Object myInfo = httpSession.getAttribute("myInfo");
-			FundUser FU = (FundUser) myInfo;
-			if(FU.getRole().equals("user")) {
-				model.addAttribute("userData", FU);
-			}
-		}catch(Exception err) {
-			Object myInfo2 = httpSession.getAttribute("myInfo");
-			FundArtist FA = (FundArtist) myInfo2;
-			if(FA.getRole().equals("artist")) {
-				model.addAttribute("userData", FA);
-			}
-		}
 		
 		
 		Page<FundBoard> fundBoardList = this.fundBoardService.findAll(page);
@@ -81,7 +69,12 @@ public class FundBoardController {
 	
 	// 미지정 펀드 등록(GET)
 	@GetMapping("/create")
-	public String create(FundBoardForm fundBoardForm, Model model) {
+	public String create(
+			FundBoardForm fundBoardForm,
+			Principal principal,
+			Model model) {
+		
+		Optional<FundUser> fundUser = this.fundUserService.findByuserName(principal.getName());
 		
 		List<Categorie> categorieList = this.categorieService.findAll();
 		model.addAttribute("categorieList", categorieList);
@@ -105,9 +98,9 @@ public class FundBoardController {
 		// 날짜 데이터와 시간 데이터를 합쳐서 데이터 넣기
 		// String time = fundBoardForm.getStartDate() + " " + fundBoardForm.getStartTime();
 		
-		if(imgPath.equals("x") && files.isEmpty()) {
-			bindingResult.reject("noImgError", "이미지를 선택해 주세요");
-		}
+//		if(imgPath.equals("x") && files.isEmpty()) {
+//			bindingResult.reject("noImgError", "이미지를 선택해 주세요");
+//		}
 		
 		if(bindingResult.hasErrors()) {
 			
@@ -213,7 +206,7 @@ public class FundBoardController {
 		return "redirect:/fundBoard/list";
 	}
 	
-	// 2022/11/29 - 5 작업중
+	// 2022/11/29 - 6 작업중
 
 	
 }
