@@ -25,7 +25,7 @@ public class FundUserService {
 		fundUser.setPassword(passwordEncoder.encode(vo.getPassword1()));
 		fundUser.setNickname(vo.getNickname());
 		fundUser.setEmail(vo.getEmail()+"@"+vo.getDomain());
-		fundUser.setMobile(vo.getMobile());
+		fundUser.setMobile("010"+vo.getMobile());
 		fundUser.setAddress(vo.getAddr1()+vo.getAddr2()+vo.getAddr3()+vo.getAddr4());
 		fundUser.setGender(vo.getGender());
 		fundUser.setBirth(Date.valueOf(vo.getYear()+"-"+vo.getMonth()+"-"+vo.getDay()));	
