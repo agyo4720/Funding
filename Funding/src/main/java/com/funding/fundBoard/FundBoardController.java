@@ -47,21 +47,8 @@ public class FundBoardController {
 	@RequestMapping("/list")
 	public String list(
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
-			Model model, HttpSession httpSession) {
+			Model model) {
 		
-		try {
-			Object myInfo = httpSession.getAttribute("myInfo");
-			FundUser FU = (FundUser) myInfo;
-			if(FU.getRole().equals("user")) {
-				model.addAttribute("userData", FU);
-			}
-		}catch(Exception err) {
-			Object myInfo2 = httpSession.getAttribute("myInfo");
-			FundArtist FA = (FundArtist) myInfo2;
-			if(FA.getRole().equals("artist")) {
-				model.addAttribute("userData", FA);
-			}
-		}
 		
 		
 		Page<FundBoard> fundBoardList = this.fundBoardService.findAll(page);

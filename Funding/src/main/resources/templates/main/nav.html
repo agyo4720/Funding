@@ -24,16 +24,16 @@
         </ul>
         <!-- 로그인 상태일 때 -->
         <div sec:authorize="isAuthenticated()">
-            <ul class="nav_user" th:each="user: ${userData}">
+            <ul class="nav_user">
                 <li><a href="#" sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a></li>
-                <li class="user_name" th:text="${user.nickname}"></li>
-                <li class="user_role" th:text="${user.role}"></li>
+                <li class="user_name" ></li>
+                <li class="user_role" ></li>
                 <li><a href="../pay/confirm.html" th:href="@{/pay/confirm}">결제</a></li>
             </ul>
             
-            <div hidden sec:authorize="isAuthenticated()">
-    		  <input hidden id="myInfo" th:value="${#authentication.getPrincipal().getUsername()}"/>
- 			</div>
+            	<div hidden sec:authorize="isAuthenticated()">
+    		  		<input hidden id="myInfo" class="active" th:value="${#authentication.getPrincipal().getUsername()}"/>
+ 				</div>
         </div>
     </div>
 </header>
@@ -41,9 +41,9 @@
 
 <script>
 
-/*	$("#myInfo").ready(function(){
-		console.log("@@@@@"+$("#myInfo"))
-		  $.ajax({
+	$(document).ready(function(){
+		
+			 $.ajax({
 	            url: '/user/navMyInfo',
 	            data: {
 	                username: $('#myInfo').val()
@@ -51,15 +51,19 @@
 	            success:
 	            	function(res){
 						console.log(res)
+						console.log(res.userName)
+						console.log(res.userRole)
+						
+						$('.user_name').html(res.userName)
+						$('.user_role').html(res.userRole)
 					}
 					
 	            ,
 	            error: function(xhr) {
 	                console.log(xhr);
-	                alert(xhr.status + ':' + xhr.statusText);
 	            }
 	        })
+		 
+	        
 	});
-	
-	*/
 </script>
