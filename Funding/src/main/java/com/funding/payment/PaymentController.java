@@ -198,7 +198,12 @@ public class PaymentController {
         	Integer add = fundBoard.getFundCurrent();
         	add += amount;
         	fundBoard.setFundCurrent(add);
+        	//누적사람 수 증가
+        	Integer cMem = fundBoard.getCurrentMember();
+        	cMem++;
+        	fundBoard.setCurrentMember(cMem);
         	fundBoardService.addFundBoard(fundBoard);
+        	
         	
         	
             return "/pay/success1";
@@ -369,9 +374,10 @@ public class PaymentController {
             	sub -= Integer.valueOf(totalAmount).intValue();
             	fundBoard.setFundCurrent(sub);
             	
-            	Integer cMem = fundBoard.getCurrentMember();
-            	cMem--;
-            	fundBoard.setCurrentMember(cMem);
+            	// 환불 인원 감소
+            	Integer currentMember = fundBoard.getCurrentMember();
+            	currentMember -= 1;
+            	fundBoard.setCurrentMember(currentMember);
             	fundBoardService.addFundBoard(fundBoard);
 
     			return "/pay/can/cancelSuccess";

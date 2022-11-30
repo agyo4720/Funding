@@ -228,8 +228,12 @@
 			if(minFund.value === ""){
 				errors[6].innerHTML='1인 최소 펀딩 금액은 필수항목 입니다.'
 				errors[6].style.display='block'
+			}else if(parseInt(minFund.value) < parseInt(1000)){
+				errors[6].innerHTML='1인 최소 펀딩 금액은 1000원 입니다.'
+        		errors[6].style.display='block'
 			}else{
 				errors[6].style.display='none'
+				
 			}
 		}
 		

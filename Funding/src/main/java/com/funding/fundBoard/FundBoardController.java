@@ -60,20 +60,20 @@ public class FundBoardController {
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			Model model, HttpSession httpSession) {
 		
-//		try {
-//			Object myInfo = httpSession.getAttribute("myInfo");
-//			FundUser FU = (FundUser) myInfo;
-//			if(FU.getRole().equals("user")) {
-//				model.addAttribute("userData", FU);
-//			}
-//			
-//		}catch(Exception err) {
-//			Object myInfo2 = httpSession.getAttribute("myInfo");
-//			FundArtist FA = (FundArtist) myInfo2;
-//			if(FA.getRole().equals("artist")) {
-//				model.addAttribute("userData", FA);
-//			}
-//		}
+		try {
+			Object myInfo = httpSession.getAttribute("myInfo");
+			FundUser FU = (FundUser) myInfo;
+			if(FU.getRole().equals("user")) {
+				model.addAttribute("userData", FU);
+			}
+			
+		}catch(Exception err) {
+			Object myInfo2 = httpSession.getAttribute("myInfo");
+			FundArtist FA = (FundArtist) myInfo2;
+			if(FA.getRole().equals("artist")) {
+				model.addAttribute("userData", FA);
+			}
+		}
 		
 		Page<FundBoard> fundBoardList = this.fundBoardService.findAll(page);
 		model.addAttribute("fundBoardList", fundBoardList);
@@ -216,7 +216,7 @@ public class FundBoardController {
 		return "redirect:/fundBoard/list";
 	}
 	
-	// 2022/11/30 - 3 작업중
+	// 2022/11/30 - 4 작업중
 
 	
 }
