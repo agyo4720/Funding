@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>계좌조회</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+</head>
+<body>
+<section>
+    <h1>계좌조회</h1>
+    <p>----------------------</p>
+    <form th:action="@{/pay/rem/confirmRequest}" method="GET">
+	    <input type="text"  id="subMallId" placeholder="서브몰ID" name="subMallId" value="" />
+	    <button id="revise-button" type="submit">조회하기</button>
+    </form>
+</section>
+    <div class="home">
+        <a href="/">홈</a>
+    </div>
+<script>
+</script>
+</body>
+</html>
