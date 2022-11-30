@@ -23,8 +23,8 @@
 			<td align="center" th:text="| ${list.payMoney}원|">가격</td>
 			<td align="center" th:text="${list.checkin}">상태</td>
 			<td align="center">
-				<button th:if="${list.fundBoardTarget} != null and ${list.checkin} == null " th:onclick="'location.href=\'' + @{/pay/can/tarCancel(paymentKey=${list.payCode})} + '\''" type="submit">지정환불하기</button>
-				<button th:if="${list.fundBoard} != null and ${list.checkin} == null" th:onclick="'location.href=\'' + @{/pay/can/cancel(paymentKey=${list.payCode})} + '\''" type="submit">미지정환불하기</button>
+				<button th:if="${list.fundBoardTarget} != null and ${list.checkin} == 결제완료 " th:onclick="'location.href=\'' + @{/pay/can/tarCancel(paymentKey=${list.payCode})} + '\''" type="submit">지정환불하기</button>
+				<button th:if="${list.fundBoard} != null and ${list.checkin} == 결제완료" th:onclick="'location.href=\'' + @{/pay/can/cancel(paymentKey=${list.payCode})} + '\''" type="submit">미지정환불하기</button>
 			</td>
 			<td align="center" th:text="${list.payDate}">결제날짜</td>
 		</tr>		
