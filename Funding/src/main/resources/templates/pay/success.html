@@ -13,6 +13,9 @@
     <link rel="shortcut icon" href="/img/favicon/ms-icon-310x310.png" type="image/x-icon" />
 </head>
 <body>
+<<<<<<< HEAD
+
+=======
     <!-- 홈페이지 상단 nav -->
     <header th:replace="/main/nav"></header>
     
@@ -36,19 +39,11 @@
                 <td>결제 수단</td>
                 <td>[[${method}]]</td>
             </tr>
-            <tr>
-                <td>결제 상태</td>
-                <td id="id"></td>
-            </tr>
         </table>
-
         <div class="btn">
             <a href="/pay/loo/confirm">결제 리스트</a>
         </div>
     </section>
-<script>
-	var s = '[[${status}]]';
-	console.log(s);
-</script>
+>>>>>>> main
 </body>
 </html>
