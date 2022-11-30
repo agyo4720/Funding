@@ -13,12 +13,12 @@
 	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 
 	<style>
-		/* 에러메세지 */
+		/* 에러메세지 시작 */
 		.errors{
 			color: red;
     		display: none;
     	}
-        
+        /* 에러메세지 끝 */
 	</style>
 </head>
 <body>
@@ -30,7 +30,7 @@
 		</div>	
 		<div class="main">
 
-			<form th:object="${fundBoardForm}" method="POST">
+			<form th:object="${fundBoardForm}" method="POST" enctype="multipart/form-data">
 				<div>
 					<label for="categorieName">카테고리</label>
 					<select id="categorieName" th:field="*{categorieName}">
@@ -51,7 +51,7 @@
 				</div>
 				<div>
 					<label for="startDateTime">공연 시작 일자</label>
-					<input type="datetime-local" id="startDateTime" th:field="*{startDateTime}" th:min="${nowTime}" autocomplete="off">
+					<input type="datetime-local" id="startDateTime" th:field="*{startDateTime}" th:min="${nowTime}">
 					<span class="errors" style="display: none">에러출력</span>
 				</div>
 				<div>
@@ -128,13 +128,7 @@
 					<input type="file" multiple="multiple" name="file" />
 				</div>
 				<!-- 파일 업로드 끝 -->
-				
-				<!-- 이미지 아무것도 선택 안하면 에러 출력 시작 -->
-				<div th:if="${#fields.hasAnyErrors()}">
-					<div th:each="err : ${#fields.allErrors()}" th:text="${err}"></div>
-				</div>
-				<!-- 이미지 아무것도 선택 안하면 에러 출력 끝 -->
-				
+						
 				<div>
 					<button type="submit">등록하기</button>
 				</div>
@@ -234,8 +228,12 @@
 			if(minFund.value === ""){
 				errors[6].innerHTML='1인 최소 펀딩 금액은 필수항목 입니다.'
 				errors[6].style.display='block'
+			}else if(parseInt(minFund.value) < parseInt(1000)){
+				errors[6].innerHTML='1인 최소 펀딩 금액은 1000원 입니다.'
+        		errors[6].style.display='block'
 			}else{
 				errors[6].style.display='none'
+				
 			}
 		}
 		
