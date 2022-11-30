@@ -58,7 +58,7 @@ public class AlertService {
 	}
 	
 	
-	//펀드 시간 마감시 알림 (해당펀딩, 해당 유저)
+	//지정펀드 시간 마감시 알림 (해당펀딩, username)
 	public void fundEndAlert(FundBoardTarget fundBoardTarget, String principal) {
 		Optional<FundUser> user = fundUserService.findByuserName(principal);
 		String url = "/fundTarget/detail/" + fundBoardTarget.getId();
@@ -89,6 +89,20 @@ public class AlertService {
 	}
 	
 	
+	//지정펀딩 금액 달성시 알림 (해당펀딩, 해당 유저)
+	public void fundEndAmount(FundBoardTarget fundBoardTarget, String principal) {
+		Optional<FundUser> user = fundUserService.findByuserName(principal);
+		String url = "/fundTarget/detail/" + fundBoardTarget.getId();
+		
+		Alert alert = new Alert();
+		alert.setContent(fundBoardTarget.getSubject() + " 펀딩 100% 달성");
+		alert.setUrl(url);
+		alert.setWitchAlert("펀딩");
+		alert.setHostUser(user.get());
+		alert.setFundBoardTarget(fundBoardTarget);
+		
+		alertRepository.save(alert);
+	}
 	
 	
 	

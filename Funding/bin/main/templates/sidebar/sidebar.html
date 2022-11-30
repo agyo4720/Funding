@@ -3,7 +3,7 @@
 <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 <link rel="stylesheet" href="css/sidebar/sidebar.css">
 
-<div class="sidebarbtn">
+<div class="sidebarbtn" sec:authorize="isAuthenticated()">
 	<h1>>></h1>
 </div>
 <div class="sidebar" sec:authorize="hasRole('ROLE_USER')">
@@ -63,10 +63,14 @@
 					$.each(result, function(index, item){	
 						if(item.type == "댓글"){
 							$('.alert').append("<a href=\"" + item.url + "?alertId=" + 
-								item.alertId + "\"><div>" + item.username + 
+								item.alertId + "\"><div>" + item.Guestname + 
 								"님이 댓글을 달았습니다.</div>[" + item.content + "]</a>")
 								
 						}else if(item.type == "마감"){
+							$('.alert').append("<a href=\"" + item.url + "?alertId=" + 
+									item.alertId + "\"><div>[" + item.content +
+									"]</div></a>")
+						}else if(item.type == "펀딩"){
 							$('.alert').append("<a href=\"" + item.url + "?alertId=" + 
 									item.alertId + "\"><div>[" + item.content +
 									"]</div></a>")
@@ -89,6 +93,14 @@
 					})
 				}
 			})
+			
+			$.ajax({
+				url : 'alert/update'
+				,data : 'a'
+				,success : function(result){
+					console.log(result)
+				}
+			})
 		}
 	})
 	
@@ -99,11 +111,11 @@
 			if($(".sidebar").hasClass('active') == true){
 				$(".sidebar").removeClass('active')
 				$(".sidebarbtn").removeClass('active')
-				$(".sidebarbtn h1").html(">>")
+				$(".sidebarbtn h1").html("<<")
 			}else{
 				$(".sidebar").addClass('active')
 				$(".sidebarbtn").addClass('active')
-				$(".sidebarbtn h1").html("<<")
+				$(".sidebarbtn h1").html(">>")
 			}
 		})
 	})

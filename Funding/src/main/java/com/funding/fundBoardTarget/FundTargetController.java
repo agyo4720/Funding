@@ -175,7 +175,7 @@ public class FundTargetController {
 	public String showDetail(Model model, @PathVariable("id")Integer id,Integer alertId, Principal principal) {
 		FundBoardTarget fundBoardTarget = fundTargetService.findById(id);
 		List<Answer> aList = answerService.findByFundBoardTarget(fundBoardTarget);
-		List<FundTargetList> ftList = fundTargetListService.findByFUndBoardTarget(fundBoardTarget);
+		List<FundTargetList> ftList = fundTargetListService.findByFundBoardTarget(fundBoardTarget);
 		
 		//알림삭제
 		if(alertId != null) {
@@ -184,11 +184,13 @@ public class FundTargetController {
 		
 		//펀딩 유무 확인
 		boolean result = false;
-		for(FundTargetList e : ftList) {
-			String username = e.getFundUser().getUsername();
-			String loginName = principal.getName();
-			if(username.equals(loginName)) {
-				result = true;
+		if(principal != null) {
+			for(FundTargetList e : ftList) {
+				String username = e.getFundUser().getUsername();
+				String loginName = principal.getName();
+				if(username.equals(loginName)) {
+					result = true;
+				}
 			}
 		}
 		

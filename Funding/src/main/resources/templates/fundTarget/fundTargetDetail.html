@@ -73,7 +73,7 @@
                     </div> -->
                     <div class="view">
                         <label for="fundCurrent">현재 펀딩 금액</label>
-                        <p th:text="${#numbers.formatInteger(fundBoardTarget.fundCurrent, 3,'COMMA')+' 원'}">7,600,000</p>
+                        <p th:text="${#numbers.formatInteger(fundBoardTarget.fundCurrent, 1,'COMMA')+' 원'}">7,600,000</p>
                     </div>
                     <div class="view">
                         <label for="fundAmount">총 펀딩 금액</label>
@@ -93,7 +93,7 @@
                         <label for="minFund">최소 펀딩 금액</label>
                         <p th:text="${#numbers.formatInteger(fundBoardTarget.minFund, 3,'COMMA')+'원'}">100,000원</p>
                     </div>
-                    <div sec:authorize="!hasRole('ROLE_ARTIST')">
+                    <div sec:authorize="hasRole('ROLE_USER')">
     	               	<button th:if="${result == true}" class="btn" th:onclick="'location.href=\''+ @{|/pay/loo/confirm|} + '\''">환불하기</button>
 	                   	<button th:if="${result == false}"class="btn" th:onclick="'location.href=\''+ @{|/pay/tossPayTar/${fundBoardTarget.id}|} + '\''">펀딩하기</button>
                     </div>
