@@ -90,19 +90,10 @@
                         <label for="minFund">최소 펀딩 금액</label>
                         <p th:text="${#numbers.formatInteger(fundBoardTarget.minFund, 3,'COMMA')+'원'}">100,000원</p>
                     </div>
-<<<<<<< HEAD
-                    <div sec:authorize="hasRole('ROLE_USER')">
-    	               	<button th:if="${result == true}" class="btn" th:onclick="'location.href=\''+ @{|/pay/loo/confirm|} + '\''">환불하기</button>
-	                   	<button th:if="${result == false}"class="btn" th:onclick="'location.href=\''+ @{|/pay/tossPayTar/${fundBoardTarget.id}|} + '\''">펀딩하기</button>
-                    </div>
-=======
-                    
-	                    <div sec:authorize="!hasRole('ROLE_ARTIST')">
+	                    <div sec:authorize="hasRole('ROLE_USER')">
 	    	               	<button th:if="${result == true}" class="con_btn" th:onclick="'location.href=\''+ @{/pay/can/tarCancel(paymentKey=${payCode})} + '\''" type="submit">환불하기</button>
 		                   	<button th:if="${result == false}"class="con_btn" th:onclick="'location.href=\''+ @{|/pay/tossPayTar/${fundBoardTarget.id}|} + '\''">펀딩하기</button>
 	                    </div>
-                    
->>>>>>> 223dfb781727e89bfc124cdd1f880da873a48a77
                 </div>
             </div>
         </div>
