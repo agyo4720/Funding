@@ -1,15 +1,44 @@
+.sidebarbtn{
+	position: fixed;
+	width: 100px;
+	height: 100px;
+	right: -50px;
+	top: 30px;
+	border-radius: 10px;
+	background-color: #353535;
+	color: #fff;
+	transition: 0.5s;
+}
+.sidebarbtn.active{
+	transform: translateX(-240px);
+}
+
+.sidebarbtn h1{
+	line-height: 108px;
+	text-align: left;
+	margin: 0 12px;
+}
+
 .sidebar {
 	position: fixed;
     padding: 20px;
 	width: 200px;
     height: 100%;
-    right: 0px;
+    right: -240px;
     background-color: #353535;
     color: #fff;
+    transition: 0.5s;
+    z-index: 10;
 }
 
 .sidebar hr {margin: 20px 0;}
 .sidebar h4 {margin-bottom: 10px;}
+
+.sidebar.active{
+	 transform: translateX(-240px);
+}
+
+
 
 /* 알림 */
 .alert a {

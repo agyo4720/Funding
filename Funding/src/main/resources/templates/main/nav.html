@@ -26,7 +26,9 @@
         <div sec:authorize="isAuthenticated()">
             <ul class="nav_user">
                 <li><a href="#" sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a></li>
+                <a class="myPage" href="/user/myInfo/">
                 <li class="user_name" ></li>
+                </a><a class="myPage" href="/user/myInfo/">
                 <li class="user_role" ></li>
                 <li><a href="../pay/confirm.html" th:href="@{/pay/loo/confirm}">결제</a></li>
             </ul>
@@ -40,7 +42,7 @@
 
 
 <script>
-
+	
 	$(document).ready(function(){
 		
 			 $.ajax({
@@ -51,9 +53,8 @@
 	            success:
 	            	function(res){
 						console.log(res)
-						console.log(res.userName)
+						console.log("유저네임 : "+res.userName)
 						console.log(res.userRole)
-						
 						$('.user_name').html(res.userName)
 						$('.user_role').html(res.userRole)
 					}
@@ -63,7 +64,6 @@
 	                console.log(xhr);
 	            }
 	        })
-		 
-	        
 	});
+	
 </script>

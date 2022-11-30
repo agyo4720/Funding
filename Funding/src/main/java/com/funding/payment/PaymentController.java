@@ -5,6 +5,8 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.security.Principal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -114,6 +116,7 @@ public class PaymentController {
             model.addAttribute("balanceAmount", successNode.get("balanceAmount").asText());//금액
             model.addAttribute("orderName", successNode.get("orderName").asText());//공연이름
             model.addAttribute("orderId", successNode.get("orderId").asText());//주문번호
+            model.addAttribute("method", successNode.get("method").asText());//결제방식
             
             String orderName = successNode.get("orderName").asText();
         	patmentService.targetSaveinfo(paymentKey, orderId, amount, orderName, FU);
@@ -185,6 +188,7 @@ public class PaymentController {
             model.addAttribute("orderName", successNode.get("orderName").asText());//공연이름
             model.addAttribute("orderId", successNode.get("orderId").asText());//주문번호
             model.addAttribute("status", successNode.get("status").asText());//상태
+            model.addAttribute("method", successNode.get("method").asText());//결제방식
             
             String orderName = successNode.get("orderName").asText();
         	patmentService.saveinfo(paymentKey, orderId, amount, orderName, FU);
@@ -200,8 +204,6 @@ public class PaymentController {
         	add += amount;
         	fundBoard.setFundCurrent(add);
         	fundBoardService.addFundBoard(fundBoard);
-        	
-        	
             return "/pay/success1";
         } else {
             JsonNode failNode = responseEntity.getBody();
@@ -452,7 +454,9 @@ public class PaymentController {
 
 	//송금하기
 	@RequestMapping("/rem/remit")
-	public String remit() {
+	public String remit(Model model) {
+		String nowTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		model.addAttribute("nowTime", nowTime);
 			return "/pay/rem/remit";
 	}
 	@RequestMapping("/rem/remitRquest")
@@ -467,7 +471,7 @@ public class PaymentController {
 			    		+ "\"payoutAmount\":"+payoutAmount+",\"payoutDate\":\""+payoutDate+"\"}]"))
 			    .build();
 			HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-			System.out.println(response.body());
+			System.out.println(response.body());			
     		if(response.statusCode() == 200) {//요청응답코드 200=성공
     			patmentService.remitInfo(subMallId, payoutAmount, payoutDate);
     			return "/pay/rem/remitSuccess";

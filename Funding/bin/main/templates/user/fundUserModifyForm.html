@@ -1,0 +1,24 @@
+<!-- 로그인 -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Let's Funding : 내 정보 수정</title>
+    
+    <!-- favicon -->
+    <link rel="shortcut icon" href="/img/favicon/ms-icon-310x310.png" type="image/x-icon" />
+</head>
+<body>
+    <!-- 홈페이지 상단 nav -->
+    <header th:replace="/main/nav"></header>
+    
+    <h2>내 정보 수정</h2>
+    <form th:object="${userData}">
+	    <span>아이디 : </span><input type="text" th:field="*{username}">
+    </form>
+</body>
+
+
+</html>

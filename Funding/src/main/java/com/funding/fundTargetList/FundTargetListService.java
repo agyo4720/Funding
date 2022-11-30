@@ -22,6 +22,7 @@ public class FundTargetListService {
 	private final FundTargetListRepository fundTargetListRepository;
 	private final FundUserService fundUserService;
 	
+	//지정펀딩 펀딩하면 db에 등록
 	public void insertList(Principal principal, FundBoardTarget fundBoardTarget) {
 		Optional<FundUser> user = fundUserService.findByuserName(principal.getName());
 		
@@ -39,14 +40,24 @@ public class FundTargetListService {
 	}
 	
 	//펀드글로 리스트 부르기
-	public List<FundTargetList> findByFUndBoardTarget(FundBoardTarget fundBoardTarget){
+	public List<FundTargetList> findByFundBoardTarget(FundBoardTarget fundBoardTarget){
 		List<FundTargetList> fList = fundTargetListRepository.findByFundBoardTarget(fundBoardTarget);
 		return fList;
 	}
 	
+	//해당 리스트 지우기
 	public void delete(FundUser user, FundBoardTarget fundBoardTarget) {
 		List<FundTargetList> ftList = fundTargetListRepository.findByFundUserAndFundBoardTarget(user, fundBoardTarget);
 		log.info("삭제할 타겟 리스트 1개 : " + ftList.toString());
 		fundTargetListRepository.delete(ftList.get(0));
 	}
+	
+	public List<FundTargetList> findAll(){
+		List<FundTargetList> targetList = fundTargetListRepository.findAll();
+		return targetList;
+	}
+	
+	
+	
+	
 }

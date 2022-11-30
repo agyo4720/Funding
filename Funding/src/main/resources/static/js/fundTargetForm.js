@@ -111,7 +111,10 @@ function checkFundAmount(){
     if(fundAmount.value === ""){
         error[7].innerHTML='빈칸이에용.'
         error[7].style.display='block'
-    }else{
+    }else if(parseInt(minFund.value) >= parseInt(fundAmount.value)){
+		error[7].innerHTML='최소금액보다 커야해요.'
+        error[7].style.display='block'
+	}else{
         error[7].style.display='none'
     }
 }
