@@ -200,8 +200,6 @@ public class PaymentController {
         	add += amount;
         	fundBoard.setFundCurrent(add);
         	fundBoardService.addFundBoard(fundBoard);
-        	
-        	
             return "/pay/success1";
         } else {
             JsonNode failNode = responseEntity.getBody();

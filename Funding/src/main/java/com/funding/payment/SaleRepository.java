@@ -13,6 +13,7 @@ import com.funding.fundUser.FundUser;
 
 public interface SaleRepository extends JpaRepository<Sale,Integer> {
 	List<Sale> findBypayCode(String nickname);
+	List<Sale> findByFundBoardTarget(String fundBoardTarget);
 	List<Sale> findByid(Integer id);
 	public Page<Sale> findByFundUser(String nickname,Pageable pageable);
 }
