@@ -3,6 +3,10 @@
 <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 <link rel="stylesheet" href="css/sidebar/sidebar.css">
 
+
+<div class="sidebarbtn">
+	<h1>>></h1>
+</div>
 <div class="sidebar" sec:authorize="hasRole('ROLE_USER')">
 	<div sec:authorize="isAuthenticated()">
 		<input hidden class="user" th:value="${#authentication.getPrincipal().getUsername()}"/>
@@ -22,7 +26,7 @@
 </div>
 
 
-<!--  유저일떄 화면       -->
+<!--  유저일떄 화면    -->
 
 
 <div class="sidebar" sec:authorize="hasRole('ROLE_ARTIST')">
@@ -89,5 +93,21 @@
 				}
 			})
 		}
+	})
+	
+	//사이드바 액션
+	$(document).ready(function(){
+		
+		$(".sidebarbtn").click(function(){
+			if($(".sidebar").hasClass('active') == true){
+				$(".sidebar").removeClass('active')
+				$(".sidebarbtn").removeClass('active')
+				$(".sidebarbtn h1").html(">>")
+			}else{
+				$(".sidebar").addClass('active')
+				$(".sidebarbtn").addClass('active')
+				$(".sidebarbtn h1").html("<<")
+			}
+		})
 	})
 </script>
