@@ -3,6 +3,7 @@ package com.funding.fundBoard;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -55,19 +56,20 @@ public class FundBoardController {
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			Model model, HttpSession httpSession) {
 		
-		try {
-			Object myInfo = httpSession.getAttribute("myInfo");
-			FundUser FU = (FundUser) myInfo;
-			if(FU.getRole().equals("user")) {
-				model.addAttribute("userData", FU);
-			}
-		}catch(Exception err) {
-			Object myInfo2 = httpSession.getAttribute("myInfo");
-			FundArtist FA = (FundArtist) myInfo2;
-			if(FA.getRole().equals("artist")) {
-				model.addAttribute("userData", FA);
-			}
-		}
+//		try {
+//			Object myInfo = httpSession.getAttribute("myInfo");
+//			FundUser FU = (FundUser) myInfo;
+//			if(FU.getRole().equals("user")) {
+//				model.addAttribute("userData", FU);
+//			}
+//			
+//		}catch(Exception err) {
+//			Object myInfo2 = httpSession.getAttribute("myInfo");
+//			FundArtist FA = (FundArtist) myInfo2;
+//			if(FA.getRole().equals("artist")) {
+//				model.addAttribute("userData", FA);
+//			}
+//		}
 		
 		Page<FundBoard> fundBoardList = this.fundBoardService.findAll(page);
 		model.addAttribute("fundBoardList", fundBoardList);
@@ -100,18 +102,14 @@ public class FundBoardController {
 	@PostMapping("/create")
 	public String create(
 			@Valid FundBoardForm fundBoardForm,
-			@RequestParam(value="imgPath", defaultValue="x") String imgPath,
-			@RequestParam(value="file", defaultValue="x") MultipartFile files,
+//			@RequestParam(value="imgPath", defaultValue="x") String imgPath,
+//			@RequestParam(value="file", defaultValue="x") MultipartFile files,
 			BindingResult bindingResult,
 			Principal principal,
 			Model model) throws IllegalStateException, IOException{
 		
 		// 날짜 데이터와 시간 데이터를 합쳐서 데이터 넣기
 		// String time = fundBoardForm.getStartDate() + " " + fundBoardForm.getStartTime();
-		
-		if(imgPath.equals("x") && files.isEmpty()) {
-			bindingResult.reject("noImgError", "이미지를 선택해 주세요");
-		}
 		
 		if(bindingResult.hasErrors()) {
 			
@@ -123,42 +121,21 @@ public class FundBoardController {
 		
 		Optional<FundUser> fundUser = this.fundUserService.findByuserName(principal.getName());
 		
-		if(!imgPath.equals("x") && files.isEmpty()) {
-			this.fundBoardService.createImg(
-					fundBoardForm.getCategorieName(),
-					fundBoardForm.getSubject(),
-					fundBoardForm.getContent(),
-					fundBoardForm.getPlace(),
-					fundBoardForm.getStartDateTime(),
-					fundBoardForm.getFundDuration(),
-					fundBoardForm.getRuntime(),
-					fundBoardForm.getMinFund(),
-					fundBoardForm.getFundAmount(),
-					fundBoardForm.getCreateDate(),
-					imgPath,
-					fundUser.get()
-					);
+		this.fundBoardService.create(
+				fundBoardForm.getCategorieName(),
+				fundBoardForm.getSubject(),
+				fundBoardForm.getContent(),
+				fundBoardForm.getPlace(),
+				fundBoardForm.getStartDateTime(),
+				fundBoardForm.getFundDuration(),
+				fundBoardForm.getRuntime(),
+				fundBoardForm.getMinFund(),
+				fundBoardForm.getFundAmount(),
+				fundBoardForm.getImgPath(),
+				fundBoardForm.getCreateDate(),
+				fundUser.get()
+				);
 			
-		}else if(!files.isEmpty()) {
-			
-			String savePath = fileService.saveFile(files);
-			
-			this.fundBoardService.createFile(
-					fundBoardForm.getCategorieName(),
-					fundBoardForm.getSubject(),
-					fundBoardForm.getContent(),
-					fundBoardForm.getPlace(),
-					fundBoardForm.getStartDateTime(),
-					fundBoardForm.getFundDuration(),
-					fundBoardForm.getRuntime(),
-					fundBoardForm.getMinFund(),
-					fundBoardForm.getFundAmount(),
-					fundBoardForm.getCreateDate(),
-					savePath,
-					fundUser.get()
-					);
-		}
-		
 		return "redirect:/fundBoard/list";
 		
 	}
@@ -217,7 +194,7 @@ public class FundBoardController {
 		return "redirect:/fundBoard/list";
 	}
 	
-	// 2022/11/30 - 작업시작!
+	// 2022/11/30 - 1 작업중
 
 	
 }
