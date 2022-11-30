@@ -44,6 +44,7 @@ public class PatmentService {
 		sale.setPayMoney(amount);
 		sale.setOrederId(orederId);
 		sale.setPayCode(paymentKey);
+		sale.setCheckin("결제완료");
 		sale.setPayDate(LocalDateTime.now());
 		sList.add(sale);
 		saleRepository.save(sale);
@@ -66,6 +67,7 @@ public class PatmentService {
 		sale.setPayMoney(amount);
 		sale.setOrederId(orederId);
 		sale.setPayCode(paymentKey);
+		sale.setCheckin("결제완료");
 		sale.setPayDate(LocalDateTime.now());
 		sList.add(sale);
 		log.info("sList: "+sList);

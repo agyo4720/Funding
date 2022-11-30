@@ -368,30 +368,10 @@ public class PaymentController {
 		Page<Cancels> cList = patmentService.findByCan(pagee,FU.get().getNickname());
 		model.addAttribute("cList",cList);
 		model.addAttribute("pagee",pagee);
+		
 		return "/pay/loo/confirm";
 	}
 	
-
-    @RequestMapping("/loo/lookup")
-    public String lookup(String paymentKey,Model model) throws Exception  {
-    	HttpRequest request = HttpRequest.newBuilder()
-    			.uri(URI.create("https://api.tosspayments.com/v1/payments/"+paymentKey))
-    		    .header("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()))
-    		    .method("GET", HttpRequest.BodyPublishers.noBody())
-    		    .build();
-    		HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-
-    		//문자열을 json형태 변환
-    		JSONParser parser = new JSONParser();
-    		Object obj = parser.parse(response.body());
-    		JSONObject jsonObj = (JSONObject)obj;
-
-		
-			String status = (String)jsonObj.get("status");//상태
-			model.addAttribute("status",status);
-			return "/pay/loo/lookupSuccess";
-    		
-    }
 	
 	
 	
