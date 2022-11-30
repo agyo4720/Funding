@@ -48,11 +48,11 @@ public class FundBoardService {
 			FundUser fundUser
 			) {
 		
-		FundBoard fundBoard = new FundBoard();
-		
 		Categorie categorie = this.categorieRepository.findByCategorieName(categorieName).get();
 		
 		DateTimeFormatter form = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		
+		FundBoard fundBoard = new FundBoard();
 		
 		fundBoard.setCategorieName(categorieName);
 		fundBoard.setSubject(subject);
@@ -91,11 +91,11 @@ public class FundBoardService {
 			String filePath,
 			FundUser fundUser) {
 		
-		FundBoard fundBoard = new FundBoard();
-		
 		Categorie categorie = this.categorieRepository.findByCategorieName(categorieName).get();
 		
 		DateTimeFormatter form = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		
+		FundBoard fundBoard = new FundBoard();
 		
 		fundBoard.setCategorieName(categorieName);
 		fundBoard.setSubject(subject);

@@ -27,6 +27,7 @@ import com.funding.Categorie.CategorieService;
 import com.funding.answer.Answer;
 import com.funding.answer.AnswerService;
 import com.funding.file.FileService;
+import com.funding.fundArtist.FundArtist;
 import com.funding.fundArtist.FundArtistService;
 import com.funding.fundUser.FundUser;
 import com.funding.fundUser.FundUserService;
@@ -68,7 +69,6 @@ public class FundBoardController {
 			}
 		}
 		
-		
 		Page<FundBoard> fundBoardList = this.fundBoardService.findAll(page);
 		model.addAttribute("fundBoardList", fundBoardList);
 		
@@ -109,9 +109,9 @@ public class FundBoardController {
 		// 날짜 데이터와 시간 데이터를 합쳐서 데이터 넣기
 		// String time = fundBoardForm.getStartDate() + " " + fundBoardForm.getStartTime();
 		
-//		if(imgPath.equals("x") && files.isEmpty()) {
-//			bindingResult.reject("noImgError", "이미지를 선택해 주세요");
-//		}
+		if(imgPath.equals("x") && files.isEmpty()) {
+			bindingResult.reject("noImgError", "이미지를 선택해 주세요");
+		}
 		
 		if(bindingResult.hasErrors()) {
 			
@@ -217,7 +217,7 @@ public class FundBoardController {
 		return "redirect:/fundBoard/list";
 	}
 	
-	// 2022/11/29 - 6 작업중
+	// 2022/11/30 - 작업시작!
 
 	
 }
