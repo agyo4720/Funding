@@ -30,7 +30,7 @@
 		</div>	
 		<div class="main">
 
-			<form th:object="${fundBoardForm}" method="POST">
+			<form th:object="${fundBoardForm}" method="POST" enctype="multipart/form-data">
 				<div>
 					<label for="categorieName">카테고리</label>
 					<select id="categorieName" th:field="*{categorieName}">
@@ -122,6 +122,12 @@
 						<input id="radio5" type="radio" name="imgPath" value="https://cdn.pixabay.com/photo/2017/07/21/23/57/concert-2527495__340.jpg">
 					</div>
 				</div>
+				
+				<!-- 파일 업로드 시작 -->
+				<div class="int_file">
+					<input type="file" multiple="multiple" name="file" />
+				</div>
+				<!-- 파일 업로드 끝 -->
 						
 				<div>
 					<button type="submit">등록하기</button>

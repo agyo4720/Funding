@@ -102,8 +102,8 @@ public class FundBoardController {
 	@PostMapping("/create")
 	public String create(
 			@Valid FundBoardForm fundBoardForm,
-//			@RequestParam(value="imgPath", defaultValue="x") String imgPath,
-//			@RequestParam(value="file", defaultValue="x") MultipartFile files,
+			@RequestParam(value="imgPath", defaultValue="x") String imgPath,
+			@RequestParam(value="file", defaultValue="x") MultipartFile files,
 			BindingResult bindingResult,
 			Principal principal,
 			Model model) throws IllegalStateException, IOException{
@@ -121,21 +121,43 @@ public class FundBoardController {
 		
 		Optional<FundUser> fundUser = this.fundUserService.findByuserName(principal.getName());
 		
-		this.fundBoardService.create(
-				fundBoardForm.getCategorieName(),
-				fundBoardForm.getSubject(),
-				fundBoardForm.getContent(),
-				fundBoardForm.getPlace(),
-				fundBoardForm.getStartDateTime(),
-				fundBoardForm.getFundDuration(),
-				fundBoardForm.getRuntime(),
-				fundBoardForm.getMinFund(),
-				fundBoardForm.getFundAmount(),
-				fundBoardForm.getImgPath(),
-				fundBoardForm.getCreateDate(),
-				fundUser.get()
-				);
+		if(!imgPath.equals("x") && files.isEmpty()) {
+			this.fundBoardService.createImg(
+					fundBoardForm.getCategorieName(),
+					fundBoardForm.getSubject(),
+					fundBoardForm.getContent(),
+					fundBoardForm.getPlace(),
+					fundBoardForm.getStartDateTime(),
+					fundBoardForm.getFundDuration(),
+					fundBoardForm.getRuntime(),
+					fundBoardForm.getMinFund(),
+					fundBoardForm.getFundAmount(),
+					fundBoardForm.getImgPath(),
+					fundBoardForm.getCreateDate(),
+					fundUser.get()
+					);
 			
+		}else if(!files.isEmpty()) {
+			
+			String savePath = this.fileService.saveFile(files);
+			
+			this.fundBoardService.createFile(
+					fundBoardForm.getCategorieName(),
+					fundBoardForm.getSubject(),
+					fundBoardForm.getContent(),
+					fundBoardForm.getPlace(),
+					fundBoardForm.getStartDateTime(),
+					fundBoardForm.getFundDuration(),
+					fundBoardForm.getRuntime(),
+					fundBoardForm.getMinFund(),
+					fundBoardForm.getFundAmount(),
+					savePath,
+					fundBoardForm.getCreateDate(),
+					fundUser.get()
+					);
+		
+		}
+		
 		return "redirect:/fundBoard/list";
 		
 	}
@@ -194,7 +216,7 @@ public class FundBoardController {
 		return "redirect:/fundBoard/list";
 	}
 	
-	// 2022/11/30 - 1 작업중
+	// 2022/11/30 - 2 작업중
 
 	
 }
