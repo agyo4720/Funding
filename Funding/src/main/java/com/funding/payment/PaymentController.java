@@ -114,6 +114,7 @@ public class PaymentController {
             model.addAttribute("balanceAmount", successNode.get("balanceAmount").asText());//금액
             model.addAttribute("orderName", successNode.get("orderName").asText());//공연이름
             model.addAttribute("orderId", successNode.get("orderId").asText());//주문번호
+            model.addAttribute("method", successNode.get("method").asText());//결제방식
             
             String orderName = successNode.get("orderName").asText();
         	patmentService.targetSaveinfo(paymentKey, orderId, amount, orderName, FU);
@@ -185,6 +186,7 @@ public class PaymentController {
             model.addAttribute("orderName", successNode.get("orderName").asText());//공연이름
             model.addAttribute("orderId", successNode.get("orderId").asText());//주문번호
             model.addAttribute("status", successNode.get("status").asText());//상태
+            model.addAttribute("method", successNode.get("method").asText());//결제방식
             
             String orderName = successNode.get("orderName").asText();
         	patmentService.saveinfo(paymentKey, orderId, amount, orderName, FU);
