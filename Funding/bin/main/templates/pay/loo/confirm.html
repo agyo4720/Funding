@@ -1,34 +1,40 @@
-<html xmlns:th="http://www.thymeleaf.org">
-
-<html>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
 <head>
-	<title>결제목록</title>
-</head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Let's Funding</title>
 
+	<!-- CSS -->
+    <link rel="stylesheet" href="/css/pay/loo/confirm.css">
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="img/favicon/ms-icon-310x310.png" type="image/x-icon" />
+</head>
 <body>
-	<table border="1">
+	<!-- 홈페이지 상단 nav -->
+	<header th:replace="/main/nav"></header>
+
+	<table>
 		<tr>
-			<th align="center" width="160">닉네임</th>
-			<th align="center" width="160">지정공연제목</th>
-			<th align="center" width="160">미지정공연제목</th>
-			<th align="center" width="160">가격</th>
-			<th align="center" width="160">상태조회하기</th>
-			<th align="center" width="160">환불하기</th>
-			<th align="center" width="160">결제날짜</th>
+			<th>No</th>
+			<th>지정공연제목</th>
+			<th>미지정공연제목</th>
+			<th>가격</th>
+			<th>환불하기</th>
+			<th>결제날짜</th>
 		</tr>
-		<tr th:each="list : ${sList}">
-			<td align="center" th:text="${list.fundUser}">닉네임</td>
-			<td align="center" th:text="${list.fundBoardTarget}">지정공연제목</td>
-			<td align="center" th:text="${list.fundBoard}">미지정공연제목</td>
-			<td align="center" th:text="| ${list.payMoney}원|">가격</td>
-			<td align="center">
-				<button th:onclick="'location.href=\'' + @{/pay/loo/lookup(paymentKey=${list.payCode})} + '\''" type="submit">상태조회하기</button>
-			</td>
-			<td align="center">
+		<tr th:each="list, i : ${sList}">
+			<td th:text="${i.count}">No</td>
+			<td th:text="${list.fundBoardTarget}">지정공연제목</td>
+			<td th:text="${list.fundBoard}">미지정공연제목</td>
+			<td th:text="| ${list.payMoney}원|">가격</td>
+			<td>
 				<button th:if="${list.fundBoardTarget} != null and ${list.checkin} == null " th:onclick="'location.href=\'' + @{/pay/can/tarCancel(paymentKey=${list.payCode})} + '\''" type="submit">지정환불하기</button>
 				<button th:if="${list.fundBoard} != null and ${list.checkin} == null" th:onclick="'location.href=\'' + @{/pay/can/cancel(paymentKey=${list.payCode})} + '\''" type="submit">미지정환불하기</button>
 			</td>
-			<td align="center" th:text="${list.payDate}">결제날짜</td>
+			<td th:text="${list.payDate}">결제날짜</td>
 		</tr>		
 	</table>
 	<!-- 페이징 -->
@@ -52,22 +58,20 @@
 	<!-- //페이징 -->
 
 	 
-	<table border="1">
+	<table>
 		<tr>
-			<th align="center" width="160">닉네임</th>
-			<th align="center" width="160">지정공연제목</th>
-			<th align="center" width="160">미지정공연제목</th>
-			<th align="center" width="160">가격</th>
-			<th align="center" width="160">환불사유</th>
-			<th align="center" width="160">환불날짜</th>
+			<th>No</th>
+			<th>미지정공연제목</th>
+			<th>가격</th>
+			<th>환불사유</th>
+			<th>환불날짜</th>
 		</tr>
-		<tr th:each="list : ${cList}">
-			<td align="center" th:text="${list.fundUser}">닉네임</td>
-			<td align="center" th:text="${list.fundBoardTarget}">지정공연제목</td>
-			<td align="center" th:text="${list.fundBoard}">미지정공연제목</td>
-			<td align="center" th:text="| ${list.payMoney}원|">가격</td>
-			<td align="center" th:text="${list.cancelReason}">환불사유</td>
-			<td align="center" th:text="${list.canceledAt}">환불날짜</td>
+		<tr th:each="list, i : ${cList}">
+			<td th:text="${i.count}">No</td>
+			<td th:text="${list.fundBoard}">미지정공연제목</td>
+			<td th:text="| ${list.payMoney}원|">가격</td>
+			<td th:text="${list.cancelReason}">환불사유</td>
+			<td th:text="${list.canceledAt}">환불날짜</td>
 		</tr>
 	</table>
 	<!-- 페이징 -->
@@ -93,7 +97,5 @@
     <div class="home">
         <a href="/">홈페이지</a>
     </div>
-	<script>
-	</script>
 </body>
 </html>
