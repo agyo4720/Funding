@@ -34,7 +34,10 @@ import com.funding.fundArtist.FundArtist;
 import com.funding.fundTargetList.FundTargetList;
 import com.funding.fundTargetList.FundTargetListService;
 import com.funding.fundUser.FundUser;
+import com.funding.fundUser.FundUserRepository;
 import com.funding.fundUser.FundUserService;
+import com.funding.payment.Sale;
+import com.funding.payment.SaleRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -52,6 +55,8 @@ public class FundTargetController {
 	private final FileService fileService;
 	private final FundUserService fundUserService;
 	private final AlertService alertService;
+	private final SaleRepository saleRepository;
+
 	
 	
 	//글 작성폼 불러오기
@@ -175,7 +180,16 @@ public class FundTargetController {
 	public String showDetail(Model model, @PathVariable("id")Integer id,Integer alertId, Principal principal) {
 		FundBoardTarget fundBoardTarget = fundTargetService.findById(id);
 		List<Answer> aList = answerService.findByFundBoardTarget(fundBoardTarget);
-		List<FundTargetList> ftList = fundTargetListService.findByFUndBoardTarget(fundBoardTarget);
+		List<FundTargetList> ftList = fundTargetListService.findByFundBoardTarget(fundBoardTarget);
+		
+		//환불
+		FundBoardTarget nick = fundTargetService.findById(id);
+		List<Sale> sale = saleRepository.findByFundBoardTarget(nick.getSubject());
+		for(int i=0; i<sale.size(); i++){
+			sale.get(i).getPayCode();
+			model.addAttribute("payCode",sale.get(i).getPayCode());
+		}
+
 		
 		//알림삭제
 		if(alertId != null) {
@@ -184,11 +198,13 @@ public class FundTargetController {
 		
 		//펀딩 유무 확인
 		boolean result = false;
-		for(FundTargetList e : ftList) {
-			String username = e.getFundUser().getUsername();
-			String loginName = principal.getName();
-			if(username.equals(loginName)) {
-				result = true;
+		if(principal != null) {
+			for(FundTargetList e : ftList) {
+				String username = e.getFundUser().getUsername();
+				String loginName = principal.getName();
+				if(username.equals(loginName)) {
+					result = true;
+				}
 			}
 		}
 		
@@ -214,7 +230,19 @@ public class FundTargetController {
 	
 	//지정펀딩 삭제
 	@RequestMapping("/delete/{id}")
-	public String deleteTarget(@PathVariable("id")Integer id) {
+	public String deleteTarget(@PathVariable("id")Integer id, Model model) {
+
+		//환불
+		FundBoardTarget nick = fundTargetService.findById(id);
+		List<Sale> sale = saleRepository.findByFundBoardTarget(nick.getSubject());
+		for(int i=0; i<sale.size(); i++){
+			sale.get(i).getPayCode();
+			sale.get(i).setCheckin("게시글 삭제");
+			log.info("@@sale.get(i).getPayCode(): "+sale.get(i).getPayCode());
+			System.out.println("!!sale: "+sale);
+			model.addAttribute("payCode",sale.get(i).getPayCode());
+		}
+		
 		fundTargetService.delete(id);
 		return "redirect:/";
 	}

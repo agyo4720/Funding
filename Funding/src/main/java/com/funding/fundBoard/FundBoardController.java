@@ -28,6 +28,8 @@ import com.funding.answer.Answer;
 import com.funding.answer.AnswerService;
 import com.funding.file.FileService;
 import com.funding.fundArtist.FundArtist;
+import com.funding.fundArtist.FundArtistService;
+
 import com.funding.fundUser.FundUser;
 import com.funding.fundUser.FundUserService;
 
