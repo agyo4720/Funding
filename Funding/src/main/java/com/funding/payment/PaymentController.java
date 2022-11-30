@@ -386,17 +386,11 @@ public class PaymentController {
     		Object obj = parser.parse(response.body());
     		JSONObject jsonObj = (JSONObject)obj;
 
-    		if(response.statusCode() == 200) {//요청응답코드 200=성공
-    			String status = (String)jsonObj.get("status");//상태
-    			model.addAttribute("status",status);
-    			return "/pay/loo/lookupSuccess";
-    		}else {
-    			String message = (String)jsonObj.get("message");
-    			String code = (String)jsonObj.get("code");
-    			model.addAttribute("message",message);
-    			model.addAttribute("code",code);
-    			return "/pay/loo/lookupFail";
-    		}
+		
+			String status = (String)jsonObj.get("status");//상태
+			model.addAttribute("status",status);
+			return "/pay/loo/lookupSuccess";
+    		
     }
 	
 	
