@@ -14,20 +14,7 @@
 </head>
 <body>
 <<<<<<< HEAD
-<section>
-    <h1>결제 성공</h1>
-    <h3>공연이름: [[${orderName}]]</h3>
-    <h3>펀딩금액: [[${balanceAmount}]]원</h3>
-    <h3>상태: [[${status}]]</h3>
-    <h3>주문번호: [[${orderId}]]</h3>
-    <h3>결제방식: [[${method}]]</h3>
-</section>
-    <div class="confirm">
-        <a href="/pay/loo/confirm">목록</a>
-    </div>
-    <div class="home">
-        <a href="/">홈</a>
-    </div>
+
 =======
     <!-- 홈페이지 상단 nav -->
     <header th:replace="/main/nav"></header>
@@ -50,7 +37,7 @@
             </tr>
             <tr>
                 <td>결제 수단</td>
-                <td></td>
+                <td>[[${method}]]</td>
             </tr>
             <tr>
                 <td>결제 상태</td>

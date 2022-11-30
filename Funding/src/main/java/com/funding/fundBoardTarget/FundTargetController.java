@@ -219,7 +219,7 @@ public class FundTargetController {
 	@RequestMapping("/delete/{id}")
 	public String deleteTarget(@PathVariable("id")Integer id, Model model) {
 		fundTargetService.delete(id);
-
+/*
 		//환불
 		FundBoardTarget nick = fundTargetService.findById(id);
 		List<Sale> sale = saleRepository.findByFundBoardTarget(nick.getSubject());
@@ -228,6 +228,7 @@ public class FundTargetController {
 		log.info("!!sale: "+sale);
 		System.out.println("!!sale: "+sale);
 		model.addAttribute("sale",sale);
+		*/
 		return "redirect:/";
 	}
 	
