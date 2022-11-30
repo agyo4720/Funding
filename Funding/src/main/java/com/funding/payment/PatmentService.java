@@ -153,9 +153,13 @@ public class PatmentService {
 		enrollRepository.saveAll(eList);
 	}
 	
-	
-	
-	
+	//서브몰ID 삭제
+	public void deletionInfo(String subMallId) {
+		List<Enroll> eList = enrollRepository.findBysubMallId(subMallId);
+		log.info("eList: "+eList);
+		eList.get(0).setSubMallId(subMallId);
+		enrollRepository.deleteAll(eList);
+	}	
 	
 	
 	//결제리스트 페이징
@@ -164,7 +168,6 @@ public class PatmentService {
 		Page<Sale> sList = saleRepository.findByFundUser(user,pageable);
 		return sList;
 	}
-	
 	//환불리스트 페이징
 	public Page<Cancels> findByCan(int pagee,String user){
 		Pageable pageable = PageRequest.of(pagee, 5, Sort.by("canceledAt").descending());
@@ -172,4 +175,10 @@ public class PatmentService {
 		return cList;
 	}
 	
+	//송금리스트 페이징
+	public Page<Remit> findBysubMallId(int page,String subMallId){
+		Pageable pageable = PageRequest.of(page, 5, Sort.by("payoutDate").descending());
+		Page<Remit> rList = remitRepository.findBysubMallId(subMallId,pageable);
+		return rList;
+	}
 }

@@ -61,6 +61,7 @@ public class PaymentController {
     private final CancelsRepository cancelsRepository;
     private final SaleRepository saleRepository;
     private final FundTargetListService fundTargetListService;
+    private final RemitRepository remitRepository;
     private String paymentKey;
     
     @PostConstruct
@@ -209,43 +210,8 @@ public class PaymentController {
             return "pay/fail1";
         }
     }
-    
-    
-    //조회하기
-    @RequestMapping("/loo/lookupRquest")
-    public String lookupRquest(String orderId,Model model) throws Exception  {
-    	HttpRequest request = HttpRequest.newBuilder()
-    			.uri(URI.create("https://api.tosspayments.com/v1/payments/orders/"+orderId))
-    		    .header("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()))
-    		    .method("GET", HttpRequest.BodyPublishers.noBody())
-    		    .build();
-    		HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
 
-    		//문자열을 json형태 변환
-    		JSONParser parser = new JSONParser();
-    		Object obj = parser.parse(response.body());
-    		JSONObject jsonObj = (JSONObject)obj;
-
-    		if(response.statusCode() == 200) {//요청응답코드 200=성공
-    			String orderName = (String)jsonObj.get("orderName");
-    			String status = (String)jsonObj.get("status");
-    			String totalAmount = jsonObj.get("totalAmount").toString();
-    			
-    			model.addAttribute("orderName",orderName);//상품명
-    			model.addAttribute("orderId",orderId);//주문번호
-    			model.addAttribute("amount",totalAmount);//금액
-    			model.addAttribute("status",status);//상태
-    			return "/pay/loo/lookupSuccess";
-    		}else {
-    			String message = (String)jsonObj.get("message");
-    			String code = (String)jsonObj.get("code");
-    			model.addAttribute("message",message);
-    			model.addAttribute("code",code);
-    			return "/pay/loo/lookupFail";
-    		}
-    }
     
-
     //지정환불하기
     @RequestMapping("/can/tarCancel")
     public String tarCancel(String paymentKey)throws Exception {
@@ -402,24 +368,12 @@ public class PaymentController {
 		model.addAttribute("pagee",pagee);
 		return "/pay/loo/confirm";
 	}
-
-//	  //삭제
-//	  curl --request POST \
-//	  --url https://api.tosspayments.com/v1/payouts/sub-malls/testmall100/delete \
-//	  --header 'Authorization: Basic dGVzdF9za196WExrS0V5cE5BcldtbzUwblgzbG1lYXhZRzVSOg=='
-//	HttpRequest request = HttpRequest.newBuilder()
-//		    .uri(URI.create("https://api.tosspayments.com/v1/payouts/sub-malls"))
-//		    .header("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()))
-//		    .header("Content-Type", "application/json")
-//		    .method("POST", HttpRequest.BodyPublishers.ofString("{\"subMallId\":\""+subMallId+"\","
-//		    		+ "\"type\":\"CORPORATE\",\"companyName\":\""+companyName+"\",\"representativeName\":\""+representativeName+"\","
-//		    		+ "\"businessNumber\":\""+businessNumber+"\",\"account\":{\"bank\":\""+bank+"\",\"accountNumber\":\""+accountNumber+"\"}}"))
-//		    .build();
-//		HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-	  
 	
 	
-	//송금등록
+	
+	
+	
+	//계좌등록
 	@RequestMapping("/rem/enroll")
 	public String enroll(){
 			return "/pay/rem/enroll";
@@ -446,12 +400,11 @@ public class PaymentController {
     		}
 	}
 	
-	//서브몰수정
+	//계좌수정
 	@RequestMapping("/rem/revise")
 	public String revise(){
 			return "/pay/rem/revise";
 	}
-	//서브몰수정
 	@RequestMapping("/rem/reviseRequest")
 	public String reviseRequest(@RequestParam("subMallId")String subMallId,@RequestParam("bank")String bank,@RequestParam("companyName")String companyName,
 			@RequestParam("representativeName")String representativeName,@RequestParam("businessNumber")String businessNumber,@RequestParam("accountNumber")String accountNumber)throws Exception {
@@ -473,6 +426,30 @@ public class PaymentController {
     		}
 	}
 	
+	
+	//계좌삭제
+	@RequestMapping("/rem/deletion")
+	public String deletion(){
+			return "/pay/rem/deletion";
+	}
+	@RequestMapping("/rem/deletionRequest")
+	public String deletionRequest(@RequestParam("subMallId")String subMallId)throws Exception {
+			HttpRequest request = HttpRequest.newBuilder()
+			.uri(URI.create("https://api.tosspayments.com/v1/payouts/sub-malls/"+subMallId+"/delete"))
+	    	.header("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()))
+	    	.header("Content-Type", "application/json")
+	    	.method("POST", HttpRequest.BodyPublishers.ofString(""))
+	    	.build();
+			HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+			System.out.println(response.body());
+    		if(response.statusCode() == 200) {//요청응답코드 200=성공
+    			patmentService.deletionInfo(subMallId);
+    			return "/pay/rem/deletionSuccess";
+    		}else {
+    			return "/pay/rem/deletionFail";
+    		}
+	}
+
 	//송금하기
 	@RequestMapping("/rem/remit")
 	public String remit() {
@@ -499,5 +476,23 @@ public class PaymentController {
     		}
 	}
 	
-	
+	//계좌조회
+	@RequestMapping("/rem/confirm")
+	public String confirm(){
+			return "/pay/rem/confirm";
+	}
+	@RequestMapping("/rem/confirmRequest")
+	public String confirmRequest(@RequestParam("subMallId")String subMallId, Model model,
+			@RequestParam(value = "page", defaultValue="0") int page)throws Exception {
+		Page<Remit> rList = patmentService.findBysubMallId(page,subMallId);
+		model.addAttribute("rList",rList);
+		model.addAttribute("page",page);
+		log.info("!!rList: "+rList);
+    		if(rList != null) {
+    			model.addAttribute("rList",rList);
+    			return "/pay/rem/confirmSuccess";
+    		}else {
+    			return "/pay/rem/confirmFail";
+    		}
+	}
 }
