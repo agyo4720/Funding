@@ -5,6 +5,8 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.security.Principal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -452,7 +454,9 @@ public class PaymentController {
 
 	//송금하기
 	@RequestMapping("/rem/remit")
-	public String remit() {
+	public String remit(Model model) {
+		String nowTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		model.addAttribute("nowTime", nowTime);
 			return "/pay/rem/remit";
 	}
 	@RequestMapping("/rem/remitRquest")
@@ -467,7 +471,7 @@ public class PaymentController {
 			    		+ "\"payoutAmount\":"+payoutAmount+",\"payoutDate\":\""+payoutDate+"\"}]"))
 			    .build();
 			HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-			System.out.println(response.body());
+			System.out.println(response.body());			
     		if(response.statusCode() == 200) {//요청응답코드 200=성공
     			patmentService.remitInfo(subMallId, payoutAmount, payoutDate);
     			return "/pay/rem/remitSuccess";
