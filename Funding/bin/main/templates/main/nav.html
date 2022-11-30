@@ -28,9 +28,9 @@
                 <li><a href="#" sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a></li>
                 <a class="myPage" href="/user/myInfo/">
                 <li class="user_name" ></li>
-                </a><a class="myPage" href="/user/myInfo/">
-                <li class="user_role" ></li>
-                <li><a href="../pay/confirm.html" th:href="@{/pay/loo/confirm}">결제</a></li>
+                </a>
+                <a class="myPage" href="/user/myInfo/">
+                <li class="user_role" ></li></a>
             </ul>
             
             	<div hidden sec:authorize="isAuthenticated()">

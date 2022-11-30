@@ -1,0 +1,15 @@
+nav {
+    padding: 30px;
+    margin: 0 100px;
+    width: 100px;
+    height: 500px;
+    background: #000;
+}
+
+nav ul li {
+    margin-bottom: 30px;
+}
+
+nav ul li a {
+    color: #fff;
+}
