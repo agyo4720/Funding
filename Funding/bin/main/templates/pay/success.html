@@ -8,6 +8,9 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="../../static/css/pay/success.css" th:href="@{/css/pay/success.css}">
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="/img/favicon/ms-icon-310x310.png" type="image/x-icon" />
 </head>
 <body>
     <!-- 홈페이지 상단 nav -->
@@ -38,13 +41,10 @@
                 <td>[[${status}]]</td>
             </tr>
         </table>
-    </section>
 
-    <div class="confirm">
-        <a href="/pay/loo/confirm">목록</a>
-    </div>
-    <div class="home">
-        <a href="/">홈</a>
-    </div>
+        <div class="btn">
+            <a href="/pay/loo/confirm">결제 리스트</a>
+        </div>
+    </section>
 </body>
 </html>
