@@ -34,6 +34,7 @@ import com.funding.fundArtist.FundArtist;
 import com.funding.fundTargetList.FundTargetList;
 import com.funding.fundTargetList.FundTargetListService;
 import com.funding.fundUser.FundUser;
+import com.funding.fundUser.FundUserRepository;
 import com.funding.fundUser.FundUserService;
 import com.funding.payment.Sale;
 import com.funding.payment.SaleRepository;
@@ -55,6 +56,7 @@ public class FundTargetController {
 	private final FundUserService fundUserService;
 	private final AlertService alertService;
 	private final SaleRepository saleRepository;
+
 	
 	
 	//글 작성폼 불러오기
@@ -179,6 +181,17 @@ public class FundTargetController {
 		FundBoardTarget fundBoardTarget = fundTargetService.findById(id);
 		List<Answer> aList = answerService.findByFundBoardTarget(fundBoardTarget);
 		List<FundTargetList> ftList = fundTargetListService.findByFUndBoardTarget(fundBoardTarget);
+		
+		//환불
+		FundBoardTarget nick = fundTargetService.findById(id);
+		List<Sale> sale = saleRepository.findByFundBoardTarget(nick.getSubject());
+		for(int i=0; i<sale.size(); i++){
+			sale.get(i).getPayCode();
+			log.info("@@sale.get(0).getPayCode(): "+sale.get(i).getPayCode());
+			System.out.println("!!sale: "+sale);
+			model.addAttribute("payCode",sale.get(i).getPayCode());
+		}
+
 		
 		//알림삭제
 		if(alertId != null) {
