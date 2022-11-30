@@ -2,12 +2,16 @@ package com.funding.payment;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.funding.fundBoardTarget.FundBoardTarget;
 import com.funding.fundUser.FundUser;
 
 import lombok.RequiredArgsConstructor;
@@ -64,6 +68,7 @@ public class PatmentService {
 		sale.setPayCode(paymentKey);
 		sale.setPayDate(LocalDateTime.now());
 		sList.add(sale);
+		log.info("sList: "+sList);
 		saleRepository.save(sale);
 	}
 	
@@ -89,7 +94,7 @@ public class PatmentService {
 
 	//미지정환불
 	public void cancelInfo(String orederId, int totalAmount, String orderName, String cancelReason, 
-			Optional<FundUser> FU) {
+			Optional<FundUser> FU, String paymentKey) {
 		List<Cancels> cList = new ArrayList<>(); //결제내역 리스트
 		Cancels cancel = new Cancels();
 		cancel.setFundUser(FU.get().getNickname());
@@ -100,6 +105,10 @@ public class PatmentService {
 		cancel.setCanceledAt(LocalDateTime.now());
 		cList.add(cancel);
 		cancelsRepository.save(cancel);
+		
+		List<Sale> sList = saleRepository.findBypayCode(paymentKey);		
+		sList.get(0).setCheckin("환불");
+		saleRepository.saveAll(sList);
 	}
 	
 	//서브몰ID 등록
@@ -129,4 +138,38 @@ public class PatmentService {
 		rList.add(remit);
 		remitRepository.save(remit);
 	}
+	
+	//서브몰ID 수정
+	public void reviseInfo(String subMallId, String companyName, String representativeName, 
+			String businessNumber, String bank, String accountNumber) {
+		List<Enroll> eList = enrollRepository.findBysubMallId(subMallId);
+		log.info("eList: "+eList);
+		eList.get(0).setSubMallId(subMallId);
+		eList.get(0).setCompanyName(companyName);
+		eList.get(0).setRepresentativeName(representativeName);
+		eList.get(0).setBusinessNumber(businessNumber);
+		eList.get(0).setBank(bank);
+		eList.get(0).setAccountNumber(accountNumber);
+		enrollRepository.saveAll(eList);
+	}
+	
+	
+	
+	
+	
+	
+	//결제리스트 페이징
+	public Page<Sale> findByFundUser(int page,String user){
+		Pageable pageable = PageRequest.of(page, 5, Sort.by("payDate").descending());
+		Page<Sale> sList = saleRepository.findByFundUser(user,pageable);
+		return sList;
+	}
+	
+	//환불리스트 페이징
+	public Page<Cancels> findByCan(int pagee,String user){
+		Pageable pageable = PageRequest.of(pagee, 5, Sort.by("canceledAt").descending());
+		Page<Cancels> cList = cancelsRepository.findByFundUser(user,pageable);
+		return cList;
+	}
+	
 }

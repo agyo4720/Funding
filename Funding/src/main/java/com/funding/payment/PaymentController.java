@@ -16,6 +16,7 @@ import javax.annotation.PostConstruct;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -33,6 +34,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.funding.Categorie.Categorie;
 import com.funding.fundBoard.FundBoard;
 import com.funding.fundBoard.FundBoardService;
 import com.funding.fundBoardTarget.FundBoardTarget;
@@ -115,7 +117,7 @@ public class PaymentController {
             String orderName = successNode.get("orderName").asText();
         	patmentService.targetSaveinfo(paymentKey, orderId, amount, orderName, FU);
         	
-        	//누적금액증가
+        	//누적금액증가, 사람 수 증가
         	String tar = successNode.get("orderId").toString();
         	String target = tar.substring(tar.lastIndexOf('-')+1);
         	target = target.replace("\"", "");
@@ -125,6 +127,9 @@ public class PaymentController {
         	Integer add = targetPk.getFundCurrent();
         	add += amount;
         	targetPk.setFundCurrent(add);
+        	Integer cMem = targetPk.getCurrentMember();
+        	cMem++;
+        	targetPk.setCurrentMember(cMem);
         	fundTargetService.addTargetFund(targetPk);
         	
         	//유저의 현재 펀딩 목록 추가
@@ -147,6 +152,7 @@ public class PaymentController {
     public String tossPay(Principal principal, Model model, @PathVariable("id")Integer id) {
 		FundBoard fundBoard = fundBoardService.findById(id);
 		model.addAttribute("fundBoard", fundBoard);//미지정공연 번호
+		log.info("fundBoard: "+fundBoard);
 
 		Optional<FundUser> FU = this.fundUserRepository.findByusername(principal.getName());//로그인중인 정보
 		model.addAttribute("userData",FU.get());//로그인정보
@@ -182,31 +188,27 @@ public class PaymentController {
             String orderName = successNode.get("orderName").asText();
         	patmentService.saveinfo(paymentKey, orderId, amount, orderName, FU);
         	
-        	/*
         	//누적금액증가
         	String tar = successNode.get("orderId").toString();
         	String target = tar.substring(tar.lastIndexOf('-')+1);
         	target = target.replace("\"", "");
         	log.info("target: "+target);	
         	
-        	FundBoardTarget targetPk = fundTargetService.findById(Integer.parseInt(target));
-        	Integer add = targetPk.getFundCurrent();
+        	FundBoard fundBoard = fundBoardService.findById(Integer.parseInt(target));
+        	Integer add = fundBoard.getFundCurrent();
         	add += amount;
-        	targetPk.setFundCurrent(add);
-        	fundTargetService.addTargetFund(targetPk);
-        	*/
+        	fundBoard.setFundCurrent(add);
+        	fundBoardService.addFundBoard(fundBoard);
         	
-            return "/pay/success";
+        	
+            return "/pay/success1";
         } else {
             JsonNode failNode = responseEntity.getBody();
             model.addAttribute("message", failNode.get("message").asText());
             model.addAttribute("code", failNode.get("code").asText());
-            return "pay/fail";
+            return "pay/fail1";
         }
     }
-    
-    
-    
     
     
     //조회하기
@@ -242,9 +244,6 @@ public class PaymentController {
     			return "/pay/loo/lookupFail";
     		}
     }
-    
-    
-    
     
 
     //지정환불하기
@@ -285,7 +284,7 @@ public class PaymentController {
     			patmentService.tarCancelInfo(orderId, Integer.valueOf(totalAmount).intValue(), orderName, cancelReason, FU, paymentKey);
 
     			
-            	//누적금액감소
+            	//누적금액감소, 인원 감소
     			JSONObject tar = (JSONObject) jsonObj;
     			String userAndTargetNo = (String)tar.get("orderId");
 
@@ -297,7 +296,15 @@ public class PaymentController {
             	Integer sub = targetPk.getFundCurrent();
             	sub -= Integer.valueOf(totalAmount).intValue();
             	targetPk.setFundCurrent(sub);
+            	
+            	Integer cMem = targetPk.getCurrentMember();
+            	cMem--;
+            	targetPk.setCurrentMember(cMem);
             	fundTargetService.addTargetFund(targetPk);
+            	
+            	
+            	//지정리스트 삭제
+            	fundTargetListService.delete(FU.get(), targetPk);
 
     			return "/pay/can/cancelSuccess";
     		}else {
@@ -347,8 +354,8 @@ public class PaymentController {
     			model.addAttribute("cancelReason",cancelReason);//환불사유
     			principal.getName();
     			Optional<FundUser> FU =  fundUserRepository.findByusername(principal.getName());
-    			patmentService.cancelInfo(orderId, Integer.valueOf(totalAmount).intValue(), orderName, cancelReason, FU);
-    			/*
+    			patmentService.cancelInfo(orderId, Integer.valueOf(totalAmount).intValue(), orderName, cancelReason, FU,paymentKey);
+    			
             	//누적금액감소
     			JSONObject tar = (JSONObject) jsonObj;
     			String userAndTargetNo = (String)tar.get("orderId");
@@ -357,12 +364,16 @@ public class PaymentController {
             	target = target.replace("\"", "");
             	log.info("target: "+target);	
             	
-            	FundBoardTarget targetPk = fundTargetService.findById(Integer.parseInt(target));
-            	Integer sub = targetPk.getFundCurrent();
+            	FundBoard fundBoard = fundBoardService.findById(Integer.parseInt(target));
+            	Integer sub = fundBoard.getFundCurrent();
             	sub -= Integer.valueOf(totalAmount).intValue();
-            	targetPk.setFundCurrent(sub);
-            	fundTargetService.addTargetFund(targetPk);
-*/
+            	fundBoard.setFundCurrent(sub);
+            	
+            	Integer cMem = fundBoard.getCurrentMember();
+            	cMem--;
+            	fundBoard.setCurrentMember(cMem);
+            	fundBoardService.addFundBoard(fundBoard);
+
     			return "/pay/can/cancelSuccess";
     		}else {
     			String message = (String)jsonObj.get("message");
@@ -372,30 +383,40 @@ public class PaymentController {
     			return "/pay/can/cancelFail";
     		}
     }
-    
-    
-    
-    
 
-    
 	//결제목록
 	@GetMapping("/loo/confirm")
-	public String confirm(Principal principal, Model model) throws Exception{
+	public String confirm(Principal principal, Model model,@RequestParam(value = "page", defaultValue="0") int page,
+			@RequestParam(value = "pagee", defaultValue="0") int pagee) throws Exception{
 		principal.getName();
 		Optional<FundUser> FU =  fundUserRepository.findByusername(principal.getName());
 		
 		//결제리스트 불러오기
-		List<Sale> sList = saleRepository.findByFundUser(FU.get().getNickname());
+		Page<Sale> sList = patmentService.findByFundUser(page,FU.get().getNickname());
 		model.addAttribute("sList",sList);
+		model.addAttribute("page",page);
 
 		//환불리스트 불러오기
-		List<Cancels> cList = cancelsRepository.findByFundUser(FU.get().getNickname());
+		Page<Cancels> cList = patmentService.findByCan(pagee,FU.get().getNickname());
 		model.addAttribute("cList",cList);
-		
+		model.addAttribute("pagee",pagee);
 		return "/pay/loo/confirm";
 	}
-	
-	
+
+//	  //삭제
+//	  curl --request POST \
+//	  --url https://api.tosspayments.com/v1/payouts/sub-malls/testmall100/delete \
+//	  --header 'Authorization: Basic dGVzdF9za196WExrS0V5cE5BcldtbzUwblgzbG1lYXhZRzVSOg=='
+//	HttpRequest request = HttpRequest.newBuilder()
+//		    .uri(URI.create("https://api.tosspayments.com/v1/payouts/sub-malls"))
+//		    .header("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()))
+//		    .header("Content-Type", "application/json")
+//		    .method("POST", HttpRequest.BodyPublishers.ofString("{\"subMallId\":\""+subMallId+"\","
+//		    		+ "\"type\":\"CORPORATE\",\"companyName\":\""+companyName+"\",\"representativeName\":\""+representativeName+"\","
+//		    		+ "\"businessNumber\":\""+businessNumber+"\",\"account\":{\"bank\":\""+bank+"\",\"accountNumber\":\""+accountNumber+"\"}}"))
+//		    .build();
+//		HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+	  
 	
 	
 	//송금등록
@@ -425,6 +446,32 @@ public class PaymentController {
     		}
 	}
 	
+	//서브몰수정
+	@RequestMapping("/rem/revise")
+	public String revise(){
+			return "/pay/rem/revise";
+	}
+	//서브몰수정
+	@RequestMapping("/rem/reviseRequest")
+	public String reviseRequest(@RequestParam("subMallId")String subMallId,@RequestParam("bank")String bank,@RequestParam("companyName")String companyName,
+			@RequestParam("representativeName")String representativeName,@RequestParam("businessNumber")String businessNumber,@RequestParam("accountNumber")String accountNumber)throws Exception {
+		HttpRequest request = HttpRequest.newBuilder()
+			    .uri(URI.create("https://api.tosspayments.com/v1/payouts/sub-malls/"+subMallId))
+    		    .header("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()))
+    		    .header("Content-Type", "application/json")
+			    .method("POST", HttpRequest.BodyPublishers.ofString("{\"subMallId\":\""+subMallId+"\","
+			    		+ "\"type\":\"CORPORATE\",\"companyName\":\""+companyName+"\",\"representativeName\":\""+representativeName+"\","
+			    		+ "\"businessNumber\":\""+businessNumber+"\",\"account\":{\"bank\":\""+bank+"\",\"accountNumber\":\""+accountNumber+"\"}}"))
+			    .build();
+			HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+			System.out.println(response.body());
+    		if(response.statusCode() == 200) {//요청응답코드 200=성공
+    			patmentService.reviseInfo(subMallId, companyName, representativeName, businessNumber, bank, accountNumber);
+    			return "/pay/rem/reviseSuccess";
+    		}else {
+    			return "/pay/rem/reviseFail";
+    		}
+	}
 	
 	//송금하기
 	@RequestMapping("/rem/remit")
@@ -451,4 +498,6 @@ public class PaymentController {
     			return "/pay/rem/remitFail";
     		}
 	}
+	
+	
 }

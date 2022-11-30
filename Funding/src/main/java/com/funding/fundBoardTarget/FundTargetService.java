@@ -58,6 +58,7 @@ public class FundTargetService {
 		target.setCategorie(categorie);
 		target.setImgPath(imgPath);
 		target.setFundUser(user);
+		target.setCurrentMember(0);
 		
 		fundTargetRepository.save(target);
 	}
@@ -96,6 +97,7 @@ public class FundTargetService {
 		target.setCategorie(categorie);
 		target.setFilePath(filePath);
 		target.setFundUser(user);
+		target.setCurrentMember(0);
 		
 		fundTargetRepository.save(target);
 	}
@@ -123,6 +125,13 @@ public class FundTargetService {
 	//결재시 업데이트 됨
 	public void addTargetFund(FundBoardTarget fundBoardTarget) {
 		fundTargetRepository.save(fundBoardTarget);
+	}
+	
+	
+	//지정펀딩 삭제
+	public void delete(Integer id) {
+		Optional<FundBoardTarget> target = fundTargetRepository.findById(id);
+		fundTargetRepository.delete(target.get());
 	}
 	
 }

@@ -25,7 +25,7 @@
     <header th:replace="/main/nav"></header>
 
     <section>
-		<div class="title">
+		<div class="s_title">
 			<h2>지정 펀딩</h2>
 		</div>
 
@@ -80,6 +80,9 @@
 							<div th:if="${target.fundUser.nickname != null}">
 								<div th:text="|글 등록한 사람 : ${target.fundUser.nickname}|"></div>
 							</div>
+						</div>
+						<div>
+							<div th:text="|진행도 : ${target.fundCurrent * 100 / target.fundAmount}% |"></div>
 						</div>
 					</div>
 				</div>

@@ -1,7 +1,10 @@
 package com.funding.fundBoard;
 
 
+import java.io.IOException;
 import java.security.Principal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,13 +20,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.funding.Categorie.Categorie;
 import com.funding.Categorie.CategorieService;
 import com.funding.answer.Answer;
 import com.funding.answer.AnswerService;
+import com.funding.file.FileService;
 import com.funding.fundArtist.FundArtist;
-import com.funding.fundArtist.FundArtistService;
 import com.funding.fundUser.FundUser;
 import com.funding.fundUser.FundUserService;
 
@@ -39,11 +43,12 @@ public class FundBoardController {
 	private final FundBoardService fundBoardService;
 	private final FundUserService fundUserService;
 	private final CategorieService categorieService;
-	private final FundArtistService fundArtistService;
 	private final AnswerService answerService;
+	private final FileService fileService;
 
 	
 	// 미지정 펀드 리스트(페이징)
+	// URL에 페이지 변수 page가 전달되지 않은 경우 디폴트 값으로 0이 되도록 설정
 	@RequestMapping("/list")
 	public String list(
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
@@ -62,10 +67,18 @@ public class FundBoardController {
 	
 	// 미지정 펀드 등록(GET)
 	@GetMapping("/create")
-	public String create(FundBoardForm fundBoardForm, Model model) {
+	public String create(
+			FundBoardForm fundBoardForm,
+			Principal principal,
+			Model model) {
+		
+		Optional<FundUser> fundUser = this.fundUserService.findByuserName(principal.getName());
 		
 		List<Categorie> categorieList = this.categorieService.findAll();
 		model.addAttribute("categorieList", categorieList);
+		
+		String nowTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		model.addAttribute("nowTime", nowTime);
 		
 		return "/fundBoard/fundBoard_form";
 	}
@@ -74,9 +87,18 @@ public class FundBoardController {
 	@PostMapping("/create")
 	public String create(
 			@Valid FundBoardForm fundBoardForm,
+			@RequestParam(value="imgPath", defaultValue="x") String imgPath,
+			@RequestParam(value="file", defaultValue="x") MultipartFile files,
 			BindingResult bindingResult,
 			Principal principal,
-			Model model) {
+			Model model) throws IllegalStateException, IOException{
+		
+		// 날짜 데이터와 시간 데이터를 합쳐서 데이터 넣기
+		// String time = fundBoardForm.getStartDate() + " " + fundBoardForm.getStartTime();
+		
+//		if(imgPath.equals("x") && files.isEmpty()) {
+//			bindingResult.reject("noImgError", "이미지를 선택해 주세요");
+//		}
 		
 		if(bindingResult.hasErrors()) {
 			
@@ -86,24 +108,43 @@ public class FundBoardController {
 			return "/fundBoard/fundBoard_form";
 		}
 		
-		// 날짜 데이터와 시간 데이터를 합쳐서 데이터 넣기
-		// String time = fundBoardForm.getStartDate() + " " + fundBoardForm.getStartTime();
-		
 		Optional<FundUser> fundUser = this.fundUserService.findByuserName(principal.getName());
 		
-		this.fundBoardService.create(
-				fundBoardForm.getCategorieName(),
-				fundBoardForm.getSubject(),
-				fundBoardForm.getContent(),
-				fundBoardForm.getPlace(),
-				fundBoardForm.getStartDateTime(),
-				fundBoardForm.getFundDuration(),
-				fundBoardForm.getRuntime(),
-				fundBoardForm.getMinFund(),
-				fundBoardForm.getFundAmount(),
-				fundBoardForm.getCreateDate(),
-				fundUser.get()
-				);
+		if(!imgPath.equals("x") && files.isEmpty()) {
+			this.fundBoardService.createImg(
+					fundBoardForm.getCategorieName(),
+					fundBoardForm.getSubject(),
+					fundBoardForm.getContent(),
+					fundBoardForm.getPlace(),
+					fundBoardForm.getStartDateTime(),
+					fundBoardForm.getFundDuration(),
+					fundBoardForm.getRuntime(),
+					fundBoardForm.getMinFund(),
+					fundBoardForm.getFundAmount(),
+					fundBoardForm.getCreateDate(),
+					imgPath,
+					fundUser.get()
+					);
+			
+		}else if(!files.isEmpty()) {
+			
+			String savePath = fileService.saveFile(files);
+			
+			this.fundBoardService.createFile(
+					fundBoardForm.getCategorieName(),
+					fundBoardForm.getSubject(),
+					fundBoardForm.getContent(),
+					fundBoardForm.getPlace(),
+					fundBoardForm.getStartDateTime(),
+					fundBoardForm.getFundDuration(),
+					fundBoardForm.getRuntime(),
+					fundBoardForm.getMinFund(),
+					fundBoardForm.getFundAmount(),
+					fundBoardForm.getCreateDate(),
+					savePath,
+					fundUser.get()
+					);
+		}
 		
 		return "redirect:/fundBoard/list";
 		
@@ -154,7 +195,16 @@ public class FundBoardController {
 		return String.format("redirect:/fundBoard/detail/%s", id);
 	}
 	
-	// 2022/11/25 - 2 작업중
+	// 미지정 펀드 삭제하기
+	@RequestMapping("/delete/{id}")
+	public String delete(@PathVariable("id") Integer id) {
+		
+		this.fundBoardService.delete(id);
+		
+		return "redirect:/fundBoard/list";
+	}
+	
+	// 2022/11/29 - 6 작업중
 
 	
 }

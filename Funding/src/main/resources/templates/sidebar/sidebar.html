@@ -12,52 +12,52 @@
 
 	<hr/>
 	
-	<p>알림</p>
-	<p class="alert"></p>
+	<h4>알림</h4>
+	<div class="alert"></div>
 
 	<hr/>
 
-	<p>현재 펀딩중인 목록</p>
+	<h4>현재 펀딩중인 목록</h4>
 	<div class="fundList"></div>
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script>
-	$(document).ready(function(){
-		let user = $(".user").val()
-		if(user != null){
-			console.log('ajax 실행됨')
-			
-			let token = $("meta[name='_csrf']").attr("content");
-			let header = $("meta[name='_csrf_header']").attr("content");
-			
-			$.ajax({
-				url : '/alert/show'
-				,data : "user=" + user
-				,beforeSend : function(xhr){
-					xhr.setRequestHeader(header, token);
-				}
-				,success : function(result){
-					$.each(result, function(index, item){					
-						$('.alert').append("<br><a href=\"" + item.url + "?alertId=" + item.alertId + "\"><div>" + item.username + 
-								"님이 댓글을 달았습니다.</div>[" + item.content + "]</a></br>")
-					})
-				}
-			})
-			
-			$.ajax({
-				url : '/show/fundList'
-				,data : "user=" + user
-				,beforeSend : function(xhr){
-					xhr.setRequestHeader(header, token);
-				}
-				,success : function(result){
-					$.each(result, function(index, item){					
-						$('.fundList').append("<br><a href=\"" + item.url + "\"><div>" + item.fundName + 
-								" 진행도 " + item.percent + "</div></a></br>")
-					})
-				}
-			})
-		}
-	})
 
-</script>
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			let user = $(".user").val()
+			if(user != null){
+				console.log('ajax 실행됨')
+				
+				let token = $("meta[name='_csrf']").attr("content");
+				let header = $("meta[name='_csrf_header']").attr("content");
+				
+				$.ajax({
+					url : '/alert/show'
+					,data : "user=" + user
+					,beforeSend : function(xhr){
+						xhr.setRequestHeader(header, token);
+					}
+					,success : function(result){
+						$.each(result, function(index, item){					
+							$('.alert').append("<a href=\"" + item.url + "?alertId=" + item.alertId + "\"><div>" + item.username + 
+									"님이 댓글을 달았습니다.</div>[" + item.content + "]</a>")
+						})
+					}
+				})
+				
+				$.ajax({
+					url : '/show/fundList'
+					,data : "user=" + user
+					,beforeSend : function(xhr){
+						xhr.setRequestHeader(header, token);
+					}
+					,success : function(result){
+						$.each(result, function(index, item){					
+							$('.fundList').append("<a href=\"" + item.url + "\"><div>" + item.status + "</br>" + 
+									item.fundName + " 진행도 " + item.percent + "</div></a>")
+						})
+					}
+				})
+			}
+		})
+	</script>
 </div>

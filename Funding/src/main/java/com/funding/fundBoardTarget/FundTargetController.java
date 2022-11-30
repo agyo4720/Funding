@@ -31,6 +31,8 @@ import com.funding.answer.Answer;
 import com.funding.answer.AnswerService;
 import com.funding.file.FileService;
 import com.funding.fundArtist.FundArtist;
+import com.funding.fundTargetList.FundTargetList;
+import com.funding.fundTargetList.FundTargetListService;
 import com.funding.fundUser.FundUser;
 import com.funding.fundUser.FundUserService;
 
@@ -44,6 +46,7 @@ import lombok.extern.slf4j.Slf4j;
 public class FundTargetController {
 
 	private final FundTargetService fundTargetService;
+	private final FundTargetListService fundTargetListService;
 	private final CategorieService categorieService;
 	private final AnswerService answerService;
 	private final FileService fileService;
@@ -97,7 +100,6 @@ public class FundTargetController {
 		Optional<FundUser> user = fundUserService.findByuserName(principal.getName());
 	
 	
-		
 		if(!imgPath.equals("x") && files.isEmpty()) {
 			fundTargetService.createimg(
 					targetForm.getSubject(), 
@@ -165,20 +167,34 @@ public class FundTargetController {
 			model.addAttribute("targetList", targetList);
 			return "fundTarget/fundTargetList";
 		}
-		
+
 	}
 
 	//디테일 창으로
 	@RequestMapping("/detail/{id}")
-	public String showDetail(Model model, @PathVariable("id")Integer id,Integer alertId) {
+	public String showDetail(Model model, @PathVariable("id")Integer id,Integer alertId, Principal principal) {
 		FundBoardTarget fundBoardTarget = fundTargetService.findById(id);
 		List<Answer> aList = answerService.findByFundBoardTarget(fundBoardTarget);
+		List<FundTargetList> ftList = fundTargetListService.findByFUndBoardTarget(fundBoardTarget);
 		
 		//알림삭제
 		if(alertId != null) {
 			alertService.deleteAlert(alertId);
 		}
 		
+		//펀딩 유무 확인
+		boolean result = false;
+		for(FundTargetList e : ftList) {
+			String username = e.getFundUser().getUsername();
+			String loginName = principal.getName();
+			if(username.equals(loginName)) {
+				result = true;
+			}
+		}
+		
+		
+		log.info("글로 추려낸 펀딩한 유저 목록 : " + ftList.toString());
+		model.addAttribute("result", result);
 		model.addAttribute("aList", aList);
 		model.addAttribute("fundBoardTarget", fundBoardTarget);
 		return "/fundTarget/fundTargetDetail";
@@ -196,6 +212,11 @@ public class FundTargetController {
 	
 	
 	
-	
+	//지정펀딩 삭제
+	@RequestMapping("/delete/{id}")
+	public String deleteTarget(@PathVariable("id")Integer id) {
+		fundTargetService.delete(id);
+		return "redirect:/";
+	}
 	
 }

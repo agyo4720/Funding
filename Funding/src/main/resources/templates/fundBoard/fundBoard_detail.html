@@ -55,90 +55,91 @@
 	            </ul>
 	        </div>
 	    </header>
+	    
 		<div class="main">
-
-			<!--섹션1 시작-->
-			<div class="section1">
-				<table>
-					<thead>
-						<tr>
-							<th>카테고리</th>
-							<th>제목</th>
-							<th>내용</th>
-							<th>장소</th>
-							<th>공연 시작 일자</th>
-							<th>공연 시간</th>
-							<th>펀딩 기간</th>
-							<th>1인 최소 펀딩 금액</th>
-							<th>펀딩 목표 금액</th>
-							<th>펀딩 현재 금액</th>
-							<th>현재 모집 인원</th>
-							<th>펀딩 상태</th>
-							<th>별점 투표 수</th>
-							<th>별점 평균</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td th:text="${fundBoard.categorieName}"></td>
-							<td th:text="${fundBoard.subject}"></td>
-							<td th:utext="${fundBoard.content}"></td>
-							<td th:text="${fundBoard.place}"></td>
-							<td th:text="${fundBoard.startDateTime}"></td>
-							<td th:text="${fundBoard.runtime}"></td>
-							<td th:text="${fundBoard.fundDuration}"></td>
-							<td th:text="${fundBoard.minFund}"></td>
-							<td th:text="${fundBoard.fundAmount}"></td>
-							<td th:text="${fundBoard.fundCurrent}"></td>
-							<td th:text="${fundBoard.currentMember}"></td>
-							<td th:text="${fundBoard.state}"></td>
-							<td th:text="${fundBoard.vote}"></td>
-							<td th:text="${fundBoard.star}"></td>
-						</tr>
-					</tbody>
-				</table>
+		
+			<div>
+				<a th:href="@{|/pay/tossPay/${fundBoard.id}|}"><button>결제하기</button></a>
 			</div>
-			<!--섹션1 끝-->
-
-			<!--섹션2 시작-->
+			<!--섹션1 시작-->
 			<div>
 				<div>
-					<h3>미지정 펀딩 참여하기</h3>
+					<div>카테고리</div>
+					<div th:text="${fundBoard.categorieName}"></div>
 				</div>
+				<div>
+					<div>제목</div>
+					<div th:text="${fundBoard.subject}"></div>
+				</div>
+				<div>
+					<div>내용</div>
+					<div th:utext="${fundBoard.content}"></div>
+				</div>
+				<div>
+					<div>장소</div>
+					<div th:text="${fundBoard.place}"></div>
+				</div>
+				<div>
+					<div>펀딩 기간</div>
+					<div th:text="${fundBoard.fundDuration}"></div>
+				</div>
+				<div>
+					<div>공연 시작 일자</div>
+					<div th:text="${fundBoard.startDateTime}"></div>
+				</div>
+				<div>
+					<div>공연 시간</div>
+					<div th:text="${fundBoard.runtime}"></div>
+				</div>
+				<div>
+					<div>1인 최소 펀딩 금액</div>
+					<div th:text="${fundBoard.minFund}"></div>
+				</div>
+				<div>
+					<div>펀딩 목표 금액</div>
+					<div th:text="${fundBoard.fundAmount}"></div>
+				</div>
+				<div>
+					<span>펀딩 현재 금액</span>
+					<span th:text="${fundBoard.fundCurrent}"></span>
+				</div>
+				<div>
+					<div>현재 모집 인원</div>
+					<div th:text="${fundBoard.currentMember}"></div>
+				</div>
+				<div>
+					<div>펀딩 상태</div>
+					<div th:text="${fundBoard.state}"></div>
+				</div>
+				<div>
+					<div>별점 투표 수</div>
+					<div th:text="${fundBoard.vote}"></div>
+				</div>
+				<div>
+					<div>별점 평균</div>
+					<div th:text="${fundBoard.star}"></div>
+				</div>
+			</div>		
+			<!--섹션1 끝-->
 
-				<form th:action="@{|/fundBoard/request/${fundBoard.id}|}" method="POST">
-					<div>
-						<label for="minFund">펀딩 금액 등록</label>
-						<input type="number" id="minFund" name="minFund">
-					</div>
-					<div>
-						<label for="star">별점 등록</label>
-						<input type="number" id="star" name="star">
-					</div>
-					<div>
-						<button type="submit">참여하기</button>
-					</div>
-				</form>
-			</div>
-			<!--섹션2 끝-->
 
-			<!--섹션3 시작-->
+			<!--섹션2 시작-->
 			<div class="section2">
 				<div th:each="answer : ${answerList}">
 					<div th:text="${answer.content}">댓글 내용</div>
 					<div th:text="${#temporals.format(answer.createDate, 'MM-dd HH:mm:ss')}">댓글 시간</div>
 				</div>
 			</div>
-			<!--섹션3 끝-->
+			<!--섹션2 끝-->
 
-			<!--섹션4 시작-->
+			<!--섹션3 시작-->
 			<div class="section3">
 				<form th:action="@{|/answer/fundBoard/create/${fundBoard.id}|}" method="GET">
 					<input type="text" name="content" value="">
 					<button type="submit">댓글 달기</button>
 				</form>
 			</div>
-			<!--섹션4 끝-->
+			<!--섹션3 끝-->
 		</div>
 	</div>
 
