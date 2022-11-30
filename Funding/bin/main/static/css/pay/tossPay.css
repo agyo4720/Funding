@@ -32,8 +32,12 @@ section {
 
 /* 결제 금액 */
 .con_tit {
-    width: 120PX;
+    width: 150PX;
     font-weight: bold;
+}
+
+.payment {
+    margin:  0 0 20px;
 }
 
 .payment input {
@@ -41,6 +45,7 @@ section {
 }
 
 .pay_check label {
+    cursor: pointer;
     margin-right: 20px;
 }
 
@@ -48,12 +53,14 @@ section {
     margin-right: 7px;
 }
 
+.pay_check label, input {cursor: pointer;}
+
 /* 이용약관 */
 .tos {
     margin: 20px 0;
-    padding: 30px;
+    padding: 30px 30px 50px;
     width: 90%;
-    height: 120px;
+    height: 100px;
     background: #dedede;
     border-radius: 10px;
 }
@@ -80,14 +87,14 @@ section {
 /* 버튼 */
 .pay_btn {
     cursor: pointer;
-    margin: 20px 0;
+    margin: 20px 0 20px 160px;
     padding: 10px 0;
     width: 300px;
     background-color: #3E3636;
     border-radius: 5px;
     color: #fff;
     font-weight: bold;
-    font-size: 15px;
+    font-size: 17px;
     letter-spacing: 2px;
     transition: 0.5s;
 }

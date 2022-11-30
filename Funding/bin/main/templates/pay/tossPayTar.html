@@ -76,7 +76,7 @@
             <h3>이용 약관</h3>
             <p>펀딩 기간 내에 금액이 모이지 않거나 공연자가 채택되지 않을 시<br/>
                 연장 혹은 취소 됩니다. <span>( 취소시 금액은 전액 환불 )</span></p>
-            <label><input class="tos_check" type="checkbox" value="checking"/>필수 확인</label>
+            <label><input class="tos_check" id="checkB" type="checkbox" value="check"/>필수 확인</label>
         </div>
 
         <button id="payment-button" class="pay_btn">결제하기</button>
@@ -91,16 +91,16 @@
         var orderId = new Date().getTime();
         var pk = document.getElementById("id").value;
         var userAndPk = orderId + '-' + pk;
+        var check = document.getElementById('checkB');
 
-        var payCheck = document.querySelector('.tos_check');
-
-        button.addEventListener("click", function () {
+        button.addEventListener("click", function (e) {
             var method = document.querySelector('input[name=method]:checked').value; // "카드" 혹은 "휴대폰" 혹은 "상품권"
             var amount=document.querySelector('#num').value;
 
-            console.log(payCheck.value);
+            console.log(check.checked);
             
-            if(parseInt(amount) >= parseInt(minfund)){
+            if(check.checked == true) {
+                if(parseInt(amount) >= parseInt(minfund)){
                 var paymentData = {
                     amount: amount,
                     orderId: userAndPk,
@@ -110,8 +110,11 @@
                     failUrl: window.location.origin + "/pay/fail",
                 };
                 tossPayments.requestPayment(method, paymentData);
-            }else{
-                alert("부족")
+                }else{
+                    alert("최소 펀딩 금액보다 적습니다.")
+                }
+            } else {
+                alert('약관 확인 부탁드립니다.');
             }
         });
     </script>
