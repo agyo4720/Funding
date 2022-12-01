@@ -68,11 +68,11 @@
                             <div class="progress-bar" style="width: 40%; height: 10px"></div>
                         </div>
                     </div> -->
-                    <div class="view">
+                    <div class="view" id="fundCurrent">
                         <label for="fundCurrent">현재 펀딩 금액</label>
                         <p th:text="${#numbers.formatInteger(fundBoardTarget.fundCurrent, 1,'COMMA')+' 원'}">7,600,000</p>
                     </div>
-                    <div class="view">
+                    <div class="view" id="fundAmount">
                         <label for="fundAmount">총 펀딩 금액</label>
                         <p th:text="${#numbers.formatInteger(fundBoardTarget.fundAmount, 3,'COMMA')+' 원'}">8,000,000</p>
                     </div>
