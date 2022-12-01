@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.funding.fundUser.FundUser;
 import com.funding.user.RegisterValidation;
 
 import lombok.RequiredArgsConstructor;
@@ -40,5 +41,15 @@ public class FundArtistService {
 	public Optional<FundArtist> findByuserName(String username) {
 		Optional<FundArtist> fundArtist = fundArtistRepository.findByusername(username);
 		return fundArtist;
+	}
+	
+	// 비밀번호 재설정
+	public void resetPwd(String username, String pwd) {
+		
+		Optional<FundArtist> FA = this.fundArtistRepository.findByusername(username);
+		FA.get().setPassword(passwordEncoder.encode(pwd));
+		
+		this.fundArtistRepository.save(FA.get());
+		
 	}
 }

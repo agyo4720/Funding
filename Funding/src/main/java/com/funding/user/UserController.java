@@ -36,6 +36,7 @@ public class UserController {
 	private final PasswordEncoder passwordEncoder;
 	
 	String username = null;
+	String userRole = null;
 	
 	// nav에 사용자 이름 출력
 	@RequestMapping("/navMyInfo")
@@ -86,10 +87,20 @@ public class UserController {
 	@ResponseBody
 	public String resetPwd2(String username, Model model) throws UnsupportedEncodingException, MessagingException {
 		Optional<FundUser> FU = this.fundUserService.findByuserName(username);
-		String code = emailService.sendEmail(FU.get().getEmail());
+		Optional<FundArtist> FA = this.fundArtistService.findByuserName(username);
+		String code = null;
+		
+		if(FU.isPresent()) {
+			code = emailService.sendEmail(FU.get().getEmail());
+			this.userRole = "user";
+		} else if(FA.isPresent()) {
+			code = emailService.sendEmail(FA.get().getEmail());
+			this.userRole = "artist";
+		}
 		this.username = username;
 		
-		return code;
+		
+		return code;		
 	}
 	
 	
@@ -97,7 +108,13 @@ public class UserController {
 	@PostMapping("/resetPwdConfirm")
 	public String resetPwdConfirm2(String pwd){
 
-		this.fundUserService.resetPwd(this.username, pwd);
+		if(userRole.equals("user")) {
+			this.fundUserService.resetPwd(this.username, pwd);
+		}
+		
+		if(userRole.equals("artist")) {
+			this.fundArtistService.resetPwd(this.username, pwd);
+		}
 		
 		return "redirect:/user/login";
 	}
