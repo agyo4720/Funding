@@ -7,12 +7,7 @@ section h1 {
     margin: 30px 0;
 }
 
-table {
-}
-
-td {
-    padding: 5px 10px;
-}
+td {padding: 5px 10px;}
 
 td:first-child {
     width: 100px;
@@ -20,9 +15,7 @@ td:first-child {
     font-weight: bold;
 }
 
-td:last-child {
-    width: 200px;
-}
+td:last-child {width: 400px;}
 
 .btn {
     display: flex;

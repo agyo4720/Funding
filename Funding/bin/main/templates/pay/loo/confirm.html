@@ -11,30 +11,36 @@
 
     <!-- favicon -->
     <link rel="shortcut icon" href="img/favicon/ms-icon-310x310.png" type="image/x-icon" />
+
+	<!-- fontawsome -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
 </head>
 <body>
 	<!-- 홈페이지 상단 nav -->
 	<header th:replace="/main/nav"></header>
 
-	<div class="wrap">
+	<section>
         <!-- nav -->
         <nav th:replace="/main/usernav"></nav>
 
 		<!-- payinfo -->
 		<div class="payinfo">
-			<h2>지정 펀딩</h2>
+			<div class="title">
+				<h2>결제 내역</h2>
+			</div>
+
 			<table>
-				<tr>
+				<thead>
 					<th>No</th>
 					<th>구분</th>
 					<th>공연</th>
 					<th>가격</th>
 					<th>결제일</th>
 					<th>상태</th>
+					<th>환불일</th>
 					<th>환불 사유</th>
-					<th>환불 날짜</th>
 					<th>환불</th>
-				</tr>
+				</thead>
 				<tr th:each="list, i : ${sList}">
 					<td th:text="${i.count}">No</td>
 					<td>
@@ -45,17 +51,18 @@
 						<span th:if="${list.fundBoardTarget != null}" th:text="${list.fundBoardTarget}"></span>
 						<span th:if="${list.fundBoard != null}" th:text="${list.fundBoard}"></span>
 					</td>
-					<td th:text="|${list.payMoney}원|">가격</td>
+					<td th:text="|${#numbers.formatInteger(list.payMoney, 3, 'COMMA')}원|">가격</td>
 					<td th:text="${#temporals.format(list.payDate, 'yyyy-MM-dd HH:mm')}">결제날짜</td>
 					<td th:text="${list.checkin}">상태</td>
-					<td th:text="${list.cancelReason}"></td>
-					<td th:text="${#temporals.format(list.cancelDate, 'yyyy-mm-dd HH:mm')}"></td>
+					<td th:text="${#temporals.format(list.cancelDate, 'yyyy-MM-dd HH:mm')}">환불일</td>
+					<td th:text="${list.cancelReason}">환불 사유</td>
 					<td>
 						<button th:if="${list.fundBoardTarget} != null and ${list.checkin} == 결제완료 " th:onclick="'location.href=\'' + @{/pay/can/tarCancel(paymentKey=${list.payCode})} + '\''" type="submit">환불하기</button>
 						<button th:if="${list.fundBoard} != null and ${list.checkin} == 결제완료" th:onclick="'location.href=\'' + @{/pay/can/cancel(paymentKey=${list.payCode})} + '\''" type="submit">환불하기</button>
 					</td>
 				</tr>
 			</table>
+
 			<!-- 페이징 -->
 			<div class="page" th:if="${!sList.isEmpty()}">
 				<div th:if="${sList.number > 0}">
@@ -76,7 +83,7 @@
 			</div>
 			<!-- //페이징 -->
 		</div>
-	</div>
+	</section>
 
 </body>
 </html>
