@@ -216,12 +216,11 @@ public class FundBoardController {
 			paymentController.totalCancel(sale.get(i).getPayCode(),"게시글 삭제");
 		}
 
-
 		this.fundBoardService.delete(id);
 
 		return "redirect:/fundBoard/list";
 	}
 
-	// 2022/11/30 - 7 작업중
+	// 2022/11/30 - 8 작업중
 
 }

@@ -120,7 +120,7 @@
 				<a th:href="@{|/pay/tossPay/${fundBoard.id}|}"><button>결제하기</button></a>
 			</div>
 			<div sec:authorize="!hasRole('ROLE_USER')">					
-				<a th:href="@{|/fundArtistList/join/${#authentication.getPrincipal().getUsername()}|}"><button>참여하기</button></a>		
+				<a th:href="@{|/fundArtistList/join/${fundBoard.id}|}"><button>참여하기</button></a>		
 			</div>
 			<!--섹션2 끝-->
 			

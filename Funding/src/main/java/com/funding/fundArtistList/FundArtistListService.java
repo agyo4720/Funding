@@ -6,6 +6,7 @@ import java.util.Set;
 import org.springframework.stereotype.Service;
 
 import com.funding.fundArtist.FundArtist;
+import com.funding.fundBoard.FundBoard;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,12 +22,25 @@ public class FundArtistListService {
 	}
 	
 	// 펀드 아티스트 참여
-	public void join(FundArtist fundArtist) {
-		FundArtistList fundArtistList = new FundArtistList();
+	public void join(FundArtist fundArtist, FundBoard fundBoard) {
 		
-		fundArtistList.setFundArtist(fundArtist);
+		List<FundArtistList> fundArtistList = this.fundArtistListRepository.findByFundArtist(fundArtist);
 		
-		this.fundArtistListRepository.save(fundArtistList);
+		// fundArtistList를 반복문을 사용해서 같은 유저일 경우 반복문에서 빠져나가는 로직
+		for(FundArtistList fal : fundArtistList) {
+			
+			if(fal.getFundArtist().getUsername().equals(fundArtist.getUsername())) {
+				
+				return ;
+			}
+		}
+	
+		FundArtistList fundArtistLists = new FundArtistList();
+		
+		fundArtistLists.setFundArtist(fundArtist);
+		fundArtistLists.setFundBoard(fundBoard);
+		
+		this.fundArtistListRepository.save(fundArtistLists);
 	}
 
 	
