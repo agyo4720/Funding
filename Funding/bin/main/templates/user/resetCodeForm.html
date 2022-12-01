@@ -1,0 +1,38 @@
+<!-- 로그인 -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Let's Funding : 비밀번호 찾기</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../../static/css/user/loginForm.css" th:href="@{/css/user/loginForm.css}">
+    
+    <!-- favicon -->
+    <link rel="shortcut icon" href="/img/favicon/ms-icon-310x310.png" type="image/x-icon" />
+</head>
+<body>
+    <!-- 홈페이지 상단 nav -->
+    <header th:replace="/main/nav"></header>
+
+    <section>
+        <div class="title">
+            <h2>비밀번호 찾기</h2>
+            <p>가입시 입력한 이메일로 발송된 인증코드 6자리를 입력하세요.</p>
+        </div>
+
+        <form action="/user/resetPwd" method="post">
+        	<input type="text" name="username" placeholder="인증번호 6자리"></input>
+        	<br>
+        	<input type="submit" value="다음"></input>
+        </form>
+    </section>
+</body>
+</html>
+
+<script>
+	
+</script>
+
