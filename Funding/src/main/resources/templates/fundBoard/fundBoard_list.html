@@ -56,7 +56,12 @@
 			</div>
 
 			<div class="section" th:each="fundBoard , loop : ${fundBoardList}">
-				<img th:src="${fundBoard.imgPath}" width="300" height="300">
+				<div th:if="${fundBoard.imgPath != null}">
+					<img th:src="${fundBoard.imgPath}" width="300" height="300">
+				</div>
+				<div th:if="${fundBoard.filePath != null}">
+					<img th:src="|/fundBoard/img/${fundBoard.id}|" width="300" height="300">
+				</div>
 				<span th:text="${fundBoard.subject}"></span>
 				<a th:href="@{|/fundBoard/detail/${fundBoard.id}|}">자세히 보기</a>
 				<a th:href="@{|/fundBoard/delete/${fundBoard.id}|}">삭제하기(그냥 편의기능)</a>

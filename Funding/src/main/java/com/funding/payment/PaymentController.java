@@ -64,7 +64,7 @@ public class PaymentController {
     private final FundTargetListService fundTargetListService;
     private final RemitRepository remitRepository;
     private String paymentKey;
-    
+
     @PostConstruct
     private void init() {
         restTemplate.setErrorHandler(new ResponseErrorHandler() {
@@ -78,7 +78,7 @@ public class PaymentController {
         });
     }
 
-    
+
 	//지정 결제
     @RequestMapping("/tossPayTar/{id}")
     public String tossPayTar(Principal principal, Model model, @PathVariable("id")Integer id) {
@@ -101,11 +101,11 @@ public class PaymentController {
         Map<String, String> payloadMap = new HashMap<>();
         payloadMap.put("orderId", orderId);
         payloadMap.put("amount", String.valueOf(amount));
-        
+
         HttpEntity<String> request = new HttpEntity<>(objectMapper.writeValueAsString(payloadMap), headers);
 
         Optional<FundUser> FU = this.fundUserRepository.findByusername(principal.getName());//로그인중인 정보
-        
+
         ResponseEntity<JsonNode> responseEntity = restTemplate.postForEntity(
                 "https://api.tosspayments.com/v1/payments/" + paymentKey, request, JsonNode.class);
         log.info("responseEntity: "+responseEntity);
@@ -116,16 +116,16 @@ public class PaymentController {
             model.addAttribute("orderName", successNode.get("orderName").asText());//공연이름
             model.addAttribute("orderId", successNode.get("orderId").asText());//주문번호
             model.addAttribute("method", successNode.get("method").asText());//결제방식
-            
+
             String orderName = successNode.get("orderName").asText();
         	patmentService.targetSaveinfo(paymentKey, orderId, amount, orderName, FU);
-        	
+
         	//누적금액증가, 사람 수 증가
         	String tar = successNode.get("orderId").toString();
         	String target = tar.substring(tar.lastIndexOf('-')+1);
         	target = target.replace("\"", "");
-        	log.info("target: "+target);	
-        	
+        	log.info("target: "+target);
+
         	FundBoardTarget targetPk = fundTargetService.findById(Integer.parseInt(target));
         	Integer add = targetPk.getFundCurrent();
         	add += amount;
@@ -134,10 +134,10 @@ public class PaymentController {
         	cMem++;
         	targetPk.setCurrentMember(cMem);
         	fundTargetService.addTargetFund(targetPk);
-        	
+
         	//유저의 현재 펀딩 목록 추가
         	fundTargetListService.insertList(principal, targetPk);
-        	
+
             return "/pay/success";
         } else {
             JsonNode failNode = responseEntity.getBody();
@@ -146,10 +146,10 @@ public class PaymentController {
             return "pay/fail";
         }
     }
-    
-    
-    
-    
+
+
+
+
     //미지정 결제
     @RequestMapping("/tossPay/{id}")
     public String tossPay(Principal principal, Model model, @PathVariable("id")Integer id) {
@@ -166,7 +166,7 @@ public class PaymentController {
     public String confirmPayment1(
             @RequestParam String paymentKey, @RequestParam String orderId, @RequestParam int amount,
             Model model, Principal principal) throws Exception {
-    	
+
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()));
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -174,11 +174,11 @@ public class PaymentController {
         Map<String, String> payloadMap = new HashMap<>();
         payloadMap.put("orderId", orderId);
         payloadMap.put("amount", String.valueOf(amount));
-        
+
         HttpEntity<String> request = new HttpEntity<>(objectMapper.writeValueAsString(payloadMap), headers);
 
         Optional<FundUser> FU = this.fundUserRepository.findByusername(principal.getName());//로그인중인 정보
-        
+
         ResponseEntity<JsonNode> responseEntity = restTemplate.postForEntity(
                 "https://api.tosspayments.com/v1/payments/" + paymentKey, request, JsonNode.class);
         if (responseEntity.getStatusCode() == HttpStatus.OK) {
@@ -188,21 +188,28 @@ public class PaymentController {
             model.addAttribute("orderId", successNode.get("orderId").asText());//주문번호
             model.addAttribute("status", successNode.get("status").asText());//상태
             model.addAttribute("method", successNode.get("method").asText());//결제방식
-            
+
             String orderName = successNode.get("orderName").asText();
         	patmentService.saveinfo(paymentKey, orderId, amount, orderName, FU);
-        	
+
         	//누적금액증가
         	String tar = successNode.get("orderId").toString();
         	String target = tar.substring(tar.lastIndexOf('-')+1);
         	target = target.replace("\"", "");
-        	log.info("target: "+target);	
-        	
+        	log.info("target: "+target);
+
         	FundBoard fundBoard = fundBoardService.findById(Integer.parseInt(target));
         	Integer add = fundBoard.getFundCurrent();
         	add += amount;
         	fundBoard.setFundCurrent(add);
+        	//누적사람 수 증가
+        	Integer cMem = fundBoard.getCurrentMember();
+        	cMem++;
+        	fundBoard.setCurrentMember(cMem);
         	fundBoardService.addFundBoard(fundBoard);
+
+
+
             return "/pay/success1";
         } else {
             JsonNode failNode = responseEntity.getBody();
@@ -212,7 +219,7 @@ public class PaymentController {
         }
     }
 
-    
+
     //지정환불하기
     @RequestMapping("/can/tarCancel")
     public String tarCancel(String paymentKey)throws Exception {
@@ -221,10 +228,10 @@ public class PaymentController {
     }
     //지정환불성공
     @RequestMapping("/can/tarCancelRquest")
-    public String tarCancelRquest(String paymentKey, 
+    public String tarCancelRquest(String paymentKey,
     		@RequestParam("cancelReason")String cancelReason, Model model, Principal principal)throws Exception{
     		paymentKey = this.paymentKey;
-    		
+
     		HttpRequest request = HttpRequest.newBuilder()
     		    .uri(URI.create("https://api.tosspayments.com/v1/payments/"+paymentKey+"/cancel"))
     		    .header("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()))
@@ -232,7 +239,7 @@ public class PaymentController {
     		    .method("POST", HttpRequest.BodyPublishers.ofString("{\"cancelReason\":\"" + cancelReason + "\"}"))
     		    .build();
     		HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-    		
+
     		JSONParser parser = new JSONParser();
     		Object obj = parser.parse(response.body());
     		JSONObject jsonObj = (JSONObject)obj;
@@ -248,28 +255,28 @@ public class PaymentController {
     			model.addAttribute("cancelReason",cancelReason);//환불사유
     			principal.getName();
     			Optional<FundUser> FU =  fundUserRepository.findByusername(principal.getName());
-    			patmentService.tarCancelInfo(orderId, Integer.valueOf(totalAmount).intValue(), orderName, cancelReason, FU, paymentKey);
+    			patmentService.cancelInfo(orderId, Integer.valueOf(totalAmount).intValue(), orderName, cancelReason, FU, paymentKey);
 
-    			
+
             	//누적금액감소, 인원 감소
     			JSONObject tar = (JSONObject) jsonObj;
     			String userAndTargetNo = (String)tar.get("orderId");
 
             	String target = userAndTargetNo.substring(userAndTargetNo.lastIndexOf('-')+1);
             	target = target.replace("\"", "");
-            	log.info("target: "+target);	
-            	
+            	log.info("target: "+target);
+
             	FundBoardTarget targetPk = fundTargetService.findById(Integer.parseInt(target));
             	Integer sub = targetPk.getFundCurrent();
             	sub -= Integer.valueOf(totalAmount).intValue();
             	targetPk.setFundCurrent(sub);
-            	
+
             	Integer cMem = targetPk.getCurrentMember();
             	cMem--;
             	targetPk.setCurrentMember(cMem);
             	fundTargetService.addTargetFund(targetPk);
-            	
-            	
+
+
             	//지정리스트 삭제
             	fundTargetListService.delete(FU.get(), targetPk);
 
@@ -282,6 +289,7 @@ public class PaymentController {
     			return "/pay/can/cancelFail";
     		}
     }
+
     
     //게시글삭제 전체환불
     public void totalCancel(String paymentKey,String cancelReason) throws Exception {
@@ -295,6 +303,7 @@ public class PaymentController {
     }
     
     
+
     //미지정환불하기
     @RequestMapping("/can/cancel")
     public String cancel(String paymentKey)throws Exception {
@@ -303,10 +312,10 @@ public class PaymentController {
     }
     //미지정환불성공
     @RequestMapping("/can/cancelRquest")
-    public String cancelRquest(String paymentKey, 
+    public String cancelRquest(String paymentKey,
     		@RequestParam("cancelReason")String cancelReason, Model model, Principal principal)throws Exception{
     		paymentKey = this.paymentKey;
-    		
+
     		HttpRequest request = HttpRequest.newBuilder()
     		    .uri(URI.create("https://api.tosspayments.com/v1/payments/"+paymentKey+"/cancel"))
     		    .header("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()))
@@ -314,7 +323,7 @@ public class PaymentController {
     		    .method("POST", HttpRequest.BodyPublishers.ofString("{\"cancelReason\":\"" + cancelReason + "\"}"))
     		    .build();
     		HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-    		
+
     		JSONParser parser = new JSONParser();
     		Object obj = parser.parse(response.body());
     		JSONObject jsonObj = (JSONObject)obj;
@@ -331,23 +340,24 @@ public class PaymentController {
     			principal.getName();
     			Optional<FundUser> FU =  fundUserRepository.findByusername(principal.getName());
     			patmentService.cancelInfo(orderId, Integer.valueOf(totalAmount).intValue(), orderName, cancelReason, FU,paymentKey);
-    			
+
             	//누적금액감소
     			JSONObject tar = (JSONObject) jsonObj;
     			String userAndTargetNo = (String)tar.get("orderId");
 
             	String target = userAndTargetNo.substring(userAndTargetNo.lastIndexOf('-')+1);
             	target = target.replace("\"", "");
-            	log.info("target: "+target);	
-            	
+            	log.info("target: "+target);
+
             	FundBoard fundBoard = fundBoardService.findById(Integer.parseInt(target));
             	Integer sub = fundBoard.getFundCurrent();
             	sub -= Integer.valueOf(totalAmount).intValue();
             	fundBoard.setFundCurrent(sub);
-            	
-            	Integer cMem = fundBoard.getCurrentMember();
-            	cMem--;
-            	fundBoard.setCurrentMember(cMem);
+
+            	// 환불 인원 감소
+            	Integer currentMember = fundBoard.getCurrentMember();
+            	currentMember -= 1;
+            	fundBoard.setCurrentMember(currentMember);
             	fundBoardService.addFundBoard(fundBoard);
 
     			return "/pay/can/cancelSuccess";
@@ -367,7 +377,7 @@ public class PaymentController {
 			@RequestParam(value = "pagee", defaultValue="0") int pagee) throws Exception{
 		principal.getName();
 		Optional<FundUser> FU =  fundUserRepository.findByusername(principal.getName());
-		
+
 		//결제리스트 불러오기
 		Page<Sale> sList = patmentService.findByFundUser(page,FU.get().getNickname());
 		model.addAttribute("sList",sList);
@@ -380,10 +390,7 @@ public class PaymentController {
 		
 		return "/pay/loo/confirm";
 	}
-	
-	
-	
-	
+
 	//계좌등록
 	@RequestMapping("/rem/enroll")
 	public String enroll(){
@@ -412,7 +419,7 @@ public class PaymentController {
     			return "/main/nav";
     		}
 	}
-	
+
 	//계좌수정
 	@RequestMapping("/rem/revise")
 	public String revise(){
@@ -441,7 +448,7 @@ public class PaymentController {
     			return "/main/nav";
     		}
 	}
-	
+
 	//계좌삭제
 	@RequestMapping("/rem/deletion")
 	public String deletion(){
@@ -496,7 +503,7 @@ public class PaymentController {
     			return "/main/nav";
     		}
 	}
-	
+
 	//계좌조회
 	@RequestMapping("/rem/confirm")
 	public String confirm(Model model){
@@ -511,11 +518,15 @@ public class PaymentController {
     			model.addAttribute("rList",rList);
     			model.addAttribute("page",page);
     		}
-    		return "/pay/rem/confirmSuccess";
+		return "/pay/rem/confirmSuccess";
 	}
+<<<<<<< HEAD
 	
 	
 
 	
 	
 }
+=======
+}
+>>>>>>> b6bac64846ad12e6975ce536346d9a0f311edaf1

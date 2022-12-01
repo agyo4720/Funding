@@ -24,5 +24,6 @@ public class FundArtistListController {
 		
 		return "fundArtistList_list";
 	}
-
+	
+	
 }

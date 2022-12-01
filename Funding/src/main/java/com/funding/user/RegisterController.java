@@ -93,7 +93,7 @@ public class RegisterController {
         return result;
 	}
 	
-	// 이메일 인증 테스트
+	// 이메일 인증
 	private final EmailService emailService;
 		
 		@RequestMapping("/emailAuth")
