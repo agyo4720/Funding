@@ -5,12 +5,11 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.security.Principal;
+import java.sql.Date;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -33,15 +32,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.ResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.funding.Categorie.Categorie;
 import com.funding.fundBoard.FundBoard;
 import com.funding.fundBoard.FundBoardService;
 import com.funding.fundBoardTarget.FundBoardTarget;
 import com.funding.fundBoardTarget.FundTargetService;
-import com.funding.fundTargetList.FundTargetList;
 import com.funding.fundTargetList.FundTargetListService;
 import com.funding.fundUser.FundUser;
 import com.funding.fundUser.FundUserRepository;
@@ -407,9 +405,11 @@ public class PaymentController {
 			System.out.println(response.body());
     		if(response.statusCode() == 200) {//요청응답코드 200=성공
     			patmentService.enrollInfo(subMallId, companyName, representativeName, businessNumber, bank, accountNumber);
-    			return "/pay/rem/enrollSuccess";
+    			model.addAttribute("msg","SUCcess");
+    			return "/main/nav";
     		}else {
-    			return "/pay/rem/enrollFail";
+    			model.addAttribute("msg","FAIl");
+    			return "/main/nav";
     		}
 	}
 	
@@ -420,7 +420,8 @@ public class PaymentController {
 	}
 	@RequestMapping("/rem/reviseRequest")
 	public String reviseRequest(@RequestParam("subMallId")String subMallId,@RequestParam("bank")String bank,@RequestParam("companyName")String companyName,
-			@RequestParam("representativeName")String representativeName,@RequestParam("businessNumber")String businessNumber,@RequestParam("accountNumber")String accountNumber)throws Exception {
+			@RequestParam("representativeName")String representativeName,@RequestParam("businessNumber")String businessNumber,
+			@RequestParam("accountNumber")String accountNumber, Model model)throws Exception {
 		HttpRequest request = HttpRequest.newBuilder()
 			    .uri(URI.create("https://api.tosspayments.com/v1/payouts/sub-malls/"+subMallId))
     		    .header("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()))
@@ -433,12 +434,13 @@ public class PaymentController {
 			System.out.println(response.body());
     		if(response.statusCode() == 200) {//요청응답코드 200=성공
     			patmentService.reviseInfo(subMallId, companyName, representativeName, businessNumber, bank, accountNumber);
-    			return "/pay/rem/reviseSuccess";
+    			model.addAttribute("msg","SUccess");
+    			return "/main/nav";
     		}else {
-    			return "/pay/rem/reviseFail";
+    			model.addAttribute("msg","FAil");
+    			return "/main/nav";
     		}
 	}
-	
 	
 	//계좌삭제
 	@RequestMapping("/rem/deletion")
@@ -446,7 +448,7 @@ public class PaymentController {
 			return "/pay/rem/deletion";
 	}
 	@RequestMapping("/rem/deletionRequest")
-	public String deletionRequest(@RequestParam("subMallId")String subMallId)throws Exception {
+	public String deletionRequest(@RequestParam("subMallId")String subMallId,Model model)throws Exception {
 			HttpRequest request = HttpRequest.newBuilder()
 			.uri(URI.create("https://api.tosspayments.com/v1/payouts/sub-malls/"+subMallId+"/delete"))
 	    	.header("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()))
@@ -457,9 +459,11 @@ public class PaymentController {
 			System.out.println(response.body());
     		if(response.statusCode() == 200) {//요청응답코드 200=성공
     			patmentService.deletionInfo(subMallId);
-    			return "/pay/rem/deletionSuccess";
+    			model.addAttribute("msg","SUCCess");
+    			return "/main/nav";
     		}else {
-    			return "/pay/rem/deletionFail";
+    			model.addAttribute("msg","FAIL");
+    			return "/main/nav";
     		}
 	}
 
@@ -472,7 +476,7 @@ public class PaymentController {
 	}
 	@RequestMapping("/rem/remitRquest")
 	public String remitRquest(@RequestParam("subMallId")String subMallId, @RequestParam("payoutAmount")Integer payoutAmount,
-			@RequestParam("payoutDate")String payoutDate) throws Exception {
+			@RequestParam("payoutDate")String payoutDate,Model model) throws Exception {
 		HttpRequest request = HttpRequest.newBuilder()
 			    .uri(URI.create("https://api.tosspayments.com/v1/payouts/sub-malls/settlements"))
     		    .header("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()))
@@ -485,29 +489,28 @@ public class PaymentController {
 			System.out.println(response.body());			
     		if(response.statusCode() == 200) {//요청응답코드 200=성공
     			patmentService.remitInfo(subMallId, payoutAmount, payoutDate);
-    			return "/pay/rem/remitSuccess";
+    			model.addAttribute("msg","Success");
+    			return "/main/nav";
     		}else {
-    			return "/pay/rem/remitFail";
+    			model.addAttribute("msg","Fail");
+    			return "/main/nav";
     		}
 	}
 	
 	//계좌조회
 	@RequestMapping("/rem/confirm")
-	public String confirm(){
+	public String confirm(Model model){
+		model.addAttribute("msg","진행중");
 			return "/pay/rem/confirm";
 	}
 	@RequestMapping("/rem/confirmRequest")
 	public String confirmRequest(@RequestParam("subMallId")String subMallId, Model model,
 			@RequestParam(value = "page", defaultValue="0") int page)throws Exception {
 		Page<Remit> rList = patmentService.findBysubMallId(page,subMallId);
-		model.addAttribute("rList",rList);
-		model.addAttribute("page",page);
-		log.info("!!rList: "+rList);
     		if(rList != null) {
     			model.addAttribute("rList",rList);
-    			return "/pay/rem/confirmSuccess";
-    		}else {
-    			return "/pay/rem/confirmFail";
+    			model.addAttribute("page",page);
     		}
+    		return "/pay/rem/confirmSuccess";
 	}
 }
