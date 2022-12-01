@@ -1,11 +1,11 @@
 package com.funding.user;
 
 import java.io.UnsupportedEncodingException;
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.Optional;
 
 import javax.mail.MessagingException;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -58,15 +58,13 @@ public class UserController {
 	
 	// 내 정보 페이지
 	@RequestMapping("/myInfo")
-	public String myInfo(HttpSession httpSession, Model model) {
-		Object object = httpSession.getAttribute("myInfo");
-		
-		try {
-			FundUser FU = (FundUser) object;
-			model.addAttribute("myInfo",FU);
-		}catch(Exception err) {
-			FundArtist FA = (FundArtist) object;
-			model.addAttribute("myInfo",FA);
+	public String myInfo(Principal principal, Model model) {
+		Optional<FundUser> FU = this.fundUserService.findByuserName(principal.getName());
+		Optional<FundArtist> FA = this.fundArtistService.findByuserName(principal.getName());
+		if(FU.isPresent()) {
+			model.addAttribute("myInfo",FU.get());
+		} else if(FA.isPresent()) {
+			model.addAttribute("myInfo",FA.get());
 		}
 		
 		return "user/myInfo";
