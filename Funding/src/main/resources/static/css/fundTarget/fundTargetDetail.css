@@ -7,6 +7,10 @@ section {
     margin-left: 30px;
 }
 
+.title {
+    margin: 20px 0;
+}
+
 .con_hr_detail hr {
     border-top: 1px solid #6a6a6a;
 }
@@ -46,14 +50,21 @@ section {
     display: inline-block;
     padding: 3px 15px;
     margin-bottom: 10px;
+    margin-right: 20px;
     border: 2px solid #B00E0E;
     border-radius: 20px;
     color: #B00E0E;
     font-weight: bold;
 }
 
+.con_del:hover {
+    text-decoration: underline;
+    text-underline-position: under;
+}
+
 .right .view {
     display: flex;
+    align-items: center;
     margin-bottom: 10px;
     font-size: 15px;
 }
@@ -61,10 +72,18 @@ section {
 .right label {
     width: 110px;
     font-weight: bold;
+
 }
 
 #fundCurrent p {
-    tab-size: 16px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#fundAmount p {
+    font-size: 18px;
+    font-weight: bold;
+    color: #6a6a6a;
 }
 
 .funding {
