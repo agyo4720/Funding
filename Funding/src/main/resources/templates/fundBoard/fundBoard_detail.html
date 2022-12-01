@@ -72,52 +72,44 @@
 					<span th:text="${fundBoard.subject}"></span>
 				</div>
 				<div>
-					<div>내용</div>
-					<div th:utext="${fundBoard.content}"></div>
+					<span>내용 : </span>
+					<span th:utext="${fundBoard.content}"></span>
 				</div>
 				<div>
-					<div>장소</div>
-					<div th:text="${fundBoard.place}"></div>
+					<span>장소 : </span>
+					<span th:text="${fundBoard.place}"></span>
 				</div>
 				<div>
-					<div>펀딩 기간</div>
-					<div th:text="${fundBoard.fundDuration}"></div>
+					<span>펀딩 기간 : </span>
+					<span th:text="${fundBoard.fundDuration}"></span>
 				</div>
 				<div>
-					<div>공연 시작 일자</div>
-					<div th:text="${fundBoard.startDateTime}"></div>
+					<span>공연 시작 일자 : </span>
+					<span th:text="${#temporals.format(fundBoard.startDateTime, 'yyyy-MM-dd HH:mm')}"></span>
 				</div>
 				<div>
-					<div>공연 시간</div>
-					<div th:text="${fundBoard.runtime}"></div>
+					<span>공연 시간 : </span>
+					<span th:text="|${fundBoard.runtime}분|"></span>
 				</div>
 				<div>
-					<div>1인 최소 펀딩 금액</div>
-					<div th:text="${fundBoard.minFund}"></div>
+					<span>1인 최소 펀딩 금액 : </span>
+					<span th:text="|${fundBoard.minFund}원|"></span>
 				</div>
 				<div>
-					<div>펀딩 목표 금액</div>
-					<div th:text="${fundBoard.fundAmount}"></div>
+					<span>펀딩 목표 금액 : </span>
+					<span th:text="|${fundBoard.fundAmount}원|"></span>
 				</div>
 				<div>
-					<span>펀딩 현재 금액</span>
-					<span th:text="${fundBoard.fundCurrent}"></span>
+					<span>펀딩 현재 금액 : </span>
+					<span th:text="|${fundBoard.fundCurrent}원|"></span>
 				</div>
 				<div>
-					<div>현재 모집 인원</div>
-					<div th:text="${fundBoard.currentMember}"></div>
+					<span>현재 모집 인원 : </span> 
+					<span th:text="|${fundBoard.currentMember}명|"></span>
 				</div>
 				<div>
-					<div>펀딩 상태</div>
-					<div th:text="${fundBoard.state}"></div>
-				</div>
-				<div>
-					<div>별점 투표 수</div>
-					<div th:text="${fundBoard.vote}"></div>
-				</div>
-				<div>
-					<div>별점 평균</div>
-					<div th:text="${fundBoard.star}"></div>
+					<span>펀딩 상태 : </span>
+					<span th:text="${fundBoard.state}"></span>
 				</div>
 			</div>		
 			<!--섹션1 끝-->
