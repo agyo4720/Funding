@@ -20,6 +20,9 @@ import com.funding.fundTargetList.FundTargetList;
 import com.funding.fundTargetList.FundTargetListService;
 import com.funding.fundUser.FundUser;
 import com.funding.fundUser.FundUserService;
+import com.funding.payment.PaymentController;
+import com.funding.payment.Sale;
+import com.funding.payment.SaleRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +38,9 @@ public class AlertController {
 	private final FundArtistService fundArtistService;
 	private final FundTargetListService fundTargetListService;
 	private final FundTargetService fundTargetService;
+	private final SaleRepository saleRepository;
+	private final PaymentController paymentController;
+	
 	
 	//댓글 알림 불러오기
 	@RequestMapping("/show")
@@ -102,7 +108,7 @@ public class AlertController {
 	//펀딩 기간 마감시 업데이트
 	@RequestMapping("/update")
 	@ResponseBody
-	public String fundEndDate() {
+	public String fundEndDate() throws Exception{
 		List<FundBoardTarget> targetList = fundTargetService.findAllList();
 		
 		for(int i=0; i<targetList.size(); i++) {
@@ -117,6 +123,15 @@ public class AlertController {
 				log.info("비교하는 날짜    : " + LocalDate.now());
 				targetList.get(i).setStatus("만료됨");
 				fundTargetService.addTargetFund(targetList.get(i));
+				
+				//환불 시킴
+				List<Sale> sale = saleRepository.findByFundBoardTarget(targetList.get(i).getSubject());
+				for(int j=0; i<sale.size(); j++){
+					sale.get(j).getPayCode();
+					sale.get(j).setCheckin("게시글 삭제");
+					
+					paymentController.totalCancel(sale.get(j).getPayCode(),"게시글 삭제");
+				}
 				
 				//알림 등록
 				FundBoardTarget fundBoardTarget = targetList.get(i);

@@ -51,27 +51,5 @@ public class HomeController {
 	}
 	
 	
-	// nav에 사용자 이름 출력
-	@RequestMapping("/user/navMyInfo")
-	@ResponseBody
-	public HashMap<String, Object> navMyInfo(String username) {
-		Optional<FundUser> FU = fundUserService.findByuserName(username);
-		Optional<FundArtist> FA = fundArtistService.findByuserName(username);
-		HashMap<String, Object> user = new HashMap<>();
-		
-		if(FU.isPresent()) {
-			user.put("userName", FU.get().getNickname());
-			user.put("userRole", FU.get().getRole());
-			
-			return user;
-		}else if(FA.isPresent()) {
-			user.put("userName", FA.get().getNickname());
-			user.put("userRole", FA.get().getRole());
-			
-			return user;
-		}
-		
-		return user;
-	}
 	
 }

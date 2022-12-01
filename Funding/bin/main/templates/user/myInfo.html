@@ -1,0 +1,47 @@
+<!-- 내 정보 -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Let's Funding : 내 정보</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/user/myinfo.css">
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="/img/favicon/ms-icon-310x310.png" type="image/x-icon" />
+</head>
+<body>
+    <!-- 홈페이지 상단 nav -->
+    <header th:replace="/main/nav"></header>
+
+    <div class="wrap">
+
+        <!-- nav -->
+        <nav th:replace="/main/usernav"></nav>
+        
+        <!-- 내 정보 조회 -->
+        <div class="myinfo">
+            <h2>회원 정보</h2>
+
+            <div class="view"><p>아이디</p><span th:text="${myInfo.username}"></span></div>
+            <div class="view"><p>비밀번호</p><span>***********</span><button>변경</button></div>
+            <div class="view"><p>이름</p><span th:text="${myInfo.nickname}"></span></div>
+            <div class="view"><p>전화번호</p><span th:text="|010 - ${myInfo.mobile}|"></span><button>변경</button></div>
+            <div class="view" hidden><p>전화번호</p><input type="text" th:value="${myInfo.mobile}"></input><button>저장</button></div>
+            <div class="view"><p>이메일</p><span th:text="${myInfo.email}"></span><button>변경</button></div>
+            <div class="view" hidden><p>생년월일</p><span id="birth" th:text="${myInfo.birth}"></span></div>
+            <div class="view"><p>생년월일</p><span id="birth2"></span></div>
+            <div class="view"><p>성별</p><span th:text="${myInfo.gender}"></span></div>
+            <div class="view"><p>권한</p><span th:text="${myInfo.role}"></span></div>
+        </div>
+    </div>
+</body>
+<script>
+	let birthCut = $('#birth').text().substring(0,10)
+	$('#birth2').html(birthCut)
+</script>
+
+</html>

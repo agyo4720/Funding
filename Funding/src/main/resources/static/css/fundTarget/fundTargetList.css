@@ -19,7 +19,7 @@ section .s_title {
 
 .categorie form a {
     margin-right: 30px;
-    font-size: 20px;
+    font-size: 17px;
     font-weight: bold;
     transition: 0.5s;
 }
@@ -40,6 +40,10 @@ section .s_title {
 .categorie form a:last-child::after {
     padding: 0;
     margin-left: 0;
+}
+
+.cate.active{
+	color: rgb(250, 78, 121);;
 }
 
 /* 공연 리스트 Form */

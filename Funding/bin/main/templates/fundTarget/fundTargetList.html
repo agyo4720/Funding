@@ -31,7 +31,7 @@
 
 		<div class="categorie">
 			<form>
-				<a th:each="cate : ${cList}" th:text="${cate.categorieName}"
+				<a th:each="cate : ${cList}" class="cate" th:text="${cate.categorieName}"
 				th:href="@{|?cate=${cate.id}&page=0|}"></a>
 			</form>
 		</div>	
@@ -76,13 +76,14 @@
 							<p th:text="${target.fundDurationS} + ' ~ ' + ${target.fundDurationE}">펀딩 기간</p>
 						</div>
 						
-						<div>
+						<!-- <div>
 							<div th:if="${target.fundUser.nickname != null}">
 								<div th:text="|글 등록한 사람 : ${target.fundUser.nickname}|"></div>
 							</div>
-						</div>
-						<div>
-							<div th:text="|진행도 : ${target.fundCurrent * 100 / target.fundAmount}% |"></div>
+						</div> -->
+						<div class="view">
+							<label for="graph">진행도</label>
+							<p th:text="|${target.fundCurrent * 100 / target.fundAmount}%|"></p>
 						</div>
 					</div>
 				</div>
@@ -109,5 +110,27 @@
 		<!-- //페이징 -->
 		<a class="btn_create" href="fundTargetForm.html" th:href="@{/fundTarget/form}">펀딩 만들기</a>
     </section>
+    
+    <script>
+    	//url에서 카테고리 값 가져와서 active 추가해주기
+    	let url = window.location.search
+    	let Params = new URLSearchParams(url)
+    	let cate = Params.get('cate')
+    	cate = parseInt(cate) - 1
+    	console.log(cate)
+    	let cateList = document.querySelectorAll('.cate')
+    	
+    	document.addEventListener("DOMContentLoaded", addActive)
+    	
+    	function addActive(){
+    		cateList.forEach(function(e){
+        		e.classList.remove('active')
+        	})
+        	cateList[cate].classList.add('active')
+    	}
+  
+
+    	
+    </script>
 </body>
 </html>

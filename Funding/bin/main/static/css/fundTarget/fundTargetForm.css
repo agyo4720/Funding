@@ -1,3 +1,6 @@
+a {
+    text-decoration: none;
+}
 form {
     margin: 30px auto;
     padding: 5px 40px;
@@ -16,7 +19,7 @@ section label {
     font-weight: bold;
 }
 
-section select {width: 300px; height: 30px;}
+section select {width: 380px; height: 30px;}
 
 section .int input {width: 380px; height: 30px;}
 

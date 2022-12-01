@@ -36,6 +36,9 @@ import com.funding.fundArtist.FundArtistService;
 import com.funding.fundBoardTarget.FundBoardTarget;
 import com.funding.fundUser.FundUser;
 import com.funding.fundUser.FundUserService;
+import com.funding.payment.PaymentController;
+import com.funding.payment.Sale;
+import com.funding.payment.SaleRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -51,6 +54,9 @@ public class FundBoardController {
 	private final CategorieService categorieService;
 	private final AnswerService answerService;
 	private final FileService fileService;
+	private final SaleRepository saleRepository;
+	private final PaymentController paymentController;
+
 
 
 	// 미지정 펀드 리스트(페이징)
@@ -60,20 +66,6 @@ public class FundBoardController {
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			Model model) {
 
-		try {
-			Object myInfo = httpSession.getAttribute("myInfo");
-			FundUser FU = (FundUser) myInfo;
-			if(FU.getRole().equals("user")) {
-				model.addAttribute("userData", FU);
-			}
-
-		}catch(Exception err) {
-			Object myInfo2 = httpSession.getAttribute("myInfo");
-			FundArtist FA = (FundArtist) myInfo2;
-			if(FA.getRole().equals("artist")) {
-				model.addAttribute("userData", FA);
-			}
-		}
 
 		Page<FundBoard> fundBoardList = this.fundBoardService.findAll(page);
 		model.addAttribute("fundBoardList", fundBoardList);
@@ -209,7 +201,18 @@ public class FundBoardController {
 
 	// 미지정 펀드 삭제하기
 	@RequestMapping("/delete/{id}")
-	public String delete(@PathVariable("id") Integer id) {
+	public String delete(@PathVariable("id") Integer id) throws Exception {
+		
+		//환불
+		FundBoard nick = fundBoardService.findById(id);
+		List<Sale> sale = saleRepository.findByFundBoardTarget(nick.getSubject());
+		for(int i=0; i<sale.size(); i++){
+			sale.get(i).getPayCode();
+			sale.get(i).setCheckin("게시글 삭제");
+			
+			paymentController.totalCancel(sale.get(i).getPayCode(),"게시글 삭제");
+		}
+		
 
 		this.fundBoardService.delete(id);
 
