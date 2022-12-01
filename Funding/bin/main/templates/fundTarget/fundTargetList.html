@@ -97,7 +97,7 @@
 				</a>
 			</div>
 			<div th:each="page : ${#numbers.sequence(0,targetList.totalPages-1)}"
-			th:if="${targetList.number-3 < page and targetList.number+3 > page}">
+				th:if="${targetList.number-3 < page and targetList.number+3 > page}">
 				<a th:classappend="${page == targetList.number} ? 'active'" th:text="${page+1}" 
 				th:href="@{|?cate=${cate}&page=${page}|}"></a>
 			</div>
@@ -128,9 +128,6 @@
         	})
         	cateList[cate].classList.add('active')
     	}
-  
-
-    	
     </script>
 </body>
 </html>
