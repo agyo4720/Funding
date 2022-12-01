@@ -525,13 +525,5 @@ public class PaymentController {
     		}
 		return "/pay/rem/confirmSuccess";
 	}
-<<<<<<< HEAD
-	
-	
+}
 
-	
-	
-}
-=======
-}
->>>>>>> b6bac64846ad12e6975ce536346d9a0f311edaf1
