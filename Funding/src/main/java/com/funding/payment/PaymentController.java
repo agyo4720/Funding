@@ -511,6 +511,6 @@ public class PaymentController {
     			model.addAttribute("rList",rList);
     			model.addAttribute("page",page);
     		}
-    		return "/pay/rem/confirmSuccess";
+		return "/pay/rem/confirmSuccess";
 	}
 }
