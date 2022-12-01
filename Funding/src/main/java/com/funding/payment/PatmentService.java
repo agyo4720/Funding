@@ -1,5 +1,6 @@
 package com.funding.payment;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.funding.fundBoardTarget.FundBoardTarget;
 import com.funding.fundUser.FundUser;
 
 import lombok.RequiredArgsConstructor;
@@ -183,4 +183,5 @@ public class PatmentService {
 		Page<Remit> rList = remitRepository.findBysubMallId(subMallId,pageable);
 		return rList;
 	}
+
 }

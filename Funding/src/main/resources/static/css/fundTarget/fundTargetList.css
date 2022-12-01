@@ -42,6 +42,10 @@ section .s_title {
     margin-left: 0;
 }
 
+.cate.active{
+	color: rgb(250, 78, 121);;
+}
+
 /* 공연 리스트 Form */
 .list_form {
     padding: 10px 20px;

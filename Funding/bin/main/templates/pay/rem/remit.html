@@ -15,7 +15,7 @@
 	    <input type="number"  id="payoutAmount" placeholder="정산할금액" name="payoutAmount" value="" />
 		<div class="int int_period">
 			<label for="duration">공연완료일</label>
-			<input class="fundDurationE" id="duration" type="date" name="payoutAmount" th:min="${nowTime}" autocomplete="off">
+			<input class="fundDurationE" id="duration" type="date" name="payoutDate" th:min="${nowTime}" autocomplete="off">
 			<div class="errorList" style="display: none"></div>
 		</div>
 	    <button id="remit-button" type="submit">송금하기</button>
