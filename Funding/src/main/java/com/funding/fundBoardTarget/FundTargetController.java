@@ -244,6 +244,12 @@ public class FundTargetController {
 			model.addAttribute("payCode",sale.get(i).getPayCode());
 		}
 		
+		//지정리스트 삭제
+		List<FundTargetList> fList = fundTargetListService.findByFundBoardTarget(nick);
+		for(int i=0;i>fList.size();i++) {
+			fundTargetListService.delete(fList.get(i).getFundUser(), nick);
+		}
+		
 		fundTargetService.delete(id);
 		return "redirect:/";
 	}

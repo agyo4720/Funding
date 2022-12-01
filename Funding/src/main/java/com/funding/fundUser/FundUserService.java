@@ -41,5 +41,9 @@ public class FundUserService {
 		return fundUser;
 	}
 	
-	
+	//nickname 으로 정보 찾기
+	public FundUser findBynickname(String nickname){
+		Optional<FundUser> fundUser = fundUserRepository.findBynickname(nickname);
+		return fundUser.get();
+	}
 }
