@@ -41,5 +41,15 @@ public class FundUserService {
 		return fundUser;
 	}
 	
+	// 비밀번호 재설정
+	public void resetPwd(String username, String pwd) {
+		
+		Optional<FundUser> FU = this.fundUserRepository.findByusername(username);
+		FU.get().setPassword(passwordEncoder.encode(pwd));
+		
+		this.fundUserRepository.save(FU.get());
+		
+	}
+	
 	
 }

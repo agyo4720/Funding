@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import javax.mail.MessagingException;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +33,9 @@ public class UserController {
 	private final FundArtistService fundArtistService;
 	private final FundTargetService fundTargetService;
 	private final EmailService emailService;
+	private final PasswordEncoder passwordEncoder;
+	
+	String username = null;
 	
 	// nav에 사용자 이름 출력
 	@RequestMapping("/navMyInfo")
@@ -70,7 +74,7 @@ public class UserController {
 		return "user/myInfo";
 	}
 	
-	// 비밀번호 초기화 폼 요청
+	// 비밀번호 초기화 하기위한 id 입력 폼 요청
 	@GetMapping("/resetPwd")
 	public String resetPwd() {
 		
@@ -79,12 +83,23 @@ public class UserController {
 	
 	// 등록된 아이디로 인증코드 발송, 인증코드 입력폼 요청
 	@PostMapping("/resetPwd")
+	@ResponseBody
 	public String resetPwd2(String username, Model model) throws UnsupportedEncodingException, MessagingException {
 		Optional<FundUser> FU = this.fundUserService.findByuserName(username);
 		String code = emailService.sendEmail(FU.get().getEmail());
-		model.addAttribute("code",code);
+		this.username = username;
 		
-		return "/user/resetCodeForm";
+		return code;
+	}
+	
+	
+	// 비밀번호 수정
+	@PostMapping("/resetPwdConfirm")
+	public String resetPwdConfirm2(String pwd){
+
+		this.fundUserService.resetPwd(this.username, pwd);
+		
+		return "redirect:/user/login";
 	}
 
 	
