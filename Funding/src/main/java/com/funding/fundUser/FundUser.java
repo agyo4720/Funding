@@ -44,7 +44,6 @@ public class FundUser {
 	@OneToMany(mappedBy = "fundUser", cascade = CascadeType.REMOVE)
 	private List<FundBoard> FundBoard;
 
-
 	@OneToMany(mappedBy = "fundUser", cascade = CascadeType.REMOVE)
 	private List<Answer> Answer;
 

@@ -9,8 +9,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -36,12 +34,10 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.funding.Categorie.Categorie;
 import com.funding.fundBoard.FundBoard;
 import com.funding.fundBoard.FundBoardService;
 import com.funding.fundBoardTarget.FundBoardTarget;
 import com.funding.fundBoardTarget.FundTargetService;
-import com.funding.fundTargetList.FundTargetList;
 import com.funding.fundTargetList.FundTargetListService;
 import com.funding.fundUser.FundUser;
 import com.funding.fundUser.FundUserRepository;
