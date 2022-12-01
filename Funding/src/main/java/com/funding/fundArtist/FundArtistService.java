@@ -41,4 +41,7 @@ public class FundArtistService {
 		Optional<FundArtist> fundArtist = fundArtistRepository.findByusername(username);
 		return fundArtist;
 	}
+	
+	
+	
 }
