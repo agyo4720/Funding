@@ -1,11 +1,31 @@
-.wrap {
-    display: flex;
-    margin-left: 330px;
+section {
+    position: relative;
+}
+
+.title {padding: 30px 0;}
+
+.payinfo {
+    position: absolute;
+    left: 440px;
 }
 
 table, th, td {
+    box-sizing: border-box;
+    cursor: default;
     border-collapse: collapse;
     border: 1px solid;
     text-align: center;
     padding: 5px 10px;
+}
+
+thead {background: #dddddd;}
+
+th:first-child {
+    padding: 5px 5px;
+}
+
+/* 버튼 */
+button {
+    cursor: pointer;
+    padding: 3px 6px;
 }

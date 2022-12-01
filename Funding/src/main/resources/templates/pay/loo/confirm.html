@@ -11,20 +11,26 @@
 
     <!-- favicon -->
     <link rel="shortcut icon" href="img/favicon/ms-icon-310x310.png" type="image/x-icon" />
+
+	<!-- fontawsome -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
 </head>
 <body>
 	<!-- 홈페이지 상단 nav -->
 	<header th:replace="/main/nav"></header>
 
-	<div class="wrap">
+	<section>
         <!-- nav -->
         <nav th:replace="/main/usernav"></nav>
 
 		<!-- payinfo -->
 		<div class="payinfo">
-			<h2>지정 펀딩</h2>
+			<div class="title">
+				<h2>결제 내역</h2>
+			</div>
+
 			<table>
-				<tr>
+				<thead>
 					<th>No</th>
 					<th>구분</th>
 					<th>공연</th>
@@ -34,7 +40,7 @@
 					<th>환불 사유</th>
 					<th>환불 날짜</th>
 					<th>환불</th>
-				</tr>
+				</thead>
 				<tr th:each="list, i : ${sList}">
 					<td th:text="${i.count}">No</td>
 					<td>
@@ -56,6 +62,7 @@
 					</td>
 				</tr>
 			</table>
+
 			<!-- 페이징 -->
 			<div class="page" th:if="${!sList.isEmpty()}">
 				<div th:if="${sList.number > 0}">
@@ -76,7 +83,7 @@
 			</div>
 			<!-- //페이징 -->
 		</div>
-	</div>
+	</section>
 
 </body>
 </html>
