@@ -26,6 +26,8 @@ section {
 /* left */
 .left {margin-right: 50px; margin-top: -50px;}
 
+.left h2 {margin: 15px 0;}
+
 .image {
     margin-top: 10px;
     width: 300px;
@@ -52,7 +54,7 @@ section {
 
 .right .view {
     display: flex;
-    margin-bottom: 3px;
+    margin-bottom: 10px;
     font-size: 15px;
 }
 
@@ -61,7 +63,9 @@ section {
     font-weight: bold;
 }
 
-.right p { }
+#fundCurrent p {
+    tab-size: 16px;
+}
 
 .funding {
     display: flex;

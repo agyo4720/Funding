@@ -76,13 +76,14 @@
 							<p th:text="${target.fundDurationS} + ' ~ ' + ${target.fundDurationE}">펀딩 기간</p>
 						</div>
 						
-						<div>
+						<!-- <div>
 							<div th:if="${target.fundUser.nickname != null}">
 								<div th:text="|글 등록한 사람 : ${target.fundUser.nickname}|"></div>
 							</div>
-						</div>
-						<div>
-							<div th:text="|진행도 : ${target.fundCurrent * 100 / target.fundAmount}% |"></div>
+						</div> -->
+						<div class="view">
+							<label for="graph">진행도</label>
+							<p th:text="|${target.fundCurrent * 100 / target.fundAmount}%|"></p>
 						</div>
 					</div>
 				</div>
