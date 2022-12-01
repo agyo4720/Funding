@@ -3,13 +3,11 @@ package com.funding.fundBoard;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.core.io.Resource;
@@ -31,9 +29,8 @@ import com.funding.Categorie.CategorieService;
 import com.funding.answer.Answer;
 import com.funding.answer.AnswerService;
 import com.funding.file.FileService;
-import com.funding.fundArtist.FundArtist;
-import com.funding.fundArtist.FundArtistService;
-import com.funding.fundBoardTarget.FundBoardTarget;
+import com.funding.fundArtistList.FundArtistList;
+import com.funding.fundArtistList.FundArtistListService;
 import com.funding.fundUser.FundUser;
 import com.funding.fundUser.FundUserService;
 import com.funding.payment.PaymentController;
@@ -56,6 +53,7 @@ public class FundBoardController {
 	private final FileService fileService;
 	private final SaleRepository saleRepository;
 	private final PaymentController paymentController;
+	private final FundArtistListService fundArtistListService;
 
 
 
@@ -158,16 +156,21 @@ public class FundBoardController {
 
 	}
 
-	// 미지정 펀드 답변등록
+	// 미지정 펀드 답변등록(자세히 보기)
 	@RequestMapping("/detail/{id}")
-	public String detail(@PathVariable ("id") Integer id, Model model) {
+	public String detail(
+			@PathVariable ("id") Integer id,
+			Model model) {
 
 		FundBoard fundBoard = this.fundBoardService.findById(id);
 		model.addAttribute("fundBoard", fundBoard);
 
 		List<Answer> answerList = this.answerService.findByFundBoard(fundBoard);
 		model.addAttribute("answerList", answerList);
-
+		
+		List<FundArtistList> fundArtistList = this.fundArtistListService.findAll();
+		model.addAttribute("fundArtistList", fundArtistList);
+		
 		return "/fundBoard/fundBoard_detail";
 	}
 
@@ -219,7 +222,6 @@ public class FundBoardController {
 		return "redirect:/fundBoard/list";
 	}
 
-	// 2022/11/30 - 4 작업중
-
+	// 2022/11/30 - 6 작업중
 
 }

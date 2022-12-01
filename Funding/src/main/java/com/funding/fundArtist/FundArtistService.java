@@ -14,14 +14,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Service
 public class FundArtistService {
-	
+
 	private final FundArtistRepository fundArtistRepository;
 	private final PasswordEncoder passwordEncoder;
 	// 회원가입 , 유저 생성
 	public void register(RegisterValidation vo) {
-		
+
 		FundArtist fundArtist = new FundArtist();
-		
+
 		fundArtist.setUsername(vo.getUsername());
 		fundArtist.setPassword(passwordEncoder.encode(vo.getPassword1()));
 		fundArtist.setNickname(vo.getNickname());
@@ -32,24 +32,24 @@ public class FundArtistService {
 		fundArtist.setBirth(Date.valueOf(vo.getYear()+"-"+vo.getMonth()+"-"+vo.getDay()));
 		fundArtist.setRole("artist");
 		fundArtist.setLikeCount(0);
-		
+
 		this.fundArtistRepository.save(fundArtist);
 		System.out.println("@@@@@@@@@아티스트 회원가입 성공");
 	}
-	
+
 	// userName 으로 계정정보 찾기
 	public Optional<FundArtist> findByuserName(String username) {
 		Optional<FundArtist> fundArtist = fundArtistRepository.findByusername(username);
 		return fundArtist;
 	}
-	
+
 	// 비밀번호 재설정
 	public void resetPwd(String username, String pwd) {
-		
+
 		Optional<FundArtist> FA = this.fundArtistRepository.findByusername(username);
 		FA.get().setPassword(passwordEncoder.encode(pwd));
-		
+
 		this.fundArtistRepository.save(FA.get());
-		
+
 	}
 }
