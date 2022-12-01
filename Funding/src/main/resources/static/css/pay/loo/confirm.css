@@ -6,7 +6,7 @@ section {
 
 .payinfo {
     position: absolute;
-    left: 440px;
+    left: 270px;
 }
 
 table, th, td {
@@ -16,6 +16,7 @@ table, th, td {
     border: 1px solid;
     text-align: center;
     padding: 5px 10px;
+    font-family: 'Noto Sans KR', sans-serif;
 }
 
 thead {background: #dddddd;}
@@ -23,6 +24,11 @@ thead {background: #dddddd;}
 th:first-child {
     padding: 5px 5px;
 }
+
+th:nth-child(3) {width: 300px;}
+th:nth-child(5) {width: 110px;}
+th:nth-child(7) {width: 110px;}
+th:nth-child(8) {width: 200px;}
 
 /* 버튼 */
 button {

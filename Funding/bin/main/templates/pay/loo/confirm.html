@@ -37,8 +37,8 @@
 					<th>가격</th>
 					<th>결제일</th>
 					<th>상태</th>
+					<th>환불일</th>
 					<th>환불 사유</th>
-					<th>환불 날짜</th>
 					<th>환불</th>
 				</thead>
 				<tr th:each="list, i : ${sList}">
@@ -51,11 +51,11 @@
 						<span th:if="${list.fundBoardTarget != null}" th:text="${list.fundBoardTarget}"></span>
 						<span th:if="${list.fundBoard != null}" th:text="${list.fundBoard}"></span>
 					</td>
-					<td th:text="|${list.payMoney}원|">가격</td>
+					<td th:text="|${#numbers.formatInteger(list.payMoney, 3, 'COMMA')}원|">가격</td>
 					<td th:text="${#temporals.format(list.payDate, 'yyyy-MM-dd HH:mm')}">결제날짜</td>
 					<td th:text="${list.checkin}">상태</td>
-					<td th:text="${list.cancelReason}"></td>
-					<td th:text="${#temporals.format(list.cancelDate, 'yyyy-mm-dd HH:mm')}"></td>
+					<td th:text="${#temporals.format(list.cancelDate, 'yyyy-MM-dd HH:mm')}">환불일</td>
+					<td th:text="${list.cancelReason}">환불 사유</td>
 					<td>
 						<button th:if="${list.fundBoardTarget} != null and ${list.checkin} == 결제완료 " th:onclick="'location.href=\'' + @{/pay/can/tarCancel(paymentKey=${list.payCode})} + '\''" type="submit">환불하기</button>
 						<button th:if="${list.fundBoard} != null and ${list.checkin} == 결제완료" th:onclick="'location.href=\'' + @{/pay/can/cancel(paymentKey=${list.payCode})} + '\''" type="submit">환불하기</button>

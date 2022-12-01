@@ -30,7 +30,7 @@ section {
 /* left */
 .left {margin-right: 50px; margin-top: -50px;}
 
-.left h2 {margin: 15px 0;}
+.left h2 {margin: 15px 0; width: 300px;}
 
 .image {
     margin-top: 10px;
@@ -47,6 +47,7 @@ section {
 }
 
 .status {
+    cursor: default;
     display: inline-block;
     padding: 3px 15px;
     margin-bottom: 10px;

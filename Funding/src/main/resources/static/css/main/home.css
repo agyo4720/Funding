@@ -9,12 +9,19 @@ section h2 {
 }
 
 .list_form {
-    padding: 20px;
-    width: 200px;
+    cursor: pointer;
+    padding: 22px;
+    width: 210px;
     height: 300px;
     border: 1px solid;
     border-radius: 30px;
     text-align: center;
 }
 
-.list_form h3 {margin-top: 10px;}
+.list_form h3 {
+    cursor: pointer;
+    margin-top: 10px;
+    overflow:hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
