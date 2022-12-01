@@ -26,27 +26,34 @@
 			<table>
 				<tr>
 					<th>No</th>
+					<th>구분</th>
 					<th>공연</th>
 					<th>가격</th>
-					<th>상태</th>
-					<th>환불</th>
 					<th>결제일</th>
+					<th>상태</th>
 					<th>환불 사유</th>
+					<th>환불 날짜</th>
+					<th>환불</th>
 				</tr>
 				<tr th:each="list, i : ${sList}">
 					<td th:text="${i.count}">No</td>
-					<td th:text="${list.fundBoardTarget}">지정공연제목</td>
+					<td>
+						<span th:if="${list.fundBoardTarget != null}">지정</span>
+						<span th:if="${list.fundBoard != null}" >미지정</span>
+					</td>
+					<td>
+						<span th:if="${list.fundBoardTarget != null}" th:text="${list.fundBoardTarget}"></span>
+						<span th:if="${list.fundBoard != null}" th:text="${list.fundBoard}"></span>
+					</td>
 					<td th:text="|${list.payMoney}원|">가격</td>
+					<td th:text="${#temporals.format(list.payDate, 'yyyy-MM-dd HH:mm')}">결제날짜</td>
 					<td th:text="${list.checkin}">상태</td>
+					<td th:text="${list.cancelReason}"></td>
+					<td th:text="${#temporals.format(list.cancelDate, 'yyyy-mm-dd HH:mm')}"></td>
 					<td>
 						<button th:if="${list.fundBoardTarget} != null and ${list.checkin} == 결제완료 " th:onclick="'location.href=\'' + @{/pay/can/tarCancel(paymentKey=${list.payCode})} + '\''" type="submit">환불하기</button>
 						<button th:if="${list.fundBoard} != null and ${list.checkin} == 결제완료" th:onclick="'location.href=\'' + @{/pay/can/cancel(paymentKey=${list.payCode})} + '\''" type="submit">미지정환불하기</button>
 					</td>
-					<td th:text="${#temporals.format(list.payDate, 'yyyy-MM-dd HH:mm')}">결제날짜</td>
-					
-					<span th:each="clist: ${cList}" hidden>
-						<td th:text="${clist.cancelReason}"></td>
-					</span>
 				</tr>
 			</table>
 			<!-- 페이징 -->
@@ -63,42 +70,6 @@
 				</div>
 				<div th:if="${sList.number < sList.totalPages-1}">
 					<a th:href="@{|?page=${sList.number+1}|}">
-						<i class="fas fa-chevron-right"></i>
-					</a>
-				</div>
-			</div>
-			<!-- //페이징 -->
-		
-			<table>
-				<tr>
-					<th>No</th>
-					<th>미지정공연제목</th>
-					<th>가격</th>
-					<th>환불사유</th>
-					<th>환불날짜</th>
-				</tr>
-				<tr th:each="list, i : ${cList}">
-					<td th:text="${i.count}">No</td>
-					<td th:text="${list.fundBoard}">미지정공연제목</td>
-					<td th:text="| ${list.payMoney}원|">가격</td>
-					<td th:text="${list.cancelReason}">환불사유</td>
-					<td th:text="${#temporals.format(list.canceledAt, 'yyyy-MM-dd HH:mm')}">환불날짜</td>
-				</tr>
-			</table>
-			<!-- 페이징 -->
-			<div class="page" th:if="${!cList.isEmpty()}">
-				<div th:if="${cList.number > 0}">
-					<a th:href="@{|?pagee=${cList.number-1}|}">
-						<i class="fas fa-chevron-left"></i>
-					</a>
-				</div>
-				<div th:each="pagee : ${#numbers.sequence(0,cList.totalPages-1)}"
-					th:if="${cList.number-3 < pagee and cList.number+3 > pagee}">
-					<a th:classappend="${pagee == cList.number} ? 'active'" th:text="${pagee+1}" 
-						th:href="@{|?pagee=${pagee}|}"></a>
-				</div>
-				<div th:if="${cList.number < cList.totalPages-1}">
-					<a th:href="@{|?pagee=${cList.number+1}|}">
 						<i class="fas fa-chevron-right"></i>
 					</a>
 				</div>
