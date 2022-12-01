@@ -52,7 +52,7 @@
 					<td th:text="${#temporals.format(list.cancelDate, 'yyyy-mm-dd HH:mm')}"></td>
 					<td>
 						<button th:if="${list.fundBoardTarget} != null and ${list.checkin} == 결제완료 " th:onclick="'location.href=\'' + @{/pay/can/tarCancel(paymentKey=${list.payCode})} + '\''" type="submit">환불하기</button>
-						<button th:if="${list.fundBoard} != null and ${list.checkin} == 결제완료" th:onclick="'location.href=\'' + @{/pay/can/cancel(paymentKey=${list.payCode})} + '\''" type="submit">미지정환불하기</button>
+						<button th:if="${list.fundBoard} != null and ${list.checkin} == 결제완료" th:onclick="'location.href=\'' + @{/pay/can/cancel(paymentKey=${list.payCode})} + '\''" type="submit">환불하기</button>
 					</td>
 				</tr>
 			</table>

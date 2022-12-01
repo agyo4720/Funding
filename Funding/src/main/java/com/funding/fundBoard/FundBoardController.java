@@ -205,7 +205,7 @@ public class FundBoardController {
 
 		//환불
 		FundBoard nick = fundBoardService.findById(id);
-		List<Sale> sale = saleRepository.findByFundBoardTarget(nick.getSubject());
+		List<Sale> sale = saleRepository.findByFundBoard(nick.getSubject());
 		for(int i=0; i<sale.size(); i++){
 			sale.get(i).getPayCode();
 			sale.get(i).setCheckin("게시글 삭제");

@@ -39,10 +39,6 @@ public class Cancels {
 	@Column(name = "fundUser")
 	private String fundUser; //고객이름
 	
-	@Column(name = "fundBoard")
-	private String fundBoard; //미지정 공연이름
-	
-	@Column(name = "fundBoardTarget")
-	private String fundBoardTarget; //지정 공연이름
-	
+	@Column(name = "orderName")
+	private String orderName; //공연이름
 }

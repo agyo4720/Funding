@@ -255,7 +255,7 @@ public class PaymentController {
     			model.addAttribute("cancelReason",cancelReason);//환불사유
     			principal.getName();
     			Optional<FundUser> FU =  fundUserRepository.findByusername(principal.getName());
-    			patmentService.tarCancelInfo(orderId, Integer.valueOf(totalAmount).intValue(), orderName, cancelReason, FU, paymentKey);
+    			patmentService.cancelInfo(orderId, Integer.valueOf(totalAmount).intValue(), orderName, cancelReason, FU, paymentKey);
 
 
             	//누적금액감소, 인원 감소
