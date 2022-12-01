@@ -285,6 +285,16 @@ public class PaymentController {
     		}
     }
     
+    //게시글삭제 전체환불
+    public void totalCancel(String paymentKey,String cancelReason) throws Exception {
+		HttpRequest request = HttpRequest.newBuilder()
+    		    .uri(URI.create("https://api.tosspayments.com/v1/payments/"+paymentKey+"/cancel"))
+    		    .header("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()))
+    		    .header("Content-Type", "application/json")
+    		    .method("POST", HttpRequest.BodyPublishers.ofString("{\"cancelReason\":\"" + cancelReason + "\"}"))
+    		    .build();
+    		HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+    }
     
     
     

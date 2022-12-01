@@ -7,7 +7,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.core.io.Resource;
@@ -30,12 +29,11 @@ import com.funding.alert.AlertService;
 import com.funding.answer.Answer;
 import com.funding.answer.AnswerService;
 import com.funding.file.FileService;
-import com.funding.fundArtist.FundArtist;
 import com.funding.fundTargetList.FundTargetList;
 import com.funding.fundTargetList.FundTargetListService;
 import com.funding.fundUser.FundUser;
-import com.funding.fundUser.FundUserRepository;
 import com.funding.fundUser.FundUserService;
+import com.funding.payment.PaymentController;
 import com.funding.payment.Sale;
 import com.funding.payment.SaleRepository;
 
@@ -56,6 +54,7 @@ public class FundTargetController {
 	private final FundUserService fundUserService;
 	private final AlertService alertService;
 	private final SaleRepository saleRepository;
+	private final PaymentController paymentController;
 
 	
 	
@@ -230,7 +229,7 @@ public class FundTargetController {
 	
 	//지정펀딩 삭제
 	@RequestMapping("/delete/{id}")
-	public String deleteTarget(@PathVariable("id")Integer id, Model model) {
+	public String deleteTarget(@PathVariable("id")Integer id, Model model) throws Exception {
 
 		//환불
 		FundBoardTarget nick = fundTargetService.findById(id);
@@ -240,6 +239,8 @@ public class FundTargetController {
 			sale.get(i).setCheckin("게시글 삭제");
 			log.info("@@sale.get(i).getPayCode(): "+sale.get(i).getPayCode());
 			System.out.println("!!sale: "+sale);
+			
+			paymentController.totalCancel(sale.get(i).getPayCode(),"게시글 삭제");
 			model.addAttribute("payCode",sale.get(i).getPayCode());
 		}
 		
