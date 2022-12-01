@@ -6,7 +6,27 @@
     <hr/>
 
     <ul>
-        <li><a href="/user/myInfo/">회원 정보</a></li>
-        <li><a href="../pay/confirm.html" th:href="@{/pay/loo/confirm}">결제</a></li>
+        <li><a th:href="@{/user/myInfo/}">회원 정보</a></li>
+        <li><a th:href="@{/pay/loo/confirm}">결제</a></li>
     </ul>
 </nav>
+
+<script>
+    let url = window.location.search
+    let Params = new URLSearchParams(url)
+
+    
+    console.log(Params)
+
+    // let cateList = document.querySelectorAll('.cate')
+
+    // document.addEventListener("DOMContentLoaded", addActive)
+
+    // function addActive() {
+    //     cateList.forEach(function(e) {
+    //         e.classList.remove('active')
+    //     })
+
+    //     cateList[cate].classList.add('cate')
+    // }
+</script>

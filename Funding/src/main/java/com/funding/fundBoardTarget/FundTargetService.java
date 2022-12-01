@@ -104,7 +104,7 @@ public class FundTargetService {
 	
 	//fundAll(page)
 	public Page<FundBoardTarget> findAll(int page){
-		Pageable pageable = PageRequest.of(page, 3, Sort.by("createDate").descending());
+		Pageable pageable = PageRequest.of(page, 5, Sort.by("createDate").descending());
 		Page<FundBoardTarget> targetList = fundTargetRepository.findAll(pageable);
 		return targetList;
 	}

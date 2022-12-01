@@ -1,13 +1,17 @@
 package com.funding.user;
 
+import java.io.UnsupportedEncodingException;
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.Optional;
 
-import javax.servlet.http.HttpSession;
+import javax.mail.MessagingException;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -16,6 +20,7 @@ import com.funding.fundArtist.FundArtistService;
 import com.funding.fundBoardTarget.FundTargetService;
 import com.funding.fundUser.FundUser;
 import com.funding.fundUser.FundUserService;
+import com.funding.user.mailValidation.EmailService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -27,6 +32,11 @@ public class UserController {
 	private final FundUserService fundUserService;
 	private final FundArtistService fundArtistService;
 	private final FundTargetService fundTargetService;
+	private final EmailService emailService;
+	private final PasswordEncoder passwordEncoder;
+	
+	String username = null;
+	String userRole = null;
 	
 	// nav에 사용자 이름 출력
 	@RequestMapping("/navMyInfo")
@@ -53,28 +63,62 @@ public class UserController {
 	
 	// 내 정보 페이지
 	@RequestMapping("/myInfo")
-	public String myInfo(HttpSession httpSession, Model model) {
-		Object object = httpSession.getAttribute("myInfo");
-		
-		try {
-			FundUser FU = (FundUser) object;
-			model.addAttribute("myInfo",FU);
-		}catch(Exception err) {
-			FundArtist FA = (FundArtist) object;
-			model.addAttribute("myInfo",FA);
+	public String myInfo(Principal principal, Model model) {
+		Optional<FundUser> FU = this.fundUserService.findByuserName(principal.getName());
+		Optional<FundArtist> FA = this.fundArtistService.findByuserName(principal.getName());
+		if(FU.isPresent()) {
+			model.addAttribute("myInfo",FU.get());
+		} else if(FA.isPresent()) {
+			model.addAttribute("myInfo",FA.get());
 		}
 		
 		return "user/myInfo";
 	}
 	
-	// 내 정보 수정
-	@RequestMapping("/modify/{username}")
-	public String mofifyForm(@PathVariable("username") String username, Model model) {
-		Optional<FundUser> FU = this.fundUserService.findByuserName(username);
-		model.addAttribute("userData", FU.get());
-		return "user/fundUserModifyForm";
+	// 비밀번호 초기화 하기위한 id 입력 폼 요청
+	@GetMapping("/resetPwd")
+	public String resetPwd() {
+		
+		return "/user/resetPwdForm";
 	}
 	
+	// 등록된 아이디로 인증코드 발송, 인증코드 입력폼 요청
+	@PostMapping("/resetPwd")
+	@ResponseBody
+	public String resetPwd2(String username, Model model) throws UnsupportedEncodingException, MessagingException {
+		Optional<FundUser> FU = this.fundUserService.findByuserName(username);
+		Optional<FundArtist> FA = this.fundArtistService.findByuserName(username);
+		String code = null;
+		
+		if(FU.isPresent()) {
+			code = emailService.sendEmail(FU.get().getEmail());
+			this.userRole = "user";
+		} else if(FA.isPresent()) {
+			code = emailService.sendEmail(FA.get().getEmail());
+			this.userRole = "artist";
+		}
+		this.username = username;
+		
+		
+		return code;		
+	}
+	
+	
+	// 비밀번호 수정
+	@PostMapping("/resetPwdConfirm")
+	public String resetPwdConfirm2(String pwd){
+
+		if(userRole.equals("user")) {
+			this.fundUserService.resetPwd(this.username, pwd);
+		}
+		
+		if(userRole.equals("artist")) {
+			this.fundArtistService.resetPwd(this.username, pwd);
+		}
+		
+		return "redirect:/user/login";
+	}
+
 	
 	
 	

@@ -41,6 +41,7 @@ public class PatmentService {
 		Sale sale = new Sale();
 		sale.setFundUser(FU.get().getNickname());
 		sale.setFundBoardTarget(orderName);
+		sale.setOrderName(orderName);
 		sale.setPayMoney(amount);
 		sale.setOrederId(orederId);
 		sale.setPayCode(paymentKey);
@@ -64,6 +65,7 @@ public class PatmentService {
 		Sale sale = new Sale();
 		sale.setFundUser(FU.get().getNickname());
 		sale.setFundBoard(orderName);
+		sale.setOrderName(orderName);
 		sale.setPayMoney(amount);
 		sale.setOrederId(orederId);
 		sale.setPayCode(paymentKey);
@@ -74,35 +76,14 @@ public class PatmentService {
 		saleRepository.save(sale);
 	}
 	
-	//지정환불
-	public void tarCancelInfo(String orederId, int totalAmount, String orderName, String cancelReason, 
-			Optional<FundUser> FU, String paymentKey) {
-		log.info("paymentKey: "+paymentKey);
-		List<Cancels> cList = new ArrayList<>(); //결제내역 리스트
-		Cancels cancel = new Cancels();
-		cancel.setFundUser(FU.get().getNickname());
-		cancel.setFundBoardTarget(orderName);
-		cancel.setPayMoney(totalAmount);
-		cancel.setOrderId(orederId);
-		cancel.setCancelReason(cancelReason);
-		cancel.setCanceledAt(LocalDateTime.now());
-		cList.add(cancel);
-		cancelsRepository.save(cancel);
-		
-		List<Sale> sList = saleRepository.findBypayCode(paymentKey);		
-		sList.get(0).setCheckin("환불");
-		sList.get(0).setCancelDate(LocalDateTime.now());
-		sList.get(0).setCancelReason(cancelReason);
-		saleRepository.saveAll(sList);
-	}
 
-	//미지정환불
+	//환불
 	public void cancelInfo(String orederId, int totalAmount, String orderName, String cancelReason, 
 			Optional<FundUser> FU, String paymentKey) {
 		List<Cancels> cList = new ArrayList<>(); //결제내역 리스트
 		Cancels cancel = new Cancels();
 		cancel.setFundUser(FU.get().getNickname());
-		cancel.setFundBoard(orderName);
+		cancel.setOrderName(orderName);
 		cancel.setPayMoney(totalAmount);
 		cancel.setOrderId(orederId);
 		cancel.setCancelReason(cancelReason);
@@ -116,6 +97,21 @@ public class PatmentService {
 		sList.get(0).setCancelReason(cancelReason);
 		saleRepository.saveAll(sList);
 	}
+	
+	public void totalCancelInfo(String orederId, int totalAmount, String orderName, String cancelReason, String FundUser) {
+		List<Cancels> cList = new ArrayList<>(); //결제내역 리스트
+		Cancels cancel = new Cancels();
+		cancel.setFundUser(FundUser);
+		cancel.setOrderName(orderName);
+		cancel.setPayMoney(totalAmount);
+		cancel.setOrderId(orederId);
+		cancel.setCancelReason(cancelReason);
+		cancel.setCanceledAt(LocalDateTime.now());
+		cList.add(cancel);
+		cancelsRepository.save(cancel);
+	}
+	
+	
 	
 	//서브몰ID 등록
 	public void enrollInfo(String subMallId, String companyName, String representativeName, 

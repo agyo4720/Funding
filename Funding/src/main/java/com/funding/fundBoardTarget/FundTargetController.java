@@ -33,6 +33,7 @@ import com.funding.fundTargetList.FundTargetList;
 import com.funding.fundTargetList.FundTargetListService;
 import com.funding.fundUser.FundUser;
 import com.funding.fundUser.FundUserService;
+import com.funding.payment.PatmentService;
 import com.funding.payment.PaymentController;
 import com.funding.payment.Sale;
 import com.funding.payment.SaleRepository;
@@ -55,6 +56,7 @@ public class FundTargetController {
 	private final AlertService alertService;
 	private final SaleRepository saleRepository;
 	private final PaymentController paymentController;
+	private final PatmentService patmentService;
 
 	
 	
@@ -239,6 +241,7 @@ public class FundTargetController {
 			sale.get(i).setCheckin("게시글 삭제");
 			
 			paymentController.totalCancel(sale.get(i).getPayCode(),"게시글 삭제");
+			patmentService.totalCancelInfo(sale.get(i).getOrederId(), Integer.valueOf(sale.get(i).getPayMoney()).intValue(), sale.get(i).getOrderName(), "게시글 삭제",sale.get(i).getFundUser());
 		}
 		
 		//지정리스트 삭제

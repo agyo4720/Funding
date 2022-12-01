@@ -29,10 +29,12 @@ import com.funding.Categorie.CategorieService;
 import com.funding.answer.Answer;
 import com.funding.answer.AnswerService;
 import com.funding.file.FileService;
-import com.funding.fundArtistList.FundArtistList;
-import com.funding.fundArtistList.FundArtistListService;
+import com.funding.fundList.FundList;
+import com.funding.fundList.FundListService;
+import com.funding.fundTargetList.FundTargetList;
 import com.funding.fundUser.FundUser;
 import com.funding.fundUser.FundUserService;
+import com.funding.payment.PatmentService;
 import com.funding.payment.PaymentController;
 import com.funding.payment.Sale;
 import com.funding.payment.SaleRepository;
@@ -53,7 +55,8 @@ public class FundBoardController {
 	private final FileService fileService;
 	private final SaleRepository saleRepository;
 	private final PaymentController paymentController;
-	private final FundArtistListService fundArtistListService;
+	private final PatmentService patmentService;
+	private final FundListService fundListService;
 
 
 
@@ -156,21 +159,39 @@ public class FundBoardController {
 
 	}
 
-	// 미지정 펀드 답변등록(자세히 보기)
+	// 미지정 펀드 답변등록
 	@RequestMapping("/detail/{id}")
-	public String detail(
-			@PathVariable ("id") Integer id,
-			Model model) {
+	public String detail(@PathVariable ("id") Integer id, Model model, Principal principal) {
 
 		FundBoard fundBoard = this.fundBoardService.findById(id);
 		model.addAttribute("fundBoard", fundBoard);
 
 		List<Answer> answerList = this.answerService.findByFundBoard(fundBoard);
 		model.addAttribute("answerList", answerList);
-		
-		List<FundArtistList> fundArtistList = this.fundArtistListService.findAll();
-		model.addAttribute("fundArtistList", fundArtistList);
-		
+
+		//펀딩버튼하면 환불버튼 변경
+		List<FundList> fList = fundListService.findByFundBoard(fundBoard);
+		//환불버튼
+		FundBoard nick = fundBoardService.findById(id);
+		List<Sale> sale = saleRepository.findByFundBoard(nick.getSubject());
+		for(int i=0; i<sale.size(); i++){
+			sale.get(i).getPayCode();
+			model.addAttribute("payCode",sale.get(i).getPayCode());
+		}
+
+		//펀딩 유무 확인
+		boolean result = false;
+		if(principal != null) {
+			for(FundList e : fList) {
+				String username = e.getFundUser().getUsername();
+				String loginName = principal.getName();
+				if(username.equals(loginName)) {
+					result = true;
+				}
+			}
+		}
+		model.addAttribute("result", result);
+
 		return "/fundBoard/fundBoard_detail";
 	}
 
@@ -206,14 +227,15 @@ public class FundBoardController {
 	@RequestMapping("/delete/{id}")
 	public String delete(@PathVariable("id") Integer id) throws Exception {
 
-		//환불
+		//게시글 삭제시 환불
 		FundBoard nick = fundBoardService.findById(id);
-		List<Sale> sale = saleRepository.findByFundBoardTarget(nick.getSubject());
+		List<Sale> sale = saleRepository.findByFundBoard(nick.getSubject());
 		for(int i=0; i<sale.size(); i++){
 			sale.get(i).getPayCode();
 			sale.get(i).setCheckin("게시글 삭제");
 
 			paymentController.totalCancel(sale.get(i).getPayCode(),"게시글 삭제");
+			patmentService.totalCancelInfo(sale.get(i).getOrederId(), Integer.valueOf(sale.get(i).getPayMoney()).intValue(), sale.get(i).getOrderName(), "게시글 삭제",sale.get(i).getFundUser());
 		}
 
 		this.fundBoardService.delete(id);

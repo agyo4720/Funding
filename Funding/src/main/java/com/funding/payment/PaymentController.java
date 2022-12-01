@@ -5,7 +5,6 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.security.Principal;
-import java.sql.Date;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
@@ -32,7 +31,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.ResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -40,6 +38,7 @@ import com.funding.fundBoard.FundBoard;
 import com.funding.fundBoard.FundBoardService;
 import com.funding.fundBoardTarget.FundBoardTarget;
 import com.funding.fundBoardTarget.FundTargetService;
+import com.funding.fundList.FundListService;
 import com.funding.fundTargetList.FundTargetListService;
 import com.funding.fundUser.FundUser;
 import com.funding.fundUser.FundUserRepository;
@@ -62,6 +61,7 @@ public class PaymentController {
     private final CancelsRepository cancelsRepository;
     private final SaleRepository saleRepository;
     private final FundTargetListService fundTargetListService;
+    private final FundListService fundListService;
     private final RemitRepository remitRepository;
     private String paymentKey;
 
@@ -209,6 +209,8 @@ public class PaymentController {
         	fundBoardService.addFundBoard(fundBoard);
 
 
+        	//유저의 현재 펀딩 목록 추가
+        	fundListService.insertList(principal, fundBoard);
 
             return "/pay/success1";
         } else {
@@ -255,7 +257,7 @@ public class PaymentController {
     			model.addAttribute("cancelReason",cancelReason);//환불사유
     			principal.getName();
     			Optional<FundUser> FU =  fundUserRepository.findByusername(principal.getName());
-    			patmentService.tarCancelInfo(orderId, Integer.valueOf(totalAmount).intValue(), orderName, cancelReason, FU, paymentKey);
+    			patmentService.cancelInfo(orderId, Integer.valueOf(totalAmount).intValue(), orderName, cancelReason, FU, paymentKey);
 
 
             	//누적금액감소, 인원 감소
@@ -360,6 +362,9 @@ public class PaymentController {
             	fundBoard.setCurrentMember(currentMember);
             	fundBoardService.addFundBoard(fundBoard);
 
+            	//지정리스트 삭제
+            	fundListService.delete(FU.get(), fundBoard);
+            	
     			return "/pay/can/cancelSuccess";
     		}else {
     			String message = (String)jsonObj.get("message");
@@ -518,6 +523,15 @@ public class PaymentController {
     			model.addAttribute("rList",rList);
     			model.addAttribute("page",page);
     		}
-    		return "/pay/rem/confirmSuccess";
+		return "/pay/rem/confirmSuccess";
 	}
+<<<<<<< HEAD
+	
+	
+
+	
+	
 }
+=======
+}
+>>>>>>> b6bac64846ad12e6975ce536346d9a0f311edaf1

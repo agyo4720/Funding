@@ -41,10 +41,10 @@
 				<a href="../fundTarget/fundTargetDetail.html" th:href="@{|/fundTarget/detail/${target.id}|}">
 					<div class="image">
 						<div th:if="${target.imgPath != null}">
-							<img th:src="${target.imgPath}" width="200" height="265">
+							<img th:src="${target.imgPath}" height="265">
 						</div>
 						<div th:if="${target.imgPath == null}">
-							<img th:src="|/fundTarget/img/${target.id}|" width="200" height="265">
+							<img th:src="|/fundTarget/img/${target.id}|" height="265">
 						</div>
 					</div>
 				</a>
@@ -97,7 +97,7 @@
 				</a>
 			</div>
 			<div th:each="page : ${#numbers.sequence(0,targetList.totalPages-1)}"
-			th:if="${targetList.number-3 < page and targetList.number+3 > page}">
+				th:if="${targetList.number-3 < page and targetList.number+3 > page}">
 				<a th:classappend="${page == targetList.number} ? 'active'" th:text="${page+1}" 
 				th:href="@{|?cate=${cate}&page=${page}|}"></a>
 			</div>
@@ -128,9 +128,6 @@
         	})
         	cateList[cate].classList.add('active')
     	}
-  
-
-    	
     </script>
 </body>
 </html>

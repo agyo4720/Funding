@@ -23,13 +23,13 @@ section {
     height: 25px;
 }
 
-/* 버튼 */
+/* 로그인 버튼 */
 .sub_login {}
 
 .btn {
     cursor: pointer;
-    margin-bottom: 10px;
-    padding: 10px 0;
+    margin-bottom: 20px;
+    padding: 10px 89px;
     width: 100%;
     background-color: #3E3636;
     border-radius: 5px;
@@ -44,11 +44,30 @@ section {
     background-color: #5e5252;
 }
 
+/* 비밀번호 찾기 버튼 */
+.btn_pw {
+    cursor: pointer;
+    margin-bottom: 20px;
+    padding: 10px 89px;
+    background-color: #3E3636;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 15px;
+    letter-spacing: 2px;
+    transition: 0.5s;
+}
+
+.btn_pw:hover {
+    background-color: #5e5252;
+}
+
 /* 가입하기 버튼 */
 .btn_join {
     display: flex;
     justify-content: center;
     padding: 10px;
+    margin-top: 20px;
 }
 
 .btn_join p {
