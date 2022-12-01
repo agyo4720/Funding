@@ -216,7 +216,7 @@ public class FundBoardController {
 		return "redirect:/fundBoard/list";
 	}
 	
-	// 2022/12/01 - 1 작업중
+	// 2022/12/01 - 2 작업중
 
 	
 }
