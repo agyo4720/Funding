@@ -49,7 +49,6 @@ public class FileController {
 	@ResponseBody
 	public Resource showImage(@PathVariable("id")Integer id) throws IOException{
 		FileDto file = fileService.findById(id);
-		log.info("파일 찾아옴");
 		String filePath = file.getSavePath();
 		
 		return new UrlResource("file:" + filePath);

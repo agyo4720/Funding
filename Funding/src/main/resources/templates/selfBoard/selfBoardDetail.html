@@ -1,0 +1,9 @@
+<div>디테일</div>
+<div>
+	<div>
+		<img th:src="|/selfBoard/img/${selfBoard.id}|" width="300" height="350">
+	</div>
+	<div th:text="|제목 : ${selfBoard.subject}|"></div>
+	<div th:utext="|장르설명 : ${selfBoard.genre}|"></div>
+	<div th:utext="|내용 : ${selfBoard.content}|"></div>
+</div>
