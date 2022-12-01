@@ -3,6 +3,10 @@
 <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 <link rel="stylesheet" href="css/sidebar/sidebar.css">
 
+<div class="sidebarbtn" sec:authorize="isAuthenticated()">
+
+	<h1>&lt;&lt;</h1>
+</div>
 <div class="sidebar" sec:authorize="hasRole('ROLE_USER')">
 	<div sec:authorize="isAuthenticated()">
 		<input hidden class="user" th:value="${#authentication.getPrincipal().getUsername()}"/>
@@ -19,10 +23,8 @@
 
 	<h4>현재 펀딩중인 목록</h4>
 	<div class="fundList"></div>
-</div>
 
-
-<!--  유저일떄 화면       -->
+<!--  유저일떄 화면    -->
 
 
 <div class="sidebar" sec:authorize="hasRole('ROLE_ARTIST')">
@@ -62,10 +64,14 @@
 					$.each(result, function(index, item){	
 						if(item.type == "댓글"){
 							$('.alert').append("<a href=\"" + item.url + "?alertId=" + 
-								item.alertId + "\"><div>" + item.username + 
+								item.alertId + "\"><div>" + item.Guestname + 
 								"님이 댓글을 달았습니다.</div>[" + item.content + "]</a>")
 								
 						}else if(item.type == "마감"){
+							$('.alert').append("<a href=\"" + item.url + "?alertId=" + 
+									item.alertId + "\"><div>[" + item.content +
+									"]</div></a>")
+						}else if(item.type == "펀딩"){
 							$('.alert').append("<a href=\"" + item.url + "?alertId=" + 
 									item.alertId + "\"><div>[" + item.content +
 									"]</div></a>")
@@ -88,6 +94,31 @@
 					})
 				}
 			})
+			
+			$.ajax({
+				url : 'alert/update'
+				,data : 'a'
+				,success : function(result){
+					console.log(result)
+				}
+			})
 		}
 	})
+	
+	//사이드바 액션
+	$(document).ready(function(){
+		
+		$(".sidebarbtn").click(function(){
+			if($(".sidebar").hasClass('active') == true){
+				$(".sidebar").removeClass('active')
+				$(".sidebarbtn").removeClass('active')
+				$(".sidebarbtn h1").html("<<")
+			}else{
+				$(".sidebar").addClass('active')
+				$(".sidebarbtn").addClass('active')
+				$(".sidebarbtn h1").html(">>")
+			}
+		})
+	})
 </script>
+

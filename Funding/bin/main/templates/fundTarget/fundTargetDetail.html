@@ -7,9 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Let's Funding</title>
 
-    <!-- Bootstrap -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-
     <!-- CSS -->
     <link rel="stylesheet" href="../../static/css/fundTarget/fundTargetDetail.css" th:href="@{/css/fundTarget/fundTargetDetail.css}">
 
@@ -24,11 +21,8 @@
         <!-- 콘서트 정보 -->
         <div class="con">
             <div class="left">
-                <div class="cate">
-                    <a href="/fundTarget">
-                        <p th:text="|지정펀딩 > ${fundBoardTarget.categorie.categorieName}|">지정 펀딩 > 카테고리1</p>
-                    </a>
-                </div>
+                <a class="cate" href="/fundTarget" th:text="|지정펀딩 > ${fundBoardTarget.categorie.categorieName}|">
+                    지정 펀딩 > 카테고리1</a>
                 <h2 th:text="${fundBoardTarget.subject}">공연 이름</h2>
                 <div class="image">
 					<div th:if="${fundBoardTarget.imgPath != null}">
@@ -64,7 +58,9 @@
                     <p th:text="|${fundBoardTarget.runtime}분|">공연시간</p>
                 </div>
                 
-                <hr/>
+                <div class="con_hr_detail">
+                    <hr/>
+                </div>
 
                 <div>
                     <!-- <div class="view">
@@ -72,16 +68,19 @@
                             <div class="progress-bar" style="width: 40%; height: 10px"></div>
                         </div>
                     </div> -->
+                    <div class="view" id="fundCurrent">
+                        <label for="fundCurrent">현재 펀딩 금액</label>
+                        <p th:text="${#numbers.formatInteger(fundBoardTarget.fundCurrent, 1,'COMMA')+' 원'}">7,600,000</p>
+                    </div>
+                    <div class="view" id="fundAmount">
+                        <label for="fundAmount">총 펀딩 금액</label>
+                        <p th:text="${#numbers.formatInteger(fundBoardTarget.fundAmount, 3,'COMMA')+' 원'}">8,000,000</p>
+                    </div>
+
                     <div class="view">
                         <label for="duration">펀딩기간</label>
                         <p th:text="${fundBoardTarget.fundDurationS}
                          + ' ~ ' + ${fundBoardTarget.fundDurationE}">2022.11.19 (토) ~ 2022.12.19 (일)</p>
-                    </div>
-                    <div class="view funding">
-                        <label for="funding">펀딩금액</label>
-                        <p th:text="${#numbers.formatInteger(fundBoardTarget.fundCurrent,1,'COMMA')+'원'}">7,600,000</p>
-                        <p>/</p>
-                        <p th:text="${#numbers.formatInteger(fundBoardTarget.fundAmount, 3,'COMMA')+'원'}">8,000,000</p>
                     </div>
                     <div class="view">
                         <label for="count">현재 인원</label>
@@ -91,16 +90,15 @@
                         <label for="minFund">최소 펀딩 금액</label>
                         <p th:text="${#numbers.formatInteger(fundBoardTarget.minFund, 3,'COMMA')+'원'}">100,000원</p>
                     </div>
-                    <div sec:authorize="!hasRole('ROLE_ARTIST')">
-    	               	<button th:if="${result == true}" class="btn" th:onclick="'location.href=\''+ @{|/pay/loo/confirm|} + '\''">환불하기</button>
-	                   	<button th:if="${result == false}"class="btn" th:onclick="'location.href=\''+ @{|/pay/tossPayTar/${fundBoardTarget.id}|} + '\''">펀딩하기</button>
-                    </div>
+	                    <div sec:authorize="hasRole('ROLE_USER')">
+	    	               	<button th:if="${result == true}" class="con_btn" th:onclick="'location.href=\''+ @{/pay/can/tarCancel(paymentKey=${payCode})} + '\''" type="submit">환불하기</button>
+		                   	<button th:if="${result == false}"class="con_btn" th:onclick="'location.href=\''+ @{|/pay/tossPayTar/${fundBoardTarget.id}|} + '\''">펀딩하기</button>
+	                    </div>
                 </div>
             </div>
         </div>
 
-        
-
+        <!-- // 콘서트 정보 -->
         <!-- <nav id="navbar-example2" class="navbar bg-light px-3 mb-3">
             <ul class="nav nav-pills">
                 <li class="nav-item">
@@ -114,6 +112,10 @@
             </ul>
         </nav> -->
         
+        <div class="con_hr">
+            <hr/>
+        </div>
+
         <!-- 콘서트 내용 -->
         <div class="con_text">
             <div class="title">
@@ -122,7 +124,9 @@
             <div th:utext="${fundBoardTarget.content}">설명</div>
         </div>
         
-        <hr/>
+        <div class="con_hr">
+            <hr/>
+        </div>
 
         <!-- 댓글 -->
         <div class="con_comment">

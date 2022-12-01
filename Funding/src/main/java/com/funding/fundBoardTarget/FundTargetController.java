@@ -7,7 +7,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.core.io.Resource;
@@ -30,12 +29,13 @@ import com.funding.alert.AlertService;
 import com.funding.answer.Answer;
 import com.funding.answer.AnswerService;
 import com.funding.file.FileService;
-import com.funding.fundArtist.FundArtist;
 import com.funding.fundTargetList.FundTargetList;
 import com.funding.fundTargetList.FundTargetListService;
 import com.funding.fundUser.FundUser;
 import com.funding.fundUser.FundUserService;
+import com.funding.payment.PaymentController;
 import com.funding.payment.Sale;
+import com.funding.payment.SaleRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -53,6 +53,9 @@ public class FundTargetController {
 	private final FileService fileService;
 	private final FundUserService fundUserService;
 	private final AlertService alertService;
+	private final SaleRepository saleRepository;
+	private final PaymentController paymentController;
+
 	
 	
 	//글 작성폼 불러오기
@@ -143,27 +146,13 @@ public class FundTargetController {
 	//글 목록 보기
 	@RequestMapping("")
 	public String showList(Model model,@RequestParam(value = "page", defaultValue="0") int page,
-			@RequestParam(value = "cate", defaultValue="0")Integer cateId, HttpSession httpSession) {
+			@RequestParam(value = "cate", defaultValue="0")Integer cateId) {
 		
 
 		//모든 카테고리 표시
 		if(cateId == 0) {
 			Page<FundBoardTarget> targetList = fundTargetService.findAll(page);
 			List<Categorie> cList = categorieService.findAll();	
-			
-			try {
-				Object myInfo = httpSession.getAttribute("myInfo");
-				FundUser FU = (FundUser) myInfo;
-				if(FU.getRole().equals("user")) {
-					model.addAttribute("userData", FU);
-				}
-			}catch(Exception err) {
-				Object myInfo2 = httpSession.getAttribute("myInfo");
-				FundArtist FA = (FundArtist) myInfo2;
-				if(FA.getRole().equals("artist")) {
-					model.addAttribute("userData", FA);
-				}
-			}
 			
 			model.addAttribute("page",page);
 			model.addAttribute("cate",cateId);
@@ -175,10 +164,6 @@ public class FundTargetController {
 			Categorie categorie = categorieService.findById(cateId);
 			Page<FundBoardTarget> targetList = fundTargetService.findByCategorie(categorie, page);
 			List<Categorie> cList = categorieService.findAll();	
-			
-			Object myInfo = httpSession.getAttribute("myInfo");
-			FundUser FU = (FundUser) myInfo;
-			model.addAttribute("userData", FU);
 			
 			model.addAttribute("page",page);
 			model.addAttribute("cate",cateId);
@@ -194,7 +179,16 @@ public class FundTargetController {
 	public String showDetail(Model model, @PathVariable("id")Integer id,Integer alertId, Principal principal) {
 		FundBoardTarget fundBoardTarget = fundTargetService.findById(id);
 		List<Answer> aList = answerService.findByFundBoardTarget(fundBoardTarget);
-		List<FundTargetList> ftList = fundTargetListService.findByFUndBoardTarget(fundBoardTarget);
+		List<FundTargetList> ftList = fundTargetListService.findByFundBoardTarget(fundBoardTarget);
+		
+		//환불
+		FundBoardTarget nick = fundTargetService.findById(id);
+		List<Sale> sale = saleRepository.findByFundBoardTarget(nick.getSubject());
+		for(int i=0; i<sale.size(); i++){
+			sale.get(i).getPayCode();
+			model.addAttribute("payCode",sale.get(i).getPayCode());
+		}
+
 		
 		//알림삭제
 		if(alertId != null) {
@@ -203,11 +197,13 @@ public class FundTargetController {
 		
 		//펀딩 유무 확인
 		boolean result = false;
-		for(FundTargetList e : ftList) {
-			String username = e.getFundUser().getUsername();
-			String loginName = principal.getName();
-			if(username.equals(loginName)) {
-				result = true;
+		if(principal != null) {
+			for(FundTargetList e : ftList) {
+				String username = e.getFundUser().getUsername();
+				String loginName = principal.getName();
+				if(username.equals(loginName)) {
+					result = true;
+				}
 			}
 		}
 		
@@ -233,7 +229,24 @@ public class FundTargetController {
 	
 	//지정펀딩 삭제
 	@RequestMapping("/delete/{id}")
-	public String deleteTarget(@PathVariable("id")Integer id) {
+	public String deleteTarget(@PathVariable("id")Integer id) throws Exception {
+
+		//환불
+		FundBoardTarget nick = fundTargetService.findById(id);
+		List<Sale> sale = saleRepository.findByFundBoardTarget(nick.getSubject());
+		for(int i=0; i<sale.size(); i++){
+			sale.get(i).getPayCode();
+			sale.get(i).setCheckin("게시글 삭제");
+			
+			paymentController.totalCancel(sale.get(i).getPayCode(),"게시글 삭제");
+		}
+		
+		//지정리스트 삭제
+		List<FundTargetList> fList = fundTargetListService.findByFundBoardTarget(nick);
+		for(int i=0;i>fList.size();i++) {
+			fundTargetListService.delete(fList.get(i).getFundUser(), nick);
+		}
+		
 		fundTargetService.delete(id);
 		return "redirect:/";
 	}

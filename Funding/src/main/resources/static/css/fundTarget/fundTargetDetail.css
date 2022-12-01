@@ -7,6 +7,15 @@ section {
     margin-left: 30px;
 }
 
+.con_hr_detail hr {
+    border-top: 1px solid #6a6a6a;
+}
+
+.con_hr hr {
+    margin: 40px 0;
+    border-top: 1px solid #6a6a6a;
+}
+
 /* con */
 .con {
     display: flex;
@@ -15,20 +24,9 @@ section {
 }
 
 /* left */
-.left {margin-right: 50px;}
+.left {margin-right: 50px; margin-top: -50px;}
 
-.left .cate {
-    display: flex;
-    margin-bottom: 5px;
-}
-
-.left .cate a p {
-    cursor: pointer;
-}
-
-.left .cate a, .left .cate p {
-    margin-right: 10px;
-}
+.left h2 {margin: 15px 0;}
 
 .image {
     margin-top: 10px;
@@ -56,7 +54,7 @@ section {
 
 .right .view {
     display: flex;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     font-size: 15px;
 }
 
@@ -65,7 +63,9 @@ section {
     font-weight: bold;
 }
 
-.right p { }
+#fundCurrent p {
+    tab-size: 16px;
+}
 
 .funding {
     display: flex;
@@ -89,10 +89,9 @@ section {
 
 .right hr {margin: 10px 0;}
 
-.btn {
+.con_btn {
     cursor: pointer;
-    margin: 5px 0 0;
-    padding: 10px 0;
+    padding: 5px 0;
     width: 100%;
     background-color: #3E3636;
     border-radius: 5px;
@@ -103,13 +102,9 @@ section {
     transition: 0.5s;
 }
 
-.btn:hover {
+.con_btn:hover {
     color: #fff;
     background-color: #5e5252;
-}
-
-section hr {
-    margin: 30px 0;
 }
 
 /* 콘서트 내용 */

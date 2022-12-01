@@ -25,7 +25,7 @@ public class FundArtistService {
 		fundArtist.setPassword(passwordEncoder.encode(vo.getPassword1()));
 		fundArtist.setNickname(vo.getNickname());
 		fundArtist.setEmail(vo.getEmail()+"@"+vo.getDomain());
-		fundArtist.setMobile(vo.getMobile());
+		fundArtist.setMobile("010"+vo.getMobile());
 		fundArtist.setAddress(vo.getAddr1()+vo.getAddr2()+vo.getAddr3()+vo.getAddr4());
 		fundArtist.setGender(vo.getGender());
 		fundArtist.setBirth(Date.valueOf(vo.getYear()+"-"+vo.getMonth()+"-"+vo.getDay()));
