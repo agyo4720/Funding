@@ -23,4 +23,9 @@
     color: #fff;
     letter-spacing: 2px;
     line-height: 50%;
+    transition: 0.3s;
+}
+
+.view button:hover {
+    background: #5c5c5c;
 }

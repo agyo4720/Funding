@@ -19,8 +19,8 @@
     <!-- 로그인 -->
     <div class="login">
         <ul>
-            <li><a href="../user/loginForm.html" sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인</a></li>
-            <li><a href="../user/userCreateForm.html" sec:authorize="isAnonymous()" th:href="@{/user/register}">회원가입</a></li>
+            <li><a class="loginForm" href="../user/loginForm.html" sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인</a></li>
+            <li><a class="joinForm" href="../user/userCreateForm.html" sec:authorize="isAnonymous()" th:href="@{/user/register}">회원가입</a></li>
         </ul>
         <!-- 로그인 상태일 때 -->
         <div sec:authorize="isAuthenticated()">
@@ -28,14 +28,12 @@
                 <li><a href="#" sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a></li>
                 <a class="myPage" href="/user/myInfo/">
                 <li class="user_name" ></li>
-                </a>
-                <a class="myPage" href="/user/myInfo/">
                 <li class="user_role" ></li></a>
             </ul>
             
-            	<div hidden sec:authorize="isAuthenticated()">
-    		  		<input hidden id="myInfo" class="active" th:value="${#authentication.getPrincipal().getUsername()}"/>
- 				</div>
+            <div hidden sec:authorize="isAuthenticated()">
+                <input hidden id="myInfo" class="active" th:value="${#authentication.getPrincipal().getUsername()}"/>
+            </div>
         </div>
     </div>
 </header>
