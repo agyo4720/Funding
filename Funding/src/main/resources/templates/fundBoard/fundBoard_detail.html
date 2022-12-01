@@ -116,8 +116,9 @@
 			<!--섹션1 끝-->
 			
 			<!--섹션2 시작-->
-			<div sec:authorize="!hasRole('ROLE_ARTIST')">
-				<a th:href="@{|/pay/tossPay/${fundBoard.id}|}"><button>결제하기</button></a>
+			<div sec:authorize="hasRole('ROLE_USER')">
+				<button th:if="${result == true}" class="con_btn" th:onclick="'location.href=\''+ @{/pay/can/cancel(paymentKey=${payCode})} + '\''" type="submit">환불하기</button>
+				<button th:if="${result == false}" class="con_btn" th:onclick="'location.href=\''+ @{|/pay/tossPay/${fundBoard.id}|} + '\''">결제하기</button>
 			</div>
 			<div sec:authorize="!hasRole('ROLE_USER')">					
 				<a th:href="@{|/fundArtistList/join/${#authentication.getPrincipal().getUsername()}|}"><button>참여하기</button></a>		
