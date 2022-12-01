@@ -36,7 +36,7 @@
 					<td th:text="${list.fundUser}">닉네임</td>
 					<td th:text="${list.fundBoardTarget}">지정공연제목</td>
 					<td th:text="${list.fundBoard}">미지정공연제목</td>
-					<td th:text="| ${list.payMoney}원|">가격</td>
+					<td th:text="|${list.payMoney}원|">가격</td>
 					<td th:text="${list.checkin}">상태</td>
 					<td>
 						<button th:if="${list.fundBoardTarget} != null and ${list.checkin} == 결제완료 " th:onclick="'location.href=\'' + @{/pay/can/tarCancel(paymentKey=${list.payCode})} + '\''" type="submit">지정환불하기</button>
