@@ -23,13 +23,13 @@
             <div class="left">
                 <a class="cate" href="/fundTarget" th:text="|지정펀딩 > ${fundBoardTarget.categorie.categorieName}|">
                     지정 펀딩 > 카테고리1</a>
-                <h2 th:text="${fundBoardTarget.subject}">공연 이름</h2>
+                <h3 th:text="${fundBoardTarget.subject}">공연 이름</h3>
                 <div class="image">
 					<div th:if="${fundBoardTarget.imgPath != null}">
-						<img th:src="${fundBoardTarget.imgPath}" width="300" height="350">
+						<img th:src="${fundBoardTarget.imgPath}" height="350">
 					</div>
 					<div th:if="${fundBoardTarget.imgPath == null}">
-						<img th:src="|/fundTarget/img/${fundBoardTarget.id}|" width="300" height="350">
+						<img th:src="|/fundTarget/img/${fundBoardTarget.id}|" height="350">
 					</div>
                 </div>
             </div>
