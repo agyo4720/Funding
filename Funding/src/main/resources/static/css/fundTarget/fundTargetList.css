@@ -19,7 +19,7 @@ section .s_title {
 
 .categorie form a {
     margin-right: 30px;
-    font-size: 20px;
+    font-size: 17px;
     font-weight: bold;
     transition: 0.5s;
 }
