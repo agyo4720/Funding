@@ -91,6 +91,8 @@ public class PatmentService {
 		
 		List<Sale> sList = saleRepository.findBypayCode(paymentKey);		
 		sList.get(0).setCheckin("환불");
+		sList.get(0).setCancelDate(LocalDateTime.now());
+		sList.get(0).setCancelReason(cancelReason);
 		saleRepository.saveAll(sList);
 	}
 
@@ -110,6 +112,8 @@ public class PatmentService {
 		
 		List<Sale> sList = saleRepository.findBypayCode(paymentKey);		
 		sList.get(0).setCheckin("환불");
+		sList.get(0).setCancelDate(LocalDateTime.now());
+		sList.get(0).setCancelReason(cancelReason);
 		saleRepository.saveAll(sList);
 	}
 	

@@ -47,4 +47,8 @@ public class Sale {
 	
 	@Column(name = "checkin")
 	private String checkin; //환불했는지 확인
+	
+	private String cancelReason;//환불 사유
+	
+	private LocalDateTime cancelDate;//환불 날짜
 }
