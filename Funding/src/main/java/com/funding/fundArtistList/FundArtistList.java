@@ -1,11 +1,13 @@
 package com.funding.fundArtistList;
 
+import java.util.Set;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
 
 import com.funding.fundArtist.FundArtist;
 import com.funding.fundBoard.FundBoard;
@@ -28,6 +30,6 @@ public class FundArtistList {
 	private FundBoard fundBoard; // 펀딩글
 	
 	@ManyToOne
-	private FundArtist fundArtist; // 공연자
+	private Set<FundArtist> fundArtist; // 공연자
 	
 }

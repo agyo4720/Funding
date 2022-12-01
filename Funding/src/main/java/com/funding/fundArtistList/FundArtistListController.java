@@ -1,7 +1,8 @@
 package com.funding.fundArtistList;
 
+import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +26,7 @@ public class FundArtistListController {
 	@RequestMapping("/list")
 	public String list(Model model) {
 		
-		List<FundArtistList> FundArtistListList = this.fundArtistListService.getFundArtistList();
+		List<FundArtistList> FundArtistListList = this.fundArtistListService.findAll();
 		model.addAttribute("FundArtistListList", FundArtistListList);
 		
 		return "fundArtistList_list";
@@ -33,9 +34,14 @@ public class FundArtistListController {
 	
 	// 펀드 아티스트 참여
 	@RequestMapping("/join/{Username}")
-	public String join(@PathVariable("Username") String Username) {
+	public String join(
+			@PathVariable("Username") String Username,
+			Principal principal,
+			Model model) {
 		
-		FundArtist fundArtist = this.fundArtistService.findByuserName(Username).get();
+		
+		
+		Set<FundArtist> fundArtist = (Set<FundArtist>) this.fundArtistService.findByuserName(Username).get();
 		
 		this.fundArtistListService.join(fundArtist);
 		
