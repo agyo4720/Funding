@@ -28,6 +28,10 @@
             color:black;
         }
 	</style>
+	
+	<!-- 메시지 창 -->
+	<input type="hidden" id="chang" th:value="${msg}" />
+	
 </head>
 <body>
 	<div id="warp">
@@ -58,90 +62,103 @@
 	    
 		<div class="main">
 		
-			<div>
-				<a th:href="@{|/pay/tossPay/${fundBoard.id}|}"><button>결제하기</button></a>
-			</div>
 			<!--섹션1 시작-->
 			<div>
 				<div>
-					<div>카테고리</div>
-					<div th:text="${fundBoard.categorieName}"></div>
+					<span>카테고리 : </span>
+					<span th:text="${fundBoard.categorieName}"></span>
 				</div>
 				<div>
-					<div>제목</div>
-					<div th:text="${fundBoard.subject}"></div>
+					<span>제목 : </span>
+					<span th:text="${fundBoard.subject}"></span>
 				</div>
 				<div>
-					<div>내용</div>
-					<div th:utext="${fundBoard.content}"></div>
+					<span>내용 : </span>
+					<span th:utext="${fundBoard.content}"></span>
 				</div>
 				<div>
-					<div>장소</div>
-					<div th:text="${fundBoard.place}"></div>
+					<span>장소 : </span>
+					<span th:text="${fundBoard.place}"></span>
 				</div>
 				<div>
-					<div>펀딩 기간</div>
-					<div th:text="${fundBoard.fundDuration}"></div>
+					<span>펀딩 기간 : </span>
+					<span th:text="${fundBoard.fundDuration}"></span>
 				</div>
 				<div>
-					<div>공연 시작 일자</div>
-					<div th:text="${fundBoard.startDateTime}"></div>
+					<span>공연 시작 일자 : </span>
+					<span th:text="${#temporals.format(fundBoard.startDateTime, 'yyyy-MM-dd HH:mm')}"></span>
 				</div>
 				<div>
-					<div>공연 시간</div>
-					<div th:text="${fundBoard.runtime}"></div>
+					<span>공연 시간 : </span>
+					<span th:text="|${fundBoard.runtime}분|"></span>
 				</div>
 				<div>
-					<div>1인 최소 펀딩 금액</div>
-					<div th:text="${fundBoard.minFund}"></div>
+					<span>1인 최소 펀딩 금액 : </span>
+					<span th:text="|${fundBoard.minFund}원|"></span>
 				</div>
 				<div>
-					<div>펀딩 목표 금액</div>
-					<div th:text="${fundBoard.fundAmount}"></div>
+					<span>펀딩 목표 금액 : </span>
+					<span th:text="|${fundBoard.fundAmount}원|"></span>
 				</div>
 				<div>
-					<span>펀딩 현재 금액</span>
-					<span th:text="${fundBoard.fundCurrent}"></span>
+					<span>펀딩 현재 금액 : </span>
+					<span th:text="|${fundBoard.fundCurrent}원|"></span>
 				</div>
 				<div>
-					<div>현재 모집 인원</div>
-					<div th:text="${fundBoard.currentMember}"></div>
+					<span>현재 모집 인원 : </span> 
+					<span th:text="|${fundBoard.currentMember}명|"></span>
 				</div>
 				<div>
-					<div>펀딩 상태</div>
-					<div th:text="${fundBoard.state}"></div>
-				</div>
-				<div>
-					<div>별점 투표 수</div>
-					<div th:text="${fundBoard.vote}"></div>
-				</div>
-				<div>
-					<div>별점 평균</div>
-					<div th:text="${fundBoard.star}"></div>
+					<span>펀딩 상태 : </span>
+					<span th:text="${fundBoard.state}"></span>
 				</div>
 			</div>		
 			<!--섹션1 끝-->
-
-
+			
 			<!--섹션2 시작-->
+			<div sec:authorize="hasRole('ROLE_USER')">
+				<button th:if="${result == true}" class="con_btn" th:onclick="'location.href=\''+ @{/pay/can/cancel(paymentKey=${payCode})} + '\''" type="submit">환불하기</button>
+				<button th:if="${result == false}" class="con_btn" th:onclick="'location.href=\''+ @{|/pay/tossPay/${fundBoard.id}|} + '\''">결제하기</button>
+			</div>
+			<div sec:authorize="!hasRole('ROLE_USER')">					
+				<a th:href="@{|/fundArtistList/join/${#authentication.getPrincipal().getUsername()}|}"><button>참여하기</button></a>		
+			</div>
+			<!--섹션2 끝-->
+			
+			<!--섹션3 끝-->
+			<div>
+				<div>현재 참여중인 아티스트</div>
+				<div th:each="fundArtistList : ${fundArtistList}">
+					<span th:text="${fundArtistList.fundArtist.nickname}"></span>
+					<a href="https://search.naver.com/search.naver?where=nexearch&sm=tab_etc&mra=bjky&pkid=1&os=159229&qvt=0&query=%EC%95%84%EC%9D%B4%EC%9C%A0%20%ED%94%84%EB%A1%9C%ED%95%84" target='_blank'>아티스트 정보보기</a>
+				</div>
+			</div>
+			<!--섹션3 끝-->
+			
+			<!--섹션4 시작-->
 			<div class="section2">
 				<div th:each="answer : ${answerList}">
 					<div th:text="${answer.content}">댓글 내용</div>
 					<div th:text="${#temporals.format(answer.createDate, 'MM-dd HH:mm:ss')}">댓글 시간</div>
 				</div>
 			</div>
-			<!--섹션2 끝-->
+			<!--섹션4 끝-->
 
-			<!--섹션3 시작-->
+			<!--섹션5 시작-->
 			<div class="section3">
 				<form th:action="@{|/answer/fundBoard/create/${fundBoard.id}|}" method="GET">
 					<input type="text" name="content" value="">
 					<button type="submit">댓글 달기</button>
 				</form>
 			</div>
-			<!--섹션3 끝-->
+			<!--섹션5 끝-->
 		</div>
 	</div>
+	
+	<script>
+	
+	
+	</script>
 
 </body>
 </html>

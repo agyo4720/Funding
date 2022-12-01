@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import javax.mail.MessagingException;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +33,10 @@ public class UserController {
 	private final FundArtistService fundArtistService;
 	private final FundTargetService fundTargetService;
 	private final EmailService emailService;
+	private final PasswordEncoder passwordEncoder;
+	
+	String username = null;
+	String userRole = null;
 	
 	// nav에 사용자 이름 출력
 	@RequestMapping("/navMyInfo")
@@ -70,7 +75,7 @@ public class UserController {
 		return "user/myInfo";
 	}
 	
-	// 비밀번호 초기화 폼 요청
+	// 비밀번호 초기화 하기위한 id 입력 폼 요청
 	@GetMapping("/resetPwd")
 	public String resetPwd() {
 		
@@ -79,12 +84,39 @@ public class UserController {
 	
 	// 등록된 아이디로 인증코드 발송, 인증코드 입력폼 요청
 	@PostMapping("/resetPwd")
+	@ResponseBody
 	public String resetPwd2(String username, Model model) throws UnsupportedEncodingException, MessagingException {
 		Optional<FundUser> FU = this.fundUserService.findByuserName(username);
-		String code = emailService.sendEmail(FU.get().getEmail());
-		model.addAttribute("code",code);
+		Optional<FundArtist> FA = this.fundArtistService.findByuserName(username);
+		String code = null;
 		
-		return "/user/resetCodeForm";
+		if(FU.isPresent()) {
+			code = emailService.sendEmail(FU.get().getEmail());
+			this.userRole = "user";
+		} else if(FA.isPresent()) {
+			code = emailService.sendEmail(FA.get().getEmail());
+			this.userRole = "artist";
+		}
+		this.username = username;
+		
+		
+		return code;		
+	}
+	
+	
+	// 비밀번호 수정
+	@PostMapping("/resetPwdConfirm")
+	public String resetPwdConfirm2(String pwd){
+
+		if(userRole.equals("user")) {
+			this.fundUserService.resetPwd(this.username, pwd);
+		}
+		
+		if(userRole.equals("artist")) {
+			this.fundArtistService.resetPwd(this.username, pwd);
+		}
+		
+		return "redirect:/user/login";
 	}
 
 	
