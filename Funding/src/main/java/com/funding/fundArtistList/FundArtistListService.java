@@ -21,7 +21,7 @@ public class FundArtistListService {
 	}
 	
 	// 펀드 아티스트 참여
-	public void join(Set<FundArtist> fundArtist) {
+	public void join(FundArtist fundArtist) {
 		FundArtistList fundArtistList = new FundArtistList();
 		
 		fundArtistList.setFundArtist(fundArtist);

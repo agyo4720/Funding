@@ -178,7 +178,7 @@ public class FundBoardController {
 			sale.get(i).getPayCode();
 			model.addAttribute("payCode",sale.get(i).getPayCode());
 		}
-		
+
 		//펀딩 유무 확인
 		boolean result = false;
 		if(principal != null) {
@@ -191,7 +191,7 @@ public class FundBoardController {
 			}
 		}
 		model.addAttribute("result", result);
-		
+
 		return "/fundBoard/fundBoard_detail";
 	}
 
@@ -242,7 +242,6 @@ public class FundBoardController {
 		return "redirect:/fundBoard/list";
 	}
 
-	// 2022/11/30 - 4 작업중
-
+	// 2022/11/30 - 7 작업중
 
 }

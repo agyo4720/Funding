@@ -41,7 +41,7 @@ public class FundArtistListController {
 		
 		
 		
-		Set<FundArtist> fundArtist = (Set<FundArtist>) this.fundArtistService.findByuserName(Username).get();
+		FundArtist fundArtist = this.fundArtistService.findByuserName(Username).get();
 		
 		this.fundArtistListService.join(fundArtist);
 		
