@@ -29,8 +29,8 @@
             <div class="view"><p>아이디</p><span th:text="${myInfo.username}"></span></div>
             <div class="view"><p>비밀번호</p><span>***********</span><button>변경</button></div>
             <div class="view"><p>이름</p><span th:text="${myInfo.nickname}"></span></div>
-            <div id="mobile1" ><p>전화번호</p><span th:text="${myInfo.mobile}"></span><button id="mobileBtn1">변경</button></div>
-            <div id="mobile2" hidden ><p>전화번호</p><input type="text" th:value="${myInfo.mobile}"></input><button>저장</button></div>
+            <div id="mobile1" ><p>전화번호</p><span id="changed" th:text="${myInfo.mobile}"></span><button id="mobileBtn1">변경</button></div>
+            <div id="mobile2" hidden ><p>전화번호</p><input id="mobileModi" type="text" th:value="${myInfo.mobile}"></input><button id="mobileBtn2">저장</button></div>
             <div class="view"><p>이메일</p><span th:text="${myInfo.email}"></span><button>변경</button></div>
             <div hidden>생년월일<span id="birth" th:text="${myInfo.birth}"></span></div>
             <div class="view"><p>생년월일</p><span id="birth2"></span></div>
@@ -40,6 +40,8 @@
     </div>
 </body>
 <script>
+	
+	let changed = null;
 	let birthCut = $('#birth').text().substring(0,10)
 	$('#birth2').html(birthCut)
 	
@@ -48,7 +50,32 @@
 		$('#mobile2').removeAttr('hidden')
 	})
 	
-	
+	$('#mobileBtn2').click(function(){
+					changed = $('#mobileModi').val()
+		$.ajax({
+			url:'/user/resetMobile',
+			type:'POST',
+			async:false,
+			data: {
+				mobile:$('#mobileModi').val()
+			},
+			success:
+				function(res){
+					
+					$('#mobile1').removeAttr('hidden')
+					$('#mobile2').attr('hidden','hidden')
+					$('#changed').html(changed)
+					alert("변경되었습니다!")
+				}
+				
+			,
+			error: function(xhr){
+				console.log(xhr);
+				alert('오류발생.');
+			}
+		})
+		
+	})
 	
 	
 	

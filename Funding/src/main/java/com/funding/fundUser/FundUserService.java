@@ -57,4 +57,10 @@ public class FundUserService {
 		Optional<FundUser> fundUser = fundUserRepository.findBynickname(nickname);
 		return fundUser.get();
 	}
+
+	// 전화번호 수정
+	public void resetMobile(FundUser fundUser, String mobile) {
+		fundUser.setMobile(mobile);
+		this.fundUserRepository.save(fundUser);
+	}
 }

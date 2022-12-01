@@ -118,6 +118,16 @@ public class UserController {
 		
 		return "redirect:/user/login";
 	}
+	
+	// 전화번호 수정
+	@PostMapping("/resetMobile")
+	@ResponseBody
+	public String resetMobile(Principal principal, String mobile) {
+		Optional<FundUser> FU = this.fundUserService.findByuserName(principal.getName());
+		this.fundUserService.resetMobile(FU.get(),mobile);
+		
+		return "done!";
+	}
 
 	
 	
