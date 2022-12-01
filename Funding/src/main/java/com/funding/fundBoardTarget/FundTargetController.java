@@ -229,7 +229,7 @@ public class FundTargetController {
 	
 	//지정펀딩 삭제
 	@RequestMapping("/delete/{id}")
-	public String deleteTarget(@PathVariable("id")Integer id, Model model) throws Exception {
+	public String deleteTarget(@PathVariable("id")Integer id) throws Exception {
 
 		//환불
 		FundBoardTarget nick = fundTargetService.findById(id);
@@ -237,11 +237,8 @@ public class FundTargetController {
 		for(int i=0; i<sale.size(); i++){
 			sale.get(i).getPayCode();
 			sale.get(i).setCheckin("게시글 삭제");
-			log.info("@@sale.get(i).getPayCode(): "+sale.get(i).getPayCode());
-			System.out.println("!!sale: "+sale);
 			
 			paymentController.totalCancel(sale.get(i).getPayCode(),"게시글 삭제");
-			model.addAttribute("payCode",sale.get(i).getPayCode());
 		}
 		
 		//지정리스트 삭제

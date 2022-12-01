@@ -297,7 +297,6 @@ public class PaymentController {
     }
     
     
-    
     //미지정환불하기
     @RequestMapping("/can/cancel")
     public String cancel(String paymentKey)throws Exception {
@@ -363,6 +362,7 @@ public class PaymentController {
     		}
     }
 
+    
 	//결제목록
 	@GetMapping("/loo/confirm")
 	public String confirm(Principal principal, Model model,@RequestParam(value = "page", defaultValue="0") int page,
