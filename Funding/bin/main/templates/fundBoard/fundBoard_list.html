@@ -11,7 +11,10 @@
     <link rel="stylesheet" href="../../static/css/fundBoard/fundBoard_list.css" th:href="@{/css/fundBoard/fundBoard_list.css}">
 
 	<!-- favicon -->
-    <link rel="stylesheet" href="../../static/css/style.css" th:href="@{/css/style.css}">
+    <link rel="shortcut icon" href="/img/favicon/ms-icon-310x310.png" type="image/x-icon" />
+
+	<!-- fontawsome -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
 </head>
 <body>
 	<div>
@@ -21,74 +24,102 @@
     <!-- 홈페이지 상단 nav -->
 	<header th:replace="/main/nav"></header>
 
-	<div id="warp">
-		<div class="header">
-			<h2>펀딩 작성</h2>
+	<section>
+		<div class="title">
+			<h2>미지정 펀딩</h2>
 		</div>
 
-		<div class="main">
-
-			<div>
-				<ul>
-					<li>
-						<a th:each="categorie, loop : ${categorieList}"
-						   th:text="${categorie.categorieName}"
-						   th:href="@{|/fundBoard/categorie/${categorie.id}|}">
-						</a>
-					</li>
-				</ul>
-			</div>
-
-			<div>
-				<a href="/fundBoard/create">등록하기</a>
-			</div>
-
-			<div class="section" th:each="fundBoard , loop : ${fundBoardList}">
-				<div th:if="${fundBoard.imgPath != null}">
-					<img th:src="${fundBoard.imgPath}" width="300" height="300">
-				</div>
-				<div th:if="${fundBoard.filePath != null}">
-					<img th:src="|/fundBoard/img/${fundBoard.id}|" width="300" height="300">
-				</div>
-				<span th:text="${fundBoard.subject}"></span>
-				<a th:href="@{|/fundBoard/detail/${fundBoard.id}|}">자세히 보기</a>
-				<a th:href="@{|/fundBoard/delete/${fundBoard.id}|}">삭제하기(그냥 편의기능)</a>
-			</div>
-
-			<!-- 페이징 시작 -->
-		    <div class="paging" th:if="${!fundBoardList.isEmpty()}">
-		        <ul>
-		        
-		        	<!-- 이전 페이지가 없으면 비활성황 -->
-		            <li th:classappend="${!fundBoardList.hasPrevious} ? 'disabled'">
-		                <a th:href="@{|?fundBoardList=${fundBoardList.number-1}|}">
-		                    <span>이전</span>
-		                </a>
-		            </li>
-		            
-		            <!-- 페이지 리스트 루프 -->
-		            <!-- 현재 페이지와 같으면 active 적용-->
-		            <li th:each="page: ${#numbers.sequence(0, fundBoardList.totalPages-1)}"
-		            	th:if="${page >= fundBoardList.number-5 and page <= fundBoardList.number+4}"
-		                th:classappend="${page == fundBoardList.number} ? 'active'"
-		                >
-		                <a th:text="${page+1}" th:href="@{|?page=${page}|}"></a>
-		            </li>
-		            
-		            <!-- 다음 페이지가 없으면 비활성화 -->
-		            <li th:classappend="${!fundBoardList.hasNext} ? 'disabled'">
-		                <a th:href="@{|?fundBoardList=${fundBoardList.number+1}|}">
-		                    <span>다음</span>
-		                </a>
-		            </li>
-		        
-		        </ul>
-		    </div>
-		    <!-- 페이징 끝 -->
-		    
+		<div class="categorie">
+			<ul>
+				<li>
+					<a th:each="categorie, loop : ${categorieList}"
+						th:text="${categorie.categorieName}"
+						th:href="@{|/fundBoard/categorie/${categorie.id}|}">
+					</a>
+				</li>
+			</ul>
 		</div>
 
-	</div>
+		<div class="list_form" th:each="fundBoard , loop : ${fundBoardList}">
+			<div class="con_list">
+				<a th:href="@{|/fundBoard/detail/${fundBoard.id}|}">
+					<div class="image">
+						<div th:if="${fundBoard.imgPath != null}">
+							<img th:src="${fundBoard.imgPath}" height="300">
+						</div>
+						<div th:if="${fundBoard.filePath != null}">
+							<img th:src="|/fundBoard/img/${fundBoard.id}|" height="300">
+						</div>
+					</div>
+
+					<div class="con">
+						<div class="status">
+							<p th:text="${fundBoard.state}">상태</p>
+						</div>
+
+						<div class="con_title">
+							<a th:href="@{|/fundBoard/detail/${fundBoard.id}|}">
+								<h3 th:text="${fundBoard.subject}">공연 이름</h3>
+							</a>
+						</div>
+
+						<div class="con_detail">
+							<div class="view">
+								<label for="place">장소</label>
+								<p th:text="${fundBoard.place}">장소</p>
+							</div>
+
+							<div class="view">
+								<label for="startDate">공연일</label>
+								<p th:text="${#temporals.format(fundBoard.startDateTime, 'yyyy-MM-dd HH:mm')}">공연일</p>
+							</div>
+
+							<div class="view">
+								<label for="fundDuration">펀딩 기간</label>
+								<p th:text="|${#temporals.format(fundBoard.createDate, 'yyyy-MM-dd')} ~ ${fundBoard.fundDuration}|"></p>
+							</div>
+
+							<div class="view">
+								<label for="grpah">진행도</label>
+								<p th:text="|${fundBoard.fundCurrent * 100 / fundBoard.fundAmount}%|">진행도</p>
+							</div>
+						</div>
+					</div>
+				</a>
+			</div>
+		</div>
+
+		<!-- 페이징 시작 -->
+		<div class="paging" th:if="${!fundBoardList.isEmpty()}">
+			<!-- 이전 페이지가 없으면 비활성화 -->
+			<div th:classappend="${!fundBoardList.hasPrevious} ? 'disabled'">
+				<a th:href="@{|?fundBoardList=${fundBoardList.number-1}|}">
+					<i class="fas fa-chevron-left"></i>
+				</a>
+			</div>
+			
+			<!-- 페이지 리스트 루프 -->
+			<!-- 현재 페이지와 같으면 active 적용-->
+			<div th:each="page: ${#numbers.sequence(0, fundBoardList.totalPages-1)}"
+				th:if="${page >= fundBoardList.number-5 and page <= fundBoardList.number+4}"
+				th:classappend="${page == fundBoardList.number} ? 'active'">
+				<a th:text="${page+1}" th:href="@{|?page=${page}|}"></a>
+			</div>
+			
+			<!-- 다음 페이지가 없으면 비활성화 -->
+			<div th:classappend="${!fundBoardList.hasNext} ? 'disabled'">
+				<a th:href="@{|?fundBoardList=${fundBoardList.number+1}|}">
+					<i class="fas fa-chevron-right"></i>
+				</a>
+			</div>
+		</div>
+		<!-- 페이징 끝 -->
+
+		<a class="btn_create" href="/fundBoard/create">등록하기</a>
+	</section>
 	
+	<script>
+
+	</script>
 </body>
 </html>
