@@ -4,7 +4,8 @@
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <header>
 	<!-- 계좌 -->
-	<input type="hidden" id="dd" th:value="${msg}" />
+	<input type="hidden" id="msg" th:value="${msg}" />
+	<input type="hidden" id="message" th:value="${message}" />
 	
     <!-- 로고 -->
     <div class="logo">
@@ -67,28 +68,29 @@
 	        })
 	});
 	
-	var result= document.querySelector('#dd').value;
+	var result= document.querySelector('#msg').value;
+	var message= document.querySelector('#message').value;
 	if(result === "Success"){
 		alert("송금완료!");
 	} else if(result === "Fail"){
-		alert("송금실패!");
+		alert(message);
 	}
 	
 	else if(result === "SUccess"){
 		alert("수정완료!");
 	}else if(result === "FAil"){
-		alert("수정실패!");
+		alert(message);
 	}
 	
 	else if(result === "SUCcess"){
 		alert("등록성공!");
 	}else if(result === "FAIl"){
-		alert("등록실패!");
+		alert(message);
 	}
 	
 	else if(result === "SUCCess"){
 		alert("삭제성공!");
 	}else if(result === "FAIL"){
-		alert("삭제실패!");
+		alert(message);
 	}
 </script>
