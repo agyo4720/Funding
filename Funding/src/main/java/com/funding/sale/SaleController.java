@@ -30,6 +30,7 @@ import com.funding.fundList.FundListService;
 import com.funding.fundTargetList.FundTargetListService;
 import com.funding.fundUser.FundUser;
 import com.funding.fundUser.FundUserRepository;
+import com.funding.fundUser.FundUserService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -43,7 +44,7 @@ public class SaleController {
     private final RestTemplate restTemplate = new RestTemplate();
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final FundTargetService fundTargetService;
-    private final FundUserRepository fundUserRepository;
+    private final FundUserService fundUserService;
     private final SaleService saleService;
     private final FundTargetListService fundTargetListService;
     private final FundBoardService fundBoardService;
@@ -57,7 +58,7 @@ public class SaleController {
 		FundBoardTarget fundBoardTarget = fundTargetService.findById(id);
 		model.addAttribute("fundBoardTarget", fundBoardTarget);//지정공연 번호
 
-		Optional<FundUser> FU = this.fundUserRepository.findByusername(principal.getName());
+		Optional<FundUser> FU = fundUserService.findByuserName(principal.getName());
 		model.addAttribute("userData",FU.get());//로그인중인 정보
     	return "pay/tossPayTar";
     }
@@ -76,11 +77,11 @@ public class SaleController {
 
         HttpEntity<String> request = new HttpEntity<>(objectMapper.writeValueAsString(payloadMap), headers);
 
-        Optional<FundUser> FU = this.fundUserRepository.findByusername(principal.getName());//로그인중인 정보
+        Optional<FundUser> FU = fundUserService.findByuserName(principal.getName());
 
         ResponseEntity<JsonNode> responseEntity = restTemplate.postForEntity(
                 "https://api.tosspayments.com/v1/payments/" + paymentKey, request, JsonNode.class);
-        log.info("responseEntity: "+responseEntity);
+
         if (responseEntity.getStatusCode() == HttpStatus.OK) {
             JsonNode successNode = responseEntity.getBody();
             model.addAttribute("status", successNode.get("status").asText());//상태
@@ -96,7 +97,6 @@ public class SaleController {
         	String tar = successNode.get("orderId").toString();
         	String target = tar.substring(tar.lastIndexOf('-')+1);
         	target = target.replace("\"", "");
-        	log.info("target: "+target);
 
         	FundBoardTarget targetPk = fundTargetService.findById(Integer.parseInt(target));
         	Integer add = targetPk.getFundCurrent();
@@ -127,9 +127,8 @@ public class SaleController {
     public String tossPay(Principal principal, Model model, @PathVariable("id")Integer id) {
 		FundBoard fundBoard = fundBoardService.findById(id);
 		model.addAttribute("fundBoard", fundBoard);//미지정공연 번호
-		log.info("fundBoard: "+fundBoard);
 
-		Optional<FundUser> FU = this.fundUserRepository.findByusername(principal.getName());//로그인중인 정보
+		Optional<FundUser> FU = fundUserService.findByuserName(principal.getName());
 		model.addAttribute("userData",FU.get());//로그인정보
     	return "pay/tossPay";
     }
@@ -149,7 +148,7 @@ public class SaleController {
 
         HttpEntity<String> request = new HttpEntity<>(objectMapper.writeValueAsString(payloadMap), headers);
 
-        Optional<FundUser> FU = this.fundUserRepository.findByusername(principal.getName());//로그인중인 정보
+        Optional<FundUser> FU = fundUserService.findByuserName(principal.getName());
 
         ResponseEntity<JsonNode> responseEntity = restTemplate.postForEntity(
                 "https://api.tosspayments.com/v1/payments/" + paymentKey, request, JsonNode.class);
@@ -168,7 +167,6 @@ public class SaleController {
         	String tar = successNode.get("orderId").toString();
         	String target = tar.substring(tar.lastIndexOf('-')+1);
         	target = target.replace("\"", "");
-        	log.info("target: "+target);
 
         	FundBoard fundBoard = fundBoardService.findById(Integer.parseInt(target));
         	Integer add = fundBoard.getFundCurrent();
@@ -198,7 +196,7 @@ public class SaleController {
 	public String confirm(Principal principal, Model model,@RequestParam(value = "page", defaultValue="0") int page,
 			@RequestParam(value = "pagee", defaultValue="0") int pagee) throws Exception{
 		
-		Optional<FundUser> FU =  fundUserRepository.findByusername(principal.getName());
+		Optional<FundUser> FU = fundUserService.findByuserName(principal.getName());
 
 		//결제리스트 불러오기
 		Page<Sale> sList = saleService.findByUsername(page,FU.get().getUsername());
