@@ -62,3 +62,9 @@
     text-decoration: underline;
     text-underline-position: under;
 }
+
+.alertbox{
+	border: 2px solid rgb(255, 48, 48);
+	margin: 15px 0px;
+	border-radius: 5px;
+}

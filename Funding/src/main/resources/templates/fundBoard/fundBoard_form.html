@@ -12,132 +12,127 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
 	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 
-	<!-- favvicon -->
-	
+	<!-- CSS -->
+	<link rel="stylesheet" href="/css/fundBoard/fundBoard_form.css"/>
 
-	<style>
-		/* 에러메세지 시작 */
-		.errors{
-			color: red;
-    		display: none;
-    	}
-        /* 에러메세지 끝 */
-	</style>
+	<!-- favvicon -->
+    <link rel="shortcut icon" href="/img/favicon/ms-icon-310x310.png" type="image/x-icon" />
 </head>
 <body>
+    <!-- 홈페이지 상단 nav -->
+    <header th:replace="/main/nav"></header>
 
-	<div id="warp">
+	<section>
+		<form th:object="${fundBoardForm}" method="POST" enctype="multipart/form-data">
 
-		<div class="header">
-			<h2>펀딩 작성</h2>
-		</div>	
-		<div class="main">
+			<div class="title">
+				<h2>미지정 펀딩</h2>
+			</div>
 
-			<form th:object="${fundBoardForm}" method="POST" enctype="multipart/form-data">
-				<div>
-					<label for="categorieName">카테고리</label>
-					<select id="categorieName" th:field="*{categorieName}">
-						<option value="">카테고리 선택</option>
-						<option th:each="categorie : ${categorieList}" th:text="${categorie.categorieName}" th:value="${categorie.categorieName}"></option>
-					</select>
-					<span class="errors" style="display: none">에러출력</span>
-				</div>
-				<div>
-					<label for="subject">제목</label>
-					<input type="text" id="subject" th:field="*{subject}" autocomplete="off" placeholder="제목을 입력하세요.">
-					<span class="errors" style="display: none">에러출력</span>
-				</div>
-				<div>
-					<label for="place">장소</label>
-					<input type="text" id="place" th:field="*{place}" autocomplete="off" placeholder="장소를 입력하세요.">
-					<span class="errors" style="display: none">에러출력</span>
-				</div>
-				<div>
-					<label for="runtime">공연 시간</label>
-					<input type="number" id="runtime" th:field="*{runtime}" autocomplete="off" placeholder="분 단위로 입력 입력하세요.">
-					<span class="errors" style="display: none">에러출력</span>
-				</div>
-				<div>
-					<label for="fundDuration">펀딩 기간</label>
-					<input type="date" id="fundDuration" th:field="*{fundDuration}" th:min="${nowTime}" autocomplete="off">
-					<span class="errors" style="display: none">에러출력</span>
-				</div>
-				<div>
-					<label for="startDateTime">공연 시작 일자</label>
-					<input type="datetime-local" id="startDateTime" th:field="*{startDateTime}" th:min="${nowTime}">
-					<span class="errors" style="display: none">에러출력</span>
-				</div>
-				<div>
-					<label for="minFund">1인 최소 펀딩 금액</label>
-					<input type="number" id="minFund" th:field="*{minFund}" autocomplete="off" placeholder="1인 최소 펀딩 금액을 입력하세요.">
-					<span class="errors" style="display: none">에러출력</span>
-				</div>
-				<div>
-					<label for="fundAmount">펀딩 목표 금액</label>
-					<input type="number" id="fundAmount" th:field="*{fundAmount}" autocomplete="off" placeholder="펀딩 목표 금액을 입력하세요.">
-					<span class="errors" style="display: none">에러출력</span>
-				</div>
-				
-				<div class="int int_content">
-					<label for="content">미지정 펀드 내용작성</label>
-					<textarea class="content" id="summernote" th:field="*{content}" autocomplete="off"></textarea>
-					<div class="errorList" style="display: none"></div>
-					<span class="errors" style="display: none">에러출력</span>
-				</div>
-				
-				<div class="image">
-					<div>
-						<label>대표 이미지</label>
-					</div>
-					
-					<div>
-						<label for="radio1">
-							<img src="https://cdn.pixabay.com/photo/2015/12/07/18/15/magic-1081149__340.jpg" alt="이미지1" width="200" heigth="200">
-						</label>
-						<input id="radio1" type="radio" name="imgPath" value="https://cdn.pixabay.com/photo/2015/12/07/18/15/magic-1081149__340.jpg">
-					</div>
-					
-					<div>
-						<label>
-							<img src="https://cdn.pixabay.com/photo/2015/10/16/11/40/tarot-991041__340.jpg" alt="이미지2" width="200" heigth="200">
-						</label>
-						<input id="radio2" type="radio" name="imgPath" value="https://cdn.pixabay.com/photo/2015/10/16/11/40/tarot-991041__340.jpg">
-					</div>
-					
-					<div>
-						<label>
-							<img src="https://cdn.pixabay.com/photo/2014/05/21/15/47/piano-349928__340.jpg" alt="이미지3" width="200" heigth="200">
-						</label>
-						<input id="radio3" type="radio" name="imgPath" value="https://cdn.pixabay.com/photo/2014/05/21/15/47/piano-349928__340.jpg">
-					</div>
-					
-					<div>
-						<label>
-							<img src="https://cdn.pixabay.com/photo/2016/11/19/09/57/violins-1838390__340.jpg" alt="이미지4" width="200" heigth="200">
-						</label>
-						<input id="radio4" type="radio" name="imgPath" value="https://cdn.pixabay.com/photo/2016/11/19/09/57/violins-1838390__340.jpg">
-					</div>
-					
-					<div>
-						<label>
-							<img src="https://cdn.pixabay.com/photo/2017/07/21/23/57/concert-2527495__340.jpg" alt="이미지5" width="200" heigth="200">
-						</label>
-						<input id="radio5" type="radio" name="imgPath" value="https://cdn.pixabay.com/photo/2017/07/21/23/57/concert-2527495__340.jpg">
-					</div>
-				</div>
-				
-				<!-- 파일 업로드 시작 -->
-				<div class="int_file">
-					<input type="file" multiple="multiple" name="file" />
-				</div>
-				<!-- 파일 업로드 끝 -->
-						
-				<div>
-					<button type="submit">등록하기</button>
-				</div>
-			</form>
+			<div class="int int_cate">
+				<label for="categorieName">카테고리</label>
+				<select id="categorieName" th:field="*{categorieName}">
+					<option value="">카테고리 선택</option>
+					<option th:each="categorie : ${categorieList}" th:text="${categorie.categorieName}" th:value="${categorie.categorieName}"></option>
+				</select>
+				<span class="errors" style="display: none">에러출력</span>
+			</div>
+
+			<div class="int int_title">
+				<label for="subject">제목</label>
+				<input type="text" id="subject" th:field="*{subject}" autocomplete="off" placeholder="제목을 입력하세요.">
+				<span class="errors" style="display: none">에러출력</span>
+			</div>
+
+			<div class="int int_place">
+				<label for="place">장소</label>
+				<input type="text" id="place" th:field="*{place}" autocomplete="off" placeholder="장소를 입력하세요.">
+				<span class="errors" style="display: none">에러출력</span>
+			</div>
 			
-		</div>
+			<div class="int int_runtime">
+				<label for="runtime">공연 시간</label>
+				<input type="number" id="runtime" th:field="*{runtime}" autocomplete="off" placeholder="분 단위로 입력 입력하세요.">
+				<span class="errors" style="display: none">에러출력</span>
+			</div>
+
+			<div class="int int_period">
+				<label for="fundDuration">펀딩 기간<span>(오늘부터 시작)</span></label>
+				<input type="date" id="fundDuration" th:field="*{fundDuration}" th:min="${nowTime}" autocomplete="off">
+				<span class="errors" style="display: none">에러출력</span>
+			</div>
+			<div class="int int_date">
+				<label for="startDateTime">공연일</label>
+				<input type="datetime-local" id="startDateTime" th:field="*{startDateTime}" th:min="${nowTime}">
+				<span class="errors" style="display: none">에러출력</span>
+			</div>
+			<div class="int int_minFund">
+				<label for="minFund">1인 최소 펀딩 금액</label>
+				<input type="number" id="minFund" th:field="*{minFund}" autocomplete="off" placeholder="1인 최소 펀딩 금액을 입력하세요.">
+				<span class="errors" style="display: none">에러출력</span>
+			</div>
+			<div class="int int_amountFund">
+				<label for="fundAmount">펀딩 목표 금액</label>
+				<input type="number" id="fundAmount" th:field="*{fundAmount}" autocomplete="off" placeholder="펀딩 목표 금액을 입력하세요.">
+				<span class="errors" style="display: none">에러출력</span>
+			</div>
+			
+			<div class="int int_content">
+				<label for="content">미지정 펀드 내용작성</label>
+				<textarea class="content" id="summernote" th:field="*{content}" autocomplete="off"></textarea>
+				<div class="errorList" style="display: none"></div>
+				<span class="errors" style="display: none">에러출력</span>
+			</div>
+			
+			<label for="image">대표 이미지</label>
+			<div class="int_image">
+				<div class="img">
+					<input id="radio1" type="radio" name="imgPath" value="https://cdn.pixabay.com/photo/2015/12/07/18/15/magic-1081149__340.jpg">
+					<label for="radio1">
+						<img src="https://cdn.pixabay.com/photo/2015/12/07/18/15/magic-1081149__340.jpg" alt="이미지1" width="200" heigth="200">
+					</label>
+				</div>
+
+				<div class="img">
+					<input id="radio2" type="radio" name="imgPath" value="https://cdn.pixabay.com/photo/2015/10/16/11/40/tarot-991041__340.jpg">
+					<label for="radio2">
+						<img src="https://cdn.pixabay.com/photo/2015/10/16/11/40/tarot-991041__340.jpg" alt="이미지2" width="200" heigth="200">
+					</label>
+				</div>
+
+				<div class="img">
+					<input id="radio3" type="radio" name="imgPath" value="https://cdn.pixabay.com/photo/2014/05/21/15/47/piano-349928__340.jpg">
+					<label for="radio3">
+						<img src="https://cdn.pixabay.com/photo/2014/05/21/15/47/piano-349928__340.jpg" alt="이미지3" width="200" heigth="200">
+					</label>
+				</div>
+
+				<div class="img">
+					<input id="radio4" type="radio" name="imgPath" value="https://cdn.pixabay.com/photo/2016/11/19/09/57/violins-1838390__340.jpg">
+					<label for="radio4">
+						<img src="https://cdn.pixabay.com/photo/2016/11/19/09/57/violins-1838390__340.jpg" alt="이미지4" width="200" heigth="200">
+					</label>
+				</div>
+
+				<div class="img">
+					<input id="radio5" type="radio" name="imgPath" value="https://cdn.pixabay.com/photo/2017/07/21/23/57/concert-2527495__340.jpg">
+					<label for="radio5">
+						<img src="https://cdn.pixabay.com/photo/2017/07/21/23/57/concert-2527495__340.jpg" alt="이미지5" width="200" heigth="200">
+					</label>
+				</div>
+			</div>
+			
+			<!-- 파일 업로드 시작 -->
+			<div class="int_file">
+				<input type="file" multiple="multiple" name="file" />
+			</div>
+			<!-- 파일 업로드 끝 -->
+					
+			<div>
+				<button type="submit">등록하기</button>
+			</div>
+		</form>
+			
     </section>
     
 
@@ -269,7 +264,7 @@
 		$(document).ready(function() {
 			$('#summernote').summernote({
 				height: 300,
-				width: 600,
+				width: 740,
 				lang: "ko-KR",
 				toolbar: [
 					    // [groupName, [list of button]]

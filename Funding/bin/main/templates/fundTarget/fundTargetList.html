@@ -68,12 +68,12 @@
 						
 						<div class="view">
 							<label for="startDate">공연일</label>
-							<p th:text="${#temporals.format(target.startDate, 'yyyy-MM-dd HH:mm')}">공연 시작</p>
+							<p th:text="${#temporals.format(target.startDate, 'yyyy-MM-dd HH:mm (E)')}">공연 시작</p>
 						</div>
 						
 						<div class="view">
 							<label for="fundDurationS">펀딩 기간</label>
-							<p th:text="${target.fundDurationS} + ' ~ ' + ${target.fundDurationE}">펀딩 기간</p>
+							<p th:text="${#temporals.format(target.fundDurationS, 'yyyy-MM-dd (E)')} + ' ~ ' + ${target.fundDurationE}">펀딩 기간</p>
 						</div>
 						
 						<!-- <div>
@@ -108,7 +108,9 @@
 			</div>
 		</div>
 		<!-- //페이징 -->
-		<a class="btn_create" href="fundTargetForm.html" th:href="@{/fundTarget/form}">펀딩 만들기</a>
+		<div sec:authorize="hasRole('ROLE_USER')">
+			<a class="btn_create" href="fundTargetForm.html" th:href="@{/fundTarget/form}">펀딩 만들기</a>
+		</div>
     </section>
     
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
@@ -126,12 +128,9 @@
     		cateList.forEach(function(e){
         		e.classList.remove('active')
         	})
-        	console.log("cate 번호 : " + cate)
-        	if(cate === NaN){
-				console.log("현재 카테고리 미지정")
-			}else{
-				cateList[cate].classList.add('active')
-			}
+        	
+			cateList[cate].classList.add('active')
+			
     	}
     	
     	

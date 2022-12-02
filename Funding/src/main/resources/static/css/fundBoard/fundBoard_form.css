@@ -1,0 +1,86 @@
+a {
+    text-decoration: none;
+}
+
+form {
+    margin: 30px auto;
+    padding: 5px 40px;
+    width: 825px;
+    border: 1px solid #575757;
+    border-radius: 5px;
+}
+
+.int {margin: 20px 0;}
+
+section label {
+    display: inline-block;
+    margin-bottom: 5px;
+    width: 200px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+section select {width: 380px; height: 30px;}
+
+section .int input {width: 380px; height: 30px;}
+
+section select, input[type=radio], img {cursor: pointer;}
+
+.sel_cate {
+    cursor: pointer;
+    width: 205px;
+    height: 27px;
+}
+
+#date { margin: 5px 0; }
+
+.int_image {display: flex; flex-wrap: wrap; margin-right: 30px;}
+
+/* SummerNote */
+.note-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.note-btn-group {
+    display: flex;
+}
+
+.btn {
+    margin: 0; padding: 3px 6px;
+}
+
+/* 대표 이미지 선택 */
+.int_image, .int_file {
+    margin: 5px 0;
+}
+
+.int_file input, .int_file button {
+    cursor: pointer;
+    padding: 7px 10px;
+}
+
+/* 작성 완료 버튼 */
+section button {
+    cursor: pointer;
+    margin: 30px 0;
+    padding: 10px 30px;
+    width: 100%;
+    background-color: #3a2c2c;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 15px;
+    letter-spacing: 2px;
+    transition: 0.5s;
+}
+
+section button:hover {
+    background-color: #5e5252;
+}
+
+/* 에러 */
+.errors{
+    color: red;
+    display: none;
+}
