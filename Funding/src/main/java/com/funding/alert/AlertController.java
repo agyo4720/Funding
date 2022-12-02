@@ -111,9 +111,16 @@ public class AlertController {
 			
 			//접속자와 댓글 생성자 같으면 출력 안함
 			if(guestcheck) {
-				String userequals = aList.get(i).getGuestUser().getUsername();
-				if(user.get().getUsername().equals(userequals)) {
-					continue;
+				if(aList.get(i).getGuestUser() != null) {
+					String userequals = aList.get(i).getGuestUser().getUsername();
+					if(user.get().getUsername().equals(userequals)) {
+						continue;
+					}
+				}else if(aList.get(i).getGuestArtist() != null) {
+					String userequals = aList.get(i).getGuestArtist().getUsername();
+					if(user.get().getUsername().equals(userequals)) {
+						continue;
+					}
 				}
 			}
 			map.put("content", aList.get(i).getContent());

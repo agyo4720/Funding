@@ -197,3 +197,19 @@ section {
 .cmt_delete:hover {
     text-decoration: underline;
 }
+
+/*----------- 진행도 바-----------*/
+progress {
+	height: 35px;
+	width: 250px;
+	-webkit-appearance: none;
+}
+::-webkit-progress-bar {
+	background-color: grey;
+	border-radius: 30px;
+}
+
+::-webkit-progress-value {
+	background-color: rgb(250, 78, 78);
+	border-radius: 30px;
+}

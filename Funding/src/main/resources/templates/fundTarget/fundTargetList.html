@@ -111,12 +111,13 @@
 		<a class="btn_create" href="fundTargetForm.html" th:href="@{/fundTarget/form}">펀딩 만들기</a>
     </section>
     
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <script>
     	//url에서 카테고리 값 가져와서 active 추가해주기
     	let url = window.location.search
     	let Params = new URLSearchParams(url)
     	let cate = Params.get('cate')
-    	cate = parseInt(cate) - 1
+    	cate = parseInt(cate) - 2
     	console.log(cate)
     	let cateList = document.querySelectorAll('.cate')
     	
@@ -128,6 +129,8 @@
         	})
         	cateList[cate].classList.add('active')
     	}
+    	
+    	
     </script>
 </body>
 </html>

@@ -249,6 +249,7 @@ public class FundTargetController {
 		
 		//지정리스트 삭제
 		List<FundTargetList> fList = fundTargetListService.findByFundBoardTarget(nick);
+		alertService.deleteTargetThenAlert(fList);
 		for(int i=0;i>fList.size();i++) {
 			fundTargetListService.delete(fList.get(i).getFundUser(), nick);
 		}
