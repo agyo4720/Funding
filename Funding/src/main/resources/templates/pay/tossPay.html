@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>구매하기</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+</head>
+<body>
+<section>
+    <h1>펀딩하기</h1>
+      
+   	<input hidden th:value="${fundBoard.id}" id="id" />
+    
+    <h2 th:text="|공연 이름: ${fundBoard.subject}|"></h2>
+    <h2 th:text="|최소금액: ${fundBoard.minFund}|"></h2>
+    <h2 th:text="|금액: ${fundBoard.fundCurrent}|"></h2>
+    <h2 th:text="|목표금액: ${fundBoard.fundAmount}|"></h2>
+    <input type="number" id="num1" th:value="${fundBoard.minFund}" />
+    <p>----------------------</p>
+    <div><label><input type="radio" name="method" value="카드" checked/>신용카드</label></div>
+    <div><label><input type="radio" name="method" value="휴대폰"/>휴대폰</label></div>
+    <div><label><input type="radio" name="method" value="문화상품권"/>상품권</label></div>
+    <div><label><input type="radio" name="method" value="가상계좌"/>계좌</label></div>
+    <p>----------------------</p>
+    <button id="payment1-button">결제하기</button>
+</section>
+    <div class="confirm">
+        <a href="/pay/loo/confirm">목록</a>
+    </div>
+    <div class="home">
+        <a href="/">홈</a>
+    </div>
+<script src="https://js.tosspayments.com/v1"></script> <!-- 토스결제창 불러오기  -->
+<script>
+    var tossPayments = TossPayments("test_ck_OALnQvDd2VJjgjj4daVMj7X41mNW");
+    var button = document.getElementById("payment1-button");
+    var minfund = document.querySelector('#num1').value;
+    
+    var orderId = new Date().getTime();
+    var pk = document.getElementById("id").value;
+    var userAndPk = orderId + '-' + pk;
+    
+    button.addEventListener("click", function () {
+        var method = document.querySelector('input[name=method]:checked').value; // "카드" 혹은 "휴대폰" 혹은 "상품권"
+    	var amount=document.querySelector('#num1').value;
+        
+    	if(parseInt(amount) >= parseInt(minfund)){
+	        var paymentData = {
+	            amount: amount,
+	            orderId: userAndPk,
+	            orderName: '[[${fundBoard.subject}]]',
+	            customerName: '[[${userData.nickname}]]',
+	            successUrl: window.location.origin + "/pay/success",
+	            failUrl: window.location.origin + "/pay/fail",
+	        };
+	        tossPayments.requestPayment(method, paymentData);
+        } else {
+        	alert("부족")
+        }
+    });
+
+</script>
+</body>
+</html>

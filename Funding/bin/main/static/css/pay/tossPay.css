@@ -1,0 +1,104 @@
+section {
+    margin: 0 auto;
+    width: 600px;
+}
+
+.view {
+    display: flex;
+    align-items: center;
+    padding: 3px 0;
+    font-size: 15px;
+}
+
+
+/* 결제 정보 */
+.con {
+    display: flex;
+    align-items: center;
+    margin: 30px 0;
+    padding: 10px 20px;
+    border: 1px solid #000;
+    border-radius: 10px;
+}
+
+.image {margin-right: 20px;}
+
+.con_detail h3 {margin-bottom: 10px;}
+
+.con_detail .view label {
+    width: 100px;
+    font-weight: bold;
+}
+
+/* 결제 금액 */
+.con_tit {
+    width: 150PX;
+    font-weight: bold;
+}
+
+.payment {
+    margin:  0 0 20px;
+}
+
+.payment input {
+    height: 30px;
+}
+
+.pay_check label {
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+.pay_check input {
+    margin-right: 7px;
+}
+
+.pay_check label, input {cursor: pointer;}
+
+/* 이용약관 */
+.tos {
+    margin: 20px 0;
+    padding: 30px 30px 50px;
+    width: 90%;
+    height: 100px;
+    background: #dedede;
+    border-radius: 10px;
+}
+
+.tos p span {
+    color: #d63939;
+    font-weight: bold;
+}
+
+.tos label {
+    cursor: pointer;
+    float: right;
+    margin: 20px 0;
+    font-weight: bold;
+}
+
+.tos label input {
+    cursor: pointer;
+    margin-right: 10px;
+    width: 15px;
+    height: 15px;
+}
+
+/* 버튼 */
+.pay_btn {
+    cursor: pointer;
+    margin: 20px 0 20px 160px;
+    padding: 10px 0;
+    width: 300px;
+    background-color: #3E3636;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 17px;
+    letter-spacing: 2px;
+    transition: 0.5s;
+}
+
+.pay_btn:hover {
+    background-color: #5e5252;
+}

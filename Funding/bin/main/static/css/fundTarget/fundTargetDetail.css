@@ -1,3 +1,25 @@
+section {
+    margin: 30px auto 100px;
+    width: 1000px;
+}
+
+.s_title {
+    margin-left: 30px;
+}
+
+.title {
+    margin: 20px 0;
+}
+
+.con_hr_detail hr {
+    border-top: 1px solid #6a6a6a;
+}
+
+.con_hr hr {
+    margin: 40px 0;
+    border-top: 1px solid #6a6a6a;
+}
+
 /* con */
 .con {
     display: flex;
@@ -6,26 +28,15 @@
 }
 
 /* left */
-.left {margin-right: 50px;}
+.left {margin-right: 50px; margin-top: -50px;}
 
-.left .cate {
-    display: flex;
-    margin-bottom: 5px;
-}
-
-.left .cate a p {
-    cursor: pointer;
-}
-
-.left .cate a, .left .cate p {
-    margin-right: 10px;
+.left h3 {
+    margin: 15px 0; width: 300px;
+    letter-spacing: 1px;
 }
 
 .image {
     margin-top: 10px;
-    width: 250px;
-    height: 300px;
-    background-color: #dedede;
 }
 
 /* right */
@@ -36,17 +47,25 @@
 }
 
 .status {
+    cursor: default;
     display: inline-block;
     padding: 3px 15px;
     margin-bottom: 10px;
+    margin-right: 20px;
     border: 2px solid #B00E0E;
     border-radius: 20px;
     color: #B00E0E;
     font-weight: bold;
 }
 
+.con_del:hover {
+    text-decoration: underline;
+    text-underline-position: under;
+}
+
 .right .view {
     display: flex;
+    align-items: center;
     margin-bottom: 10px;
     font-size: 15px;
 }
@@ -54,9 +73,19 @@
 .right label {
     width: 110px;
     font-weight: bold;
+
 }
 
-.right p { }
+#fundCurrent p {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#fundAmount p {
+    font-size: 18px;
+    font-weight: bold;
+    color: #6a6a6a;
+}
 
 .funding {
     display: flex;
@@ -80,11 +109,10 @@
 
 .right hr {margin: 10px 0;}
 
-.btn {
+.con_btn {
     cursor: pointer;
-    margin: 5px 0 0;
-    padding: 10px 0;
-    width: 200px;
+    padding: 5px 0;
+    width: 100%;
     background-color: #3E3636;
     border-radius: 5px;
     color: #fff;
@@ -94,6 +122,94 @@
     transition: 0.5s;
 }
 
-.btn:hover {
+.con_btn:hover {
+    color: #fff;
     background-color: #5e5252;
+}
+
+/* 콘서트 내용 */
+.con_text {}
+
+/* 댓글 입력 */
+.con_commet {}
+
+.cmt_form {
+    display: inline-block;
+}
+.cmt_form form {
+    display: flex;
+    margin-bottom: 30px;
+}
+
+.int_cmt {
+    padding: 30px;
+    width: 890px;
+    margin-right: 10px;
+}
+
+.btn_cmt {
+    cursor: pointer;
+    float: right;
+    width: 100px;
+    background-color: #3E3636;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 15px;
+    letter-spacing: 2px;
+    transition: 0.5s;
+}
+
+.btn_cmt:hover {
+    background-color: #5e5252;
+}
+
+/* 댓글 보기 */
+.cmt_view {}
+
+.cmt {
+    margin: 20px auto;
+    padding: 30px;
+    width: 100%;
+    border: 1px solid #6a6a6a;
+    border-radius: 3px;
+}
+
+.cmt_head {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.cmt_head .id {
+    margin-right: 30px;
+    font-weight: bold;
+}
+
+.cmt_head .time {
+    color: #5e5252;
+    font-size: 14px;
+}
+
+.cmt_delete {
+    cursor: pointer;
+    margin-left: 30px;
+}
+.cmt_delete:hover {
+    text-decoration: underline;
+}
+
+/*----------- 진행도 바-----------*/
+progress {
+	height: 35px;
+	width: 250px;
+	-webkit-appearance: none;
+}
+::-webkit-progress-bar {
+	background-color: grey;
+	border-radius: 30px;
+}
+
+::-webkit-progress-value {
+	background-color: rgb(250, 78, 78);
+	border-radius: 30px;
 }

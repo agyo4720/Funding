@@ -14,6 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.funding.Categorie.Categorie;
+import com.funding.fundUser.FundUser;
 
 import lombok.RequiredArgsConstructor;
 
@@ -35,10 +36,10 @@ public class FundTargetService {
 			Integer minFund,
 			Integer fundAmount,
 			Categorie categorie,
-			String imgPath
+			String imgPath,
+			FundUser user
 			) {
 		
-		DateTimeFormatter form = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 		
 		FundBoardTarget target = new FundBoardTarget();
 		target.setSubject(subject);
@@ -49,13 +50,15 @@ public class FundTargetService {
 		target.setStatus("진행중");
 		target.setFundDurationS(LocalDate.now());
 		target.setFundDurationE(LocalDate.parse(fundDurationE, DateTimeFormatter.ISO_DATE));
-		target.setStartDate(LocalDateTime.parse(startTime, form));
+		target.setStartDate(LocalDateTime.parse(startTime));
 		target.setCreateDate(LocalDateTime.now());
 		target.setMinFund(minFund);
 		target.setFundCurrent(0);
 		target.setFundAmount(fundAmount);
 		target.setCategorie(categorie);
 		target.setImgPath(imgPath);
+		target.setFundUser(user);
+		target.setCurrentMember(0);
 		
 		fundTargetRepository.save(target);
 	}
@@ -72,10 +75,10 @@ public class FundTargetService {
 			Integer minFund,
 			Integer fundAmount,
 			Categorie categorie,
-			String filePath
+			String filePath,
+			FundUser user
 			) {
 		
-		DateTimeFormatter form = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 		
 		FundBoardTarget target = new FundBoardTarget();
 		target.setSubject(subject);
@@ -86,21 +89,28 @@ public class FundTargetService {
 		target.setStatus("진행중");
 		target.setFundDurationS(LocalDate.now());
 		target.setFundDurationE(LocalDate.parse(fundDurationE, DateTimeFormatter.ISO_DATE));
-		target.setStartDate(LocalDateTime.parse(startTime, form));
+		target.setStartDate(LocalDateTime.parse(startTime));
 		target.setCreateDate(LocalDateTime.now());
 		target.setMinFund(minFund);
 		target.setFundCurrent(0);
 		target.setFundAmount(fundAmount);
 		target.setCategorie(categorie);
 		target.setFilePath(filePath);
+		target.setFundUser(user);
+		target.setCurrentMember(0);
 		
 		fundTargetRepository.save(target);
 	}
 	
-	//fundAll
+	//fundAll(page)
 	public Page<FundBoardTarget> findAll(int page){
-		Pageable pageable = PageRequest.of(page, 3, Sort.by("createDate").descending());
+		Pageable pageable = PageRequest.of(page, 5, Sort.by("createDate").descending());
 		Page<FundBoardTarget> targetList = fundTargetRepository.findAll(pageable);
+		return targetList;
+	}
+	
+	public List<FundBoardTarget> findAllList(){
+		List<FundBoardTarget> targetList = fundTargetRepository.findAll();
 		return targetList;
 	}
 	
@@ -115,6 +125,18 @@ public class FundTargetService {
 		Pageable pageable = PageRequest.of(page, 3, Sort.by("createDate").descending());
 		Page<FundBoardTarget> targetList = fundTargetRepository.findByCategorie(categorie, pageable);
 		return targetList;
+	}
+	
+	//결재시 업데이트 됨
+	public void addTargetFund(FundBoardTarget fundBoardTarget) {
+		fundTargetRepository.save(fundBoardTarget);
+	}
+	
+	
+	//지정펀딩 삭제
+	public void delete(Integer id) {
+		Optional<FundBoardTarget> target = fundTargetRepository.findById(id);
+		fundTargetRepository.delete(target.get());
 	}
 	
 }

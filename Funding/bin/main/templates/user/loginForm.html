@@ -6,59 +6,34 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Let's Funding : 로그인</title>
-    <link rel="stylesheet" href="../../static/css/style.css" th:href="@{/css/style.css}">
+
+    <!-- CSS -->
     <link rel="stylesheet" href="../../static/css/user/loginForm.css" th:href="@{/css/user/loginForm.css}">
+    
+    <!-- favicon -->
+    <link rel="shortcut icon" href="/img/favicon/ms-icon-310x310.png" type="image/x-icon" />
 </head>
 <body>
     <!-- 홈페이지 상단 nav -->
-    <header>
-        <!-- 로고 -->
-        <div class="logo">
-            <a href="../main/home.html" th:href="@{/}">Let's Funding</a>
-        </div>
-
-        <!-- 메뉴 -->
-        <div class="menu">
-            <ul>
-                <li><a href="../fundTarget/fundTargetList.html" th:href="@{/fundTarget}">지정 펀딩</a></li>
-                <li><a href="#">미지정 펀딩</a></li>
-            </ul>
-        </div>
-
-        <!-- 검색 -->
-        <div class="search">
-            <form action="#">
-                <input class="int_search" type="text">
-                <input class="btn_search" type="submit">
-            </form>
-        </div>
-
-        <!-- 로그인 -->
-        <div class="login">
-            <ul>
-                <li><a href="../user/loginForm.html" th:href="@{/user/login}">로그인</a></li>
-                <li><a href="../user/userCreateForm.html" th:href="@{/user/register}">회원가입</a></li>
-            </ul>
-        </div>
-    </header>
+    <header th:replace="/main/nav"></header>
 
     <section>
-        <div id="title">
-            <h1>로그인</h1>
+        <div class="title">
+            <h2>로그인</h2>
         </div>
 
-        <form action="/login" method="post">
+        <form action="/user/login" method="post">
             <div class="int int_id">
                 <label for="id">아이디</label>
-                <input type="text" name="username">
+                <input id="id" type="text" name="username">
             </div>
             <div class="int int_pw">
                 <label for="pw">비밀번호</label>
-                <input type="password" name="password">
+                <input id="pw" type="password" name="password">
             </div>
             <div class="sub_login">
                 <input id="login" class="btn" type="submit" value="로그인">
-                <button class="btn">비밀번호 찾기</button>
+                <a class="btn_pw" href="/user/resetPwd">비밀번호 찾기</a>
                 <div class="btn_join">
                     <p>아직 회원이 아니십니까?</p>
                     <a href="../user/userCreateForm.html" th:href="@{/user/register}">회원가입</a>
@@ -68,3 +43,4 @@
     </section>
 </body>
 </html>
+

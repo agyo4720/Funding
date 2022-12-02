@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>송금하기</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+</head>
+<body>
+<section>
+    <h1>송금하기</h1>
+    <p>----------------------</p>
+    <form th:action="@{/pay/rem/remitRquest}" method="GET">
+	    <input type="text"  id="subMallId" placeholder="서브몰ID" name="subMallId" value="" />
+	    <input type="number"  id="payoutAmount" placeholder="정산할금액" name="payoutAmount" value="" />
+		<div class="int int_period">
+			<label for="duration">공연완료일</label>
+			<input class="fundDurationE" id="duration" type="date" name="payoutDate" th:min="${nowTime}" autocomplete="off">
+			<div class="errorList" style="display: none"></div>
+		</div>
+	    <button id="remit-button" type="submit">송금하기</button>
+    </form>
+</section>
+    <div class="home">
+        <a href="/">홈</a>
+    </div>
+<script>
+</script>
+</body>
+</html>

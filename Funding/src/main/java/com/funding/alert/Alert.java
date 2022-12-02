@@ -6,6 +6,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.funding.fundArtist.FundArtist;
+import com.funding.fundBoard.FundBoard;
+import com.funding.fundBoardTarget.FundBoardTarget;
 import com.funding.fundUser.FundUser;
 
 import lombok.Getter;
@@ -24,6 +27,32 @@ public class Alert {
 	
 	private String url;
 	
+	//어떤 알림인지 "댓글", "마감", "취소", "펀딩"
+	private String witchAlert;
+	
+	//알림 받을 사람
 	@ManyToOne
-	private FundUser fundUser_id;
+	private FundUser hostUser;
+	
+	//알림 받을 사람
+	@ManyToOne
+	private FundArtist hostArtist;
+	
+	//알림 발생 사람
+	@ManyToOne
+	private FundUser guestUser;
+	
+	//알림 발생 사람
+	@ManyToOne
+	private FundArtist guestArtist;
+	
+	
+	//알림 발생지
+	@ManyToOne
+	private FundBoardTarget fundBoardTarget;
+	
+	@ManyToOne
+	private FundBoard fundBoard;
+	
+	
 }

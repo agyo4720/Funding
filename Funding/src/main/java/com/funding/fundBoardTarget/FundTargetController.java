@@ -1,8 +1,11 @@
 package com.funding.fundBoardTarget;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
+import java.security.Principal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -22,9 +25,18 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.funding.Categorie.Categorie;
 import com.funding.Categorie.CategorieService;
+import com.funding.alert.AlertService;
 import com.funding.answer.Answer;
 import com.funding.answer.AnswerService;
+import com.funding.cancels.CancelsController;
+import com.funding.cancels.CancelsService;
 import com.funding.file.FileService;
+import com.funding.fundTargetList.FundTargetList;
+import com.funding.fundTargetList.FundTargetListService;
+import com.funding.fundUser.FundUser;
+import com.funding.fundUser.FundUserService;
+import com.funding.sale.Sale;
+import com.funding.sale.SaleRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,15 +48,38 @@ import lombok.extern.slf4j.Slf4j;
 public class FundTargetController {
 
 	private final FundTargetService fundTargetService;
+	private final FundTargetListService fundTargetListService;
 	private final CategorieService categorieService;
 	private final AnswerService answerService;
 	private final FileService fileService;
+	private final FundUserService fundUserService;
+	private final AlertService alertService;
+	private final SaleRepository saleRepository;
+	private final CancelsController cancelsController;
+	private final CancelsService cancelsService;
+
+	
 	
 	//글 작성폼 불러오기
 	@GetMapping("/form")
-	private String form(TargetForm targetForm, Model model) {
+	private String form(TargetForm targetForm, Model model,Principal principal) {
 		List<Categorie> cList = categorieService.findAll();
+		
+		//유저 확인 로직(현재는 권한 기능 없으니 임시로 열어둠)
+		if(principal != null) {
+			
+			log.info("현재 유저 이름 :" + principal.getName());
+			Optional<FundUser> user = fundUserService.findByuserName(principal.getName());
+			if(user.isEmpty()) {
+				return "/fundTarget/notUser";
+			}
+		}
+		
+		
+		String nowTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		
 		model.addAttribute("cList",cList);
+		model.addAttribute("nowTime", nowTime);
 		return "/fundTarget/fundTargetForm";
 	}
 	
@@ -53,11 +88,11 @@ public class FundTargetController {
 	@PostMapping("/form")
 	private String create(@Valid TargetForm targetForm,BindingResult bindingResult,
 			@RequestParam("categorie")Integer cid, @RequestParam(value="imgPath", defaultValue = "x")String imgPath
-			,@RequestParam(value="file", defaultValue = "x")MultipartFile files, Model model) throws IllegalStateException, IOException {
+			,@RequestParam(value="file", defaultValue = "x")MultipartFile files, Model model,Principal principal) throws IllegalStateException, IOException {
 		
-		String startTime = targetForm.getStartDate() + " " +  targetForm.getStartTime();
+		String startTime = targetForm.getStartDate();
 		Categorie categorie = categorieService.findById(cid);
-		List<Categorie> cList = categorieService.findAll();
+		List<Categorie> cList = categorieService.findAll();		
 		
 		if(imgPath.equals("x") && files.isEmpty()) {
 			bindingResult.reject("noImgError", "이미지를 선택해 주세요");
@@ -68,6 +103,9 @@ public class FundTargetController {
 			return "/fundTarget/fundTargetForm";
 		}
 		
+		Optional<FundUser> user = fundUserService.findByuserName(principal.getName());
+	
+	
 		if(!imgPath.equals("x") && files.isEmpty()) {
 			fundTargetService.createimg(
 					targetForm.getSubject(), 
@@ -80,7 +118,8 @@ public class FundTargetController {
 					targetForm.getMinFund(),
 					targetForm.getFundAmount(),
 					categorie,
-					imgPath
+					imgPath,
+					user.get()
 					);
 		}else if(!files.isEmpty()){
 			
@@ -97,7 +136,8 @@ public class FundTargetController {
 					targetForm.getMinFund(),
 					targetForm.getFundAmount(),
 					categorie,
-					savePath
+					savePath,
+					user.get()
 					);
 		}
 		
@@ -109,6 +149,8 @@ public class FundTargetController {
 	@RequestMapping("")
 	public String showList(Model model,@RequestParam(value = "page", defaultValue="0") int page,
 			@RequestParam(value = "cate", defaultValue="0")Integer cateId) {
+		
+
 		//모든 카테고리 표시
 		if(cateId == 0) {
 			Page<FundBoardTarget> targetList = fundTargetService.findAll(page);
@@ -131,20 +173,50 @@ public class FundTargetController {
 			model.addAttribute("targetList", targetList);
 			return "fundTarget/fundTargetList";
 		}
-		
+
 	}
-	
+
 	//디테일 창으로
 	@RequestMapping("/detail/{id}")
-	public String showDetail(Model model, @PathVariable("id")Integer id) {
+	public String showDetail(Model model, @PathVariable("id")Integer id,Integer alertId, Principal principal) {
 		FundBoardTarget fundBoardTarget = fundTargetService.findById(id);
 		List<Answer> aList = answerService.findByFundBoardTarget(fundBoardTarget);
+		List<FundTargetList> ftList = fundTargetListService.findByFundBoardTarget(fundBoardTarget);
 		
+		//환불
+		FundBoardTarget nick = fundTargetService.findById(id);
+		List<Sale> sale = saleRepository.findByFundBoardTarget(nick.getSubject());
+		for(int i=0; i<sale.size(); i++){
+			sale.get(i).getPayCode();
+			model.addAttribute("payCode",sale.get(i).getPayCode());
+		}
+
+		
+		//알림삭제
+		if(alertId != null) {
+			alertService.deleteAlert(alertId);
+		}
+		
+		//펀딩 유무 확인
+		boolean result = false;
+		if(principal != null) {
+			for(FundTargetList e : ftList) {
+				String username = e.getFundUser().getUsername();
+				String loginName = principal.getName();
+				if(username.equals(loginName)) {
+					result = true;
+				}
+			}
+		}
+		
+		
+		model.addAttribute("result", result);
 		model.addAttribute("aList", aList);
 		model.addAttribute("fundBoardTarget", fundBoardTarget);
 		return "/fundTarget/fundTargetDetail";
 	}
 	
+	//이미지 보이기
 	@GetMapping("/img/{id}")
 	@ResponseBody
 	public Resource showImg(@PathVariable("id")Integer id) throws IOException {
@@ -156,6 +228,34 @@ public class FundTargetController {
 	
 	
 	
-	
+	//지정펀딩 삭제
+	@RequestMapping("/delete/{id}")
+	public String deleteTarget(@PathVariable("id")Integer id) throws Exception {
+
+		//환불
+		FundBoardTarget nick = fundTargetService.findById(id);
+		List<Sale> sale = saleRepository.findByFundBoardTarget(nick.getSubject());
+		for(int i=0; i<sale.size(); i++){
+			if(sale.get(i).getCheckin().equals("결제완료")) {
+				sale.get(i).getPayCode();
+				sale.get(i).setCheckin("게시글 삭제");
+				
+				cancelsController.totalCancel(sale.get(i).getPayCode(),"게시글 삭제");
+				cancelsService.totalCancelInfo(sale.get(i).getOrederId(), Integer.valueOf(sale.get(i).getPayMoney()).intValue(), sale.get(i).getOrderName(), 
+						sale.get(i).getCheckin(),sale.get(i).getFundUser(),sale.get(i).getUsername());
+			}
+		}
+		
+		log.info("삭제컨트롤로 실행됨");
+		//지정리스트 삭제
+		List<FundTargetList> fList = fundTargetListService.findByFundBoardTarget(nick);
+		alertService.deleteTargetThenAlert(fList);
+		for(int i=0;i>fList.size();i++) {
+			fundTargetListService.delete(fList.get(i).getFundUser(), nick);
+		}
+		
+		fundTargetService.delete(id);
+		return "redirect:/";
+	}
 	
 }

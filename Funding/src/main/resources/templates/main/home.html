@@ -6,43 +6,39 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Let's Funding</title>
-    <link rel="stylesheet" href="../../static/css/style.css" th:href="@{/css/style.css}">
+
+    <!-- CSS -->
     <link rel="stylesheet" href="../../static/css/main/home.css" th:href="@{/css/main/home.css}">
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="img/favicon/ms-icon-310x310.png" type="image/x-icon" />
 </head>
 <body>
     <!-- 홈페이지 상단 nav -->
-    <header>
-        <!-- 로고 -->
-        <div class="logo">
-            <a href="../main/home.html" th:href="@{/}">Let's Funding</a>
-        </div>
-
-        <!-- 메뉴 -->
-        <div class="menu">
-            <ul>
-                <li><a href="../fundTarget/fundTargetList.html" th:href="@{/fundTarget}">지정 펀딩</a></li>
-                <li><a href="#">미지정 펀딩</a></li>
-            </ul>
-        </div>
-
-        <!-- 검색 -->
-        <!-- <div class="search">
-            <form action="#" method="get">
-                <input class="int_search" type="text">
-                <input class="btn_search" type="submit" value="검색">
-            </form>
-        </div> -->
-
-        <!-- 로그인 -->
-        <div class="login">
-            <ul>
-                <li><a href="../user/loginForm.html" th:href="@{/user/login}">로그인</a></li>
-                <li><a href="../user/userCreateForm.html" th:href="@{/user/register}">회원가입</a></li>
-            </ul>
-        </div>
-    </header>
-
+    <header th:replace="/main/nav"></header>
+    
     <section>
+		<h2>지정 펀딩</h2>
+		<div class="sec_fund">
+			<div class="list_form" th:each="target : ${page}">
+				<div class="con_list">
+					<a href="../fundTarget/fundTargetDetail.html" th:href="@{|/fundTarget/detail/${target.id}|}">
+						<div class="image">
+							<div th:if="${target.imgPath != null}">
+								<img th:src="${target.imgPath}" height="265">
+							</div>
+							<div th:if="${target.imgPath == null}">
+								<img th:src="|/fundTarget/img/${target.id}|" height="265">
+							</div>
+						</div>
+						<div class="con">
+							<p th:text="${target.subject}">공연 이름</p>
+						</div>
+					</a>
+				</div>
+			</div>
+		</div>
+
 
     </section>
 </body>

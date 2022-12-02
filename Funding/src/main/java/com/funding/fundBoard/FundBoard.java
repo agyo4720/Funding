@@ -1,5 +1,6 @@
 package com.funding.fundBoard;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -19,6 +20,7 @@ import com.funding.fundArtist.FundArtist;
 import com.funding.fundArtistList.FundArtistList;
 import com.funding.fundList.FundList;
 import com.funding.fundUser.FundUser;
+import com.funding.starScore.StarScore;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -35,19 +37,21 @@ public class FundBoard {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;	// 고유번호
 	
+	private String CategorieName; // 카테고리 이름
+	
 	private String subject; // 제목
 	
 	private String content; // 내용
 	
 	private String place; // 장소
 	
-	private LocalDateTime startDate; // 공연 시작 일자
+	private LocalDateTime startDateTime; // 공연 시작 일자
+	
+	private LocalDate fundDuration; // 펀딩 기간
 	
 	private String runtime; // 공연 시간
 	
 	private String state; // 펀딩 상태
-	
-	private String fundDuration; // 펀딩 기간
 	
 	private Integer minFund; // 1인 최소 펀딩 금액
 	
@@ -60,6 +64,12 @@ public class FundBoard {
 	private Integer vote; // 별점 투표 수
 	
 	private Integer star; // 별점 평균
+	
+	private LocalDateTime createDate; // 작성일시
+	
+	private String imgPath;
+	
+	private String filePath;
 	
 	// 제약 조건
 	@ManyToOne
@@ -78,10 +88,13 @@ public class FundBoard {
 	private List<FundArtistList> fundArtistList; // 신청한 공연자 목록
 	
 	@OneToMany(mappedBy = "fundBoard", cascade = CascadeType.REMOVE)
-	private List<Answer> answer; // 질문들
+	private List<Answer> answerList; // 질문들
 	
 	@OneToMany(mappedBy = "fundBoard", cascade = CascadeType.REMOVE)
-	private List<AnswerAns> answerAns; // 답변들
+	private List<AnswerAns> answerAnsList; // 답변들
+	
+	@OneToMany(mappedBy = "fundBoard", cascade = CascadeType.REMOVE)
+	private List<StarScore> starScoreList;
 	// 제약 조건
 	
 }

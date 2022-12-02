@@ -6,63 +6,43 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Let's Funding</title>
-    <link rel="stylesheet" href="../../static/css/style.css" th:href="@{/css/style.css}">
+
+    <!-- CSS -->
     <link rel="stylesheet" href="../../static/css/fundTarget/fundTargetDetail.css" th:href="@{/css/fundTarget/fundTargetDetail.css}">
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="/img/favicon/ms-icon-310x310.png" type="image/x-icon" />
 </head>
 <body>
     <!-- 홈페이지 상단 nav -->
-    <header>
-        <!-- 로고 -->
-        <div class="logo">
-            <a href="../main/home.html" th:href="@{/}">Let's Funding</a>
-        </div>
-
-        <!-- 메뉴 -->
-        <div class="menu">
-            <ul>
-                <li><a href="../fundTarget/fundTargetList.html" th:href="@{/fundTarget}">지정 펀딩</a></li>
-                <li><a href="#">미지정 펀딩</a></li>
-            </ul>
-        </div>
-
-        <!-- 검색 -->
-        <!-- <div class="search">
-            <form action="#" method="get">
-                <input class="int_search" type="text">
-                <input class="btn_search" type="submit" value="검색">
-            </form>
-        </div> -->
-
-        <!-- 로그인 -->
-        <div class="login">
-            <ul>
-                <li><a href="../user/loginForm.html" th:href="@{/user/login}">로그인</a></li>
-                <li><a href="../user/userCreateForm.html" th:href="@{/user/register}">회원가입</a></li>
-            </ul>
-        </div>
-    </header>
+    <header th:replace="/main/nav"></header>
 
     <section>
+        <!-- 콘서트 정보 -->
         <div class="con">
             <div class="left">
-                <div class="cate">
-                    <a href="../fundTarget/fundTargetList.html">
-                        <p>지정 펀딩 > 카테고리1</p>
-                    </a>
-                </div>
-                <h2 th:text="${fundBoardTarget.subject}">공연 이름</h2>
+                <a class="cate" href="/fundTarget" th:text="|지정펀딩 > ${fundBoardTarget.categorie.categorieName}|">
+                    지정 펀딩 > 카테고리1</a>
+                <h3 th:text="${fundBoardTarget.subject}">공연 이름</h3>
                 <div class="image">
 					<div th:if="${fundBoardTarget.imgPath != null}">
-						<img th:src="${fundBoardTarget.imgPath}" width="200" height="265">
+						<img th:src="${fundBoardTarget.imgPath}" height="350">
 					</div>
 					<div th:if="${fundBoardTarget.imgPath == null}">
-						<img th:src="|/fundTarget/img/${fundBoardTarget.id}|" width="200" height="265">
+						<img th:src="|/fundTarget/img/${fundBoardTarget.id}|" height="350">
 					</div>
                 </div>
             </div>
             <div class="right">
-                <div class="status">
-                    <div th:text="${fundBoardTarget.status}">상태</div>
+                <div class="view">
+                    <div class="status">
+                        <div th:text="${fundBoardTarget.status}">상태</div>
+                    </div>
+                    <a class="con_del" th:href="@{|/fundTarget/delete/${fundBoardTarget.id}|}">삭제</a>
+                </div>
+                <div class="view">
+                    <label for="writer">작성자</label>
+                    <p th:text="${fundBoardTarget.fundUser.username}">글쓴이</p>
                 </div>
                 <div class="view">
                     <label for="artist">아티스트</label>
@@ -70,7 +50,7 @@
                 </div>
                 <div class="view">
                     <label for="startDate">공연일</label>
-                    <p th:text="${fundBoardTarget.startDate}">공연일</p>
+                    <p th:text="${#temporals.format(fundBoardTarget.startDate, 'yyyy-MM-dd HH:mm')}">공연일</p>
                 </div>
                 <div class="view">
                     <label for="place">공연장</label>
@@ -81,48 +61,123 @@
                     <p th:text="|${fundBoardTarget.runtime}분|">공연시간</p>
                 </div>
                 
-                <hr/>
+                <div class="con_hr_detail">
+                    <hr/>
+                </div>
 
+
+                
+                <!-- <div class="view">
+                    <div class="progress" style="height: 10px">
+                        <div class="progress-bar" style="width: 40%; height: 10px"></div>
+                    </div>
+                </div> -->
+                    
                 <div>
-                    <div class="view">
-                        <label for="duration">펀딩기간</label>
-                        <p th:text="${fundBoardTarget.fundDurationS}
-                         + ' ~ ' + ${fundBoardTarget.fundDurationE}">2022.11.19 (토) ~ 2022.12.19 (일)</p>
-                    </div>
-                    <div class="view funding">
-                        <label for="funding">펀딩금액</label>
-                        <p th:text="${fundBoardTarget.fundCurrent}">7,600,000</p>
-                        <p>/</p>
-                        <p th:text="${fundBoardTarget.fundAmount}">8,000,000</p>
-                    </div>
-                    <div class="view">
-                        <label for="count">현재 인원</label>
-                        <p>76명</p>
-                    </div>
-                    <div class="view minFund">
-                        <label for="minFund">최소 펀딩 금액</label>
-                        <p th:text="${fundBoardTarget.minFund}">100,000원</p>
-                    </div>
-                    <button class="btn">펀딩하기</button>
+                	<progress th:value="|${fundBoardTarget.fundCurrent * 100 / fundBoardTarget.fundAmount}|" max="100"></progress>
+                	<span th:text="|${fundBoardTarget.fundCurrent * 100 / fundBoardTarget.fundAmount}%|"></span>
+                </div>
+                
+                <div class="view" id="fundCurrent">
+                    <label for="fundCurrent">현재 펀딩 금액</label>
+                    <p th:text="${#numbers.formatInteger(fundBoardTarget.fundCurrent, 1,'COMMA')+' 원'}">7,600,000</p>
+                </div>
+                <div class="view" id="fundAmount">
+                    <label for="fundAmount">총 펀딩 금액</label>
+                    <p th:text="${#numbers.formatInteger(fundBoardTarget.fundAmount, 3,'COMMA')+' 원'}">8,000,000</p>
+                </div>
+
+                <div class="view">
+                    <label for="duration">펀딩기간</label>
+                    <p th:text="${fundBoardTarget.fundDurationS}
+                        + ' ~ ' + ${fundBoardTarget.fundDurationE}">2022.11.19 (토) ~ 2022.12.19 (일)</p>
+                </div>
+                <div class="view">
+                    <label for="count">현재 인원</label>
+                    <p th:text="${fundBoardTarget.CurrentMember}">76명</p>
+                </div>
+                <div class="view minFund">
+                    <label for="minFund">최소 펀딩 금액</label>
+                    <p th:text="${#numbers.formatInteger(fundBoardTarget.minFund, 3,'COMMA')+' 원'}">100,000원</p>
+                </div>
+                <div sec:authorize="hasRole('ROLE_USER')">
+                    <button th:if="${result == true}" class="con_btn" th:onclick="'location.href=\''+ @{/pay/can/tarCancel(paymentKey=${payCode})} + '\''" type="submit">환불하기</button>
+                    <button th:if="${result == false}"class="con_btn" th:onclick="'location.href=\''+ @{|/pay/tossPayTar/${fundBoardTarget.id}|} + '\''">펀딩하기</button>
                 </div>
             </div>
         </div>
 
-        <div th:text="${fundBoardTarget.content}">설명</div>
+        <!-- // 콘서트 정보 -->
+        <!-- <nav id="navbar-example2" class="navbar bg-light px-3 mb-3">
+            <ul class="nav nav-pills">
+                <li class="nav-item">
+                    <a class="nav-link" href="#scrollspyHeading1">First</a>
+                </li>
+            </ul>
+            <ul class="nav nav-pills">
+                <li class="nav-item">
+                    <a class="nav-link" href="#scrollspyHeading2">Second</a>
+                </li>
+            </ul>
+        </nav> -->
+        
+        <div class="con_hr">
+            <hr/>
+        </div>
 
-        <div>댓글</div>
-        <div>
-            <form th:action="@{|/answer/target/create/${fundBoardTarget.id}|}" method="POST">
-                <input type="text" name="content" value=""/>
-                <button type="submit">댓글 달기</button>
-            </form>
+        <!-- 콘서트 내용 -->
+        <div class="con_text">
+            <div class="title">
+                <h2>콘서트 내용</h2>
+            </div>
+            <div th:utext="${fundBoardTarget.content}">설명</div>
         </div>
         
-        <div th:each="answer : ${aList}">
-            <div th:text="${answer.content}">댓글 내용</div>
-            <div th:text="${#temporals.format(answer.createDate, 'MM-dd HH:mm:ss')}">댓글 시간</div>
-            <div><a th:href="@{|/answer/delete/${answer.id}?location=target&id=${fundBoardTarget.id}|}">삭제</a></div>
+        <div class="con_hr">
+            <hr/>
         </div>
-    </section>
+
+        <!-- 댓글 -->
+        <div class="con_comment">
+            <div class="title">
+                <h2>댓글</h2>
+            </div>
+            
+            <div class="cmt_form">
+                <form th:action="@{|/answer/target/create/${fundBoardTarget.id}|}" method="POST">
+                    <textarea class="int_cmt" name="content" placeholder="내용을 입력하세요."></textarea>
+                    <button class="btn_cmt" type="submit">등록</button>
+                </form>
+            </div>
+            
+            <div class="cmt_view" th:each="answer : ${aList}">
+                <div class="cmt">
+                    <div class="cmt_head">
+                        <p class="id" th:text="${answer.fundUser} != null ? 
+                        ${answer.fundUser.username} : ${answer.fundArtist.username}">아이디</p>
+                        <p class="time" th:text="${#temporals.format(answer.createDate, 'yyyy-MM-dd HH:mm')}">2022-11-21 10:25</p>
+                        <a class="cmt_delete" th:href="@{|/answer/delete/${answer.id}?location=target&id=${fundBoardTarget.id}|}">삭제</a>
+                    </div>
+                    <p th:text="${answer.content}">댓글 내용</p>
+                </div>
+            </div>
+        </div>
+	</section>
+	<script>
+		let answerBtn = document.querySelector('.btn_cmt')
+		answerBtn.addEventListener('click', checkAns)
+		
+		
+		//댓글 빈칸 금지
+		function checkAns(e){
+			var input = document.querySelector('.int_cmt').value
+			console.log(input)
+			if(input == ""){
+				e.preventDefault();
+				alert("빈칸은 안돼요")
+			}
+		}
+	
+	</script>
 </body>
 </html>

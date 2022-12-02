@@ -30,10 +30,10 @@ public class AnswerAns {
 	private LocalDateTime createDate;
 	
 	@ManyToOne
-	private Answer answerId;
+	private Answer answer;
 	
 	@ManyToOne
-	private FundUser fundUserId;
+	private FundUser fundUser;
 	
 	@ManyToOne
 	private FundBoard fundBoard;

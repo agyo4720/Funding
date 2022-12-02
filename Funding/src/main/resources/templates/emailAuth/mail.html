@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+
+    <style>
+
+
+    </style>
+</head>
+<body>
+	<div>
+        <h1 style="font-size: 40px; font-weight: bold;">Let's Funding</h1>
+		<h2>인증번호:</h2>
+        <h2 th:text="${code}" style="color: #37E2D5">112233</h2>
+        <p>
+            안녕하세요!<br>
+            <h3 style="display: inline;">"Let's Funding"</h3> 의 계정 본인 확인 메일입니다.<br><br>
+            위의 인증번호를 입력하고 본인 인증을 완료하여 주십시오.<br>
+            인증번호는 10분 후에 만료됩니다.<br>
+            10분 내에 입력하여 주시기 바랍니다.<br>
+        </p>
+	
+	</div>
+	
+</body>
+</html>

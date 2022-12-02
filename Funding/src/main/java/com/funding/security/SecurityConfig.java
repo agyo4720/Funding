@@ -10,6 +10,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import com.funding.user.LoginSuccessHandler;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfig {
 	
 	private final UserSecurityService userSecurityService;
+	private final LoginSuccessHandler loginSuccessHandler;
 	
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -35,17 +39,22 @@ public class SecurityConfig {
         // 로그인 주소
         .and()
         .formLogin()
-        .loginPage("/login")
+        .loginPage("/user/login")
         .defaultSuccessUrl("/")
+        .successHandler(loginSuccessHandler)
         
-        
-        
+        // 로그아웃
+        .and()
+        .logout()
+        .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
+        .logoutSuccessUrl("/")
+        .invalidateHttpSession(true)
                 ;
+        
+        
         return http.build();
     }
-    
-    
-    
+        
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

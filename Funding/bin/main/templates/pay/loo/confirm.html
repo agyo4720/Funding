@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Let's Funding</title>
+
+	<!-- CSS -->
+    <link rel="stylesheet" href="/css/pay/loo/confirm.css">
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="img/favicon/ms-icon-310x310.png" type="image/x-icon" />
+
+	<!-- fontawsome -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+</head>
+<body>
+	<!-- 홈페이지 상단 nav -->
+	<header th:replace="/main/nav"></header>
+
+	<section>
+        <!-- nav -->
+        <nav th:replace="/main/usernav"></nav>
+
+		<!-- payinfo -->
+		<div class="payinfo">
+			<div class="title">
+				<h2>결제 내역</h2>
+			</div>
+
+			<table>
+				<thead>
+					<th>No</th>
+					<th>구분</th>
+					<th>공연</th>
+					<th>가격</th>
+					<th>결제일</th>
+					<th>상태</th>
+					<th>환불일</th>
+					<th>환불 사유</th>
+					<th>환불</th>
+				</thead>
+				<tr th:each="list, i : ${sList}">
+					<td th:text="${i.count}">No</td>
+					<td>
+						<span th:if="${list.fundBoardTarget != null}">지정</span>
+						<span th:if="${list.fundBoard != null}" >미지정</span>
+					</td>
+					<td>
+						<span th:if="${list.fundBoardTarget != null}" th:text="${list.fundBoardTarget}"></span>
+						<span th:if="${list.fundBoard != null}" th:text="${list.fundBoard}"></span>
+					</td>
+					<td th:text="|${#numbers.formatInteger(list.payMoney, 3, 'COMMA')}원|">가격</td>
+					<td th:text="${#temporals.format(list.payDate, 'yyyy-MM-dd HH:mm')}">결제날짜</td>
+					<td th:text="${list.checkin}">상태</td>
+					<td th:text="${#temporals.format(list.cancelDate, 'yyyy-MM-dd HH:mm')}">환불일</td>
+					<td th:text="${list.cancelReason}">환불 사유</td>
+					<td>
+						<button th:if="${list.fundBoardTarget} != null and ${list.checkin} == 결제완료 " th:onclick="'location.href=\'' + @{/pay/can/tarCancel(paymentKey=${list.payCode})} + '\''" type="submit">환불하기</button>
+						<button th:if="${list.fundBoard} != null and ${list.checkin} == 결제완료" th:onclick="'location.href=\'' + @{/pay/can/cancel(paymentKey=${list.payCode})} + '\''" type="submit">환불하기</button>
+					</td>
+				</tr>
+			</table>
+
+			<!-- 페이징 -->
+			<div class="page" th:if="${!sList.isEmpty()}">
+				<div th:if="${sList.number > 0}">
+					<a th:href="@{|?page=${sList.number-1}|}">
+						<i class="fas fa-chevron-left"></i>
+					</a>
+				</div>
+				<div th:each="page : ${#numbers.sequence(0,sList.totalPages-1)}"
+					th:if="${sList.number-5 < page and sList.number+5 > page}">
+					<a th:classappend="${page == sList.number} ? 'active'" th:text="${page+1}" 
+						th:href="@{|?page=${page}|}"></a>
+				</div>
+				<div th:if="${sList.number < sList.totalPages-1}">
+					<a th:href="@{|?page=${sList.number+1}|}">
+						<i class="fas fa-chevron-right"></i>
+					</a>
+				</div>
+			</div>
+			<!-- //페이징 -->
+		</div>
+	</section>
+
+</body>
+</html>

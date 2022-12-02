@@ -1,0 +1,165 @@
+<!-- 로그인 -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Let's Funding : 비밀번호 찾기</title>
+
+
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../../static/css/user/loginForm.css" th:href="@{/css/user/loginForm.css}">
+    
+    <!-- favicon -->
+    <link rel="shortcut icon" href="/img/favicon/ms-icon-310x310.png" type="image/x-icon" />
+</head>
+<body>
+    <!-- 홈페이지 상단 nav -->
+    <header th:replace="/main/nav"></header>
+
+    <section id="sec1">
+        <div class="title">
+            <h2>비밀번호 찾기</h2>
+            <p>비밀번호를 찾고자하는 아이디를 입력해주세요.</p>
+        </div>
+
+        	<input type="text" id="username" name="username" placeholder="ID를 입력하세요"></input>
+        	<br>
+        	<input id="btn1" type="button" value="다음"></input>
+    </section>
+    
+     <section hidden id="sec2">
+        <div class="title">
+            <h2>비밀번호 찾기</h2>
+            <p>가입시 입력한 이메일로 발송된 인증코드 6자리를 입력하세요.</p>
+        </div>
+
+    	<input type="text" name="code" id="code" placeholder="인증번호 6자리"></input>
+    	<br>
+    	<input id="btn2" type="button" value="다음"></input>
+    </section>
+    
+    <section hidden id="sec3">
+        <div class="title">
+            <h2>비밀번호 재설정</h2>
+            <p>사용 할 비밀번호를 입력하세요.</p>
+        </div>
+
+		<form action="/user/resetPwdConfirm" id="form" method="POST">
+	    	<input type="password" name="pwd" id="pwd" placeholder="비밀번호"></input>
+	    	<div id="pwd1Result"></div>
+	    	<br>
+	    	<input type="password" name="pwdCheck" id="pwdCheck" placeholder="비밀번호 확인"></input>
+	    	<div id="pwd2Result"></div>
+	    	<br>
+	    	<input id="btn3" type="submit" value="완료"></input>
+	    </form>
+    </section>
+</body>
+</html>
+
+<script>
+	let code;
+	
+	$('#btn1').click(function(){
+		
+		$.ajax({
+			url:'/user/resetPwd',
+			type:'POST',
+			data: {
+				username:$('#username').val()
+			},
+			success:
+				function(res){
+					code = res;
+					$('#sec2').removeAttr('hidden')
+					$('#sec1').attr('hidden','hidden')
+					console.log(res)
+				}
+				
+			,
+			error: function(xhr){
+				console.log(xhr);
+				alert('아이디를 찾을 수 없습니다.');
+			}
+		})
+	})
+	
+	$('#btn2').on('click',function(){
+		
+		if($('#code').val() != code){
+			alert('인증번호가 일치하지 않습니다.')
+		}
+		
+		if($('#code').val() == code){
+			$('#sec2').attr('hidden','hidden')
+			$('#sec3').removeAttr('hidden')
+			
+		}
+		
+	})
+	
+	// 비밀번호 유효성 검사
+	$('#pwd').focusout(function() {
+	    	let pwdval = $('#pwd').val()
+	        let pwdcheck =  /^[a-zA-Z0-9~!@#$%^&*()`_+?:;'"{}]{1,16}$/
+		
+	        if (!pwdcheck.test(pwdval) || pwdval.length<8){
+				$('#pwd1Result').html('비밀번호는 영대소문자,숫자로 구성된 8글자 이상으로 조합하시오.')
+	        	return false
+	        }
+	        $("#pwd1Result").html('')
+		});
+		
+		$('#form').on('submit', function() {
+			let pwdval = $('#pwd').val()
+	        let pwdcheck =  /^[a-zA-Z0-9~!@#$%^&*()`_+?:;'"{}]{1,16}$/
+		
+	        if (!pwdcheck.test(pwdval) || pwdval.length<8){
+				$('#pwd1Result').html('비밀번호는 영대소문자,숫자로 구성된 8글자 이상으로 조합하시오.')
+				$('#pwd').focus()
+	        	return false
+	        }
+	        $("#pwd1Result").html('')
+		})
+	
+		$('#pwdCheck').focusout(function() {
+			let pwdval = $('#pwd').val()
+	        let pwdokval = $('#pwdCheck').val()
+	    
+        	if (pwdokval){
+            	if (pwdval!==pwdokval){
+					$('#pwd2Result').html('비밀번호가 일치하지 않습니다.')
+                    return false
+                } 
+	            } else {
+					$('#pwd2Result').html('비밀번호확인을 입력하시오.')
+	                return false
+	            }
+	        
+	        $("#pwd2Result").html('')
+		});
+		
+		$('#form').on('submit', function() {
+			let pwdval = $('#pwd').val()
+	        let pwdokval = $('#pwdCheck').val()
+	    
+        	if (pwdokval){
+            	if (pwdval!==pwdokval){
+					$('#pwd2Result').html('비밀번호가 일치하지 않습니다.')
+					$('#pwdCheck').focus()
+                    return false
+                } 
+	            } else {
+					$('#pwd2Result').html('비밀번호확인을 입력하시오.')
+					$('#pwd2').focus()
+	                return false
+	            }
+	        
+	        $("#pwd2Result").html('')
+		})
+	
+</script>
+

@@ -1,0 +1,199 @@
+section {
+    margin: 30px auto 100px;
+    width: 1000px;
+}
+
+.s_title {
+    margin-left: 30px;
+}
+
+.title {
+    margin: 20px 0;
+}
+
+.con_hr_detail hr {
+    border-top: 1px solid #6a6a6a;
+}
+
+.con_hr hr {
+    margin: 40px 0;
+    border-top: 1px solid #6a6a6a;
+}
+
+/* con */
+.con {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* left */
+.left {margin-right: 50px; margin-top: -50px;}
+
+.left h3 {
+    margin: 15px 0; width: 300px;
+    letter-spacing: 1px;
+}
+
+.image {
+    margin-top: 10px;
+}
+
+/* right */
+.right {
+    border: 0.1px solid #707070;
+    border-radius: 20px;
+    padding: 30px;
+}
+
+.status {
+    cursor: default;
+    display: inline-block;
+    padding: 3px 15px;
+    margin-bottom: 10px;
+    margin-right: 20px;
+    border: 2px solid #B00E0E;
+    border-radius: 20px;
+    color: #B00E0E;
+    font-weight: bold;
+}
+
+.con_del:hover {
+    text-decoration: underline;
+    text-underline-position: under;
+}
+
+.right .view {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 15px;
+}
+
+.right label {
+    width: 110px;
+    font-weight: bold;
+
+}
+
+#fundCurrent p {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#fundAmount p {
+    font-size: 18px;
+    font-weight: bold;
+    color: #6a6a6a;
+}
+
+.funding {
+    display: flex;
+    align-items: center;
+}
+
+.funding p {font-weight: bold; font-size: 20px;}
+.funding p:nth-child(3) {margin: 0 5px;}
+.funding p:nth-child(4) {color: #6a6a6a;}
+
+.minFund {
+    display: flex;
+    align-items: center;
+}
+
+.minFund p {
+    color: #B00E0E;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.right hr {margin: 10px 0;}
+
+.con_btn {
+    cursor: pointer;
+    padding: 5px 0;
+    width: 100%;
+    background-color: #3E3636;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 18px;
+    letter-spacing: 2px;
+    transition: 0.5s;
+}
+
+.con_btn:hover {
+    color: #fff;
+    background-color: #5e5252;
+}
+
+/* 콘서트 내용 */
+.con_text {}
+
+/* 댓글 입력 */
+.con_commet {}
+
+.cmt_form {
+    display: inline-block;
+}
+.cmt_form form {
+    display: flex;
+    margin-bottom: 30px;
+}
+
+.int_cmt {
+    padding: 30px;
+    width: 890px;
+    margin-right: 10px;
+}
+
+.btn_cmt {
+    cursor: pointer;
+    float: right;
+    width: 100px;
+    background-color: #3E3636;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 15px;
+    letter-spacing: 2px;
+    transition: 0.5s;
+}
+
+.btn_cmt:hover {
+    background-color: #5e5252;
+}
+
+/* 댓글 보기 */
+.cmt_view {}
+
+.cmt {
+    margin: 20px auto;
+    padding: 30px;
+    width: 100%;
+    border: 1px solid #6a6a6a;
+    border-radius: 3px;
+}
+
+.cmt_head {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.cmt_head .id {
+    margin-right: 30px;
+    font-weight: bold;
+}
+
+.cmt_head .time {
+    color: #5e5252;
+    font-size: 14px;
+}
+
+.cmt_delete {
+    cursor: pointer;
+    margin-left: 30px;
+}
+.cmt_delete:hover {
+    text-decoration: underline;
+}

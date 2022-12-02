@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.funding.answerAns.AnswerAns;
+import com.funding.fundArtist.FundArtist;
 import com.funding.fundBoard.FundBoard;
 import com.funding.fundBoardTarget.FundBoardTarget;
 import com.funding.fundUser.FundUser;
@@ -39,8 +40,11 @@ public class Answer {
 	private FundBoardTarget fundBoardTarget;
 	
 	@ManyToOne
-	private FundUser fundUserId;
+	private FundUser fundUser;
 	
-	@OneToMany(mappedBy = "answerId", cascade = CascadeType.REMOVE)
+	@ManyToOne
+	private FundArtist fundArtist;
+	
+	@OneToMany(mappedBy = "answer", cascade = CascadeType.REMOVE)
 	private List<AnswerAns> answerAnsList;
 }

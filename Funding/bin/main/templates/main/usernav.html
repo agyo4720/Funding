@@ -1,0 +1,38 @@
+<link rel="stylesheet" href="/css/main/usernav.css">
+
+<nav>
+    <h3>마이페이지</h3>
+
+    <hr/>
+	
+    <ul>
+        <li><a href="/user/myInfo/">회원 정보</a></li>
+        <li><a href="/pay/loo/confirm">결제</a></li>
+        <li><a href="/categorie/list">카테고리 리스트</a></li>
+        <li sec:authorize="hasRole('ROLE_ARTIST')"><a href="/pay/rem/enroll">계좌등록</a></li>
+        <li sec:authorize="hasRole('ROLE_ARTIST')"><a href="/pay/rem/revise">계좌수정</a></li>
+        <li sec:authorize="hasRole('ROLE_ARTIST')"><a href="/pay/rem/deletion">계좌삭제</a></li>
+        <li sec:authorize="hasRole('ROLE_ARTIST')"><a href="/pay/rem/confirm">내역</a></li>
+    </ul>
+</nav>
+
+<script>
+    let url = window.location.search
+    let Params = new URLSearchParams(url)
+
+    
+    console.log(Params)
+    
+    
+    // let cateList = document.querySelectorAll('.cate')
+
+    // document.addEventListener("DOMContentLoaded", addActive)
+
+    // function addActive() {
+    //     cateList.forEach(function(e) {
+    //         e.classList.remove('active')
+    //     })
+
+    //     cateList[cate].classList.add('cate')
+    // }
+</script>
