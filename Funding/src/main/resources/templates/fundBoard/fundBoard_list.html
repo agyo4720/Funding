@@ -77,10 +77,9 @@
 			<!-- 페이징 시작 -->
 		    <div class="paging" th:if="${!fundBoardList.isEmpty()}">
 		        <ul>
-		        
 		        	<!-- 이전 페이지가 없으면 비활성황 -->
 		            <li th:classappend="${!fundBoardList.hasPrevious} ? 'disabled'">
-		                <a th:href="@{|?fundBoardList=${fundBoardList.number-1}|}">
+		                <a hidden th:href="@{|?page=${fundBoardList.number-1}|}">
 		                    <span>이전</span>
 		                </a>
 		            </li>
@@ -96,14 +95,14 @@
 		            
 		            <!-- 다음 페이지가 없으면 비활성화 -->
 		            <li th:classappend="${!fundBoardList.hasNext} ? 'disabled'">
-		                <a th:href="@{|?fundBoardList=${fundBoardList.number+1}|}">
+		                <a hidden th:href="@{|?page=${fundBoardList.number+1}|}">
 		                    <span>다음</span>
 		                </a>
 		            </li>
-		        
 		        </ul>
 		    </div>
 		    <!-- 페이징 끝 -->
+		    
 		    
 		</div>
 

@@ -98,7 +98,7 @@ public class FundBoardController {
 
 		return "/fundBoard/fundBoard_form";
 	}
-
+	
 	// 미지정 펀드 등록(POST)
 	@PostMapping("/create")
 	public String create(
@@ -270,6 +270,6 @@ public class FundBoardController {
 		return "redirect:/fundBoard/detail";
 	}
 
-	// 2022/12/02 - 2 작업중
+	// 2022/12/02 - 3 작업중
 
 }
