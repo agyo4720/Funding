@@ -5,160 +5,126 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>fundBoard_detail</title>
-
-	<style>
-		table{
-            border: 1px solid #000;
-            border-collapse: collapse;
-        }
-
-        table thead{
-            background-color:white;
-            color:black;
-        }
-
-        th{
-            border: 1px solid black;
-            background-color:black;
-            color:white
-        }
-
-        td{
-            border: 1px solid black;
-            color:black;
-        }
-	</style>
 	
-	<!-- 메시지 창 -->
-	<input type="hidden" id="chang" th:value="${msg}" />
-	
+    <!-- favicon -->
+    <link rel="shortcut icon" href="/img/favicon/ms-icon-310x310.png" type="image/x-icon" />
 </head>
 <body>
-	<div id="warp">
+	<!-- 홈페이지 상단 nav -->
+    <header th:replace="/main/nav"></header>
 	
-		<!-- 홈페이지 상단 nav -->
-	    <header>
-	        <!-- 로고 -->
-	        <div class="logo">
-	            <a href="../main/home.html" th:href="@{/}">Let's Funding</a>
-	        </div>
-	
-	        <!-- 메뉴 -->
-	        <div class="menu">
-	            <ul>
-	                <li><a href="../fundTarget/fundTargetList.html" th:href="@{/fundTarget}">지정 펀딩</a></li>
-	                <li><a href="../fundBoard/fundBoard_list.html" th:href="@{/fundBoard/list}">미지정 펀딩</a></li>
-	            </ul>
-	        </div>
-	
-	        <!-- 로그인 -->
-	        <div class="login">
-	            <ul>
-	                <li><a href="../user/loginForm.html" th:href="@{/user/login}">로그인</a></li>
-	                <li><a href="../user/userCreateForm.html" th:href="@{/user/register}">회원가입</a></li>
-	            </ul>
-	        </div>
-	    </header>
-	    
-		<div class="main">
-		
-			<!--섹션1 시작-->
-			<div>
-				<div>
-					<span>카테고리 : </span>
-					<span th:text="${fundBoard.categorieName}"></span>
-				</div>
-				<div>
-					<span>제목 : </span>
-					<span th:text="${fundBoard.subject}"></span>
-				</div>
-				<div>
-					<span>내용 : </span>
-					<span th:utext="${fundBoard.content}"></span>
-				</div>
-				<div>
-					<span>장소 : </span>
-					<span th:text="${fundBoard.place}"></span>
-				</div>
-				<div>
-					<span>펀딩 기간 : </span>
-					<span th:text="${fundBoard.fundDuration}"></span>
-				</div>
-				<div>
-					<span>공연 시작 일자 : </span>
-					<span th:text="${#temporals.format(fundBoard.startDateTime, 'yyyy-MM-dd HH:mm')}"></span>
-				</div>
-				<div>
-					<span>공연 시간 : </span>
-					<span th:text="|${fundBoard.runtime}분|"></span>
-				</div>
-				<div>
-					<span>1인 최소 펀딩 금액 : </span>
-					<span th:text="|${fundBoard.minFund}원|"></span>
-				</div>
-				<div>
-					<span>펀딩 목표 금액 : </span>
-					<span th:text="|${fundBoard.fundAmount}원|"></span>
-				</div>
-				<div>
-					<span>펀딩 현재 금액 : </span>
-					<span th:text="|${fundBoard.fundCurrent}원|"></span>
-				</div>
-				<div>
-					<span>현재 모집 인원 : </span> 
-					<span th:text="|${fundBoard.currentMember}명|"></span>
-				</div>
-				<div>
-					<span>펀딩 상태 : </span>
-					<span th:text="${fundBoard.state}"></span>
-				</div>
-			</div>		
-			<!--섹션1 끝-->
-			
-			<!--섹션2 시작-->
-			<div sec:authorize="hasRole('ROLE_USER')">
-				<button th:if="${result == true}" class="con_btn" th:onclick="'location.href=\''+ @{/pay/can/cancel(paymentKey=${payCode})} + '\''" type="submit">환불하기</button>
-				<button th:if="${result == false}" class="con_btn" th:onclick="'location.href=\''+ @{|/pay/tossPay/${fundBoard.id}|} + '\''">결제하기</button>
+	<section>
+		<!--섹션1 시작-->
+		<div class="left">
+			<div class="cate">
+				<a href="/fundBoard/list"
+					th:text="|미지정 펀딩 > ${fundBoard.categorieName}|"></a>
 			</div>
-			<div sec:authorize="!hasRole('ROLE_USER')">					
-				<a th:href="@{|/fundArtistList/join/${#authentication.getPrincipal().getUsername()}|}"><button>참여하기</button></a>		
-			</div>
-			<!--섹션2 끝-->
-			
-			<!--섹션3 끝-->
-			<div>
-				<div>현재 참여중인 아티스트</div>
-				<div th:each="fundArtistList : ${fundArtistList}">
-					<span th:text="${fundArtistList.fundArtist.nickname}"></span>
-					<a href="https://search.naver.com/search.naver?where=nexearch&sm=tab_etc&mra=bjky&pkid=1&os=159229&qvt=0&query=%EC%95%84%EC%9D%B4%EC%9C%A0%20%ED%94%84%EB%A1%9C%ED%95%84" target='_blank'>아티스트 정보보기</a>
+			<h3 th:text="${fundBoard.subject}">공연 이름</h3>
+			<div class="image">
+				<div th:if="${fundBoard.imgPath != null}">
+					<img th:src="${fundBoard.imgPath}" height="300">
+				</div>
+				<div th:if="${fundBoard.filePath != null}">
+					<img th:src="|/fundBoard/img/${fundBoard.id}|" height="300">
 				</div>
 			</div>
-			<!--섹션3 끝-->
-			
-			<!--섹션4 시작-->
-			<div class="section2">
-				<div th:each="answer : ${answerList}">
-					<div th:text="${answer.content}">댓글 내용</div>
-					<div th:text="${#temporals.format(answer.createDate, 'MM-dd HH:mm:ss')}">댓글 시간</div>
-				</div>
-			</div>
-			<!--섹션4 끝-->
-
-			<!--섹션5 시작-->
-			<div class="section3">
-				<form th:action="@{|/answer/fundBoard/create/${fundBoard.id}|}" method="GET">
-					<input type="text" name="content" value="">
-					<button type="submit">댓글 달기</button>
-				</form>
-			</div>
-			<!--섹션5 끝-->
 		</div>
-	</div>
-	
-	<script>
-	
-	
-	</script>
 
+		<div class="right">
+			<div class="view">
+				<div class="status">
+					<div th:text="${fundBoard.state}">상태</div>
+				</div>
+			</div>
+			<div class="view">
+				<label for="writer">작성자</label>
+				<p th:text="${fundBoard.fundUser.username}"></p>
+			</div>
+			<div class="view">
+				<label for="startDate">공연일</label>
+				<p th:text="${#temporals.format(fundBoard.startDateTime, 'yyyy-MM-dd HH:mm')}">공연일</p>
+			</div>
+			<div class="view">
+				<label for="place">공연장</label>
+				<span th:text="${fundBoard.place}"></span>
+			</div>
+			<div>
+				<span>펀딩 기간 : </span>
+				<span th:text="${fundBoard.fundDuration}"></span>
+			</div>
+			<div>
+				<span>공연 시작 일자 : </span>
+				<span th:text="${#temporals.format(fundBoard.startDateTime, 'yyyy-MM-dd HH:mm')}"></span>
+			</div>
+			<div>
+				<span>공연 시간 : </span>
+				<span th:text="|${fundBoard.runtime}분|"></span>
+			</div>
+			<div>
+				<span>1인 최소 펀딩 금액 : </span>
+				<span th:text="|${fundBoard.minFund}원|"></span>
+			</div>
+			<div>
+				<span>펀딩 목표 금액 : </span>
+				<span th:text="|${fundBoard.fundAmount}원|"></span>
+			</div>
+			<div>
+				<span>펀딩 현재 금액 : </span>
+				<span th:text="|${fundBoard.fundCurrent}원|"></span>
+			</div>
+			<div>
+				<span>현재 모집 인원 : </span> 
+				<span th:text="|${fundBoard.currentMember}명|"></span>
+			</div>
+			<div>
+				<span>펀딩 상태 : </span>
+				<span th:text="${fundBoard.state}"></span>
+			</div>
+		</div>		
+		<!--섹션1 끝-->
+		<div>
+			<span>내용 : </span>
+			<span th:utext="${fundBoard.content}"></span>
+		</div>
+
+		<!--섹션2 시작-->
+		<div sec:authorize="hasRole('ROLE_USER')">
+			<button th:if="${result == true}" class="con_btn" th:onclick="'location.href=\''+ @{/pay/can/cancel(paymentKey=${payCode})} + '\''" type="submit">환불하기</button>
+			<button th:if="${result == false}" class="con_btn" th:onclick="'location.href=\''+ @{|/pay/tossPay/${fundBoard.id}|} + '\''">결제하기</button>
+		</div>
+		<div sec:authorize="!hasRole('ROLE_USER')">					
+			<a th:href="@{|/fundArtistList/join/${#authentication.getPrincipal().getUsername()}|}"><button>참여하기</button></a>		
+		</div>
+		<!--섹션2 끝-->
+		
+		<!--섹션3 끝-->
+		<div>
+			<div>현재 참여중인 아티스트</div>
+			<div th:each="fundArtistList : ${fundArtistList}">
+				<span th:text="${fundArtistList.fundArtist.nickname}"></span>
+				<a href="https://search.naver.com/search.naver?where=nexearch&sm=tab_etc&mra=bjky&pkid=1&os=159229&qvt=0&query=%EC%95%84%EC%9D%B4%EC%9C%A0%20%ED%94%84%EB%A1%9C%ED%95%84" target='_blank'>아티스트 정보보기</a>
+			</div>
+		</div>
+		<!--섹션3 끝-->
+		
+		<!--섹션4 시작-->
+		<div class="section2">
+			<div th:each="answer : ${answerList}">
+				<div th:text="${answer.content}">댓글 내용</div>
+				<div th:text="${#temporals.format(answer.createDate, 'MM-dd HH:mm:ss')}">댓글 시간</div>
+			</div>
+		</div>
+		<!--섹션4 끝-->
+
+		<!--섹션5 시작-->
+		<div class="section3">
+			<form th:action="@{|/answer/fundBoard/create/${fundBoard.id}|}" method="GET">
+				<input type="text" name="content" value="">
+				<button type="submit">댓글 달기</button>
+			</form>
+		</div>
+		<!--섹션5 끝-->
+	</section	>
 </body>
 </html>
