@@ -7,6 +7,7 @@ import java.util.Set;
 import org.springframework.stereotype.Service;
 
 import com.funding.fundArtist.FundArtist;
+import com.funding.fundArtist.FundArtistRepository;
 import com.funding.fundBoard.FundBoard;
 
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 public class FundArtistListService {
 
 	private final FundArtistListRepository fundArtistListRepository;
+	private final FundArtistRepository fundArtistRepository;
 	
 	// 펀드 아티스트 리스트
 	public List<FundArtistList> findAll(){
@@ -37,6 +39,7 @@ public class FundArtistListService {
 	
 		FundArtistList fundArtistLists = new FundArtistList();
 		
+		fundArtistLists.setLikeConut(0);
 		fundArtistLists.setFundArtist(fundArtist);
 		fundArtistLists.setFundBoard(fundBoard);
 		
@@ -54,6 +57,17 @@ public class FundArtistListService {
 		Optional<FundArtistList> fundArtistList = this.fundArtistListRepository.findById(id);
 		
 		return fundArtistList.get();
+	}
+	
+	public void score(FundArtistList fundArtistList) {
+		
+		Integer i = fundArtistList.getLikeConut();
+		i++;
+		
+		fundArtistList.setLikeConut(i);
+		
+		this.fundArtistRepository.save(fundArtistList);
+		
 	}
 
 	

@@ -186,4 +186,8 @@ public class FundBoardService {
 //		
 //	}
 
+	public List<FundBoard> findAllList(){
+		List<FundBoard> bList = fundBoardRepository.findAll();
+		return bList;
+	}
 }

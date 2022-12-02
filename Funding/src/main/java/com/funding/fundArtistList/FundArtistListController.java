@@ -49,6 +49,19 @@ public class FundArtistListController {
 		return "redirect:/fundBoard/list";
 	}
 	
+	// 펀드 참여 아티스트 투표하기
+	@RequestMapping("/score/{id}")
+	public String score(
+			@PathVariable("id") Integer id,
+			Principal principal) {
+
+		FundArtistList fundArtistList = this.fundArtistListService.findById(id);
+
+		this.fundArtistListService.score(fundArtistList);
+		
+		return "redirect:/fundBoard/list";
+	}
+	
 	
 	
 	

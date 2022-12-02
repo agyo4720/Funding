@@ -184,7 +184,7 @@ public class CancelsController {
             	fundBoardService.addFundBoard(fundBoard);
 
             	//지정리스트 삭제
-            	fundListService.delete(FU.get(), fundBoard);
+            	fundListService.deleteFund(FU.get(), fundBoard);
             	
     			return "/pay/can/cancelSuccess";
     		}else {

@@ -26,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.funding.Categorie.Categorie;
 import com.funding.Categorie.CategorieService;
+import com.funding.alert.AlertService;
 import com.funding.answer.Answer;
 import com.funding.answer.AnswerService;
 import com.funding.cancels.CancelsController;
@@ -61,6 +62,7 @@ public class FundBoardController {
 	private final FundArtistService fundArtistService;
 	private final CancelsController cancelsController;
 	private final CancelsService cancelsService;
+	private final AlertService alertService;
 
 
 
@@ -98,7 +100,7 @@ public class FundBoardController {
 
 		return "/fundBoard/fundBoard_form";
 	}
-	
+
 	// 미지정 펀드 등록(POST)
 	@PostMapping("/create")
 	public String create(
@@ -168,16 +170,21 @@ public class FundBoardController {
 	public String detail(
 			@PathVariable ("id") Integer id,
 			Principal principal,
-			Model model){
+			Model model,
+			Integer alertId){
 
 		FundBoard fundBoard = this.fundBoardService.findById(id);
 		model.addAttribute("fundBoard", fundBoard);
 
 		List<Answer> answerList = this.answerService.findByFundBoard(fundBoard);
 		model.addAttribute("answerList", answerList);
-
 		List<FundArtistList> fundArtistList = this.fundArtistListService.findByFundBoard(fundBoard);
 		model.addAttribute("fundArtistList", fundArtistList);
+		//알람으로 들어왔을 시 알람 삭제
+		if(alertId != null) {
+			alertService.deleteAlert(alertId);
+		}
+
 
 		//펀딩버튼하면 환불버튼 변경
 		List<FundList> fList = fundListService.findByFundBoard(fundBoard);
@@ -244,9 +251,9 @@ public class FundBoardController {
 			if(sale.get(i).getCheckin().equals("결제완료")) {
 				sale.get(i).getPayCode();
 				sale.get(i).setCheckin("게시글 삭제");
-	
+
 				cancelsController.totalCancel(sale.get(i).getPayCode(),"게시글 삭제");
-				cancelsService.totalCancelInfo(sale.get(i).getOrederId(), Integer.valueOf(sale.get(i).getPayMoney()).intValue(), sale.get(i).getOrderName(), 
+				cancelsService.totalCancelInfo(sale.get(i).getOrederId(), Integer.valueOf(sale.get(i).getPayMoney()).intValue(), sale.get(i).getOrderName(),
 						sale.get(i).getCheckin(),sale.get(i).getFundUser(),sale.get(i).getUsername());
 			}
 		}
@@ -256,19 +263,6 @@ public class FundBoardController {
 		return "redirect:/fundBoard/list";
 	}
 
-	// 펀드 참여 아티스트 투표하기
-	@RequestMapping("/score/{id}")
-	public String score(
-			@PathVariable("id") Integer id,
-			Principal principal) {
-
-		
-		
-		//this.fundBoardService.score(fundArtistList);
-
-		return "redirect:/fundBoard/detail";
-	}
-
-	// 2022/12/02 - 4 작업중
+	// 2022/12/02 - 5 작업중
 
 }

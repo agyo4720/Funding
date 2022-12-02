@@ -24,10 +24,13 @@ public class FundArtistList {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;	// 고유번호
 	
+	private Integer likeConut; // 투표수
+	
 	@ManyToOne
 	private FundBoard fundBoard; // 펀딩글
 	
 	@ManyToOne
 	private FundArtist fundArtist; // 공연자
 	
+
 }

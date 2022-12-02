@@ -32,38 +32,6 @@
 		</div>
 	</div>
 
-
-	<script>
-
-		let username = document.querySelector('.username').value;
-		let fundArtist = document.querySelectorAll('.fundArtistList');
-		let btn = document.querySelector('#btn1');
-
-		btn.addEventListener('click', check);
-
-		function check(){
-
-			console.log('실행되었습니다!');
-
-			let bol = true;
-
-			fundArtist.forEach(function(e){
-
-				if(e.value == username){
-					bol = false;
-				}
-			})
-
-			if(bol == true){
-				alert("참여 완료되었습니다.");
-			}else{
-				alert("이미 존재합니다.");
-			}
-
-		}
-
-	</script>
-
 		<div class="right">
 			<div class="view">
 				<div class="status">
@@ -136,7 +104,7 @@
 			<div>현재 참여중인 아티스트</div>
 			<div th:each="fundArtistList : ${fundArtistList}">
 				<span th:text="${fundArtistList.fundArtist.nickname}"></span>
-				<a href="https://search.naver.com/search.naver?where=nexearch&sm=tab_etc&mra=bjky&pkid=1&os=159229&qvt=0&query=%EC%95%84%EC%9D%B4%EC%9C%A0%20%ED%94%84%EB%A1%9C%ED%95%84" target='_blank'>아티스트 정보보기</a>
+				<a th:href="@{|/fundArtistList/score/${fundArtistList.id}|}">투표하기</a>
 			</div>
 		</div>
 		<!--섹션3 끝-->
@@ -146,6 +114,7 @@
 			<div th:each="answer : ${answerList}">
 				<div th:text="${answer.content}">댓글 내용</div>
 				<div th:text="${#temporals.format(answer.createDate, 'MM-dd HH:mm:ss')}">댓글 시간</div>
+				<a class="cmt_delete" th:href="@{|/answer/delete/${answer.id}?location=board&id=${fundBoard.id}|}">삭제</a>
 			</div>
 		</div>
 		<!--섹션4 끝-->
@@ -158,6 +127,37 @@
 			</form>
 		</div>
 		<!--섹션5 끝-->
-	</section	>
+		
+	<script>
+
+		let username = document.querySelector('.username').value;
+		let fundArtist = document.querySelectorAll('.fundArtistList');
+		let btn = document.querySelector('#btn1');
+
+		btn.addEventListener('click', check);
+
+		function check(){
+
+			console.log('실행되었습니다!');
+
+			let bol = true;
+
+			fundArtist.forEach(function(e){
+
+				if(e.value == username){
+					bol = false;
+				}
+			})
+
+			if(bol == true){
+				alert("참여 완료되었습니다.");
+			}else{
+				alert("이미 존재합니다.");
+			}
+
+		}
+		
+	</script>
+		
 </body>
 </html>

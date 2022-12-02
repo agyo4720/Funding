@@ -68,9 +68,4 @@ public class FundListService {
 		return fList;
 	}
 	
-	//해당 리스트 지우기
-	public void delete(FundUser user, FundBoard fundBoard) {
-		List<FundList> fList = fundListRepository.findByFundUserAndFundBoard(user, fundBoard);
-		fundListRepository.delete(fList.get(0));
-	}
 }
