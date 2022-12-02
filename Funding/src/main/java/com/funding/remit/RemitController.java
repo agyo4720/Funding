@@ -49,7 +49,7 @@ public class RemitController {
 			    		+ "\"payoutAmount\":"+payoutAmount+",\"payoutDate\":\""+payoutDate+"\"}]"))
 			    .build();
 			HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-			System.out.println(response.body());			
+						
     		if(response.statusCode() == 200) {//요청응답코드 200=성공
     			remitService.remitInfo(subMallId, payoutAmount, payoutDate);
     			model.addAttribute("msg","Success");

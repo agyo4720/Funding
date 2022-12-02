@@ -46,7 +46,7 @@ public class EnrollController {
 			    		+ "\"businessNumber\":\""+businessNumber+"\",\"account\":{\"bank\":\""+bank+"\",\"accountNumber\":\""+accountNumber+"\"}}"))
 			    .build();
 			HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-			System.out.println(response.body());
+
     		if(response.statusCode() == 200) {//요청응답코드 200=성공
     			enrollService.enrollInfo(subMallId, companyName, representativeName, businessNumber, bank, accountNumber);
     			model.addAttribute("msg","SUCcess");
@@ -75,7 +75,7 @@ public class EnrollController {
 			    		+ "\"businessNumber\":\""+businessNumber+"\",\"account\":{\"bank\":\""+bank+"\",\"accountNumber\":\""+accountNumber+"\"}}"))
 			    .build();
 			HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-			System.out.println(response.body());
+
     		if(response.statusCode() == 200) {//요청응답코드 200=성공
     			enrollService.reviseInfo(subMallId, companyName, representativeName, businessNumber, bank, accountNumber);
     			model.addAttribute("msg","SUccess");
@@ -100,7 +100,7 @@ public class EnrollController {
 	    	.method("POST", HttpRequest.BodyPublishers.ofString(""))
 	    	.build();
 			HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-			System.out.println(response.body());
+			
     		if(response.statusCode() == 200) {//요청응답코드 200=성공
     			enrollService.deletionInfo(subMallId);
     			model.addAttribute("msg","SUCCess");
