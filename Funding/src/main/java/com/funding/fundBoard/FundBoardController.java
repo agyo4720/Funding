@@ -26,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.funding.Categorie.Categorie;
 import com.funding.Categorie.CategorieService;
+import com.funding.alert.AlertService;
 import com.funding.answer.Answer;
 import com.funding.answer.AnswerService;
 import com.funding.cancels.CancelsController;
@@ -56,6 +57,7 @@ public class FundBoardController {
 	private final FundListService fundListService;
 	private final CancelsController cancelsController;
 	private final CancelsService cancelsService;
+	private final AlertService alertService;
 
 
 
@@ -160,7 +162,7 @@ public class FundBoardController {
 
 	// 미지정 펀드 답변등록
 	@RequestMapping("/detail/{id}")
-	public String detail(@PathVariable ("id") Integer id, Model model, Principal principal) {
+	public String detail(@PathVariable ("id") Integer id, Model model, Principal principal,Integer alertId) {
 
 		FundBoard fundBoard = this.fundBoardService.findById(id);
 		model.addAttribute("fundBoard", fundBoard);
@@ -168,6 +170,12 @@ public class FundBoardController {
 		List<Answer> answerList = this.answerService.findByFundBoard(fundBoard);
 		model.addAttribute("answerList", answerList);
 
+		//알람으로 들어왔을 시 알람 삭제
+		if(alertId != null) {
+			alertService.deleteAlert(alertId);
+		}
+		
+		
 		//펀딩버튼하면 환불버튼 변경
 		List<FundList> fList = fundListService.findByFundBoard(fundBoard);
 		//환불버튼

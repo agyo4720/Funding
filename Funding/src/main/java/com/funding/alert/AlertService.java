@@ -148,6 +148,39 @@ public class AlertService {
 	}
 
 	
+	//미지정펀드 시간 마감시 알림 (해당펀딩, username)
+	public void fundBoardEndAlert(FundBoard fundBoard, String principal) {
+		Optional<FundUser> user = fundUserService.findByuserName(principal);
+		String url = "/fundBoard/detail/" + fundBoard.getId();
+		
+		Alert alert = new Alert();
+		alert.setContent(fundBoard.getSubject() + " 펀딩기간이 만료되었습니다");
+		alert.setUrl(url);
+		alert.setWitchAlert("마감");
+		alert.setHostUser(user.get());
+		alert.setFundBoard(fundBoard);
+		
+		alertRepository.save(alert);
+	}
+	
+	//미지정펀딩 금액 달성시 알림 (해당펀딩, 해당 유저)
+	public void fundBoardEndAmount(FundBoard fundBoard, String principal) {
+		Optional<FundUser> user = fundUserService.findByuserName(principal);
+		String url = "/fundBoard/detail/" + fundBoard.getId();
+		
+		Alert alert = new Alert();
+		alert.setContent(fundBoard.getSubject() + " 펀딩 100% 달성");
+		alert.setUrl(url);
+		alert.setWitchAlert("펀딩");
+		alert.setHostUser(user.get());
+		alert.setFundBoard(fundBoard);
+		
+		alertRepository.save(alert);
+	}
+	
+	
+	
+	
 	public List<Alert> findByHostUser(FundUser user){
 		List<Alert> aList = alertRepository.findByHostUser(user);
 		return aList;
