@@ -127,7 +127,7 @@
 			<button th:if="${result == false}" class="con_btn" th:onclick="'location.href=\''+ @{|/pay/tossPay/${fundBoard.id}|} + '\''">결제하기</button>
 		</div>
 		<div sec:authorize="!hasRole('ROLE_USER')">
-			<a th:href="@{|/fundArtistList/join/${#authentication.getPrincipal().getUsername()}|}"><button>참여하기</button></a>
+			<a th:href="@{|/fundArtistList/join/${fundBoard.id}|}"><button>참여하기</button></a>
 		</div>
 		<!--섹션2 끝-->
 

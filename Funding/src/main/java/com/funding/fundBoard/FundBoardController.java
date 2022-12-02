@@ -262,14 +262,13 @@ public class FundBoardController {
 			@PathVariable("id") Integer id,
 			Principal principal) {
 
-
-
-
+		
+		
 		//this.fundBoardService.score(fundArtistList);
 
 		return "redirect:/fundBoard/detail";
 	}
 
-	// 2022/12/02 - 3 작업중
+	// 2022/12/02 - 4 작업중
 
 }
