@@ -173,4 +173,8 @@ public class FundBoardService {
 		fundBoardRepository.save(fundBoard);
 	}
 
+	public List<FundBoard> findAllList(){
+		List<FundBoard> bList = fundBoardRepository.findAll();
+		return bList;
+	}
 }

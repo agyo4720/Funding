@@ -83,4 +83,9 @@ public class SaleService {
 		Page<Sale> sList = saleRepository.findByUsername(user,pageable);
 		return sList;
 	}
+	
+
+	
+	
+	
 }
