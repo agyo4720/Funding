@@ -28,16 +28,15 @@ import com.funding.Categorie.Categorie;
 import com.funding.Categorie.CategorieService;
 import com.funding.answer.Answer;
 import com.funding.answer.AnswerService;
+import com.funding.cancels.CancelsController;
+import com.funding.cancels.CancelsService;
 import com.funding.file.FileService;
 import com.funding.fundList.FundList;
 import com.funding.fundList.FundListService;
-import com.funding.fundTargetList.FundTargetList;
 import com.funding.fundUser.FundUser;
 import com.funding.fundUser.FundUserService;
-import com.funding.payment.PatmentService;
-import com.funding.payment.PaymentController;
-import com.funding.payment.Sale;
-import com.funding.payment.SaleRepository;
+import com.funding.sale.Sale;
+import com.funding.sale.SaleRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -54,9 +53,9 @@ public class FundBoardController {
 	private final AnswerService answerService;
 	private final FileService fileService;
 	private final SaleRepository saleRepository;
-	private final PaymentController paymentController;
-	private final PatmentService patmentService;
 	private final FundListService fundListService;
+	private final CancelsController cancelsController;
+	private final CancelsService cancelsService;
 
 
 
@@ -234,8 +233,8 @@ public class FundBoardController {
 			sale.get(i).getPayCode();
 			sale.get(i).setCheckin("게시글 삭제");
 
-			paymentController.totalCancel(sale.get(i).getPayCode(),"게시글 삭제");
-			patmentService.totalCancelInfo(sale.get(i).getOrederId(), Integer.valueOf(sale.get(i).getPayMoney()).intValue(), sale.get(i).getOrderName(), "게시글 삭제",sale.get(i).getFundUser());
+			cancelsController.totalCancel(sale.get(i).getPayCode(),"게시글 삭제");
+			cancelsService.totalCancelInfo(sale.get(i).getOrederId(), Integer.valueOf(sale.get(i).getPayMoney()).intValue(), sale.get(i).getOrderName(), "게시글 삭제",sale.get(i).getFundUser());
 		}
 
 		fundBoardService.delete(id);
