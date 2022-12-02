@@ -10,6 +10,8 @@ import com.funding.fundArtist.FundArtist;
 import com.funding.fundArtist.FundArtistService;
 import com.funding.fundBoard.FundBoard;
 import com.funding.fundBoardTarget.FundBoardTarget;
+import com.funding.fundTargetList.FundTargetList;
+import com.funding.fundTargetList.FundTargetListService;
 import com.funding.fundUser.FundUser;
 import com.funding.fundUser.FundUserService;
 
@@ -22,6 +24,7 @@ public class AlertService {
 	private final AlertRepository alertRepository;
 	private final FundArtistService fundArtistService;
 	private final FundUserService fundUserService;
+	private final FundTargetListService fundTargetListService;
 	
 	
 	//지정펀딩에 댓글 생성시 알림 등록 (글 작성자, 댓글 쓴 사람, 내용)
@@ -194,6 +197,16 @@ public class AlertService {
 	public void deleteAlert(Integer id) {
 		Optional<Alert> alert = alertRepository.findById(id);
 		alertRepository.delete(alert.get());
+	}
+	
+	//게시글 삭제시 삭제됬다는 알림
+	public void deleteTargetThenAlert(List<FundTargetList> fundTargetList) {
+		for(FundTargetList fl : fundTargetList) {
+			Alert alert = new Alert();
+			alert.setContent("게시글이 삭제되어 펀딩이 취소되었습니다.");
+			alert.setHostUser(fl.getFundUser());
+			alert.setWitchAlert("취소");
+		}
 	}
 
 		
