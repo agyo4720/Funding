@@ -42,7 +42,7 @@ public class AlertController {
 	private final PaymentController paymentController;
 	
 	
-	//댓글 알림 불러오기
+	//댓글 알림 불러오기 (ajax)
 	@RequestMapping("/show")
 	@ResponseBody
 	public List<HashMap<String, String>> showAlert(@RequestParam("user")String username) {

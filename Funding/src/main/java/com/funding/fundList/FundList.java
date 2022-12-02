@@ -30,7 +30,5 @@ public class FundList {
 	@ManyToOne
 	private FundUser fundUser; // 누가 펀딩했는가?
 	
-	@ManyToOne
-	private FundBoardTarget fundBoardTarget; // 지정펀딩
 	
 }

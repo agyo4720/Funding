@@ -1,7 +1,7 @@
 
 <meta name="_csrf" th:content="${_csrf.token}"/>
 <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
-<link rel="stylesheet" href="css/sidebar/sidebar.css">
+<link rel="stylesheet" href="/css/sidebar/sidebar.css">
 
 <div class="sidebarbtn" sec:authorize="isAuthenticated()">
 
@@ -21,7 +21,10 @@
 
 	<hr/>
 
-	<h4>현재 펀딩중인 목록</h4>
+	<h4>현재 펀딩중인 목록(지정)</h4>
+	<div class="fundTargetList"></div>
+	
+	<h4>현재 펀딩중인 목록(미지정)</h4>
 	<div class="fundList"></div>
 
 <!--  유저일떄 화면    -->
@@ -80,9 +83,24 @@
 				}
 			})
 			
-			//현재 펀딩목록 불러오는 ajax
+			//현재 지정펀딩목록 불러오는 ajax
 			$.ajax({
 				url : '/show/fundList'
+				,data : "user=" + user
+				,beforeSend : function(xhr){
+					xhr.setRequestHeader(header, token);
+				}
+				,success : function(result){
+					$.each(result, function(index, item){					
+						$('.fundTargetList').append("<a href=\"" + item.url + "\"><div><br>" + item.status + "</br>" + 
+								item.fundName + " 진행도 " + item.percent + "</div></a>")
+					})
+				}
+			})
+			
+			//현재 미지정펀딩목록 불러오는 ajax
+			$.ajax({
+				url : '/fundList/show'
 				,data : "user=" + user
 				,beforeSend : function(xhr){
 					xhr.setRequestHeader(header, token);
@@ -94,6 +112,7 @@
 					})
 				}
 			})
+			
 			
 			$.ajax({
 				url : 'alert/update'

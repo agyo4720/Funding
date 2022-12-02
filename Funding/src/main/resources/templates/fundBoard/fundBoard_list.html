@@ -28,9 +28,16 @@
 	</style>
 </head>
 <body>
+	<!-- 사이드바 -->
+	<div>
+		<nav th:replace="/sidebar/sidebar"></nav>
+	</div>
+	
+
     <!-- 홈페이지 상단 nav -->
 	<header th:replace="/main/nav"></header>
-
+	
+	
 	<a th:href="@{/categorie/list}">카테고리 생성</a>
 
 	<div id="warp">
