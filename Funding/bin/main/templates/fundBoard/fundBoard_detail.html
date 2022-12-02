@@ -121,16 +121,18 @@
 				<button th:if="${result == false}" class="con_btn" th:onclick="'location.href=\''+ @{|/pay/tossPay/${fundBoard.id}|} + '\''">결제하기</button>
 			</div>
 			<div sec:authorize="!hasRole('ROLE_USER')">					
-				<a th:href="@{|/fundArtistList/join/${fundBoard.id}|}"><button>참여하기</button></a>		
+				<a th:href="@{|/fundArtistList/join/${fundBoard.id}|}"><button id="btn1">참여하기</button></a>		
 			</div>
 			<!--섹션2 끝-->
 			
 			<!--섹션3 끝-->
 			<div>
+				<input hidden class="username" th:value="${#authentication.getPrincipal().getUsername()}">
 				<div>현재 참여중인 아티스트</div>
 				<div th:each="fundArtistList : ${fundArtistList}">
 					<span th:text="${fundArtistList.fundArtist.nickname}"></span>
-					<a href="https://search.naver.com/search.naver?where=nexearch&sm=tab_etc&mra=bjky&pkid=1&os=159229&qvt=0&query=%EC%95%84%EC%9D%B4%EC%9C%A0%20%ED%94%84%EB%A1%9C%ED%95%84" target='_blank'>아티스트 정보보기</a>
+					<button th:href="">투표하기</button>
+					<input hidden class="fundArtistList" th:value="${fundArtistList.fundArtist.username}">
 				</div>
 			</div>
 			<!--섹션3 끝-->
@@ -155,8 +157,38 @@
 		</div>
 	</div>
 	
-	<script>
 	
+	<script>
+		
+		let username = document.querySelector('.username').value;
+		let fundArtist = document.querySelectorAll('.fundArtistList');
+		let btn = document.querySelector('#btn1');
+			
+		btn.addEventListener('click', check);
+		
+		function check(){
+			
+			console.log('실행되었습니다!');
+			
+			let bol = true;
+			
+			fundArtist.forEach(function(e){
+				
+				if(e.value == username){
+					bol = false;
+				}
+			})
+			
+			if(bol == true){
+				alert("참여 완료되었습니다.");
+			}else{
+				alert("이미 존재합니다.");
+			}
+			
+		}
+			
+		
+		
 	
 	</script>
 

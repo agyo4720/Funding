@@ -29,8 +29,7 @@ public class FundArtistListService {
 		// fundArtistList를 반복문을 사용해서 같은 유저일 경우 반복문에서 빠져나가는 로직
 		for(FundArtistList fal : fundArtistList) {
 			
-			if(fal.getFundArtist().getUsername().equals(fundArtist.getUsername())) {
-				
+			if(fal.getFundBoard().getId().equals(fundBoard.getId())) {
 				return ;
 			}
 		}
@@ -41,6 +40,11 @@ public class FundArtistListService {
 		fundArtistLists.setFundBoard(fundBoard);
 		
 		this.fundArtistListRepository.save(fundArtistLists);
+	}
+	
+	public List<FundArtistList> findByFundBoard(FundBoard fundBoard) {
+		
+		return this.fundArtistListRepository.findByFundBoard(fundBoard);
 	}
 
 	

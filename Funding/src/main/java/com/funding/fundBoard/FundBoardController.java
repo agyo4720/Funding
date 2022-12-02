@@ -29,6 +29,8 @@ import com.funding.Categorie.CategorieService;
 import com.funding.answer.Answer;
 import com.funding.answer.AnswerService;
 import com.funding.file.FileService;
+import com.funding.fundArtistList.FundArtistList;
+import com.funding.fundArtistList.FundArtistListService;
 import com.funding.fundList.FundList;
 import com.funding.fundList.FundListService;
 import com.funding.fundTargetList.FundTargetList;
@@ -57,6 +59,7 @@ public class FundBoardController {
 	private final PaymentController paymentController;
 	private final PatmentService patmentService;
 	private final FundListService fundListService;
+	private final FundArtistListService fundArtistListService;
 
 
 
@@ -159,15 +162,21 @@ public class FundBoardController {
 
 	}
 
-	// 미지정 펀드 답변등록
+	// 미지정 펀드 디테일
 	@RequestMapping("/detail/{id}")
-	public String detail(@PathVariable ("id") Integer id, Model model, Principal principal) {
-
+	public String detail(
+			@PathVariable ("id") Integer id,
+			Principal principal,
+			Model model){	
+		
 		FundBoard fundBoard = this.fundBoardService.findById(id);
 		model.addAttribute("fundBoard", fundBoard);
 
 		List<Answer> answerList = this.answerService.findByFundBoard(fundBoard);
 		model.addAttribute("answerList", answerList);
+		
+		List<FundArtistList> fundArtistList = this.fundArtistListService.findByFundBoard(fundBoard);
+		model.addAttribute("fundArtistList", fundArtistList);
 
 		//펀딩버튼하면 환불버튼 변경
 		List<FundList> fList = fundListService.findByFundBoard(fundBoard);
@@ -243,6 +252,6 @@ public class FundBoardController {
 		return "redirect:/fundBoard/list";
 	}
 
-	// 2022/11/30 - 8 작업중
+	// 2022/12/02 - 1 작업중
 
 }
