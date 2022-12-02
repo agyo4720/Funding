@@ -28,19 +28,18 @@ import com.funding.Categorie.Categorie;
 import com.funding.Categorie.CategorieService;
 import com.funding.answer.Answer;
 import com.funding.answer.AnswerService;
+import com.funding.cancels.CancelsController;
+import com.funding.cancels.CancelsService;
 import com.funding.file.FileService;
 import com.funding.fundArtist.FundArtistService;
 import com.funding.fundArtistList.FundArtistList;
 import com.funding.fundArtistList.FundArtistListService;
 import com.funding.fundList.FundList;
 import com.funding.fundList.FundListService;
-import com.funding.fundTargetList.FundTargetList;
 import com.funding.fundUser.FundUser;
 import com.funding.fundUser.FundUserService;
-import com.funding.payment.PatmentService;
-import com.funding.payment.PaymentController;
-import com.funding.payment.Sale;
-import com.funding.payment.SaleRepository;
+import com.funding.sale.Sale;
+import com.funding.sale.SaleRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -57,8 +56,6 @@ public class FundBoardController {
 	private final AnswerService answerService;
 	private final FileService fileService;
 	private final SaleRepository saleRepository;
-	private final PaymentController paymentController;
-	private final PatmentService patmentService;
 	private final FundListService fundListService;
 	private final FundArtistListService fundArtistListService;
 	private final FundArtistService fundArtistService;
@@ -169,14 +166,14 @@ public class FundBoardController {
 	public String detail(
 			@PathVariable ("id") Integer id,
 			Principal principal,
-			Model model){	
-		
+			Model model){
+
 		FundBoard fundBoard = this.fundBoardService.findById(id);
 		model.addAttribute("fundBoard", fundBoard);
 
 		List<Answer> answerList = this.answerService.findByFundBoard(fundBoard);
 		model.addAttribute("answerList", answerList);
-		
+
 		List<FundArtistList> fundArtistList = this.fundArtistListService.findByFundBoard(fundBoard);
 		model.addAttribute("fundArtistList", fundArtistList);
 
@@ -245,26 +242,26 @@ public class FundBoardController {
 			sale.get(i).getPayCode();
 			sale.get(i).setCheckin("게시글 삭제");
 
-			paymentController.totalCancel(sale.get(i).getPayCode(),"게시글 삭제");
-			patmentService.totalCancelInfo(sale.get(i).getOrederId(), Integer.valueOf(sale.get(i).getPayMoney()).intValue(), sale.get(i).getOrderName(), "게시글 삭제",sale.get(i).getFundUser());
+			cancelsController.totalCancel(sale.get(i).getPayCode(),"게시글 삭제");
+			cancelsService.totalCancelInfo(sale.get(i).getOrederId(), Integer.valueOf(sale.get(i).getPayMoney()).intValue(), sale.get(i).getOrderName(), "게시글 삭제",sale.get(i).getFundUser());
 		}
 
 		this.fundBoardService.delete(id);
 
 		return "redirect:/fundBoard/list";
 	}
-	
+
 	// 펀드 참여 아티스트 투표하기
 	@RequestMapping("/score/{id}")
 	public String score(
 			@PathVariable("id") Integer id,
 			Principal principal) {
-		
-		
-		
-		
+
+
+
+
 		//this.fundBoardService.score(fundArtistList);
-		
+
 		return "redirect:/fundBoard/detail";
 	}
 

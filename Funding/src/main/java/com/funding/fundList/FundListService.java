@@ -7,8 +7,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.funding.fundBoard.FundBoard;
-import com.funding.fundBoardTarget.FundBoardTarget;
-import com.funding.fundTargetList.FundTargetList;
+
 import com.funding.fundUser.FundUser;
 import com.funding.fundUser.FundUserService;
 
@@ -24,6 +23,31 @@ public class FundListService {
 	public List<FundList> getFundList(){
 		return this.fundListRepository.findAll();
 	}
+	
+	//결제시 목록 등록
+	public void insertfund(Principal principal, FundBoard fundBoard) {
+		Optional<FundUser> user = fundUserService.findByuserName(principal.getName());
+		
+		FundList fundList = new FundList();
+		fundList.setFundBoard(fundBoard);
+		fundList.setFundUser(user.get());
+		
+		fundListRepository.save(fundList);
+	}
+	
+	//환불시 목록 삭제
+	public void deleteFund(FundUser user, FundBoard fundBoard) {
+		List<FundList> fList = fundListRepository.findByFundBoardAndFundUser(fundBoard, user);
+		fundListRepository.delete(fList.get(0));
+	}
+	
+	public List<FundList> findByFundUser(FundUser user){
+		List<FundList> fList = fundListRepository.findByFundUser(user);
+		return fList;
+	}
+	
+	
+	
 	
 	
 	//지정펀딩 펀딩하면 db에 등록

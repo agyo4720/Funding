@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.funding.cancels.CancelsController;
 import com.funding.fundArtist.FundArtist;
 import com.funding.fundArtist.FundArtistService;
 import com.funding.fundBoardTarget.FundBoardTarget;
@@ -20,9 +21,8 @@ import com.funding.fundTargetList.FundTargetList;
 import com.funding.fundTargetList.FundTargetListService;
 import com.funding.fundUser.FundUser;
 import com.funding.fundUser.FundUserService;
-import com.funding.payment.PaymentController;
-import com.funding.payment.Sale;
-import com.funding.payment.SaleRepository;
+import com.funding.sale.Sale;
+import com.funding.sale.SaleRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,10 +39,10 @@ public class AlertController {
 	private final FundTargetListService fundTargetListService;
 	private final FundTargetService fundTargetService;
 	private final SaleRepository saleRepository;
-	private final PaymentController paymentController;
+	private final CancelsController cancelsController;
 	
 	
-	//댓글 알림 불러오기
+	//댓글 알림 불러오기 (ajax)
 	@RequestMapping("/show")
 	@ResponseBody
 	public List<HashMap<String, String>> showAlert(@RequestParam("user")String username) {
@@ -130,7 +130,7 @@ public class AlertController {
 					sale.get(j).getPayCode();
 					sale.get(j).setCheckin("게시글 삭제");
 					
-					paymentController.totalCancel(sale.get(j).getPayCode(),"게시글 삭제");
+					cancelsController.totalCancel(sale.get(j).getPayCode(),"게시글 삭제");
 				}
 				
 				//알림 등록

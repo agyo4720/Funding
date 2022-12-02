@@ -116,11 +116,11 @@ public class AlertService {
 	//미지정펀딩에 댓글 생성시 알림 등록
 	public void answerAlertBoard(FundBoard fundBoard, String principal, String content) {
 		Optional<FundUser> user = fundUserService.findByuserName(principal);
+		String url = "/fundBoard/detail/" + fundBoard.getId();
+		
+		
 		if(user.isEmpty()) {
 			Optional<FundArtist> artist = fundArtistService.findByuserName(principal);
-			
-			
-			String url = "/fundBoard/detail/" + fundBoard.getId();
 			
 			Alert alert = new Alert();
 			alert.setContent(content);
@@ -134,9 +134,7 @@ public class AlertService {
 			
 			return;
 		}
-
 		
-		String url = "/fundBoard/detail/" + fundBoard.getId();
 		
 		Alert alert = new Alert();
 		alert.setContent(content);

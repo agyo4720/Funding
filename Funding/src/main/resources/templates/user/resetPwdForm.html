@@ -47,10 +47,12 @@
             <p>사용 할 비밀번호를 입력하세요.</p>
         </div>
 
-		<form action="/user/resetPwdConfirm" method="POST">
+		<form action="/user/resetPwdConfirm" id="form" method="POST">
 	    	<input type="password" name="pwd" id="pwd" placeholder="비밀번호"></input>
+	    	<div id="pwd1Result"></div>
 	    	<br>
 	    	<input type="password" name="pwdCheck" id="pwdCheck" placeholder="비밀번호 확인"></input>
+	    	<div id="pwd2Result"></div>
 	    	<br>
 	    	<input id="btn3" type="submit" value="완료"></input>
 	    </form>
@@ -98,5 +100,66 @@
 		}
 		
 	})
+	
+	// 비밀번호 유효성 검사
+	$('#pwd').focusout(function() {
+	    	let pwdval = $('#pwd').val()
+	        let pwdcheck =  /^[a-zA-Z0-9~!@#$%^&*()`_+?:;'"{}]{1,16}$/
+		
+	        if (!pwdcheck.test(pwdval) || pwdval.length<8){
+				$('#pwd1Result').html('비밀번호는 영대소문자,숫자로 구성된 8글자 이상으로 조합하시오.')
+	        	return false
+	        }
+	        $("#pwd1Result").html('')
+		});
+		
+		$('#form').on('submit', function() {
+			let pwdval = $('#pwd').val()
+	        let pwdcheck =  /^[a-zA-Z0-9~!@#$%^&*()`_+?:;'"{}]{1,16}$/
+		
+	        if (!pwdcheck.test(pwdval) || pwdval.length<8){
+				$('#pwd1Result').html('비밀번호는 영대소문자,숫자로 구성된 8글자 이상으로 조합하시오.')
+				$('#pwd').focus()
+	        	return false
+	        }
+	        $("#pwd1Result").html('')
+		})
+	
+		$('#pwdCheck').focusout(function() {
+			let pwdval = $('#pwd').val()
+	        let pwdokval = $('#pwdCheck').val()
+	    
+        	if (pwdokval){
+            	if (pwdval!==pwdokval){
+					$('#pwd2Result').html('비밀번호가 일치하지 않습니다.')
+                    return false
+                } 
+	            } else {
+					$('#pwd2Result').html('비밀번호확인을 입력하시오.')
+	                return false
+	            }
+	        
+	        $("#pwd2Result").html('')
+		});
+		
+		$('#form').on('submit', function() {
+			let pwdval = $('#pwd').val()
+	        let pwdokval = $('#pwdCheck').val()
+	    
+        	if (pwdokval){
+            	if (pwdval!==pwdokval){
+					$('#pwd2Result').html('비밀번호가 일치하지 않습니다.')
+					$('#pwdCheck').focus()
+                    return false
+                } 
+	            } else {
+					$('#pwd2Result').html('비밀번호확인을 입력하시오.')
+					$('#pwd2').focus()
+	                return false
+	            }
+	        
+	        $("#pwd2Result").html('')
+		})
+	
 </script>
 
