@@ -1,0 +1,33 @@
+<!-- 지정펀딩 결제 실패 -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>결제 실패</title>
+    <meta http equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../../static/css/pay/fail.css" th:href="@{/css/pay/fail.css}">
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="/img/favicon/ms-icon-310x310.png" type="image/x-icon" />
+</head>
+<body>
+    <!-- 홈페이지 상단 nav -->
+    <header th:replace="/main/nav"></header>
+
+    <section>
+        <h1>결제 실패</h1>
+
+        <p>결제실패: [[${message}]]</p>
+
+        <span>에러코드: [[${code}]]</span>
+    </section>
+    <div class="confirm">
+        <a href="/pay/loo/confirm">목록</a>
+    </div>
+    <div class="home">
+        <a href="/">홈</a>
+    </div>
+</body>
+</html>

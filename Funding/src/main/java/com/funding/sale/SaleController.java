@@ -63,7 +63,7 @@ public class SaleController {
     	return "pay/tossPayTar";
     }
     //지정 결제성공
-    @RequestMapping("/success")
+    @RequestMapping("/successTar")
     public String confirmPayment(
             @RequestParam String paymentKey, @RequestParam String orderId, @RequestParam int amount,
             Model model, Principal principal) throws Exception {
@@ -110,12 +110,12 @@ public class SaleController {
         	//유저의 현재 펀딩 목록 추가
         	fundTargetListService.insertList(principal, targetPk);
 
-            return "/pay/success";
+            return "/pay/successTar";
         } else {
             JsonNode failNode = responseEntity.getBody();
             model.addAttribute("message", failNode.get("message").asText());
             model.addAttribute("code", failNode.get("code").asText());
-            return "pay/fail";
+            return "pay/failTar";
         }
     }
 
@@ -133,7 +133,7 @@ public class SaleController {
     	return "pay/tossPay";
     }
     //미지정 결제성공
-    @RequestMapping("/success1")
+    @RequestMapping("/success")
     public String confirmPayment1(
             @RequestParam String paymentKey, @RequestParam String orderId, @RequestParam int amount,
             Model model, Principal principal) throws Exception {
@@ -182,12 +182,12 @@ public class SaleController {
         	//유저의 현재 펀딩 목록 추가
         	fundListService.insertList(principal, fundBoard);
 
-            return "/pay/success1";
+            return "/pay/success";
         } else {
             JsonNode failNode = responseEntity.getBody();
             model.addAttribute("message", failNode.get("message").asText());
             model.addAttribute("code", failNode.get("code").asText());
-            return "pay/fail1";
+            return "pay/fail";
         }
     }
     
