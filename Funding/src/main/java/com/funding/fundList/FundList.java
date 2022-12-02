@@ -30,5 +30,4 @@ public class FundList {
 	@ManyToOne
 	private FundUser fundUser; // 누가 펀딩했는가?
 	
-	
 }

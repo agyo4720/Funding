@@ -21,11 +21,6 @@ section .s_title {
     margin-right: 30px;
     font-size: 17px;
     font-weight: bold;
-    transition: 0.5s;
-}
-
-.categorie form a:hover {
-    color: #B00E0E;
 }
 
 .categorie form a::after {
@@ -42,9 +37,7 @@ section .s_title {
     margin-left: 0;
 }
 
-.cate.active{
-	color: rgb(250, 78, 121);;
-}
+.cate.active{color: #B00E0E;}
 
 /* 공연 리스트 Form */
 .list_form {

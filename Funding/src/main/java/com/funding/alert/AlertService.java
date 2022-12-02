@@ -134,8 +134,6 @@ public class AlertService {
 			
 			return;
 		}
-
-		
 		
 		
 		Alert alert = new Alert();

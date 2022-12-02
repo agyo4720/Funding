@@ -1,11 +1,11 @@
 package com.funding.fundArtistList;
 
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
 
 import com.funding.fundArtist.FundArtist;
 import com.funding.fundBoard.FundBoard;
