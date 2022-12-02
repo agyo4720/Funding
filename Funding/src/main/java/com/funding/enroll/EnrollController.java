@@ -52,7 +52,7 @@ public class EnrollController {
     		if(response.statusCode() == 200) {//요청응답코드 200=성공
     			enrollService.enrollInfo(subMallId, companyName, representativeName, businessNumber, bank, accountNumber);
     			model.addAttribute("msg","SUCcess");
-    			return "/main/nav";
+    			return "/pay/loo/lookup";
     		}else {
         		JSONParser parser = new JSONParser();
         		Object obj = parser.parse(response.body());
@@ -60,7 +60,7 @@ public class EnrollController {
     			String message = (String)jsonObj.get("message");
     			model.addAttribute("message",message);
     			model.addAttribute("msg","FAIl");
-    			return "/main/nav";
+    			return "/pay/loo/lookup";
     		}
 	}
 	
@@ -86,7 +86,7 @@ public class EnrollController {
     		if(response.statusCode() == 200) {//요청응답코드 200=성공
     			enrollService.reviseInfo(subMallId, companyName, representativeName, businessNumber, bank, accountNumber);
     			model.addAttribute("msg","SUccess");
-    			return "/main/nav";
+    			return "/pay/loo/lookup";
     		}else {
         		JSONParser parser = new JSONParser();
         		Object obj = parser.parse(response.body());
@@ -94,15 +94,11 @@ public class EnrollController {
     			String message = (String)jsonObj.get("message");
     			model.addAttribute("message",message);
     			model.addAttribute("msg","FAil");
-    			return "/main/nav";
+    			return "/pay/loo/lookup";
     		}
 	}
 
 	//계좌삭제
-	@RequestMapping("/rem/deletion")
-	public String deletion(){
-			return "/pay/rem/deletion";
-	}
 	@RequestMapping("/rem/deletionRequest")
 	public String deletionRequest(@RequestParam("subMallId")String subMallId,Model model)throws Exception {
 			HttpRequest request = HttpRequest.newBuilder()
@@ -116,7 +112,7 @@ public class EnrollController {
     		if(response.statusCode() == 200) {//요청응답코드 200=성공
     			enrollService.deletionInfo(subMallId);
     			model.addAttribute("msg","SUCCess");
-    			return "/main/nav";
+    			return "/pay/loo/lookup";
     		}else {
         		JSONParser parser = new JSONParser();
         		Object obj = parser.parse(response.body());
@@ -124,7 +120,7 @@ public class EnrollController {
     			String message = (String)jsonObj.get("message");
     			model.addAttribute("message",message);
     			model.addAttribute("msg","FAIL");
-    			return "/main/nav";
+    			return "/pay/loo/lookup";
     		}
 	}
 	
