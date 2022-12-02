@@ -114,7 +114,9 @@
 			</div>
 		</div>
 		<!-- //페이징 -->
-		<a class="btn_create" href="fundTargetForm.html" th:href="@{/fundTarget/form}">펀딩 만들기</a>
+		<div sec:authorize="hasRole('ROLE_USER')">
+			<a class="btn_create" href="fundTargetForm.html" th:href="@{/fundTarget/form}">펀딩 만들기</a>
+		</div>
     </section>
     
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
@@ -122,9 +124,8 @@
     	//url에서 카테고리 값 가져와서 active 추가해주기
     	let url = window.location.search
     	let Params = new URLSearchParams(url)
-    	let cate = Params.get('cate')
-    	cate = parseInt(cate) - 2
-    	console.log(cate)
+    	let cate = 0
+    	cate = parseInt(Params.get('cate')) - 1
     	let cateList = document.querySelectorAll('.cate')
     	
     	document.addEventListener("DOMContentLoaded", addActive)
@@ -133,7 +134,9 @@
     		cateList.forEach(function(e){
         		e.classList.remove('active')
         	})
-        	cateList[cate].classList.add('active')
+        	
+			cateList[cate].classList.add('active')
+			
     	}
     </script>
 
