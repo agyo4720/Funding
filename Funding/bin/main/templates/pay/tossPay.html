@@ -51,8 +51,8 @@
 	            orderId: userAndPk,
 	            orderName: '[[${fundBoard.subject}]]',
 	            customerName: '[[${userData.nickname}]]',
-	            successUrl: window.location.origin + "/pay/success1",
-	            failUrl: window.location.origin + "/pay/fail1",
+	            successUrl: window.location.origin + "/pay/success",
+	            failUrl: window.location.origin + "/pay/fail",
 	        };
 	        tossPayments.requestPayment(method, paymentData);
         } else {
