@@ -24,7 +24,6 @@ import com.funding.fundBoardTarget.FundTargetService;
 import com.funding.fundList.FundListService;
 import com.funding.fundTargetList.FundTargetListService;
 import com.funding.fundUser.FundUser;
-import com.funding.fundUser.FundUserRepository;
 import com.funding.fundUser.FundUserService;
 
 import lombok.RequiredArgsConstructor;
@@ -71,7 +70,6 @@ public class CancelsController {
     		JSONParser parser = new JSONParser();
     		Object obj = parser.parse(response.body());
     		JSONObject jsonObj = (JSONObject)obj;
-        	log.info("jsonObj: "+jsonObj.toString());
     		if(response.statusCode() == 200) {
     			String orderName = (String)jsonObj.get("orderName");
     			String orderId = (String)jsonObj.get("orderId");
@@ -92,7 +90,6 @@ public class CancelsController {
 
             	String target = userAndTargetNo.substring(userAndTargetNo.lastIndexOf('-')+1);
             	target = target.replace("\"", "");
-            	log.info("target: "+target);
 
             	FundBoardTarget targetPk = fundTargetService.findById(Integer.parseInt(target));
             	Integer sub = targetPk.getFundCurrent();
@@ -155,7 +152,6 @@ public class CancelsController {
     		JSONParser parser = new JSONParser();
     		Object obj = parser.parse(response.body());
     		JSONObject jsonObj = (JSONObject)obj;
-        	log.info("jsonObj: "+jsonObj.toString());
     		if(response.statusCode() == 200) {
     			String orderName = (String)jsonObj.get("orderName");
     			String orderId = (String)jsonObj.get("orderId");
@@ -175,7 +171,6 @@ public class CancelsController {
 
             	String target = userAndTargetNo.substring(userAndTargetNo.lastIndexOf('-')+1);
             	target = target.replace("\"", "");
-            	log.info("target: "+target);
 
             	FundBoard fundBoard = fundBoardService.findById(Integer.parseInt(target));
             	Integer sub = fundBoard.getFundCurrent();
