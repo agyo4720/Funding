@@ -72,7 +72,7 @@
                 <div class="int_domain">
                     <p>@</p>
                     <select name="domain" id="sel_domain">
-                        <option value="">선택하기</option>
+                        <option value="empty">선택하기</option>
                         <option value="gmail.com">gmail.com</option>
                         <option value="naver.com">naver.com</option>
                         <option value="nate.com">nate.com</option>
@@ -90,7 +90,7 @@
 					<input type="button" class="sub_email" id="sendEmailAuthcode" value="인증번호 받기">
 				</div>
 				<div class="email_code">
-					<input type="text" class="sub_int_email"></input>
+					<input type="text" class="sub_int_email" id="emailAuthCode"></input>
 					<input type="button" class="sub_email" id="emailAuthCodeCheck" value="인증번호 확인">
 				</div>
 			</div>
@@ -173,8 +173,6 @@
         </form>
     </section>
     
-    <!-- JQuery -->
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <!-- 카카오 우편번호 API -->
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     
@@ -186,7 +184,7 @@
                 } else {
                     $("#int_direct").hide();
                 }
-            });
+            });s
         });
     </script>
 
@@ -379,6 +377,7 @@
 				console.log($('#directVal').val)
 			}
 	        
+	        
 	        console.log('111')
 	        if (!domainCheck.test(domain)){
 				 console.log('222')
@@ -392,7 +391,35 @@
 				$('#domainCheckResult').html('')
 	        }
 	        $('#domainCheckResult').html('')
+	        
+	        $(sel_domain).removeAttr('disabled')
+			$('#int_direct').removeAttr('disabled')
+			$(email).removeAttr('readonly')
 	    })
+	    
+	    $('#sel_domain').focusout(function() {	
+		    	let domain = $('#sel_domain').val()
+	    		let domainDirect = $('#int_direct').val()
+	      		let domainCheck =  /^([a-z0-9\-]+\.)+[a-z]{2,6}$/ 
+	      		
+		        if (!domainCheck.test(domain)){
+					$('#domainCheckResult').html('도메인을 정확히 입력하세요.')
+		        	return false
+		        }
+		        $('#domainCheckResult').html('')
+		});
+		
+		$('#int_direct').focusout(function() {	
+		    	let domain = $('#sel_domain').val()
+	    		let domainDirect = $('#int_direct').val()
+	      		let domainCheck =  /^([a-z0-9\-]+\.)+[a-z]{2,6}$/ 
+	      		
+		        if (!domainCheck.test(domainDirect)){
+					$('#domainCheckResult').html('도메인을 정확히 입력하세요.')
+		        	return false
+		        }
+		        $('#domainCheckResult').html('')
+		});
 	</script>
 	
 	<!-- 생년월일 검사 -->
@@ -457,7 +484,7 @@
 	<script>
 		$('#form').on('submit', function() {
 	    	let gender = $('#sel_gender').val()
-	        if (gender !== '남성' && gender !== '여성'){
+	        if (gender !== '남성' && gender !== '여성' && gender !== '선택 안함'){
 				$('#genderCheckResult').html('성별을 선택하세요.')
 	        	$('#gender').focus()
 	        	return false
@@ -554,12 +581,18 @@
 			let domain = $('#sel_domain').val()
 			let domainDirect = $('#int_direct').val()
 			
+			if(domain === 'empty'){
+				$('#domainCheckResult').html('도메인 주소를 선택하세요.')
+				
+				return false;				
+			}
+			
 			if(domain==='direct'){
 				$('#directVal').attr('value',domainDirect)
 			}
 			
 			$.ajax({
-	            url: '/emailAuth',
+	            url: '/user/emailAuth',
 	            data: {
 	                email: $('#email').val() + "@" +$('#sel_domain').val()
 	            },
@@ -568,6 +601,16 @@
 						emailAuthCode = res							
 						console.log(emailAuthCode)	
 		                console.log('##인증번호 발송##')
+		                alert('인증메일이 발송 되었습니다!')
+		                
+		                var emailCheck = document.querySelector('.email_check');
+						var emailSend = document.querySelector('.email_send');
+						var emailCode = document.querySelector('.email_code');
+						
+						
+							$(emailSend).hide();
+							$(emailCode).show();
+		                
 					}
 	            	
 	            ,
@@ -578,38 +621,40 @@
 	        })
 		})
 
+		var emailCode = document.querySelector('.email_code');
+
+		window.onload = function() {
+			$(emailCode).hide();
+		}
+
+
 		//이메일 인증번호 확인
 		$('#emailAuthCodeCheck').click(function(){
 			let authCode = $('#emailAuthCode').val()
+			
+			
 			if(emailAuthCode === authCode){
 				$('#form').attr( 'action' ,'/user/register' );
 				$('#form').attr( 'id' ,'formActive' );
 				$('#submitBtn').attr( 'type' ,'submit' );
 				$('#submitBtn').attr( 'onclick' ,'' );
+				$(emailCode).hide();
+				$(sel_domain).attr('disabled','disabled')
+				$('#int_direct').attr('disabled','disabled')
+				$(email).attr('readonly','readonly')
+						
 				
 				alert("인증 되었습니다! ")
 			}
 			if(emailAuthCode !== authCode){
+				console.log(emailAuthCode)
+				console.log(authCode)
 				alert("인증 번호가 일치하지 않습니다.")
 			}
 		})
 	</script>
 	
-	<!-- 이메일 인증번호 확인 -->
-	<script>
-		var emailCheck = document.querySelector('.email_check');
-		var emailSend = document.querySelector('.email_send');
-		var emailCode = document.querySelector('.email_code');
-
-		window.onload = function() {
-			$(emailCode).hide();
-
-			$(emailSend).click(function() {
-				$(emailSend).hide();
-				$(emailCode).show();
-			})
-		}
-	</script>
+		
 	
 	
 	

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>환불하기</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/pay/can/cancel.css">
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="/img/favicon/ms-icon-310x310.png" type="image/x-icon" />
+</head>
+<body>
+    <!-- 홈페이지 상단 nav -->
+    <header th:replace="/main/nav"></header>
+
+    <section>
+        <div class="title">
+            <h1>환불하기</h1>
+        </div>
+
+        <div class="con">
+            <form th:action="@{/pay/can/tarCancelRquest}" method="GET">
+                <textarea type="text"  id="cancelReason" placeholder="환불사유" name="cancelReason"
+                    cols="70" rows="5"></textarea>
+                <button id="cancel-button" class="pay_btn" type="submit">환불하기</button>
+            </form>
+        </div>
+    </section>
+</body>
+</html>

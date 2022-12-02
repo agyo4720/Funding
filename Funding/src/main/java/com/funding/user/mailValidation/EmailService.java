@@ -51,7 +51,7 @@ public class EmailService {
 		createKey(); //인증 코드 생성
 		log.info("####인증번호: " + ePw);
 		
-		String setFrom = "zlwmdnlsl86@naver.com";
+		String setFrom = "qor8001@naver.com";
 		String toEmail = email; //받는 사람
 		String title = "Let's Funding 이메일 인증"; //메일 제목
 		

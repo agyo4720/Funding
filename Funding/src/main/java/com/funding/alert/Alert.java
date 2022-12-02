@@ -6,7 +6,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.funding.fundArtist.FundArtist;
 import com.funding.fundBoard.FundBoard;
 import com.funding.fundBoardTarget.FundBoardTarget;
@@ -27,6 +26,9 @@ public class Alert {
 	private String content;
 	
 	private String url;
+	
+	//어떤 알림인지 "댓글", "마감", "취소", "펀딩"
+	private String witchAlert;
 	
 	//알림 받을 사람
 	@ManyToOne

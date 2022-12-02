@@ -65,7 +65,11 @@ public class FundBoard {
 	
 	private Integer star; // 별점 평균
 	
-	private LocalDateTime createDate;
+	private LocalDateTime createDate; // 작성일시
+	
+	private String imgPath;
+	
+	private String filePath;
 	
 	// 제약 조건
 	@ManyToOne

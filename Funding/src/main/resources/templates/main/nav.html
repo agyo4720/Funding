@@ -1,10 +1,15 @@
 <!-- html -->
 <link rel="stylesheet" href="../../static/css/style.css" th:href="@{/css/style.css}">
-
+<!-- JQuery -->
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <header>
+	<!-- 계좌 -->
+	<input type="hidden" id="msg" th:value="${msg}" />
+	<input type="hidden" id="message" th:value="${message}" />
+	
     <!-- 로고 -->
     <div class="logo">
-        <a href="../main/home.html" th:href="@{/}">Let's Funding</a>
+        <a href="../main/home.html" th:href="@{/}"><img src="/img/favicon/android-icon-72x72.png" alt="logo"></a>
     </div>
     
     <!-- 메뉴 -->
@@ -18,17 +23,74 @@
     <!-- 로그인 -->
     <div class="login">
         <ul>
-            <li><a href="../user/loginForm.html" sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인</a></li>
-            <li><a href="../user/userCreateForm.html" sec:authorize="isAnonymous()" th:href="@{/user/register}">회원가입</a></li>
+            <li><a class="loginForm" href="../user/loginForm.html" sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인</a></li>
+            <li><a class="joinForm" href="../user/userCreateForm.html" sec:authorize="isAnonymous()" th:href="@{/user/register}">회원가입</a></li>
         </ul>
         <!-- 로그인 상태일 때 -->
         <div sec:authorize="isAuthenticated()">
-            <ul class="nav_user" th:each="user: ${userData}">
+            <ul class="nav_user">
                 <li><a href="#" sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a></li>
-                <li class="user_name" th:text="${user.nickname}"></li>
-                <li class="user_role" th:text="${user.role}"></li>
-                <li><a href="../pay/confirm.html" th:href="@{/pay/confirm}">결제</a></li>
+                <a class="myPage" href="/user/myInfo/">
+                <li class="user_name" ></li>
+                <li class="user_role" ></li></a>
             </ul>
+            
+            <div hidden sec:authorize="isAuthenticated()">
+                <input hidden id="myInfo" class="active" th:value="${#authentication.getPrincipal().getUsername()}"/>
+            </div>
         </div>
     </div>
 </header>
+
+
+<script>
+	
+	$(document).ready(function(){
+		
+			 $.ajax({
+	            url: '/user/navMyInfo',
+	            data: {
+	                username: $('#myInfo').val()
+	            },
+	            success:
+	            	function(res){
+						console.log(res)
+						console.log("유저네임 : "+res.userName)
+						console.log(res.userRole)
+						$('.user_name').html(res.userName)
+						$('.user_role').html(res.userRole)
+					}
+					
+	            ,
+	            error: function(xhr) {
+	                console.log(xhr);
+	            }
+	        })
+	});
+	
+	var result= document.querySelector('#msg').value;
+	var message= document.querySelector('#message').value;
+	if(result === "Success"){
+		alert("송금완료!");
+	} else if(result === "Fail"){
+		alert(message);
+	}
+	
+	else if(result === "SUccess"){
+		alert("수정완료!");
+	}else if(result === "FAil"){
+		alert(message);
+	}
+	
+	else if(result === "SUCcess"){
+		alert("등록성공!");
+	}else if(result === "FAIl"){
+		alert(message);
+	}
+	
+	else if(result === "SUCCess"){
+		alert("삭제성공!");
+	}else if(result === "FAIL"){
+		alert(message);
+	}
+</script>

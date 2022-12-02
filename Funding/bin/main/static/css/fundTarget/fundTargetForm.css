@@ -1,3 +1,6 @@
+a {
+    text-decoration: none;
+}
 form {
     margin: 30px auto;
     padding: 5px 40px;
@@ -16,7 +19,7 @@ section label {
     font-weight: bold;
 }
 
-section select {width: 300px; height: 30px;}
+section select {width: 380px; height: 30px;}
 
 section .int input {width: 380px; height: 30px;}
 
@@ -29,6 +32,20 @@ section select, input[type=radio], img {cursor: pointer;}
 }
 
 #date { margin: 5px 0; }
+
+/* SummerNote */
+.note-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.note-btn-group {
+    display: flex;
+}
+
+.btn {
+    margin: 0; padding: 3px 6px;
+}
 
 /* 대표 이미지 선택 */
 .int_image, .int_file {

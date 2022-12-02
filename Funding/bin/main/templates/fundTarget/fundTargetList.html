@@ -12,6 +12,9 @@
 
 	<!-- favicon -->
     <link rel="shortcut icon" href="/img/favicon/ms-icon-310x310.png" type="image/x-icon" />
+
+	<!-- fontawsome -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
 </head>
 <body>
 	<div>
@@ -22,20 +25,16 @@
     <header th:replace="/main/nav"></header>
 
     <section>
-		<div id="title">
-            <h1>지정 펀딩</h1>
-        </div>
+		<div class="s_title">
+			<h2>지정 펀딩</h2>
+		</div>
 
 		<div class="categorie">
-			<ul>
-				<li>
-					<form>
-						<a th:each="cate : ${cList}" th:text="${cate.categorieName}"
-						  th:href="@{|?cate=${cate.id}&page=0|}"></a>
-					</form>
-				</li>
-			</ul>
-		</div>
+			<form>
+				<a th:each="cate : ${cList}" class="cate" th:text="${cate.categorieName}"
+				th:href="@{|?cate=${cate.id}&page=0|}"></a>
+			</form>
+		</div>	
 
 		<div class="list_form" th:each="target : ${targetList}">
 			<div class="con_list">
@@ -60,7 +59,7 @@
 						</a>
 						<p class="view" th:text="${target.artiest}">아티스트</p>
 					</div>
-	
+					
 					<div class="con_detail">
 						<div class="view">
 							<label for="place">장소</label>
@@ -73,47 +72,65 @@
 						</div>
 						
 						<div class="view">
-							<label for="runtime">공연시간</label>
-							<p th:text="|${target.runtime}분|">공연시간</p>
-						</div>
-						
-						<div class="view">
 							<label for="fundDurationS">펀딩 기간</label>
 							<p th:text="${target.fundDurationS} + ' ~ ' + ${target.fundDurationE}">펀딩 기간</p>
 						</div>
 						
-						<div>
+						<!-- <div>
 							<div th:if="${target.fundUser.nickname != null}">
 								<div th:text="|글 등록한 사람 : ${target.fundUser.nickname}|"></div>
 							</div>
+						</div> -->
+						<div class="view">
+							<label for="graph">진행도</label>
+							<p th:text="|${target.fundCurrent * 100 / target.fundAmount}%|"></p>
 						</div>
 					</div>
 				</div>
 			</div>
-			<hr/>
 		</div>
 		<!-- 페이징 -->
-		<div>
-			<div th:if="${!targetList.isEmpty()}">
-				<div th:if="${targetList.number > 0}">
-					<a th:href="@{|?cate=${cate}&page=${targetList.number-1}|}">
-						<span>뒤로</span>
-					</a>
-				</div>
-				<div th:each="page : ${#numbers.sequence(0,targetList.totalPages-1)}"
+		<div class="page" th:if="${!targetList.isEmpty()}">
+			<div th:if="${targetList.number > 0}">
+				<a th:href="@{|?cate=${cate}&page=${targetList.number-1}|}">
+					<i class="fas fa-chevron-left"></i>
+				</a>
+			</div>
+			<div th:each="page : ${#numbers.sequence(0,targetList.totalPages-1)}"
 				th:if="${targetList.number-3 < page and targetList.number+3 > page}">
-					<a th:classappend="${page == targetList.number} ? 'active'" th:text="${page+1}" 
-					th:href="@{|?cate=${cate}&page=${page}|}"></a>
-				</div>
-				<div th:if="${targetList.number < targetList.totalPages-1}">
-					<a th:href="@{|?cate=${cate}&page=${targetList.number+1}|}">
-						<span>앞으로</span>
-					</a>
-				</div>
+				<a th:classappend="${page == targetList.number} ? 'active'" th:text="${page+1}" 
+				th:href="@{|?cate=${cate}&page=${page}|}"></a>
+			</div>
+			<div th:if="${targetList.number < targetList.totalPages-1}">
+				<a th:href="@{|?cate=${cate}&page=${targetList.number+1}|}">
+					<i class="fas fa-chevron-right"></i>
+				</a>
 			</div>
 		</div>
 		<!-- //페이징 -->
 		<a class="btn_create" href="fundTargetForm.html" th:href="@{/fundTarget/form}">펀딩 만들기</a>
     </section>
+    
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script>
+    	//url에서 카테고리 값 가져와서 active 추가해주기
+    	let url = window.location.search
+    	let Params = new URLSearchParams(url)
+    	let cate = Params.get('cate')
+    	cate = parseInt(cate) - 2
+    	console.log(cate)
+    	let cateList = document.querySelectorAll('.cate')
+    	
+    	document.addEventListener("DOMContentLoaded", addActive)
+    	
+    	function addActive(){
+    		cateList.forEach(function(e){
+        		e.classList.remove('active')
+        	})
+        	cateList[cate].classList.add('active')
+    	}
+    	
+    	
+    </script>
 </body>
 </html>

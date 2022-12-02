@@ -1,9 +1,11 @@
 package com.funding.user;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,7 @@ import com.funding.fundArtist.FundArtist;
 import com.funding.fundArtist.FundArtistService;
 import com.funding.fundUser.FundUser;
 import com.funding.fundUser.FundUserService;
+import com.funding.user.mailValidation.EmailService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -89,4 +92,17 @@ public class RegisterController {
         result.put("code", "사용 가능한 ID 입니다");
         return result;
 	}
+	
+	// 이메일 인증
+	private final EmailService emailService;
+		
+		@RequestMapping("/emailAuth")
+		@ResponseBody
+		public String emailTest(String email) throws UnsupportedEncodingException, MessagingException {
+			String emailAuthCode = emailService.sendEmail(email);
+			
+			return emailAuthCode;
+	}
+	
+	
 }

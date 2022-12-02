@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,7 +13,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import com.funding.Categorie.Categorie;
+import com.funding.alert.Alert;
 import com.funding.answer.Answer;
 import com.funding.answerAns.AnswerAns;
 import com.funding.fundTargetList.FundTargetList;
@@ -50,13 +54,15 @@ public class FundBoardTarget {
 	
 	private LocalDateTime createDate;
 	
-	private int view;
+	private Integer view;
 	
 	private Integer minFund;
 	
 	private Integer fundCurrent;
 	
 	private Integer fundAmount;
+	
+	private Integer currentMember;
 	
 	private String imgPath;
 	
@@ -79,6 +85,10 @@ public class FundBoardTarget {
 	//답글 목록
 	@OneToMany(mappedBy = "fundBoardTarget", cascade = CascadeType.REMOVE)
 	private List<AnswerAns> answerAnsList;
+	
+	//답글 목록
+	@OneToMany(mappedBy = "fundBoardTarget", cascade = CascadeType.REMOVE)
+	private List<Alert> alertList;
 	
 	
 	

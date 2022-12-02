@@ -1,0 +1,39 @@
+<!-- 환불하기 -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>Let's Funding : 환불</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+	<!-- CSS -->
+    <link rel="stylesheet" href="/css/pay/can/cancel.css">
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="img/favicon/ms-icon-310x310.png" type="image/x-icon" />
+</head>
+<body>
+<section>
+    <!-- 홈페이지 상단 nav -->
+    <header th:replace="/main/nav"></header>
+
+    <h2>환불하기</h2>
+    <p>----------------------</p>
+    <form th:action="@{/pay/can/cancelRquest}" method="GET">
+	    <div><label><input type="radio" name="method" value="환불하기" checked/>환불하기</label></div>
+	    <p>----------------------</p>
+	    <input type="text"  id="cancelReason" placeholder="환불사유" name="cancelReason" value="" />
+	    <button id="cancel-button" type="submit">환불하기</button>
+    </form>
+</section>
+    <div class="confirm">
+        <a href="/pay/loo/confirm">목록</a>
+    </div>
+    <div class="home">
+        <a href="/">홈</a>
+    </div>
+<script>
+</script>
+</body>
+</html>

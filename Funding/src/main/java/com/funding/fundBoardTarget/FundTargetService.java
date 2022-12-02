@@ -58,6 +58,7 @@ public class FundTargetService {
 		target.setCategorie(categorie);
 		target.setImgPath(imgPath);
 		target.setFundUser(user);
+		target.setCurrentMember(0);
 		
 		fundTargetRepository.save(target);
 	}
@@ -96,14 +97,20 @@ public class FundTargetService {
 		target.setCategorie(categorie);
 		target.setFilePath(filePath);
 		target.setFundUser(user);
+		target.setCurrentMember(0);
 		
 		fundTargetRepository.save(target);
 	}
 	
-	//fundAll
+	//fundAll(page)
 	public Page<FundBoardTarget> findAll(int page){
-		Pageable pageable = PageRequest.of(page, 3, Sort.by("createDate").descending());
+		Pageable pageable = PageRequest.of(page, 5, Sort.by("createDate").descending());
 		Page<FundBoardTarget> targetList = fundTargetRepository.findAll(pageable);
+		return targetList;
+	}
+	
+	public List<FundBoardTarget> findAllList(){
+		List<FundBoardTarget> targetList = fundTargetRepository.findAll();
 		return targetList;
 	}
 	
@@ -123,6 +130,13 @@ public class FundTargetService {
 	//결재시 업데이트 됨
 	public void addTargetFund(FundBoardTarget fundBoardTarget) {
 		fundTargetRepository.save(fundBoardTarget);
+	}
+	
+	
+	//지정펀딩 삭제
+	public void delete(Integer id) {
+		Optional<FundBoardTarget> target = fundTargetRepository.findById(id);
+		fundTargetRepository.delete(target.get());
 	}
 	
 }

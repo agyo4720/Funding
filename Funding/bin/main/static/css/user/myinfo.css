@@ -1,0 +1,36 @@
+section {position: relative;}
+
+.myinfo {
+    position: absolute;
+    left: 500px;
+}
+
+.title {padding: 30px 0;}
+
+.view {
+    display: flex;
+    margin: 13px 0;
+    height: 30px;
+}
+
+.view p {
+    width: 100px;
+    font-weight: bold;
+}
+
+.view button {
+    cursor: pointer;
+    margin-left: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    background: #838383;
+    color: #fff;
+    letter-spacing: 2px;
+    line-height: 50%;
+    transition: 0.3s;
+}
+
+.view button:hover {
+    background: #5c5c5c;
+}

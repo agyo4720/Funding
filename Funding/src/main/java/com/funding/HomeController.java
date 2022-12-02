@@ -1,10 +1,8 @@
 package com.funding;
 
-import java.io.UnsupportedEncodingException;
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.Optional;
-
-import javax.mail.MessagingException;
 
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -18,7 +16,6 @@ import com.funding.fundBoardTarget.FundBoardTarget;
 import com.funding.fundBoardTarget.FundTargetService;
 import com.funding.fundUser.FundUser;
 import com.funding.fundUser.FundUserService;
-import com.funding.user.mailValidation.EmailService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -54,16 +51,5 @@ public class HomeController {
 	}
 	
 	
-	
-	// 이메일 인증 테스트
-	private final EmailService emailService;
-	
-	@RequestMapping("/emailAuth")
-	@ResponseBody
-	public String emailTest(String email) throws UnsupportedEncodingException, MessagingException {
-		String emailAuthCode = emailService.sendEmail(email);
-		
-		return emailAuthCode;
-	}
 	
 }
