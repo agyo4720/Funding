@@ -1,6 +1,6 @@
 package com.funding.alert;
 
-import java.security.Principal;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -10,13 +10,16 @@ import com.funding.fundArtist.FundArtist;
 import com.funding.fundArtist.FundArtistService;
 import com.funding.fundBoard.FundBoard;
 import com.funding.fundBoardTarget.FundBoardTarget;
+import com.funding.fundList.FundList;
 import com.funding.fundTargetList.FundTargetList;
 import com.funding.fundTargetList.FundTargetListService;
 import com.funding.fundUser.FundUser;
 import com.funding.fundUser.FundUserService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class AlertService {
@@ -199,15 +202,28 @@ public class AlertService {
 		alertRepository.delete(alert.get());
 	}
 	
-	//게시글 삭제시 삭제됬다는 알림
+	//지정 삭제시 삭제됬다는 알림
 	public void deleteTargetThenAlert(List<FundTargetList> fundTargetList) {
+		
 		for(FundTargetList fl : fundTargetList) {
+			Alert alert = new Alert();
+			alert.setContent("게시글이 삭제되어 펀딩이 취소되었습니다.");
+			alert.setHostUser(fl.getFundUser());
+			alert.setWitchAlert("취소");
+			log.info("알림등록 실행");
+			
+			alertRepository.save(alert);
+		}
+	}
+	
+	//미지정 삭제시 삭제 됬다는 알림
+	public void deleteBoardThenAlert(List<FundList> fundList) {
+		for(FundList fl : fundList) {
 			Alert alert = new Alert();
 			alert.setContent("게시글이 삭제되어 펀딩이 취소되었습니다.");
 			alert.setHostUser(fl.getFundUser());
 			alert.setWitchAlert("취소");
 		}
 	}
-
 		
 }

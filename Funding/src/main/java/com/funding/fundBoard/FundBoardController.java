@@ -247,7 +247,14 @@ public class FundBoardController {
 						sale.get(i).getCheckin(),sale.get(i).getFundUser(),sale.get(i).getUsername());
 			}
 		}
-
+		
+		//미지정 리스트 삭제
+		List<FundList> fList = fundListService.findByFundBoard(nick);
+		alertService.deleteBoardThenAlert(fList);
+		for(int i=0;i>fList.size();i++) {
+			fundListService.deleteFund(fList.get(i).getFundUser(), nick);
+		}
+		
 		fundBoardService.delete(id);
 		return "redirect:/fundBoard/list";
 	}

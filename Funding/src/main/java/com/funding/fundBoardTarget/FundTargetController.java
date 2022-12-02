@@ -210,7 +210,6 @@ public class FundTargetController {
 		}
 		
 		
-		log.info("글로 추려낸 펀딩한 유저 목록 : " + ftList.toString());
 		model.addAttribute("result", result);
 		model.addAttribute("aList", aList);
 		model.addAttribute("fundBoardTarget", fundBoardTarget);
@@ -247,6 +246,7 @@ public class FundTargetController {
 			}
 		}
 		
+		log.info("삭제컨트롤로 실행됨");
 		//지정리스트 삭제
 		List<FundTargetList> fList = fundTargetListService.findByFundBoardTarget(nick);
 		alertService.deleteTargetThenAlert(fList);

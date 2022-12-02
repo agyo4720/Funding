@@ -41,13 +41,11 @@ public class FundListService {
 		fundListRepository.delete(fList.get(0));
 	}
 	
+	//유저로 펀드 목록 부르기
 	public List<FundList> findByFundUser(FundUser user){
 		List<FundList> fList = fundListRepository.findByFundUser(user);
 		return fList;
 	}
-	
-	
-	
 	
 	
 	//지정펀딩 펀딩하면 db에 등록
