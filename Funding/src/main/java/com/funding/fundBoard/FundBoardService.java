@@ -176,15 +176,6 @@ public class FundBoardService {
 	public void addFundBoard(FundBoard fundBoard) {
 		fundBoardRepository.save(fundBoard);
 	}
-	
-//	// 미지정 펀드 참여 아티스트 투표하기
-//	public void score(FundArtistList fundArtistList) {
-//		
-//		FundArtistList fal = new FundArtistList();
-//		
-//		fal.getFundArtist().setLikeCount();
-//		
-//	}
 
 	public List<FundBoard> findAllList(){
 		List<FundBoard> bList = fundBoardRepository.findAll();

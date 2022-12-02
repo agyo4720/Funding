@@ -8,6 +8,8 @@
 
     <!-- favicon -->
     <link rel="shortcut icon" href="/img/favicon/ms-icon-310x310.png" type="image/x-icon" />
+    
+    
 </head>
 <body>
 	<!-- 홈페이지 상단 nav -->
@@ -18,7 +20,8 @@
 		<div class="left">
 			<div class="cate">
 				<a href="/fundBoard/list"
-					th:text="|미지정 펀딩 > ${fundBoard.categorieName}|"></a>
+				   th:text="${fundBoard.categorieName}|">
+				</a>
 			</div>
 			<h3 th:text="${fundBoard.subject}">공연 이름</h3>
 			<div class="image">
@@ -101,10 +104,13 @@
 
 		<!--섹션3 끝-->
 		<div>
+			<input hidden class="username" th:value="${#authentication.getPrincipal().getUsername()}">
 			<div>현재 참여중인 아티스트</div>
 			<div th:each="fundArtistList : ${fundArtistList}">
 				<span th:text="${fundArtistList.fundArtist.nickname}"></span>
-				<a th:href="@{|/fundArtistList/score/${fundArtistList.id}|}">투표하기</a>
+			<input hidden class="fundArtistList" th:value="${fundArtistList.fundArtist.username}">
+				<a id="btn1" th:href="@{|/fundArtistList/score/${fundArtistList.id}|}">투표하기</a>
+				<span th:text="|${fundArtistList.likeConut}개|"></span>
 			</div>
 		</div>
 		<!--섹션3 끝-->
@@ -131,7 +137,7 @@
 	<script>
 
 		let username = document.querySelector('.username').value;
-		let fundArtist = document.querySelectorAll('.fundArtistList');
+		let fundArtistList = document.querySelectorAll('.fundArtistList');
 		let btn = document.querySelector('#btn1');
 
 		btn.addEventListener('click', check);
@@ -142,7 +148,7 @@
 
 			let bol = true;
 
-			fundArtist.forEach(function(e){
+			fundArtistList.forEach(function(e){
 
 				if(e.value == username){
 					bol = false;
@@ -154,10 +160,11 @@
 			}else{
 				alert("이미 존재합니다.");
 			}
-
+		
 		}
 		
 	</script>
+	
 		
 </body>
 </html>

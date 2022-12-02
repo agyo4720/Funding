@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.funding.fundArtist.FundArtist;
 import com.funding.fundArtist.FundArtistRepository;
 import com.funding.fundBoard.FundBoard;
+import com.funding.fundUser.FundUserRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,6 +19,7 @@ public class FundArtistListService {
 
 	private final FundArtistListRepository fundArtistListRepository;
 	private final FundArtistRepository fundArtistRepository;
+	private final FundUserRepository fundUserRepository;
 	
 	// 펀드 아티스트 리스트
 	public List<FundArtistList> findAll(){
@@ -46,6 +48,7 @@ public class FundArtistListService {
 		this.fundArtistListRepository.save(fundArtistLists);
 	}
 	
+	
 	public List<FundArtistList> findByFundBoard(FundBoard fundBoard) {
 		
 		return this.fundArtistListRepository.findByFundBoard(fundBoard);
@@ -59,6 +62,7 @@ public class FundArtistListService {
 		return fundArtistList.get();
 	}
 	
+	// 미지정 펀드 아티스트 투표하기
 	public void score(FundArtistList fundArtistList) {
 		
 		Integer i = fundArtistList.getLikeConut();
