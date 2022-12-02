@@ -44,6 +44,7 @@ public class SaleService {
 		sale.setOrederId(orederId);
 		sale.setPayCode(paymentKey);
 		sale.setCheckin("결제완료");
+		sale.setUsername(FU.get().getUsername());
 		sale.setPayDate(LocalDateTime.now());
 		sList.add(sale);
 		saleRepository.save(sale);
@@ -68,6 +69,7 @@ public class SaleService {
 		sale.setOrederId(orederId);
 		sale.setPayCode(paymentKey);
 		sale.setCheckin("결제완료");
+		sale.setUsername(FU.get().getUsername());
 		sale.setPayDate(LocalDateTime.now());
 		sList.add(sale);
 		log.info("sList: "+sList);
@@ -76,9 +78,9 @@ public class SaleService {
 	
 	
 	//결제리스트 페이징
-	public Page<Sale> findByFundUser(int page,String user){
+	public Page<Sale> findByUsername(int page,String user){
 		Pageable pageable = PageRequest.of(page, 5, Sort.by("payDate").descending());
-		Page<Sale> sList = saleRepository.findByFundUser(user,pageable);
+		Page<Sale> sList = saleRepository.findByUsername(user,pageable);
 		return sList;
 	}
 }

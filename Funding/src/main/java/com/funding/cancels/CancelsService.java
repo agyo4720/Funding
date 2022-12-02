@@ -27,6 +27,7 @@ public class CancelsService {
 		List<Cancels> cList = new ArrayList<>(); //결제내역 리스트
 		Cancels cancel = new Cancels();
 		cancel.setFundUser(FU.get().getNickname());
+		cancel.setUsername(FU.get().getUsername());
 		cancel.setOrderName(orderName);
 		cancel.setPayMoney(totalAmount);
 		cancel.setOrderId(orederId);
@@ -42,10 +43,12 @@ public class CancelsService {
 		saleRepository.saveAll(sList);
 	}
 	
-	public void totalCancelInfo(String orederId, int totalAmount, String orderName, String cancelReason, String FundUser) {
+	public void totalCancelInfo(String orederId, int totalAmount, String orderName, String cancelReason, String fundUser, 
+			String username) {
 		List<Cancels> cList = new ArrayList<>(); //결제내역 리스트
 		Cancels cancel = new Cancels();
-		cancel.setFundUser(FundUser);
+		cancel.setFundUser(fundUser);
+		cancel.setUsername(username);
 		cancel.setOrderName(orderName);
 		cancel.setPayMoney(totalAmount);
 		cancel.setOrderId(orederId);
@@ -53,5 +56,12 @@ public class CancelsService {
 		cancel.setCanceledAt(LocalDateTime.now());
 		cList.add(cancel);
 		cancelsRepository.save(cancel);
+		
+		List<Sale> sList = saleRepository.findByOrederId(orederId);
+		for(int i=0; i<sList.size(); i++) {
+			sList.get(i).setCancelReason(cancelReason);
+			sList.get(i).setCancelDate(LocalDateTime.now());
+			saleRepository.saveAll(sList);
+		}
 	}
 }
