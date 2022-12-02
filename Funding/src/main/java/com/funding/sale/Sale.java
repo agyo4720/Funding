@@ -39,6 +39,9 @@ public class Sale {
 	@Column(name = "fundUser")
 	private String fundUser; //고객이름
 	
+	@Column(name = "username")
+	private String username; //고객아이디
+	
 	@Column(name = "orderName")
 	private String orderName; //공연이름
 	

@@ -25,7 +25,7 @@
     <header th:replace="/main/nav"></header>
 
     <section>
-		<div class="s_title">
+		<div class="title">
 			<h2>지정 펀딩</h2>
 		</div>
 
@@ -89,6 +89,7 @@
 				</div>
 			</div>
 		</div>
+
 		<!-- 페이징 -->
 		<div class="page" th:if="${!targetList.isEmpty()}">
 			<div th:if="${targetList.number > 0}">
@@ -108,7 +109,7 @@
 			</div>
 		</div>
 		<!-- //페이징 -->
-		<a class="btn_create" href="fundTargetForm.html" th:href="@{/fundTarget/form}">펀딩 만들기</a>
+		<a class="btn_create" href="fundTargetForm.html" th:href="@{/fundTarget/form}">등록하기</a>
     </section>
     
     <script>

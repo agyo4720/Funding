@@ -197,11 +197,11 @@ public class SaleController {
 	@GetMapping("/loo/confirm")
 	public String confirm(Principal principal, Model model,@RequestParam(value = "page", defaultValue="0") int page,
 			@RequestParam(value = "pagee", defaultValue="0") int pagee) throws Exception{
-		principal.getName();
+		
 		Optional<FundUser> FU =  fundUserRepository.findByusername(principal.getName());
 
 		//결제리스트 불러오기
-		Page<Sale> sList = saleService.findByFundUser(page,FU.get().getNickname());
+		Page<Sale> sList = saleService.findByUsername(page,FU.get().getUsername());
 		model.addAttribute("sList",sList);
 		model.addAttribute("page",page);
 		

@@ -25,6 +25,7 @@ import com.funding.fundList.FundListService;
 import com.funding.fundTargetList.FundTargetListService;
 import com.funding.fundUser.FundUser;
 import com.funding.fundUser.FundUserRepository;
+import com.funding.fundUser.FundUserService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,7 +39,8 @@ public class CancelsController {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final String SECRET_KEY = "test_sk_JQbgMGZzorzl7aMN4D3l5E1em4dK";
     private String paymentKey;
-    private final FundUserRepository fundUserRepository;
+   
+    private final FundUserService fundUserService;
     private final CancelsService cancelsService;
     private final FundTargetService fundTargetService;
     private final FundTargetListService fundTargetListService;
@@ -79,8 +81,8 @@ public class CancelsController {
     			model.addAttribute("orderId",orderId);//주문번호
     			model.addAttribute("totalAmount",totalAmount);//금액
     			model.addAttribute("cancelReason",cancelReason);//환불사유
-    			principal.getName();
-    			Optional<FundUser> FU =  fundUserRepository.findByusername(principal.getName());
+    			
+    			Optional<FundUser> FU =  fundUserService.findByuserName(principal.getName());
     			cancelsService.cancelInfo(orderId, Integer.valueOf(totalAmount).intValue(), orderName, cancelReason, FU, paymentKey);
 
 
@@ -163,8 +165,8 @@ public class CancelsController {
     			model.addAttribute("orderId",orderId);//주문번호
     			model.addAttribute("totalAmount",totalAmount);//금액
     			model.addAttribute("cancelReason",cancelReason);//환불사유
-    			principal.getName();
-    			Optional<FundUser> FU =  fundUserRepository.findByusername(principal.getName());
+    			
+    			Optional<FundUser> FU =  fundUserService.findByuserName(principal.getName());
     			cancelsService.cancelInfo(orderId, Integer.valueOf(totalAmount).intValue(), orderName, cancelReason, FU,paymentKey);
 
             	//누적금액감소
