@@ -131,7 +131,7 @@
 				<div>현재 참여중인 아티스트</div>
 				<div th:each="fundArtistList : ${fundArtistList}">
 					<span th:text="${fundArtistList.fundArtist.nickname}"></span>
-					<button th:href="">투표하기</button>
+					<button th:href="@{|/fundBoard/score/${fundArtistList.id}|}">투표하기</button>
 					<input hidden class="fundArtistList" th:value="${fundArtistList.fundArtist.username}">
 				</div>
 			</div>
@@ -187,9 +187,6 @@
 			
 		}
 			
-		
-		
-	
 	</script>
 
 </body>

@@ -41,7 +41,6 @@ public class FundArtistListController {
 			Principal principal,
 			Model model) {
 		
-		
 		FundArtist fundArtist = this.fundArtistService.findByuserName(principal.getName()).get();
 		FundBoard furndBoard = this.fundBoardService.findById(id);
 		

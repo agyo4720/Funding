@@ -31,7 +31,6 @@ public class FundArtist {
 	private Date birth;			// 생년월일
 	private String role;		// 권한등급
 	private Integer likeCount;	// 추천 수
-	
-	
+
 	
 }

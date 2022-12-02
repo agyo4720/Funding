@@ -15,6 +15,9 @@ import org.springframework.stereotype.Service;
 
 import com.funding.Categorie.Categorie;
 import com.funding.Categorie.CategorieRepository;
+import com.funding.fundArtist.FundArtist;
+import com.funding.fundArtist.FundArtistRepository;
+import com.funding.fundArtistList.FundArtistList;
 import com.funding.fundUser.FundUser;
 
 import lombok.RequiredArgsConstructor;
@@ -26,6 +29,7 @@ public class FundBoardService {
 
 	private final FundBoardRepository fundBoardRepository;
 	private final CategorieRepository categorieRepository;
+	private final FundArtistRepository fundArtistRepository; 
 	
 	// 펀드보드 리스트
 	public List<FundBoard> findAll(){
@@ -172,5 +176,14 @@ public class FundBoardService {
 	public void addFundBoard(FundBoard fundBoard) {
 		fundBoardRepository.save(fundBoard);
 	}
+	
+//	// 미지정 펀드 참여 아티스트 투표하기
+//	public void score(FundArtistList fundArtistList) {
+//		
+//		FundArtistList fal = new FundArtistList();
+//		
+//		fal.getFundArtist().setLikeCount();
+//		
+//	}
 
 }

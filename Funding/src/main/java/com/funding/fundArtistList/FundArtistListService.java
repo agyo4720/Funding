@@ -1,6 +1,7 @@
 package com.funding.fundArtistList;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.stereotype.Service;
@@ -45,6 +46,14 @@ public class FundArtistListService {
 	public List<FundArtistList> findByFundBoard(FundBoard fundBoard) {
 		
 		return this.fundArtistListRepository.findByFundBoard(fundBoard);
+	}
+	
+	// 해당 id로 데이터 가져오기
+	public FundArtistList findById(Integer id) {
+		
+		Optional<FundArtistList> fundArtistList = this.fundArtistListRepository.findById(id);
+		
+		return fundArtistList.get();
 	}
 
 	

@@ -29,6 +29,7 @@ import com.funding.Categorie.CategorieService;
 import com.funding.answer.Answer;
 import com.funding.answer.AnswerService;
 import com.funding.file.FileService;
+import com.funding.fundArtist.FundArtistService;
 import com.funding.fundArtistList.FundArtistList;
 import com.funding.fundArtistList.FundArtistListService;
 import com.funding.fundList.FundList;
@@ -60,6 +61,7 @@ public class FundBoardController {
 	private final PatmentService patmentService;
 	private final FundListService fundListService;
 	private final FundArtistListService fundArtistListService;
+	private final FundArtistService fundArtistService;
 
 
 
@@ -251,7 +253,21 @@ public class FundBoardController {
 
 		return "redirect:/fundBoard/list";
 	}
+	
+	// 펀드 참여 아티스트 투표하기
+	@RequestMapping("/score/{id}")
+	public String score(
+			@PathVariable("id") Integer id,
+			Principal principal) {
+		
+		
+		
+		
+		//this.fundBoardService.score(fundArtistList);
+		
+		return "redirect:/fundBoard/detail";
+	}
 
-	// 2022/12/02 - 1 작업중
+	// 2022/12/02 - 2 작업중
 
 }
