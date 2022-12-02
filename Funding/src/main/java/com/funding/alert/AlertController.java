@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.funding.cancels.CancelsController;
 import com.funding.fundArtist.FundArtist;
 import com.funding.fundArtist.FundArtistService;
+import com.funding.fundBoard.FundBoard;
+import com.funding.fundBoard.FundBoardService;
 import com.funding.fundBoardTarget.FundBoardTarget;
 import com.funding.fundBoardTarget.FundTargetService;
 import com.funding.fundTargetList.FundTargetList;
@@ -38,6 +40,7 @@ public class AlertController {
 	private final FundArtistService fundArtistService;
 	private final FundTargetListService fundTargetListService;
 	private final FundTargetService fundTargetService;
+	private final FundBoardService fundBoardService;
 	private final SaleRepository saleRepository;
 	private final CancelsController cancelsController;
 	
@@ -64,7 +67,8 @@ public class AlertController {
 				}
 				
 				//접속자와 댓글 생성자 같으면 출력 안함
-				if(art.get().getUsername().equals(map.get("username"))) {
+				String userequals = artList.get(i).getGuestUser().getUsername();
+				if(art.get().getUsername().equals(userequals)) {
 					continue;
 				}
 				map.put("content", artList.get(i).getContent());
@@ -90,9 +94,11 @@ public class AlertController {
 			}else if(aList.get(i).getGuestArtist() != null) {
 				map.put("Guestname", aList.get(i).getGuestArtist().getUsername());
 			}
-					
+			
+			
 			//접속자와 댓글 생성자 같으면 출력 안함
-			if(user.get().getUsername().equals(map.get("username"))) {
+			String userequals = aList.get(i).getGuestUser().getUsername();
+			if(user.get().getUsername().equals(userequals)) {
 				continue;
 			}
 			map.put("content", aList.get(i).getContent());
@@ -141,6 +147,7 @@ public class AlertController {
 					alertService.fundEndAlert(fundBoardTarget, user.getUsername());
 				}
 			}
+		
 			
 			//펀딩 금액 달성시
 			if(targetList.get(i).getFundCurrent() >= targetList.get(i).getFundAmount() && 
@@ -163,6 +170,40 @@ public class AlertController {
 				}
 			}
 		}
+			
+			
+		//미지정 업데이트
+		List<FundBoard> bList = fundBoardService.findAllList();
+			
+		for(int i=0; i<targetList.size(); i++) {
+			if(bList.get(i).getFundDuration().isBefore(LocalDate.now()) &&
+					bList.get(i).getState().equals("진행중")) {
+				
+				log.info("날짜 지났어용    : " + targetList.get(i).getSubject());
+				log.info("게시글 만료 날짜 : "+ targetList.get(i).getFundDurationE());
+				log.info("비교하는 날짜    : " + LocalDate.now());
+				targetList.get(i).setStatus("만료됨");
+				fundTargetService.addTargetFund(targetList.get(i));
+				
+				//환불 시킴
+				List<Sale> sale = saleRepository.findByFundBoardTarget(targetList.get(i).getSubject());
+				for(int j=0; i<sale.size(); j++){
+					sale.get(j).getPayCode();
+					sale.get(j).setCheckin("게시글 삭제");
+					
+					cancelsController.totalCancel(sale.get(j).getPayCode(),"게시글 삭제");
+				}
+				
+				//알림 등록
+				FundBoardTarget fundBoardTarget = targetList.get(i);
+				List<FundTargetList> fListList = fundTargetListService.findByFundBoardTarget(fundBoardTarget);
+				for(int j=0; j<fListList.size(); j++) {
+					FundUser user = fListList.get(j).getFundUser();
+					alertService.fundEndAlert(fundBoardTarget, user.getUsername());
+				}
+			}
+		}
+			
 		return "알림 정리 했어요";
 	}
 	

@@ -135,14 +135,6 @@
 			</div>
 			<!--섹션3 끝-->
 			
-			<!--섹션4 시작-->
-			<div class="section2">
-				<div th:each="answer : ${answerList}">
-					<div th:text="${answer.content}">댓글 내용</div>
-					<div th:text="${#temporals.format(answer.createDate, 'MM-dd HH:mm:ss')}">댓글 시간</div>
-				</div>
-			</div>
-			<!--섹션4 끝-->
 
 			<!--섹션5 시작-->
 			<div class="section3">
@@ -152,6 +144,18 @@
 				</form>
 			</div>
 			<!--섹션5 끝-->
+			
+			<!--섹션4 시작-->
+			<div class="section2">
+				<div th:each="answer : ${answerList}">
+					<div th:text="${answer.fundUser.username}"></div>
+					<div th:text="${answer.content}">댓글 내용</div>
+					<div th:text="${#temporals.format(answer.createDate, 'MM-dd HH:mm:ss')}">댓글 시간</div>
+					<a class="cmt_delete" th:href="@{|/answer/delete/${answer.id}?location=board&id=${fundBoard.id}|}">삭제</a>
+				</div>
+			</div>
+			<!--섹션4 끝-->
+			
 		</div>
 	</div>
 	
