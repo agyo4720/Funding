@@ -6,6 +6,8 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Base64;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,6 +54,11 @@ public class EnrollController {
     			model.addAttribute("msg","SUCcess");
     			return "/main/nav";
     		}else {
+        		JSONParser parser = new JSONParser();
+        		Object obj = parser.parse(response.body());
+        		JSONObject jsonObj = (JSONObject)obj;
+    			String message = (String)jsonObj.get("message");
+    			model.addAttribute("message",message);
     			model.addAttribute("msg","FAIl");
     			return "/main/nav";
     		}
@@ -81,6 +88,11 @@ public class EnrollController {
     			model.addAttribute("msg","SUccess");
     			return "/main/nav";
     		}else {
+        		JSONParser parser = new JSONParser();
+        		Object obj = parser.parse(response.body());
+        		JSONObject jsonObj = (JSONObject)obj;
+    			String message = (String)jsonObj.get("message");
+    			model.addAttribute("message",message);
     			model.addAttribute("msg","FAil");
     			return "/main/nav";
     		}
@@ -106,6 +118,11 @@ public class EnrollController {
     			model.addAttribute("msg","SUCCess");
     			return "/main/nav";
     		}else {
+        		JSONParser parser = new JSONParser();
+        		Object obj = parser.parse(response.body());
+        		JSONObject jsonObj = (JSONObject)obj;
+    			String message = (String)jsonObj.get("message");
+    			model.addAttribute("message",message);
     			model.addAttribute("msg","FAIL");
     			return "/main/nav";
     		}

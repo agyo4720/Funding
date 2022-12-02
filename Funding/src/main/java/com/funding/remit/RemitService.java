@@ -27,15 +27,15 @@ public class RemitService {
 		Remit remit = new Remit();
 		remit.setSubMallId(subMallId);
 		remit.setPayoutAmount(payoutAmount);
-		remit.setRequestedAt(payoutDate);
-		remit.setPayoutDate(LocalDateTime.now());
+		remit.setPayoutDate(payoutDate);
+		remit.setRequestedAt(LocalDateTime.now());
 		rList.add(remit);
 		remitRepository.save(remit);
 	}
 
 	//송금리스트 페이징
 	public Page<Remit> findBysubMallId(int page,String subMallId){
-		Pageable pageable = PageRequest.of(page, 5, Sort.by("payoutDate").descending());
+		Pageable pageable = PageRequest.of(page, 5, Sort.by("requestedAt").descending());
 		Page<Remit> rList = remitRepository.findBysubMallId(subMallId,pageable);
 		return rList;
 	}

@@ -65,6 +65,7 @@
                     <hr/>
                 </div>
 
+
                 <div>
                     <!-- <div class="view">
                         <div class="progress" style="height: 10px">
@@ -75,32 +76,39 @@
                     	<progress th:value="|${fundBoardTarget.fundCurrent * 100 / fundBoardTarget.fundAmount}|" max="100"></progress>
                     	<span th:text="|${fundBoardTarget.fundCurrent * 100 / fundBoardTarget.fundAmount}%|"></span>
                     </div>
-                    <div class="view" id="fundCurrent">
-                        <label for="fundCurrent">현재 펀딩 금액</label>
-                        <p th:text="${#numbers.formatInteger(fundBoardTarget.fundCurrent, 1,'COMMA')+' 원'}">7,600,000</p>
-                    </div>
-                    <div class="view" id="fundAmount">
-                        <label for="fundAmount">총 펀딩 금액</label>
-                        <p th:text="${#numbers.formatInteger(fundBoardTarget.fundAmount, 3,'COMMA')+' 원'}">8,000,000</p>
-                    </div>
 
-                    <div class="view">
-                        <label for="duration">펀딩기간</label>
-                        <p th:text="${fundBoardTarget.fundDurationS}
-                         + ' ~ ' + ${fundBoardTarget.fundDurationE}">2022.11.19 (토) ~ 2022.12.19 (일)</p>
+
+                <!-- <div class="view">
+                    <div class="progress" style="height: 10px">
+                        <div class="progress-bar" style="width: 40%; height: 10px"></div>
                     </div>
-                    <div class="view">
-                        <label for="count">현재 인원</label>
-                        <p th:text="${fundBoardTarget.CurrentMember}">76명</p>
-                    </div>
-                    <div class="view minFund">
-                        <label for="minFund">최소 펀딩 금액</label>
-                        <p th:text="${#numbers.formatInteger(fundBoardTarget.minFund, 3,'COMMA')+' 원'}">100,000원</p>
-                    </div>
-	                    <div sec:authorize="hasRole('ROLE_USER')">
-	    	               	<button th:if="${result == true}" class="con_btn" th:onclick="'location.href=\''+ @{/pay/can/tarCancel(paymentKey=${payCode})} + '\''" type="submit">환불하기</button>
-		                   	<button th:if="${result == false}"class="con_btn" th:onclick="'location.href=\''+ @{|/pay/tossPayTar/${fundBoardTarget.id}|} + '\''">펀딩하기</button>
-	                    </div>
+                </div> -->
+                
+                <div class="view" id="fundCurrent">
+                    <label for="fundCurrent">현재 펀딩 금액</label>
+                    <p th:text="${#numbers.formatInteger(fundBoardTarget.fundCurrent, 1,'COMMA')+' 원'}">7,600,000</p>
+                </div>
+                <div class="view" id="fundAmount">
+                    <label for="fundAmount">총 펀딩 금액</label>
+                    <p th:text="${#numbers.formatInteger(fundBoardTarget.fundAmount, 3,'COMMA')+' 원'}">8,000,000</p>
+                </div>
+
+                <div class="view">
+                    <label for="duration">펀딩기간</label>
+                    <p th:text="${fundBoardTarget.fundDurationS}
+                        + ' ~ ' + ${fundBoardTarget.fundDurationE}">2022.11.19 (토) ~ 2022.12.19 (일)</p>
+                </div>
+                <div class="view">
+                    <label for="count">현재 인원</label>
+                    <p th:text="${fundBoardTarget.CurrentMember}">76명</p>
+                </div>
+                <div class="view minFund">
+                    <label for="minFund">최소 펀딩 금액</label>
+                    <p th:text="${#numbers.formatInteger(fundBoardTarget.minFund, 3,'COMMA')+' 원'}">100,000원</p>
+                </div>
+                <div sec:authorize="hasRole('ROLE_USER')">
+                    <button th:if="${result == true}" class="con_btn" th:onclick="'tion.href=\''+ @{/pay/can/tarCancel(paymentKey=${payCode})} + '\''" type="submit">환불하기</button>
+                    <button th:if="${result == false}"class="con_btn" th:onclick="'tion.href=\''+ @{|/pay/tossPayTar/${fundBoardTarget.id}|} + '\''">펀딩하기</button>
                 </div>
             </div>
         </div>

@@ -193,8 +193,7 @@ public class SaleController {
     
 	//결제목록
 	@GetMapping("/loo/confirm")
-	public String confirm(Principal principal, Model model,@RequestParam(value = "page", defaultValue="0") int page,
-			@RequestParam(value = "pagee", defaultValue="0") int pagee) throws Exception{
+	public String confirm(Principal principal, Model model,@RequestParam(value = "page", defaultValue="0") int page) throws Exception{
 		
 		Optional<FundUser> FU = fundUserService.findByuserName(principal.getName());
 

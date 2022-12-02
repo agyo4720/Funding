@@ -32,7 +32,8 @@
 		<div class="categorie">
 			<ul>
 				<li>
-					<a th:each="categorie, loop : ${categorieList}"
+					<a class="cate"
+						th:each="categorie, loop : ${categorieList}"
 						th:text="${categorie.categorieName}"
 						th:href="@{|/fundBoard/categorie/${categorie.id}|}">
 					</a>
@@ -119,6 +120,32 @@
 	</section>
 	
 	<script>
+		let url = window.location.href;
+		console.log(url);
+
+		let Params = new URLSearchParams(url);
+		console.log(Params);
+
+		let cate = Params.get('{id}}');
+		cate = parseInt(cate);
+		console.log(cate);
+
+		let cateList = document.querySelectorAll('.cate');
+
+		console.log(cateList[0].text);
+
+		cateList.forEach(function(e) {
+			console.log(e.text);
+		})
+
+		document.addEventListener("DOMContentLoaded", addActive);
+
+		function addActive() {
+			cateList.forEach(function(e) {
+				e.classList.remove('active');
+			})
+        	// cateList[cate].classList.add('active')
+		}
 
 	</script>
 </body>
