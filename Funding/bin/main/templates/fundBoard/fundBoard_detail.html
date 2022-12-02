@@ -113,6 +113,7 @@
 			<div th:each="answer : ${answerList}">
 				<div th:text="${answer.content}">댓글 내용</div>
 				<div th:text="${#temporals.format(answer.createDate, 'MM-dd HH:mm:ss')}">댓글 시간</div>
+				<a class="cmt_delete" th:href="@{|/answer/delete/${answer.id}?location=board&id=${fundBoard.id}|}">삭제</a>
 			</div>
 		</div>
 		<!--섹션4 끝-->

@@ -34,10 +34,22 @@ public class AnswerService {
 	}
 	
 	//미지정 보드 댓글 만들기
-	public void createBoardAnswer(String content, FundBoard fundBoard) {
+	public void createBoardAnswerUser(String content, FundBoard fundBoard, FundUser user) {
 		Answer answer = new Answer();
 		answer.setContent(content);
 		answer.setCreateDate(LocalDateTime.now());
+		answer.setFundBoard(fundBoard);
+		answer.setFundUser(user);
+		
+		answerRepository.save(answer);
+	}
+	
+	//미지정 보드 아티스트 댓글 만들기
+	public void createBoardAnswerArt(String content, FundBoard fundBoard, FundArtist art) {
+		Answer answer = new Answer();
+		answer.setContent(content);
+		answer.setCreateDate(LocalDateTime.now());
+		answer.setFundArtist(art);
 		answer.setFundBoard(fundBoard);
 		
 		answerRepository.save(answer);
