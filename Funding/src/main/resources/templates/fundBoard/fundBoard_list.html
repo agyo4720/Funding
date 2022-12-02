@@ -93,8 +93,8 @@
 		<!-- 페이징 시작 -->
 		<div class="paging" th:if="${!fundBoardList.isEmpty()}">
 			<!-- 이전 페이지가 없으면 비활성화 -->
-			<div th:classappend="${!fundBoardList.hasPrevious} ? 'disabled'">
-				<a th:href="@{|?fundBoardList=${fundBoardList.number-1}|}">
+			<div th:if="${fundBoardList.number > 0}">
+				<a th:href="@{|?page=${fundBoardList.number-1}|}">
 					<i class="fas fa-chevron-left"></i>
 				</a>
 			</div>
@@ -102,14 +102,14 @@
 			<!-- 페이지 리스트 루프 -->
 			<!-- 현재 페이지와 같으면 active 적용-->
 			<div th:each="page: ${#numbers.sequence(0, fundBoardList.totalPages-1)}"
-				th:if="${page >= fundBoardList.number-5 and page <= fundBoardList.number+4}"
-				th:classappend="${page == fundBoardList.number} ? 'active'">
-				<a th:text="${page+1}" th:href="@{|?page=${page}|}"></a>
+				th:if="${page >= fundBoardList.number-5 and page <= fundBoardList.number+4}">
+				<a th:classappend="${page == fundBoardList.number} ? 'active'"
+				th:text="${page+1}" th:href="@{|?page=${page}|}"></a>
 			</div>
 			
 			<!-- 다음 페이지가 없으면 비활성화 -->
-			<div th:classappend="${!fundBoardList.hasNext} ? 'disabled'">
-				<a th:href="@{|?fundBoardList=${fundBoardList.number+1}|}">
+			<div th:if="${fundBoardList.number < fundBoardList.totalPages-1}">
+				<a th:href="@{|?page=${fundBoardList.number+1}|}">
 					<i class="fas fa-chevron-right"></i>
 				</a>
 			</div>
@@ -121,30 +121,17 @@
 	
 	<script>
 		let url = window.location.href;
-		console.log(url);
-
-		let Params = new URLSearchParams(url);
-		console.log(Params);
-
-		let cate = Params.get('{id}}');
-		cate = parseInt(cate);
-		console.log(cate);
-
+		let cate = url.split('/')
+		cate = parseInt(cate[5])-1
+		
 		let cateList = document.querySelectorAll('.cate');
-
-		console.log(cateList[0].text);
-
-		cateList.forEach(function(e) {
-			console.log(e.text);
-		})
-
 		document.addEventListener("DOMContentLoaded", addActive);
 
 		function addActive() {
 			cateList.forEach(function(e) {
 				e.classList.remove('active');
 			})
-        	// cateList[cate].classList.add('active')
+        	cateList[cate].classList.add('active')
 		}
 
 	</script>
