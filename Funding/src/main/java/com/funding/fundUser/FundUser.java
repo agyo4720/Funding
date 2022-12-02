@@ -10,9 +10,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import com.funding.answer.Answer;
 import com.funding.answerAns.AnswerAns;
+import com.funding.fundArtistList.FundArtistList;
 import com.funding.fundBoard.FundBoard;
 import com.funding.fundBoardTarget.FundBoardTarget;
 import com.funding.fundList.FundList;
@@ -55,5 +57,8 @@ public class FundUser {
 
 	@OneToMany(mappedBy = "fundUser", cascade = CascadeType.REMOVE)
 	private List<FundTargetList> fundTargetList;
+	
+	
+	
 
 }

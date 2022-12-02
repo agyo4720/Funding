@@ -12,6 +12,8 @@ import com.funding.fundArtist.FundArtist;
 import com.funding.fundArtist.FundArtistService;
 import com.funding.fundBoard.FundBoard;
 import com.funding.fundBoard.FundBoardService;
+import com.funding.fundUser.FundUser;
+import com.funding.fundUser.FundUserService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,6 +25,7 @@ public class FundArtistListController {
 	private final FundArtistListService fundArtistListService;
 	private final FundArtistService fundArtistService;
 	private final FundBoardService fundBoardService;
+	private final FundUserService fundUserService;
 	
 	// 펀드 아티스트 리스트 목록
 	@RequestMapping("/list")
@@ -54,10 +57,19 @@ public class FundArtistListController {
 	public String score(
 			@PathVariable("id") Integer id,
 			Principal principal) {
-
+		
+		// 해당 펀드아티스트리스트 아이디
 		FundArtistList fundArtistList = this.fundArtistListService.findById(id);
-
-		this.fundArtistListService.score(fundArtistList);
+		
+		// 투표하기한 유저정보
+		FundUser fundUser = this.fundUserService.findByuserName(principal.getName()).get();
+		
+		//this.fundArtistListService.score(fundArtistList, fundUser);
+		this.fundArtistListService.addvote(
+				fundArtistList.getFundBoard(),
+				fundArtistList.getFundArtist(),
+				fundUser
+				,id);
 		
 		return "redirect:/fundBoard/list";
 	}

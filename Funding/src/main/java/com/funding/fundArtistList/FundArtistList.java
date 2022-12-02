@@ -1,14 +1,19 @@
 package com.funding.fundArtistList;
 
 
+import java.util.List;
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 import com.funding.fundArtist.FundArtist;
 import com.funding.fundBoard.FundBoard;
+import com.funding.fundUser.FundUser;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -32,5 +37,6 @@ public class FundArtistList {
 	@ManyToOne
 	private FundArtist fundArtist; // 공연자
 	
-
+	@ManyToMany
+	private Set<FundUser> fundUserList; // 누가 투표했는가?
 }
