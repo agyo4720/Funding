@@ -36,7 +36,8 @@
 			</form>
 		</div>	
 
-		<div class="list_form" th:each="target : ${targetList}">
+		<div class="list_form" th:each="target, i : ${targetList}">
+			<div th:text="${i.count}" hidden></div>
 			<div class="con_list">
 				<a href="../fundTarget/fundTargetDetail.html" th:href="@{|/fundTarget/detail/${target.id}|}">
 					<div class="image">
@@ -88,7 +89,12 @@
 					</div>
 				</div>
 			</div>
+
+			<hr th:class="|h${i.count}|"/>
+			<div th:text="#lists.size(target)"></div>
+
 		</div>
+
 		<!-- 페이징 -->
 		<div class="page" th:if="${!targetList.isEmpty()}">
 			<div th:if="${targetList.number > 0}">
@@ -129,8 +135,7 @@
         	})
         	cateList[cate].classList.add('active')
     	}
-    	
-    	
     </script>
+
 </body>
 </html>

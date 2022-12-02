@@ -44,8 +44,8 @@ section .s_title {
     padding: 10px 20px;
     margin: 30px auto;
     width: 900px;
-    border: 1px solid #7c7c7c;
-    border-radius: 30px;
+    /* border: 1px solid #7c7c7c; */
+    /* border-radius: 30px; */
 }
 
 .con_list {display: flex;}
@@ -98,6 +98,11 @@ section .s_title {
 .view label {width: 120px;}
 
 .view:last-child {margin: 0 auto;}
+
+hr {
+    border-top: 1px solid;
+    margin: 30px 0 0;
+}
 
 /* 페이징 */
 .page {
