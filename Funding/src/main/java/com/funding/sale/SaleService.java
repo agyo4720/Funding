@@ -23,8 +23,6 @@ import lombok.extern.slf4j.Slf4j;
 public class SaleService {
 	private final SaleRepository saleRepository;
 	
-	//a
-	
 	//지정공연 결제
 	public void targetSaveinfo(String paymentKey, String orederId, int amount, String orderName, 
 			Optional<FundUser> FU) {

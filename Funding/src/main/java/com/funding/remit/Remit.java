@@ -32,9 +32,9 @@ public class Remit {
 	private Integer payoutAmount ; //송금금액
 	
 	@Column(name = "requestedAt ")
-	private String requestedAt ; //원하는 송금날짜
+	private LocalDateTime requestedAt ; //등록날짜
 	
 	@Column(name = "payoutDate  ")
-	private LocalDateTime payoutDate  ; //송금날짜
+	private String  payoutDate  ; //공연완료날짜
 	
 }

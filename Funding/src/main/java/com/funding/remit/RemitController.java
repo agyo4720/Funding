@@ -4,10 +4,14 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Base64;
+import java.util.Calendar;
+import java.util.Date;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,12 +33,19 @@ public class RemitController {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final String SECRET_KEY = "test_sk_JQbgMGZzorzl7aMN4D3l5E1em4dK";
     private final RemitService remitService;
+    private String subMallId;
     
 	//송금하기
 	@RequestMapping("/rem/remit")
 	public String remit(Model model) {
-		String nowTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-		model.addAttribute("nowTime", nowTime);
+		Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
+        cal.add(Calendar.DATE, +3);
+        String nowTime = df.format(cal.getTime());
+        
+        model.addAttribute("nowTime", nowTime);
 			return "/pay/rem/remit";
 	}
 	@RequestMapping("/rem/remitRquest")
@@ -48,13 +59,18 @@ public class RemitController {
 			    		+ "\"payoutDate\":\""+payoutDate+"\"},{\"subMallId\":\""+subMallId+"\","
 			    		+ "\"payoutAmount\":"+payoutAmount+",\"payoutDate\":\""+payoutDate+"\"}]"))
 			    .build();
-			HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-						
+			HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());			
+
     		if(response.statusCode() == 200) {//요청응답코드 200=성공
     			remitService.remitInfo(subMallId, payoutAmount, payoutDate);
     			model.addAttribute("msg","Success");
     			return "/main/nav";
     		}else {
+        		JSONParser parser = new JSONParser();
+        		Object obj = parser.parse(response.body());
+        		JSONObject jsonObj = (JSONObject)obj;
+    			String message = (String)jsonObj.get("message");
+    			model.addAttribute("message",message);
     			model.addAttribute("msg","Fail");
     			return "/main/nav";
     		}
@@ -62,18 +78,17 @@ public class RemitController {
 
 	//계좌조회
 	@RequestMapping("/rem/confirm")
-	public String confirm(Model model){
-		model.addAttribute("msg","진행중");
+	public String confirm(){
 			return "/pay/rem/confirm";
 	}
 	@RequestMapping("/rem/confirmRequest")
 	public String confirmRequest(@RequestParam("subMallId")String subMallId, Model model,
 			@RequestParam(value = "page", defaultValue="0") int page)throws Exception {
-		Page<Remit> rList = remitService.findBysubMallId(page,subMallId);
-    		if(rList != null) {
-    			model.addAttribute("rList",rList);
-    			model.addAttribute("page",page);
-    		}
+		this.subMallId = subMallId;
+		Page<Remit> rList = remitService.findBysubMallId(page,this.subMallId);
+		model.addAttribute("rList",rList);
+		model.addAttribute("page",page);
+		model.addAttribute("subMallId",subMallId);
 		return "/pay/rem/confirmSuccess";
 	}
 }
