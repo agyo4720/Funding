@@ -69,7 +69,11 @@
 							$('.alert').append("<a href=\"" + item.url + "?alertId=" + 
 									item.alertId + "\"><div>[" + item.content +
 									"]</div></a>")
+						}else if(item.type == "취소"){
+							$('.alert').append("<a href=\"" +  "/\"><div>[" + item.content +
+									"]</div></a>")
 						}
+						
 					})
 				}
 			})
