@@ -4,10 +4,15 @@
     <h3>마이페이지</h3>
 
     <hr/>
-
+	
     <ul>
-        <li><a th:href="@{/user/myInfo/}">회원 정보</a></li>
-        <li><a th:href="@{/pay/loo/confirm}">결제</a></li>
+        <li><a href="/user/myInfo/">회원 정보</a></li>
+        <li><a href="/pay/loo/confirm">결제</a></li>
+        <li><a href="/categorie/list">카테고리 리스트</a></li>
+        <li sec:authorize="hasRole('ROLE_ARTIST')"><a href="/pay/rem/enroll">계좌등록</a></li>
+        <li sec:authorize="hasRole('ROLE_ARTIST')"><a href="/pay/rem/revise">계좌수정</a></li>
+        <li sec:authorize="hasRole('ROLE_ARTIST')"><a href="/pay/rem/deletion">계좌삭제</a></li>
+        <li sec:authorize="hasRole('ROLE_ARTIST')"><a href="/pay/rem/confirm">내역</a></li>
     </ul>
 </nav>
 
@@ -17,7 +22,8 @@
 
     
     console.log(Params)
-
+    
+    
     // let cateList = document.querySelectorAll('.cate')
 
     // document.addEventListener("DOMContentLoaded", addActive)
