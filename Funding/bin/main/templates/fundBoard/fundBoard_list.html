@@ -32,11 +32,12 @@
 	<div>
 		<nav th:replace="/sidebar/sidebar"></nav>
 	</div>
-
+	
 
     <!-- 홈페이지 상단 nav -->
 	<header th:replace="/main/nav"></header>
-
+	
+	
 	<a th:href="@{/categorie/list}">카테고리 생성</a>
 
 	<div id="warp">
@@ -76,14 +77,14 @@
 			<!-- 페이징 시작 -->
 		    <div class="paging" th:if="${!fundBoardList.isEmpty()}">
 		        <ul>
-
+		        
 		        	<!-- 이전 페이지가 없으면 비활성황 -->
 		            <li th:classappend="${!fundBoardList.hasPrevious} ? 'disabled'">
 		                <a th:href="@{|?fundBoardList=${fundBoardList.number-1}|}">
 		                    <span>이전</span>
 		                </a>
 		            </li>
-
+		            
 		            <!-- 페이지 리스트 루프 -->
 		            <!-- 현재 페이지와 같으면 active 적용-->
 		            <li th:each="page: ${#numbers.sequence(0, fundBoardList.totalPages-1)}"
@@ -92,21 +93,21 @@
 		                >
 		                <a th:text="${page+1}" th:href="@{|?page=${page}|}"></a>
 		            </li>
-
+		            
 		            <!-- 다음 페이지가 없으면 비활성화 -->
 		            <li th:classappend="${!fundBoardList.hasNext} ? 'disabled'">
 		                <a th:href="@{|?fundBoardList=${fundBoardList.number+1}|}">
 		                    <span>다음</span>
 		                </a>
 		            </li>
-
+		        
 		        </ul>
 		    </div>
 		    <!-- 페이징 끝 -->
-
+		    
 		</div>
 
 	</div>
-
+	
 </body>
 </html>

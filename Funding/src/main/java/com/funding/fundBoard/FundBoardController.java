@@ -59,6 +59,8 @@ public class FundBoardController {
 	private final FundListService fundListService;
 	private final FundArtistListService fundArtistListService;
 	private final FundArtistService fundArtistService;
+	private final CancelsController cancelsController;
+	private final CancelsService cancelsService;
 
 
 
