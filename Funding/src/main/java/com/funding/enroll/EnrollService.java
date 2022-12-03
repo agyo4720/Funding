@@ -20,14 +20,13 @@ public class EnrollService {
 			String businessNumber, String bank, String accountNumber) {
 		List<Enroll> eList = new ArrayList<>(); //서브몰등록 리스트
 		Enroll enroll = new Enroll();
-		enroll.setSubMallId(subMallId);
-		enroll.setCompanyName(companyName);
-		enroll.setRepresentativeName(representativeName);
-		enroll.setBusinessNumber(businessNumber);
-		enroll.setBank(bank);
-		enroll.setAccountNumber(accountNumber);
+		enroll.setSubMallId(subMallId);//고유ID
+		enroll.setCompanyName(companyName);//상호명
+		enroll.setRepresentativeName(representativeName);//대표자명
+		enroll.setBusinessNumber(businessNumber);//사업자번호
+		enroll.setBank(bank);//은행
+		enroll.setAccountNumber(accountNumber);//계좌번호
 		eList.add(enroll);
-		log.info("eList: "+eList);
 		enrollRepository.save(enroll);
 	}
 	
@@ -35,7 +34,6 @@ public class EnrollService {
 	public void reviseInfo(String subMallId, String companyName, String representativeName, 
 			String businessNumber, String bank, String accountNumber) {
 		List<Enroll> eList = enrollRepository.findBysubMallId(subMallId);
-		log.info("eList: "+eList);
 		eList.get(0).setSubMallId(subMallId);
 		eList.get(0).setCompanyName(companyName);
 		eList.get(0).setRepresentativeName(representativeName);
@@ -48,7 +46,6 @@ public class EnrollService {
 	//서브몰ID 삭제
 	public void deletionInfo(String subMallId) {
 		List<Enroll> eList = enrollRepository.findBysubMallId(subMallId);
-		log.info("eList: "+eList);
 		eList.get(0).setSubMallId(subMallId);
 		enrollRepository.deleteAll(eList);
 	}	

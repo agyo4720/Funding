@@ -22,7 +22,7 @@ public class Sale {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private Integer id; //기본키sd
+	private Integer id; //기본키Id
 	
 	@Column(name = "payCode")
 	private String payCode; //결제완료키(환불할때 필요)

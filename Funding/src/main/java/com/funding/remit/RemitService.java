@@ -25,18 +25,18 @@ public class RemitService {
 	public void remitInfo(String subMallId, Integer payoutAmount, LocalDateTime payoutDate) {
 		List<Remit> rList = new ArrayList<>(); //서브몰등록 리스트
 		Remit remit = new Remit();
-		remit.setSubMallId(subMallId);
-		remit.setPayoutAmount(payoutAmount);
-		remit.setPayoutDate(payoutDate);
-		remit.setRequestedAt(LocalDateTime.now());
+		remit.setSubMallId(subMallId);//고유ID
+		remit.setPayoutAmount(payoutAmount);//송금금액
+		remit.setPayoutDate(payoutDate);//공연완료일
+		remit.setRequestedAt(LocalDateTime.now());//송금등록일
 		rList.add(remit);
 		remitRepository.save(remit);
 	}
 
 	//송금리스트 페이징
 	public Page<Remit> findBysubMallId(int page,String subMallId){
-		Pageable pageable = PageRequest.of(page, 5, Sort.by("requestedAt").descending());
-		Page<Remit> rList = remitRepository.findBysubMallId(subMallId,pageable);
+		Pageable pageable = PageRequest.of(page, 5, Sort.by("requestedAt").descending());//송금등록일 기준으로 정렬
+		Page<Remit> rList = remitRepository.findBysubMallId(subMallId,pageable);// 페이징
 		return rList;
 	}
 }

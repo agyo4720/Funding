@@ -25,50 +25,36 @@ public class SaleService {
 	
 	//지정공연 결제
 	public void targetSaveinfo(String paymentKey, String orederId, int amount, String orderName, 
-			Optional<FundUser> FU) {
-		CallbackPayload cp = new CallbackPayload(); //정보
-		cp.setFundUser(FU.get().getNickname()); 
-		cp.setOrderName(orderName);
-		cp.setAmount(amount);
-		cp.setOrderId(orederId);
-		cp.setPaymentKey(paymentKey);
-		
+			Optional<FundUser> FU) {	
 		List<Sale> sList = new ArrayList<>(); //결제내역 리스트
 		Sale sale = new Sale();
-		sale.setFundUser(FU.get().getNickname());
-		sale.setFundBoardTarget(orderName);
-		sale.setOrderName(orderName);
-		sale.setPayMoney(amount);
-		sale.setOrederId(orederId);
-		sale.setPayCode(paymentKey);
-		sale.setCheckin("결제완료");
-		sale.setUsername(FU.get().getUsername());
-		sale.setPayDate(LocalDateTime.now());
+		sale.setFundUser(FU.get().getNickname());//로그인중인 고객이름
+		sale.setFundBoardTarget(orderName);//지정공연이름
+		sale.setOrderName(orderName);//공연이름
+		sale.setPayMoney(amount);//금액
+		sale.setOrederId(orederId);//주문번호
+		sale.setPayCode(paymentKey);//결제키
+		sale.setCheckin("결제완료");//상태 "결제완료"
+		sale.setUsername(FU.get().getUsername());//로그인중인 고객아이디 
+		sale.setPayDate(LocalDateTime.now());//결제시간
 		sList.add(sale);
 		saleRepository.save(sale);
 	}
 	
 	//미지정공연 결제
 	public void saveinfo(String paymentKey, String orederId, int amount, String orderName, 
-			Optional<FundUser> FU) {
-		CallbackPayload cp = new CallbackPayload(); //정보
-		cp.setFundUser(FU.get().getNickname()); 
-		cp.setOrderName(orderName);
-		cp.setAmount(amount);
-		cp.setOrderId(orederId);
-		cp.setPaymentKey(paymentKey);
-		
+			Optional<FundUser> FU) {	
 		List<Sale> sList = new ArrayList<>(); //결제내역 리스트
 		Sale sale = new Sale();
-		sale.setFundUser(FU.get().getNickname());
-		sale.setFundBoard(orderName);
-		sale.setOrderName(orderName);
-		sale.setPayMoney(amount);
-		sale.setOrederId(orederId);
-		sale.setPayCode(paymentKey);
-		sale.setCheckin("결제완료");
-		sale.setUsername(FU.get().getUsername());
-		sale.setPayDate(LocalDateTime.now());
+		sale.setFundUser(FU.get().getNickname());//로그인중인 고객이름
+		sale.setFundBoard(orderName);//미지정공연이름
+		sale.setOrderName(orderName);//공연이름
+		sale.setPayMoney(amount);//금액
+		sale.setOrederId(orederId);//주문번호
+		sale.setPayCode(paymentKey);//결제키
+		sale.setCheckin("결제완료");//상태 "결제완료"
+		sale.setUsername(FU.get().getUsername());//로그인중인 고객아이디 
+		sale.setPayDate(LocalDateTime.now());//결제시간
 		sList.add(sale);
 		log.info("sList: "+sList);
 		saleRepository.save(sale);
@@ -77,13 +63,8 @@ public class SaleService {
 	
 	//결제리스트 페이징
 	public Page<Sale> findByUsername(int page,String user){
-		Pageable pageable = PageRequest.of(page, 5, Sort.by("payDate").descending());
-		Page<Sale> sList = saleRepository.findByUsername(user,pageable);
+		Pageable pageable = PageRequest.of(page, 5, Sort.by("payDate").descending());//결제완료시간순으로 페이징
+		Page<Sale> sList = saleRepository.findByUsername(user,pageable);//페이징(아이디일치)
 		return sList;
 	}
-	
-
-	
-	
-	
 }
