@@ -6,6 +6,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
@@ -33,7 +34,6 @@ public class RemitController {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final String SECRET_KEY = "test_sk_JQbgMGZzorzl7aMN4D3l5E1em4dK";
     private final RemitService remitService;
-    private String subMallId;
     
 	//송금하기
 	@RequestMapping("/rem/remit")
@@ -50,7 +50,7 @@ public class RemitController {
 	}
 	@RequestMapping("/rem/remitRquest")
 	public String remitRquest(@RequestParam("subMallId")String subMallId, @RequestParam("payoutAmount")Integer payoutAmount,
-			@RequestParam("payoutDate")String payoutDate,Model model) throws Exception {
+			@RequestParam("payoutDate")LocalDateTime payoutDate,Model model) throws Exception {
 		HttpRequest request = HttpRequest.newBuilder()
 			    .uri(URI.create("https://api.tosspayments.com/v1/payouts/sub-malls/settlements"))
     		    .header("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()))
@@ -64,7 +64,7 @@ public class RemitController {
     		if(response.statusCode() == 200) {//요청응답코드 200=성공
     			remitService.remitInfo(subMallId, payoutAmount, payoutDate);
     			model.addAttribute("msg","Success");
-    			return "/main/nav";
+    			return "/pay/loo/lookup";
     		}else {
         		JSONParser parser = new JSONParser();
         		Object obj = parser.parse(response.body());
@@ -72,23 +72,19 @@ public class RemitController {
     			String message = (String)jsonObj.get("message");
     			model.addAttribute("message",message);
     			model.addAttribute("msg","Fail");
-    			return "/main/nav";
+    			return "/pay/loo/lookup";
     		}
 	}
 
-	//계좌조회
-	@RequestMapping("/rem/confirm")
-	public String confirm(){
-			return "/pay/rem/confirm";
-	}
-	@RequestMapping("/rem/confirmRequest")
-	public String confirmRequest(@RequestParam("subMallId")String subMallId, Model model,
+	
+	//계좌관리, 계좌조회
+	@RequestMapping("/loo/lookup")
+	public String lookup(String subMallId, Model model,
 			@RequestParam(value = "page", defaultValue="0") int page)throws Exception {
-		this.subMallId = subMallId;
-		Page<Remit> rList = remitService.findBysubMallId(page,this.subMallId);
+		Page<Remit> rList = remitService.findBysubMallId(page,subMallId);
 		model.addAttribute("rList",rList);
 		model.addAttribute("page",page);
 		model.addAttribute("subMallId",subMallId);
-		return "/pay/rem/confirmSuccess";
+		return "pay/loo/lookup";
 	}
 }
