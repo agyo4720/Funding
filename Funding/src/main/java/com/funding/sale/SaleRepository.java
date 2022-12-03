@@ -12,10 +12,10 @@ import com.funding.fundBoardTarget.FundBoardTarget;
 import com.funding.fundUser.FundUser;
 
 public interface SaleRepository extends JpaRepository<Sale,Integer> {
-	List<Sale> findBypayCode(String nickname);
-	List<Sale> findByOrederId(String orederId);
-	List<Sale> findByFundBoardTarget(String fundBoardTarget);
-	List<Sale> findByFundBoard(String fundBoard);
-	List<Sale> findByid(Integer id);
-	public Page<Sale> findByUsername(String username,Pageable pageable);
+	List<Sale> findBypayCode(String payCode);//결제키
+	List<Sale> findByOrederId(String orederId);//주문번호
+	List<Sale> findByFundBoardTarget(String fundBoardTarget);//지정공연이름
+	List<Sale> findByFundBoard(String fundBoard);//미지정공연이름
+	List<Sale> findByid(Integer id);//기본키ID
+	public Page<Sale> findByUsername(String username,Pageable pageable);//페이징
 }

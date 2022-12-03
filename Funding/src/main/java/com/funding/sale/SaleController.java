@@ -68,21 +68,21 @@ public class SaleController {
             @RequestParam String paymentKey, @RequestParam String orderId, @RequestParam int amount,
             Model model, Principal principal) throws Exception {
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()));
-        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()));//토스에서 개인식별(시크릿키)
+        headers.setContentType(MediaType.APPLICATION_JSON);//json형식 사용
 
         Map<String, String> payloadMap = new HashMap<>();
-        payloadMap.put("orderId", orderId);
-        payloadMap.put("amount", String.valueOf(amount));
+        payloadMap.put("orderId", orderId);//주문번호
+        payloadMap.put("amount", String.valueOf(amount));//금액
 
-        HttpEntity<String> request = new HttpEntity<>(objectMapper.writeValueAsString(payloadMap), headers);
+        HttpEntity<String> request = new HttpEntity<>(objectMapper.writeValueAsString(payloadMap), headers);// JSON -> String
 
-        Optional<FundUser> FU = fundUserService.findByuserName(principal.getName());
+        Optional<FundUser> FU = fundUserService.findByuserName(principal.getName());//로그인중인 아이디
 
         ResponseEntity<JsonNode> responseEntity = restTemplate.postForEntity(
-                "https://api.tosspayments.com/v1/payments/" + paymentKey, request, JsonNode.class);
+                "https://api.tosspayments.com/v1/payments/" + paymentKey, request, JsonNode.class);//토스에서 요구하는 주소 + JsonNode
 
-        if (responseEntity.getStatusCode() == HttpStatus.OK) {
+        if (responseEntity.getStatusCode() == HttpStatus.OK) {//코드 200
             JsonNode successNode = responseEntity.getBody();
             model.addAttribute("status", successNode.get("status").asText());//상태
             model.addAttribute("balanceAmount", successNode.get("balanceAmount").asText());//금액
@@ -90,21 +90,21 @@ public class SaleController {
             model.addAttribute("orderId", successNode.get("orderId").asText());//주문번호
             model.addAttribute("method", successNode.get("method").asText());//결제방식
 
-            String orderName = successNode.get("orderName").asText();
+            String orderName = successNode.get("orderName").asText();//공연이름
             saleService.targetSaveinfo(paymentKey, orderId, amount, orderName, FU);
 
         	//누적금액증가, 사람 수 증가
-        	String tar = successNode.get("orderId").toString();
-        	String target = tar.substring(tar.lastIndexOf('-')+1);
-        	target = target.replace("\"", "");
+        	String tar = successNode.get("orderId").toString();//결제한 주문번호를 들고옴
+        	String target = tar.substring(tar.lastIndexOf('-')+1);// 주문번호 -    삭제하고 뒤에 번호로 어떤공연인지 식별
+        	target = target.replace("\"", "");//문자열 값 변경
 
-        	FundBoardTarget targetPk = fundTargetService.findById(Integer.parseInt(target));
-        	Integer add = targetPk.getFundCurrent();
-        	add += amount;
-        	targetPk.setFundCurrent(add);
-        	Integer cMem = targetPk.getCurrentMember();
-        	cMem++;
-        	targetPk.setCurrentMember(cMem);
+        	FundBoardTarget targetPk = fundTargetService.findById(Integer.parseInt(target));// 식별한 번호로 공연정보 찾음
+        	Integer add = targetPk.getFundCurrent();//총펀딩금액 들고옴
+        	add += amount;//결제한 금액만큼 증가
+        	targetPk.setFundCurrent(add);//증가한 펀딩금액을 저장
+        	Integer cMem = targetPk.getCurrentMember();//펀딩한 사람수
+        	cMem++;//결제했으면 펀딩한 사람수에서 증가
+        	targetPk.setCurrentMember(cMem);//증가한 사람수를 저장
         	fundTargetService.addTargetFund(targetPk);
 
         	//유저의 현재 펀딩 목록 추가
@@ -113,8 +113,8 @@ public class SaleController {
             return "/pay/successTar";
         } else {
             JsonNode failNode = responseEntity.getBody();
-            model.addAttribute("message", failNode.get("message").asText());
-            model.addAttribute("code", failNode.get("code").asText());
+            model.addAttribute("message", failNode.get("message").asText());//실패사유
+            model.addAttribute("code", failNode.get("code").asText());//실패코드
             return "pay/failTar";
         }
     }
@@ -139,20 +139,20 @@ public class SaleController {
             Model model, Principal principal) throws Exception {
 
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()));
-        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()));//토스에서 개인식별(시크릿키)
+        headers.setContentType(MediaType.APPLICATION_JSON);//json형식 사용
 
         Map<String, String> payloadMap = new HashMap<>();
-        payloadMap.put("orderId", orderId);
-        payloadMap.put("amount", String.valueOf(amount));
+        payloadMap.put("orderId", orderId);//주문번호
+        payloadMap.put("amount", String.valueOf(amount));//금액
 
-        HttpEntity<String> request = new HttpEntity<>(objectMapper.writeValueAsString(payloadMap), headers);
+        HttpEntity<String> request = new HttpEntity<>(objectMapper.writeValueAsString(payloadMap), headers);// JSON -> String
 
-        Optional<FundUser> FU = fundUserService.findByuserName(principal.getName());
+        Optional<FundUser> FU = fundUserService.findByuserName(principal.getName());//로그인중인 아이디
 
         ResponseEntity<JsonNode> responseEntity = restTemplate.postForEntity(
-                "https://api.tosspayments.com/v1/payments/" + paymentKey, request, JsonNode.class);
-        if (responseEntity.getStatusCode() == HttpStatus.OK) {
+                "https://api.tosspayments.com/v1/payments/" + paymentKey, request, JsonNode.class);//토스에서 요구하는 주소 + JsonNode
+        if (responseEntity.getStatusCode() == HttpStatus.OK) {//코드 200
             JsonNode successNode = responseEntity.getBody();
             model.addAttribute("balanceAmount", successNode.get("balanceAmount").asText());//금액
             model.addAttribute("orderName", successNode.get("orderName").asText());//공연이름
@@ -160,22 +160,22 @@ public class SaleController {
             model.addAttribute("status", successNode.get("status").asText());//상태
             model.addAttribute("method", successNode.get("method").asText());//결제방식
 
-            String orderName = successNode.get("orderName").asText();
+            String orderName = successNode.get("orderName").asText();//공연이름
             saleService.saveinfo(paymentKey, orderId, amount, orderName, FU);
 
         	//누적금액증가
-        	String tar = successNode.get("orderId").toString();
-        	String target = tar.substring(tar.lastIndexOf('-')+1);
-        	target = target.replace("\"", "");
+        	String tar = successNode.get("orderId").toString();//결제한 주문번호를 들고옴
+        	String target = tar.substring(tar.lastIndexOf('-')+1);// 주문번호 -    삭제하고 뒤에 번호로 어떤공연인지 식별
+        	target = target.replace("\"", "");//문자열 값 변경
 
-        	FundBoard fundBoard = fundBoardService.findById(Integer.parseInt(target));
-        	Integer add = fundBoard.getFundCurrent();
-        	add += amount;
-        	fundBoard.setFundCurrent(add);
+        	FundBoard fundBoard = fundBoardService.findById(Integer.parseInt(target));// 식별한 번호로 공연정보 찾음
+        	Integer add = fundBoard.getFundCurrent();//총펀딩금액 들고옴
+        	add += amount;//결제한 금액만큼 증가
+        	fundBoard.setFundCurrent(add);//증가한 펀딩금액을 저장
         	//누적사람 수 증가
-        	Integer cMem = fundBoard.getCurrentMember();
-        	cMem++;
-        	fundBoard.setCurrentMember(cMem);
+        	Integer cMem = fundBoard.getCurrentMember();//펀딩한 사람수
+        	cMem++;//결제했으면 펀딩한 사람수에서 증가
+        	fundBoard.setCurrentMember(cMem);//증가한 사람수를 저장
         	fundBoardService.addFundBoard(fundBoard);
 
 
@@ -185,8 +185,8 @@ public class SaleController {
             return "/pay/success";
         } else {
             JsonNode failNode = responseEntity.getBody();
-            model.addAttribute("message", failNode.get("message").asText());
-            model.addAttribute("code", failNode.get("code").asText());
+            model.addAttribute("message", failNode.get("message").asText());//실패사유
+            model.addAttribute("code", failNode.get("code").asText());//실패코드
             return "pay/fail";
         }
     }
@@ -195,10 +195,10 @@ public class SaleController {
 	@GetMapping("/loo/confirm")
 	public String confirm(Principal principal, Model model,@RequestParam(value = "page", defaultValue="0") int page) throws Exception{
 		
-		Optional<FundUser> FU = fundUserService.findByuserName(principal.getName());
+		Optional<FundUser> FU = fundUserService.findByuserName(principal.getName());//로그인중인 아이디일치하는 정보들
 
 		//결제리스트 불러오기
-		Page<Sale> sList = saleService.findByUsername(page,FU.get().getUsername());
+		Page<Sale> sList = saleService.findByUsername(page,FU.get().getUsername());//로그인중인 아이디일치하는 정보들 페이징
 		model.addAttribute("sList",sList);
 		model.addAttribute("page",page);
 		

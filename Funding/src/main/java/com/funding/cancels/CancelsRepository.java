@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 
 public interface CancelsRepository extends JpaRepository<Cancels,Integer> {
-	List<Cancels> findByFundUser(String nickname);
-	List<Cancels> findByid(Integer id);
-	public Page<Cancels> findByFundUser(String nickname,Pageable pageable);
+	List<Cancels> findByFundUser(String nickname); //고객이름 리스트
+	List<Cancels> findByid(Integer id); //환불 고유번호 리스트
 }
