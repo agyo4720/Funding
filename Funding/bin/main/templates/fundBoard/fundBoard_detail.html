@@ -64,13 +64,26 @@
 					<hr/>
 				</div>
 				
+				<div class="view int_progress">
+                	<progress th:value="|${fundBoard.fundCurrent * 100 / fundBoard.fundAmount}|" max="100"></progress>
+                	<span th:text="|${fundBoard.fundCurrent * 100 / fundBoard.fundAmount}%|"></span>
+                </div>
+
 				<div class="view" id="fundCurrent">
 					<label for="fundCurrent">현재 펀딩 금액</label>
+<<<<<<< HEAD
 					<p th:text="${#numbers.formatInteger(fundBoard.fundCurrent, 1,'COMMA')+'원'}"></p>
 				</div>
 				<div class="view" id="fundAmount">
 					<label for="fundAmount">총 펀딩 금액</label>
 					<p th:text="${#numbers.formatInteger(fundBoard.fundAmount, 3,'COMMA')+'원'}"></p>
+=======
+					<p th:text="|${#numbers.formatInteger(fundBoard.fundCurrent, 3, 'COMMA')}원|"></p>
+				</div>
+				<div class="view" id="fundAmount">
+					<label for="fundAmount">총 펀딩 금액</label>
+					<p th:text="|${#numbers.formatInteger(fundBoard.fundAmount, 3, 'COMMA')}원|"></p>
+>>>>>>> 137910a4b573893ae3ad1babe29e5e4150f369d0
 				</div>
 				<div class="view">
 					<label for="duration">펀딩기간</label>
@@ -83,7 +96,11 @@
 				</div>
 				<div class="view minFund">
 					<label for="minFund">최소 펀딩 금액</label>
+<<<<<<< HEAD
 					<p th:text="${#numbers.formatInteger(fundBoard.minFund, 3,'COMMA')+'원'}"></p>
+=======
+					<p th:text="|${#numbers.formatInteger(fundBoard.minFund, 3, 'COMMA')}원|"></p>
+>>>>>>> 137910a4b573893ae3ad1babe29e5e4150f369d0
 				</div>
 				<div sec:authorize="hasRole('ROLE_USER')">
 					<button th:if="${result == true}" class="con_btn" th:onclick="'location.href=\''+ @{/pay/can/cancel(paymentKey=${payCode})} + '\''" type="submit">환불하기</button>
@@ -166,6 +183,9 @@
 					<p th:text="${answer.content}">댓글 내용</p>
 				</div>
 			</div>
+		</div>
+		<div>
+			<a th:href="@{|/fundBoard/delete/${fundBoard.id}|}">삭제</a>
 		</div>
 	</section>
 	

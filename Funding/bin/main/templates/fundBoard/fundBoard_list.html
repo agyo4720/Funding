@@ -54,42 +54,44 @@
 							<img th:src="|/fundBoard/img/${fundBoard.id}|" width="150px" height="215px" center>
 						</div>
 					</div>
-
-					<div class="con">
-						<div class="status">
-							<p th:text="${fundBoard.state}">상태</p>
-						</div>
-
-						<div class="con_title">
-							<a th:href="@{|/fundBoard/detail/${fundBoard.id}|}">
-								<h3 th:text="${fundBoard.subject}">공연 이름</h3>
-							</a>
-						</div>
-
-						<div class="con_detail">
-							<div class="view">
-								<label for="place">장소</label>
-								<p th:text="${fundBoard.place}">장소</p>
-							</div>
-
-							<div class="view">
-								<label for="startDate">공연일</label>
-								<p th:text="${#temporals.format(fundBoard.startDateTime, 'yyyy-MM-dd (E) HH:mm')}">공연일</p>
-							</div>
-
-							<div class="view">
-								<label for="fundDuration">펀딩 기간</label>
-								<p th:text="|${#temporals.format(fundBoard.createDate, 'yyyy-MM-dd (E)')}
-									 ~ ${#temporals.format(fundBoard.fundDuration, 'yyyy-MM-dd (E)')}|"></p>
-							</div>
-
-							<div class="view">
-								<label for="grpah">진행도</label>
-								<p th:text="|${fundBoard.fundCurrent * 100 / fundBoard.fundAmount}%|">진행도</p>
-							</div>
-						</div>
-					</div>
 				</a>
+
+				<div class="con">
+					<div class="status">
+						<p th:text="${fundBoard.state}">상태</p>
+					</div>
+
+					<div class="con_title">
+						<a th:href="@{|/fundBoard/detail/${fundBoard.id}|}">
+							<h3 th:text="${fundBoard.subject}">공연 이름</h3>
+						</a>
+					</div>
+
+					<div class="con_detail">
+						<div class="view">
+							<label for="place">장소</label>
+							<p th:text="${fundBoard.place}">장소</p>
+						</div>
+
+						<div class="view">
+							<label for="startDate">공연일</label>
+							<p th:text="${#temporals.format(fundBoard.startDateTime, 'yyyy-MM-dd (E) HH:mm')}">공연일</p>
+						</div>
+
+						<div class="view">
+							<label for="fundDuration">펀딩 기간</label>
+							<p th:text="|${#temporals.format(fundBoard.createDate, 'yyyy-MM-dd (E)')}
+									~ ${#temporals.format(fundBoard.fundDuration, 'yyyy-MM-dd (E)')}|"></p>
+						</div>
+
+					</div>
+				</div>
+				<div class="graph">
+					<div class="graph_view">
+						<p>진행도</p>
+						<h1 th:text="|${fundBoard.fundCurrent * 100 / fundBoard.fundAmount}%|">진행도</h1>
+					</div>
+				</div>
 			</div>
 		</div>
 

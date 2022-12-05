@@ -7,10 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Let's Funding : 비밀번호 찾기</title>
 
-
-
     <!-- CSS -->
-    <link rel="stylesheet" href="../../static/css/user/loginForm.css" th:href="@{/css/user/loginForm.css}">
+    <link rel="stylesheet" href="../../static/css/user/readPwdForm.css" th:href="@{/css/user/readPwdForm.css}">
     
     <!-- favicon -->
     <link rel="shortcut icon" href="/img/favicon/ms-icon-310x310.png" type="image/x-icon" />
@@ -22,29 +20,28 @@
     <section id="sec1">
         <div class="title">
             <h2>비밀번호 찾기</h2>
-            <p>비밀번호를 찾고자하는 아이디를 입력해주세요.</p>
         </div>
 
         	<input type="text" id="username" name="username" placeholder="ID를 입력하세요"></input>
         	<br>
-        	<input id="btn1" type="button" value="다음"></input>
+        	<input id="btn1" class="btn" type="button" value="다음"></input>
     </section>
     
      <section hidden id="sec2">
         <div class="title">
             <h2>비밀번호 찾기</h2>
-            <p>가입시 입력한 이메일로 발송된 인증코드 6자리를 입력하세요.</p>
+            <p>가입시 입력한 이메일로 발송된<br/>인증코드 6자리를 입력하세요.</p>
         </div>
 
     	<input type="text" name="code" id="code" placeholder="인증번호 6자리"></input>
     	<br>
-    	<input id="btn2" type="button" value="다음"></input>
+    	<input id="btn2" class="btn" type="button" value="다음"></input>
     </section>
     
     <section hidden id="sec3">
         <div class="title">
             <h2>비밀번호 재설정</h2>
-            <p>사용 할 비밀번호를 입력하세요.</p>
+            <p>새 비밀번호를 입력하세요.</p>
         </div>
 
 		<form action="/user/resetPwdConfirm" id="form" method="POST">
@@ -54,7 +51,7 @@
 	    	<input type="password" name="pwdCheck" id="pwdCheck" placeholder="비밀번호 확인"></input>
 	    	<div id="pwd2Result"></div>
 	    	<br>
-	    	<input id="btn3" type="submit" value="완료"></input>
+	    	<input id="btn3" class="btn" type="submit" value="완료"></input>
 	    </form>
     </section>
 </body>

@@ -25,7 +25,7 @@
     <header th:replace="/main/nav"></header>
 
     <section>
-		<div class="s_title">
+		<div class="title">
 			<h2>지정 펀딩</h2>
 		</div>
 
@@ -83,10 +83,12 @@
 								<div th:text="|글 등록한 사람 : ${target.fundUser.nickname}|"></div>
 							</div>
 						</div> -->
-						<div class="view">
-							<label for="graph">진행도</label>
-							<p th:text="|${target.fundCurrent * 100 / target.fundAmount}%|"></p>
-						</div>
+					</div>
+				</div>
+				<div class="graph">
+					<div class="graph_view">
+						<p>진행도</p>
+						<h1 th:text="|${target.fundCurrent * 100 / target.fundAmount}%|"></h1>
 					</div>
 				</div>
 			</div>
@@ -123,6 +125,7 @@
     	let Params = new URLSearchParams(url)
     	let cate = 0
     	cate = parseInt(Params.get('cate')) - 1
+    	console.log("뺴고나서 값 : " + cate)
     	let cateList = document.querySelectorAll('.cate')
     	
     	document.addEventListener("DOMContentLoaded", addActive)
