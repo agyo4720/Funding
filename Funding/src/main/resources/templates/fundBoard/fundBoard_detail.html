@@ -97,6 +97,7 @@
 		</div>
 
 		<div>
+			<!-- 참여 아티스트 유효성 검사 시작 -->
 			<input hidden class="username" th:value="${#authentication.getPrincipal().getUsername()}">
 			<div>현재 참여중인 아티스트</div>
 			<div sec:authorize="!hasRole('ROLE_USER')">					
@@ -105,8 +106,14 @@
 			<div th:each="fundArtistList : ${fundArtistList}">
 				<span th:text="${fundArtistList.fundArtist.nickname}"></span>
 			<input hidden class="fundArtistList" th:value="${fundArtistList.fundArtist.username}">
+			<!-- 참여 아티스트 유효성 검사 끝 -->
+			
+			<!-- 참여 아티스트 투표하기 유효성 검사 시작 -->
+			<input hidden class="username" th:value="${#authentication.getPrincipal().getUsername()}">
 				<a sec:authorize="hasRole('ROLE_USER')" th:href="@{|/fundArtistList/score/${fundArtistList.id}|}">투표하기</a>
 				<span th:text="|${fundArtistList.fundUserList.size()}개|"></span>
+			<input hidden class="fundUser" th:value="${fundArtistList.fundArtist.username}">
+			<!-- 참여 아티스트 투표하기 유효성 검사 끝 -->
 			</div>
 		</div>
 
