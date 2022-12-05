@@ -32,6 +32,9 @@ import com.funding.answer.AnswerService;
 import com.funding.cancels.CancelsController;
 import com.funding.cancels.CancelsService;
 import com.funding.file.FileService;
+import com.funding.fundArtist.FundArtistService;
+import com.funding.fundArtistList.FundArtistList;
+import com.funding.fundArtistList.FundArtistListService;
 import com.funding.fundList.FundList;
 import com.funding.fundList.FundListService;
 import com.funding.fundUser.FundUser;
@@ -55,6 +58,8 @@ public class FundBoardController {
 	private final FileService fileService;
 	private final SaleRepository saleRepository;
 	private final FundListService fundListService;
+	private final FundArtistListService fundArtistListService;
+	private final FundArtistService fundArtistService;
 	private final CancelsController cancelsController;
 	private final CancelsService cancelsService;
 	private final AlertService alertService;
@@ -160,22 +165,27 @@ public class FundBoardController {
 
 	}
 
-	// 미지정 펀드 답변등록
+	// 미지정 펀드 디테일
 	@RequestMapping("/detail/{id}")
-	public String detail(@PathVariable ("id") Integer id, Model model, Principal principal,Integer alertId) {
+	public String detail(
+			@PathVariable ("id") Integer id,
+			Principal principal,
+			Model model,
+			Integer alertId){
 
 		FundBoard fundBoard = this.fundBoardService.findById(id);
 		model.addAttribute("fundBoard", fundBoard);
 
 		List<Answer> answerList = this.answerService.findByFundBoard(fundBoard);
 		model.addAttribute("answerList", answerList);
-
+		List<FundArtistList> fundArtistList = this.fundArtistListService.findByFundBoard(fundBoard);
+		model.addAttribute("fundArtistList", fundArtistList);
 		//알람으로 들어왔을 시 알람 삭제
 		if(alertId != null) {
 			alertService.deleteAlert(alertId);
 		}
-		
-		
+
+
 		//펀딩버튼하면 환불버튼 변경
 		List<FundList> fList = fundListService.findByFundBoard(fundBoard);
 		//환불버튼
@@ -241,12 +251,13 @@ public class FundBoardController {
 			if(sale.get(i).getCheckin().equals("결제완료")) {
 				sale.get(i).getPayCode();
 				sale.get(i).setCheckin("게시글 삭제");
-	
+
 				cancelsController.totalCancel(sale.get(i).getPayCode(),"게시글 삭제");
-				cancelsService.totalCancelInfo(sale.get(i).getOrederId(), Integer.valueOf(sale.get(i).getPayMoney()).intValue(), sale.get(i).getOrderName(), 
+				cancelsService.totalCancelInfo(sale.get(i).getOrederId(), Integer.valueOf(sale.get(i).getPayMoney()).intValue(), sale.get(i).getOrderName(),
 						sale.get(i).getCheckin(),sale.get(i).getFundUser(),sale.get(i).getUsername());
 			}
 		}
+<<<<<<< HEAD
 		
 		//미지정 리스트 삭제
 		List<FundList> fList = fundListService.findByFundBoard(nick);
@@ -256,9 +267,14 @@ public class FundBoardController {
 		}
 		
 		fundBoardService.delete(id);
+=======
+
+		this.fundBoardService.delete(id);
+
+>>>>>>> namgo
 		return "redirect:/fundBoard/list";
 	}
-
-	// 2022/11/30 - 7 작업중
+	
+	// 2022/12/02 - 7 작업중
 
 }
