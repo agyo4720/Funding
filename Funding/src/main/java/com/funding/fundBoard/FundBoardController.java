@@ -261,11 +261,13 @@ public class FundBoardController {
 		
 		//미지정 리스트 삭제
 		List<FundList> fList = fundListService.findByFundBoard(nick);
-		alertService.deleteBoardThenAlert(fList);
 		for(int i=0;i>fList.size();i++) {
 			fundListService.deleteFund(fList.get(i).getFundUser(), nick);
 		}
-
+		
+		//삭제시 알림 추가
+		alertService.deleteBoardThenAlert(fList);
+		
 		this.fundBoardService.delete(id);
 
 		return "redirect:/fundBoard/list";

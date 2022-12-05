@@ -145,7 +145,7 @@ public class AlertController {
 			
 			//펀딩기간 만료시 알림
 			LocalDate d1 = LocalDate.parse("2022-12-25",DateTimeFormatter.ISO_DATE);
-			if(targetList.get(i).getFundDurationE().isBefore(d1) &&
+			if(targetList.get(i).getFundDurationE().isBefore(LocalDate.now()) &&
 					targetList.get(i).getStatus().equals("진행중")) {
 				
 				log.info("날짜 지났어용    : " + targetList.get(i).getSubject());
@@ -157,12 +157,8 @@ public class AlertController {
 				//기간 지나고 100% 미달성시 환불 시킴
 				if(targetList.get(i).getFundCurrent() < targetList.get(i).getFundAmount()) {
 					List<Sale> sale = saleRepository.findByFundBoardTarget(targetList.get(i).getSubject());
-					log.info("환불 진행함 (기간만료 자동 환불)");
 					for(int j=0; j<sale.size(); j++){
 						if(sale.get(j).getCheckin().equals("결제완료")) {
-							sale.get(j).getPayCode();
-							log.info("삭제 실행 sale.get(j).getPayCode() : "+sale.get(j).getPayCode());
-							sale.get(j).setCheckin("게시글 삭제");
 							
 							cancelsController.totalCancel(sale.get(j).getPayCode(),"기간만료 환불");
 							cancelsService.totalCancelInfo(
@@ -211,14 +207,19 @@ public class AlertController {
 		}
 		
 		
+		
+		
+		
+		
+		
 		//미지정 알림업데이트
 		List<FundBoard> bList = fundBoardService.findAllList();
 			
 		for(int i=0; i<bList.size(); i++) {
 				
 			//펀딩기간 만료시 알림
-			//LocalDate d1 = LocalDate.parse("2022-12-05",DateTimeFormatter.ISO_DATE);
-			if(bList.get(i).getFundDuration().isBefore(LocalDate.now()) &&
+			LocalDate d12 = LocalDate.parse("2023-12-05",DateTimeFormatter.ISO_DATE);
+			if(bList.get(i).getFundDuration().isBefore(d12) &&
 					bList.get(i).getState().equals("진행중")) {
 				
 				log.info("날짜 지났어용    : " + bList.get(i).getSubject());
@@ -230,15 +231,18 @@ public class AlertController {
 				//기간 지나고 100% 미달성시 환불 시킴
 				if(bList.get(i).getFundCurrent() < bList.get(i).getFundAmount()) {
 					List<Sale> sale = saleRepository.findByFundBoard(bList.get(i).getSubject());
-					for(int j=0; i<sale.size(); j++){
-						cancelsController.totalCancel(sale.get(j).getPayCode(),"기간만료 환불");
-						cancelsService.totalCancelInfo(
-								sale.get(j).getOrederId()
-								, sale.get(i).getPayMoney()
-								, sale.get(i).getOrderName()
-								, "기간만료 환불"
-								, sale.get(i).getFundUser()
-								, sale.get(i).getUsername());
+					for(int j=0; j<sale.size(); j++){
+						if(sale.get(j).getCheckin().equals("결제완료")) {
+							
+							cancelsController.totalCancel(sale.get(j).getPayCode(),"기간만료 환불");
+							cancelsService.totalCancelInfo(
+									sale.get(j).getOrederId()
+									, Integer.valueOf(sale.get(i).getPayMoney()).intValue()
+									, sale.get(i).getOrderName()
+									, "기간만료 환불"
+									, sale.get(i).getFundUser()
+									, sale.get(i).getUsername());
+						}
 					}
 				}
 				
