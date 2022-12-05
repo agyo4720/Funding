@@ -113,7 +113,7 @@
 				<a sec:authorize="hasRole('ROLE_USER')" th:href="@{|/fundArtistList/score/${fundArtistList.id}|}">투표하기</a>
 				<span th:text="|${fundArtistList.fundUserList.size()}개|"></span>
 			<input hidden class="fundUser" th:value="${fundArtistList.fundArtist.username}">
-			<!-- 참여 아티스트 투표하기 유효성 검사 끝 -->
+			<!-- 참여 아티스트 투표하기 유효성 검사 끝 테스트 -->
 			</div>
 		</div>
 
