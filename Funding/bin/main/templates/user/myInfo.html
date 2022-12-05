@@ -17,14 +17,16 @@
     <!-- 홈페이지 상단 nav -->
     <header th:replace="/main/nav"></header>
 
-    <div class="wrap">
+    <section>
 
         <!-- nav -->
         <nav th:replace="/main/usernav"></nav>
         
         <!-- 내 정보 조회 -->
         <div class="myinfo">
-            <h2>회원 정보</h2>
+            <div class="title">
+                <h2>회원 정보</h2>
+            </div>
 
             <div class="view"><p>아이디</p><span th:text="${myInfo.username}"></span></div>
             <div class="view"><p>비밀번호</p><span>***********</span><button>변경</button></div>
@@ -41,7 +43,7 @@
             <div class="view"><p>성별</p><span th:text="${myInfo.gender}"></span></div>
             <div class="view"><p>권한</p><span th:text="${myInfo.role}"></span></div>
         </div>
-    </div>
+    </section>
 </body>
 <script>
 	let mobileCut = $('#mob').text().substring(0,3)+" - "+$('#mob').text().substring(3,7) +" - "+$('#mob').text().substring(7,11)
@@ -64,8 +66,6 @@
 	        alert("변경 되었습니다!")
 	        $('#mobileCheckResult').html('')
 	})
-	
-	
 	
 	
 </script>

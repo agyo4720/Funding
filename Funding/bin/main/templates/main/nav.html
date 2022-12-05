@@ -3,9 +3,6 @@
 <!-- JQuery -->
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <header>
-	<!-- 계좌 -->
-	<input type="hidden" id="dd" th:value="${msg}" />
-	
     <!-- 로고 -->
     <div class="logo">
         <a href="../main/home.html" th:href="@{/}"><img src="/img/favicon/android-icon-72x72.png" alt="logo"></a>
@@ -66,29 +63,4 @@
 	            }
 	        })
 	});
-	
-	var result= document.querySelector('#dd').value;
-	if(result === "Success"){
-		alert("송금완료!");
-	} else if(result === "Fail"){
-		alert("송금실패!");
-	}
-	
-	else if(result === "SUccess"){
-		alert("수정완료!");
-	}else if(result === "FAil"){
-		alert("수정실패!");
-	}
-	
-	else if(result === "SUCcess"){
-		alert("등록성공!");
-	}else if(result === "FAIl"){
-		alert("등록실패!");
-	}
-	
-	else if(result === "SUCCess"){
-		alert("삭제성공!");
-	}else if(result === "FAIL"){
-		alert("삭제실패!");
-	}
 </script>

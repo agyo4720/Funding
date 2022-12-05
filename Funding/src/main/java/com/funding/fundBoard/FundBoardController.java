@@ -3,13 +3,11 @@ package com.funding.fundBoard;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.core.io.Resource;
@@ -28,17 +26,21 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.funding.Categorie.Categorie;
 import com.funding.Categorie.CategorieService;
+import com.funding.alert.AlertService;
 import com.funding.answer.Answer;
 import com.funding.answer.AnswerService;
+import com.funding.cancels.CancelsController;
+import com.funding.cancels.CancelsService;
 import com.funding.file.FileService;
-import com.funding.fundArtist.FundArtist;
 import com.funding.fundArtist.FundArtistService;
-import com.funding.fundBoardTarget.FundBoardTarget;
+import com.funding.fundArtistList.FundArtistList;
+import com.funding.fundArtistList.FundArtistListService;
+import com.funding.fundList.FundList;
+import com.funding.fundList.FundListService;
 import com.funding.fundUser.FundUser;
 import com.funding.fundUser.FundUserService;
-import com.funding.payment.PaymentController;
-import com.funding.payment.Sale;
-import com.funding.payment.SaleRepository;
+import com.funding.sale.Sale;
+import com.funding.sale.SaleRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -55,7 +57,12 @@ public class FundBoardController {
 	private final AnswerService answerService;
 	private final FileService fileService;
 	private final SaleRepository saleRepository;
-	private final PaymentController paymentController;
+	private final FundListService fundListService;
+	private final FundArtistListService fundArtistListService;
+	private final FundArtistService fundArtistService;
+	private final CancelsController cancelsController;
+	private final CancelsService cancelsService;
+	private final AlertService alertService;
 
 
 
@@ -158,15 +165,49 @@ public class FundBoardController {
 
 	}
 
-	// 미지정 펀드 답변등록
+	// 미지정 펀드 디테일
 	@RequestMapping("/detail/{id}")
-	public String detail(@PathVariable ("id") Integer id, Model model) {
+	public String detail(
+			@PathVariable ("id") Integer id,
+			Principal principal,
+			Model model,
+			Integer alertId){
 
 		FundBoard fundBoard = this.fundBoardService.findById(id);
 		model.addAttribute("fundBoard", fundBoard);
 
 		List<Answer> answerList = this.answerService.findByFundBoard(fundBoard);
 		model.addAttribute("answerList", answerList);
+		List<FundArtistList> fundArtistList = this.fundArtistListService.findByFundBoard(fundBoard);
+		model.addAttribute("fundArtistList", fundArtistList);
+		//알람으로 들어왔을 시 알람 삭제
+		if(alertId != null) {
+			alertService.deleteAlert(alertId);
+		}
+
+
+		//펀딩버튼하면 환불버튼 변경
+		List<FundList> fList = fundListService.findByFundBoard(fundBoard);
+		//환불버튼
+		FundBoard nick = fundBoardService.findById(id);
+		List<Sale> sale = saleRepository.findByFundBoard(nick.getSubject());
+		for(int i=0; i<sale.size(); i++){
+			sale.get(i).getPayCode();
+			model.addAttribute("payCode",sale.get(i).getPayCode());
+		}
+
+		//펀딩 유무 확인
+		boolean result = false;
+		if(principal != null) {
+			for(FundList e : fList) {
+				String username = e.getFundUser().getUsername();
+				String loginName = principal.getName();
+				if(username.equals(loginName)) {
+					result = true;
+				}
+			}
+		}
+		model.addAttribute("result", result);
 
 		return "/fundBoard/fundBoard_detail";
 	}
@@ -203,23 +244,43 @@ public class FundBoardController {
 	@RequestMapping("/delete/{id}")
 	public String delete(@PathVariable("id") Integer id) throws Exception {
 
-		//환불
+		//게시글 삭제시 환불
 		FundBoard nick = fundBoardService.findById(id);
 		List<Sale> sale = saleRepository.findByFundBoard(nick.getSubject());
 		for(int i=0; i<sale.size(); i++){
-			sale.get(i).getPayCode();
-			sale.get(i).setCheckin("게시글 삭제");
+			if(sale.get(i).getCheckin().equals("결제완료")) {
+				sale.get(i).getPayCode();
+				sale.get(i).setCheckin("게시글 삭제");
 
-			paymentController.totalCancel(sale.get(i).getPayCode(),"게시글 삭제");
+				cancelsController.totalCancel(sale.get(i).getPayCode(),"게시글 삭제");
+				cancelsService.totalCancelInfo(sale.get(i).getOrederId(), Integer.valueOf(sale.get(i).getPayMoney()).intValue(), sale.get(i).getOrderName(),
+						sale.get(i).getCheckin(),sale.get(i).getFundUser(),sale.get(i).getUsername());
+			}
 		}
+
+		
+		//미지정 리스트 삭제
+		List<FundList> fList = fundListService.findByFundBoard(nick);
+		alertService.deleteBoardThenAlert(fList);
+		for(int i=0;i>fList.size();i++) {
+			fundListService.deleteFund(fList.get(i).getFundUser(), nick);
+		}
+		
+<<<<<<< HEAD
+		fundBoardService.delete(id);
+=======
+>>>>>>> 1e56264a37879f9bda76850fd3102fc46b2f0d39
 
 
 		this.fundBoardService.delete(id);
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1e56264a37879f9bda76850fd3102fc46b2f0d39
 		return "redirect:/fundBoard/list";
 	}
-
-	// 2022/11/30 - 4 작업중
-
+	
+	// 2022/12/05 - 1 작업중
 
 }

@@ -1,0 +1,45 @@
+<!-- 지정펀딩 결제 완료 -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>결제 성공</title>
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../../static/css/pay/success.css" th:href="@{/css/pay/success.css}">
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="/img/favicon/ms-icon-310x310.png" type="image/x-icon" />
+</head>
+<body>
+    <!-- 홈페이지 상단 nav -->
+    <header th:replace="/main/nav"></header>
+    
+    <section>
+        <h1>결제 성공</h1>
+
+        <table>
+            <tr>
+                <td>주문 번호</td>
+                <td>[[${orderId}]]</td>
+            </tr>
+            <tr>
+                <td>공연 이름</td>
+                <td class="con_title">[[${orderName}]]</td>
+            </tr>
+            <tr>
+                <td>펀딩 금액</td>
+                <td>[[${balanceAmount}]]원</td>
+            </tr>
+            <tr>
+                <td>결제 수단</td>
+                <td>[[${method}]]</td>
+            </tr>
+        </table>
+        <div class="btn">
+            <a href="/pay/loo/confirm">결제 리스트</a>
+        </div>
+    </section>
+</body>
+</html>

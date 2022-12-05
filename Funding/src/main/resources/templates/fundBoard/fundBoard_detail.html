@@ -5,140 +5,205 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>fundBoard_detail</title>
+<<<<<<< HEAD
 
-	<style>
-		table{
-            border: 1px solid #000;
-            border-collapse: collapse;
-        }
-
-        table thead{
-            background-color:white;
-            color:black;
-        }
-
-        th{
-            border: 1px solid black;
-            background-color:black;
-            color:white
-        }
-
-        td{
-            border: 1px solid black;
-            color:black;
-        }
-	</style>
+=======
+>>>>>>> 1e56264a37879f9bda76850fd3102fc46b2f0d39
+	<!-- CSS -->
+	<link rel="stylesheet" href="/css/fundBoard/fundBoard_detail.css">
+	
+    <!-- favicon -->
+    <link rel="shortcut icon" href="/img/favicon/ms-icon-310x310.png" type="image/x-icon" />
+    
+    
 </head>
 <body>
-	<div id="warp">
-	
-		<!-- 홈페이지 상단 nav -->
-	    <header>
-	        <!-- 로고 -->
-	        <div class="logo">
-	            <a href="../main/home.html" th:href="@{/}">Let's Funding</a>
-	        </div>
-	
-	        <!-- 메뉴 -->
-	        <div class="menu">
-	            <ul>
-	                <li><a href="../fundTarget/fundTargetList.html" th:href="@{/fundTarget}">지정 펀딩</a></li>
-	                <li><a href="../fundBoard/fundBoard_list.html" th:href="@{/fundBoard/list}">미지정 펀딩</a></li>
-	            </ul>
-	        </div>
-	
-	        <!-- 로그인 -->
-	        <div class="login">
-	            <ul>
-	                <li><a href="../user/loginForm.html" th:href="@{/user/login}">로그인</a></li>
-	                <li><a href="../user/userCreateForm.html" th:href="@{/user/register}">회원가입</a></li>
-	            </ul>
-	        </div>
-	    </header>
-	    
-		<div class="main">
-		
-			<!--섹션1 시작-->
-			<div>
-				<div>
-					<span>카테고리 : </span>
-					<span th:text="${fundBoard.categorieName}"></span>
-				</div>
-				<div>
-					<span>제목 : </span>
-					<span th:text="${fundBoard.subject}"></span>
-				</div>
-				<div>
-					<span>내용 : </span>
-					<span th:utext="${fundBoard.content}"></span>
-				</div>
-				<div>
-					<span>장소 : </span>
-					<span th:text="${fundBoard.place}"></span>
-				</div>
-				<div>
-					<span>펀딩 기간 : </span>
-					<span th:text="${fundBoard.fundDuration}"></span>
-				</div>
-				<div>
-					<span>공연 시작 일자 : </span>
-					<span th:text="${#temporals.format(fundBoard.startDateTime, 'yyyy-MM-dd HH:mm')}"></span>
-				</div>
-				<div>
-					<span>공연 시간 : </span>
-					<span th:text="|${fundBoard.runtime}분|"></span>
-				</div>
-				<div>
-					<span>1인 최소 펀딩 금액 : </span>
-					<span th:text="|${fundBoard.minFund}원|"></span>
-				</div>
-				<div>
-					<span>펀딩 목표 금액 : </span>
-					<span th:text="|${fundBoard.fundAmount}원|"></span>
-				</div>
-				<div>
-					<span>펀딩 현재 금액 : </span>
-					<span th:text="|${fundBoard.fundCurrent}원|"></span>
-				</div>
-				<div>
-					<span>현재 모집 인원 : </span> 
-					<span th:text="|${fundBoard.currentMember}명|"></span>
-				</div>
-				<div>
-					<span>펀딩 상태 : </span>
-					<span th:text="${fundBoard.state}"></span>
-				</div>
-			</div>		
-			<!--섹션1 끝-->
-			
-			<!--섹션2 시작-->
-			<div sec:authorize="!hasRole('ROLE_ARTIST')">
-				<a th:href="@{|/pay/tossPay/${fundBoard.id}|}"><button>결제하기</button></a>
-			</div>
-			<div sec:authorize="!hasRole('ROLE_USER')">
-				<a href="#"><button>참여하기</button></a>
-			</div>
-			<!--섹션2 끝-->
-			
-			<!--섹션3 시작-->
-			<div class="section2">
-				<div th:each="answer : ${answerList}">
-					<div th:text="${answer.content}">댓글 내용</div>
-					<div th:text="${#temporals.format(answer.createDate, 'MM-dd HH:mm:ss')}">댓글 시간</div>
-				</div>
-			</div>
-			<!--섹션3 끝-->
+	<!-- 홈페이지 상단 nav -->
+    <header th:replace="/main/nav"></header>
 
-			<!--섹션4 시작-->
-			<div class="section3">
+	<section>
+		<div class="con">
+			
+			<div class="left">
+				<div class="cate">
+					<a href="/fundBoard/list"
+					th:text="|미지정 펀딩 > ${fundBoard.categorieName}|"></a>
+				</div>
+				<h3 th:text="${fundBoard.subject}">공연 이름</h3>
+				<div class="image">
+					<div th:if="${fundBoard.imgPath != null}">
+						<img th:src="${fundBoard.imgPath}" height="300">
+					</div>
+					<div th:if="${fundBoard.filePath != null}">
+						<img th:src="|/fundBoard/img/${fundBoard.id}|" height="300">
+					</div>
+				</div>
+			</div>
+		
+			<div class="right">
+				<div class="view">
+					<div class="status">
+						<div th:text="${fundBoard.state}">상태</div>
+					</div>
+				</div>
+				<div class="view">
+					<label for="writer">작성자</label>
+					<p th:text="${fundBoard.fundUser.username}"></p>
+				</div>
+				<div class="view">
+					<label for="startDate">공연일</label>
+					<p th:text="${#temporals.format(fundBoard.startDateTime, 'yyyy-MM-dd (E) HH:mm')}">공연일</p>
+				</div>
+				<div class="view">
+					<label for="place">공연장</label>
+					<p th:text="${fundBoard.place}"></p>
+				</div>
+				<div class="view">
+					<label for="runtime">공연시간</label>
+					<p th:text="|${fundBoard.runtime}분|">공연시간</p>
+				</div>
+				
+				<div class="con_hr_detail">
+					<hr/>
+				</div>
+				
+				<div class="view" id="fundCurrent">
+					<label for="fundCurrent">현재 펀딩 금액</label>
+					<p th:text="|${fundBoard.fundCurrent}원|"></p>
+				</div>
+				<div class="view" id="fundAmount">
+					<label for="fundAmount">총 펀딩 금액</label>
+					<p th:text="|${fundBoard.fundAmount}원|"></p>
+				</div>
+				<div class="view">
+					<label for="duration">펀딩기간</label>
+					<p th:text="|${#temporals.format(fundBoard.createDate, 'yyyy-MM-dd (E)')} ~ 
+						${#temporals.format(fundBoard.fundDuration, 'yyyy-MM-dd (E)')}|"></p>
+				</div>
+				<div class="view">
+					<label for="count">현재 인원</label>
+					<p th:text="|${fundBoard.currentMember}명|"></p>
+				</div>
+				<div class="view minFund">
+					<label for="minFund">최소 펀딩 금액</label>
+					<p th:text="|${fundBoard.minFund}원|"></p>
+				</div>
+				<div sec:authorize="hasRole('ROLE_USER')">
+					<button th:if="${result == true}" class="con_btn" th:onclick="'location.href=\''+ @{/pay/can/cancel(paymentKey=${payCode})} + '\''" type="submit">환불하기</button>
+					<button th:if="${result == false}" class="con_btn" th:onclick="'location.href=\''+ @{|/pay/tossPay/${fundBoard.id}|} + '\''">결제하기</button>
+				</div>
+<<<<<<< HEAD
+=======
+				
+>>>>>>> 1e56264a37879f9bda76850fd3102fc46b2f0d39
+			</div>
+		</div>
+		
+		<div class="con_hr">
+			<hr/>
+		</div>
+
+		<div>
+			<input hidden class="username" th:value="${#authentication.getPrincipal().getUsername()}">
+			<div>현재 참여중인 아티스트</div>
+			<div sec:authorize="!hasRole('ROLE_USER')">					
+				<a id="btn1" th:href="@{|/fundArtistList/join/${fundBoard.id}|}"><button>참여하기</button></a>
+			</div>
+			<div th:each="fundArtistList : ${fundArtistList}">
+				<span th:text="${fundArtistList.fundArtist.nickname}"></span>
+				<div sec:authorize="!hasRole('ROLE_USER')">
+					<a id="btn1" th:href="@{|/fundArtistList/join/${fundBoard.id}|}"><button>참여하기</button></a>
+				</div>
+			<input hidden class="fundArtistList" th:value="${fundArtistList.fundArtist.username}">
+				<a sec:authorize="hasRole('ROLE_USER')" th:href="@{|/fundArtistList/score/${fundArtistList.id}|}">투표하기</a>
+				<span th:text="|${fundArtistList.fundUserList.size()}개|"></span>
+			</div>
+		</div>
+
+		<div class="con_hr">
+			<hr/>
+		</div>
+
+		<div class="con_text">
+			<div class="title">
+                <h2>콘서트 내용</h2>
+			</div>
+
+			<div th:utext="${fundBoard.content}">설명</div>
+		</div>
+
+		<div class="con_hr">
+            <hr/>
+        </div>
+		
+		<!-- 댓글 -->
+		<div class="con_comment">
+			<div class="tutke">
+				<h2>댓글</h2>
+			</div>
+
+			<div class="cmt_form">
 				<form th:action="@{|/answer/fundBoard/create/${fundBoard.id}|}" method="GET">
-					<input type="text" name="content" value="">
-					<button type="submit">댓글 달기</button>
+					<textarea class="int_cmt" name="content" placeholder="내용을 입력하세요."></textarea>
+					<button class="btn_cmt" type="submit">등록</button>
 				</form>
 			</div>
-			<!--섹션4 끝-->
+			
+			<div class="cmt_view" th:each="answer : ${answerList}">
+				<div class="cmt">
+					<div class="cmt_head">
+<<<<<<< HEAD
+						<p class="id" th:text="${answer.fundUser.username}">아이디</p>
+						<p class="time" th:text="${#temporals.format(answer.createDate, 'MM-dd HH:mm:ss')}">댓글 시간</p>
+=======
+						<p class="id">아이디</p>
+						<p class="time" th:text="${#temporals.format(answer.createDate, 'MM-dd HH:mm:ss (E)')}">댓글 시간</p>
+>>>>>>> 1e56264a37879f9bda76850fd3102fc46b2f0d39
+						<a class="cmt_delete" th:href="@{|/answer/delete/${answer.id}?location=board&id=${fundBoard.id}|}">삭제</a>
+					</div>
+					<p th:text="${answer.content}">댓글 내용</p>
+				</div>
+			</div>
 		</div>
-	</div>
+	</section>
+<<<<<<< HEAD
+		
+=======
 
+>>>>>>> 1e56264a37879f9bda76850fd3102fc46b2f0d39
+	<script>
+
+		let username = document.querySelector('.username').value;
+		let fundArtistList = document.querySelectorAll('.fundArtistList');
+		let btn = document.querySelector('#btn1');
+
+		btn.addEventListener('click', check);
+
+		function check(){
+
+			console.log('실행되었습니다!');
+
+			let bol = true;
+
+			fundArtistList.forEach(function(e){
+
+				if(e.value == username){
+					bol = false;
+				}
+			})
+
+			if(bol == true){
+				alert("참여 완료되었습니다.");
+			}else{
+				alert("이미 참여하셨습니다.");
+			}
+		
+		}
+		
+	</script>
+<<<<<<< HEAD
+	
+=======
+>>>>>>> 1e56264a37879f9bda76850fd3102fc46b2f0d39
 </body>
 </html>

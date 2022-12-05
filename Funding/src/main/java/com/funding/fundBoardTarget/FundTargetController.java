@@ -28,15 +28,15 @@ import com.funding.Categorie.CategorieService;
 import com.funding.alert.AlertService;
 import com.funding.answer.Answer;
 import com.funding.answer.AnswerService;
+import com.funding.cancels.CancelsController;
+import com.funding.cancels.CancelsService;
 import com.funding.file.FileService;
 import com.funding.fundTargetList.FundTargetList;
 import com.funding.fundTargetList.FundTargetListService;
 import com.funding.fundUser.FundUser;
 import com.funding.fundUser.FundUserService;
-import com.funding.payment.PatmentService;
-import com.funding.payment.PaymentController;
-import com.funding.payment.Sale;
-import com.funding.payment.SaleRepository;
+import com.funding.sale.Sale;
+import com.funding.sale.SaleRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -55,8 +55,8 @@ public class FundTargetController {
 	private final FundUserService fundUserService;
 	private final AlertService alertService;
 	private final SaleRepository saleRepository;
-	private final PaymentController paymentController;
-	private final PatmentService patmentService;
+	private final CancelsController cancelsController;
+	private final CancelsService cancelsService;
 
 	
 	
@@ -210,7 +210,6 @@ public class FundTargetController {
 		}
 		
 		
-		log.info("글로 추려낸 펀딩한 유저 목록 : " + ftList.toString());
 		model.addAttribute("result", result);
 		model.addAttribute("aList", aList);
 		model.addAttribute("fundBoardTarget", fundBoardTarget);
@@ -237,15 +236,20 @@ public class FundTargetController {
 		FundBoardTarget nick = fundTargetService.findById(id);
 		List<Sale> sale = saleRepository.findByFundBoardTarget(nick.getSubject());
 		for(int i=0; i<sale.size(); i++){
-			sale.get(i).getPayCode();
-			sale.get(i).setCheckin("게시글 삭제");
-			
-			paymentController.totalCancel(sale.get(i).getPayCode(),"게시글 삭제");
-			patmentService.totalCancelInfo(sale.get(i).getOrederId(), Integer.valueOf(sale.get(i).getPayMoney()).intValue(), sale.get(i).getOrderName(), "게시글 삭제",sale.get(i).getFundUser());
+			if(sale.get(i).getCheckin().equals("결제완료")) {
+				sale.get(i).getPayCode();
+				sale.get(i).setCheckin("게시글 삭제");
+				
+				cancelsController.totalCancel(sale.get(i).getPayCode(),"게시글 삭제");
+				cancelsService.totalCancelInfo(sale.get(i).getOrederId(), Integer.valueOf(sale.get(i).getPayMoney()).intValue(), sale.get(i).getOrderName(), 
+						sale.get(i).getCheckin(),sale.get(i).getFundUser(),sale.get(i).getUsername());
+			}
 		}
 		
+		log.info("삭제컨트롤로 실행됨");
 		//지정리스트 삭제
 		List<FundTargetList> fList = fundTargetListService.findByFundBoardTarget(nick);
+		alertService.deleteTargetThenAlert(fList);
 		for(int i=0;i>fList.size();i++) {
 			fundTargetListService.delete(fList.get(i).getFundUser(), nick);
 		}

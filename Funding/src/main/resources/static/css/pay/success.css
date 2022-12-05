@@ -1,27 +1,32 @@
 section {
     margin: 50px auto;
-    width: 300px;
+    width: 420px;
 }
 
 section h1 {
     margin: 30px 0;
 }
 
-table {
+table, td {
+    border: 1px solid;
+    border-collapse: collapse;
+    padding: 3px 5px;
 }
 
-td {
-    padding: 5px 10px;
-}
+td {padding: 5px 10px;}
 
 td:first-child {
-    width: 100px;
+    width: 95px;
     text-align: center;
     font-weight: bold;
 }
 
 td:last-child {
-    width: 200px;
+    width: 305px;
+}
+
+.con_title {
+    word-break: break-all;
 }
 
 .btn {
@@ -32,7 +37,6 @@ td:last-child {
 }
 
 .btn a {
-    /* display: inline-flex; */
     padding: 10px 20px;
     background-color: #3E3636;
     border-radius: 5px;

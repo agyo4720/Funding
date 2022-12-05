@@ -1,46 +1,40 @@
 
 <meta name="_csrf" th:content="${_csrf.token}"/>
 <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
-<link rel="stylesheet" href="css/sidebar/sidebar.css">
+<link rel="stylesheet" href="/css/sidebar/sidebar.css">
 
 <div class="sidebarbtn" sec:authorize="isAuthenticated()">
 
 	<h1>&lt;&lt;</h1>
 </div>
-<div class="sidebar" sec:authorize="hasRole('ROLE_USER')">
+<div class="sidebar">
 	<div sec:authorize="isAuthenticated()">
 		<input hidden class="user" th:value="${#authentication.getPrincipal().getUsername()}"/>
-	</div>
-
-	<h4>Sidebar</h4>
-
-	<hr/>
-	
-	<h4>알림</h4>
-	<div class="alert"></div>
-
-	<hr/>
-
-	<h4>현재 펀딩중인 목록</h4>
-	<div class="fundList"></div>
-
-<!--  유저일떄 화면    -->
-
-
-<div class="sidebar" sec:authorize="hasRole('ROLE_ARTIST')">
-	<div sec:authorize="isAuthenticated()">
 		<input hidden class="artist" th:value="${#authentication.getPrincipal().getUsername()}"/>
 	</div>
-
-	<h4>Sidebar</h4>
+	<!--  유저일떄 화면    -->
+	<div sec:authorize="hasRole('ROLE_USER')">
+		<h4>Sidebar</h4>
 	
-	<h4>현재 신청한 펀딩목록</h4>
-	<div class="fundList2"></div>
+		<hr/>
+		
+		<h4>알림</h4>
+		<div class="alert"></div>
 	
+		<hr/>
 	
-</div>
-
-
+		<h4>현재 펀딩중인 목록(지정)</h4>
+		<div class="fundTargetList"></div>
+		
+		<h4>현재 펀딩중인 목록(미지정)</h4>
+		<div class="fundList"></div>
+	</div>
+	
+	<!-- 아티스트 일 떄 -->
+	<div sec:authorize="hasRole('ROLE_ARTIST')">
+		<h4>현재 신청한 펀딩목록</h4>
+		<div class="fundList2"></div>
+	</div>
 
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -63,26 +57,45 @@
 				,success : function(result){
 					$.each(result, function(index, item){	
 						if(item.type == "댓글"){
-							$('.alert').append("<a href=\"" + item.url + "?alertId=" + 
+							$('.alert').append("<div class=\"alertbox\"><a href=\"" + item.url + "?alertId=" + 
 								item.alertId + "\"><div>" + item.Guestname + 
-								"님이 댓글을 달았습니다.</div>[" + item.content + "]</a>")
+								"님이 댓글을 달았습니다.</div>[" + item.content + "]</a></div>")
 								
 						}else if(item.type == "마감"){
 							$('.alert').append("<a href=\"" + item.url + "?alertId=" + 
-									item.alertId + "\"><div>[" + item.content +
+									item.alertId + "\"><div class=\"alertbox\">[" + item.content +
 									"]</div></a>")
 						}else if(item.type == "펀딩"){
 							$('.alert').append("<a href=\"" + item.url + "?alertId=" + 
-									item.alertId + "\"><div>[" + item.content +
+									item.alertId + "\"><div class=\"alertbox\">[" + item.content +
+									"]</div></a>")
+						}else if(item.type == "취소"){
+							$('.alert').append("<a href=\"" +  "/\"><div>[" + item.content +
 									"]</div></a>")
 						}
+						
 					})
 				}
 			})
 			
-			//현재 펀딩목록 불러오는 ajax
+			//현재 지정펀딩목록 불러오는 ajax
 			$.ajax({
 				url : '/show/fundList'
+				,data : "user=" + user
+				,beforeSend : function(xhr){
+					xhr.setRequestHeader(header, token);
+				}
+				,success : function(result){
+					$.each(result, function(index, item){					
+						$('.fundTargetList').append("<a href=\"" + item.url + "\"><div><br>" + item.status + "</br>" + 
+								item.fundName + " 진행도 " + item.percent + "</div></a>")
+					})
+				}
+			})
+			
+			//현재 미지정펀딩목록 불러오는 ajax
+			$.ajax({
+				url : '/fundList/show'
 				,data : "user=" + user
 				,beforeSend : function(xhr){
 					xhr.setRequestHeader(header, token);
@@ -95,11 +108,15 @@
 				}
 			})
 			
+			
 			$.ajax({
-				url : 'alert/update'
+				url : '/alert/update'
 				,data : 'a'
 				,success : function(result){
 					console.log(result)
+				}
+				,error: function(){
+					alert("에러발생")
 				}
 			})
 		}
@@ -120,5 +137,6 @@
 			}
 		})
 	})
+	// 주석이요
 </script>
 

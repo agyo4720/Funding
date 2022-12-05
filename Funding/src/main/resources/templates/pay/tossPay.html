@@ -33,26 +33,26 @@
     </div>
 <script src="https://js.tosspayments.com/v1"></script> <!-- 토스결제창 불러오기  -->
 <script>
-    var tossPayments = TossPayments("test_ck_OALnQvDd2VJjgjj4daVMj7X41mNW");
-    var button = document.getElementById("payment1-button");
-    var minfund = document.querySelector('#num1').value;
+    var tossPayments = TossPayments("test_ck_OALnQvDd2VJjgjj4daVMj7X41mNW"); //토스 클라이언트키
+    var button = document.getElementById("payment1-button"); //결제방식
+    var minfund = document.querySelector('#num1').value; //펀딩최소금액
     
-    var orderId = new Date().getTime();
-    var pk = document.getElementById("id").value;
-    var userAndPk = orderId + '-' + pk;
+    var orderId = new Date().getTime(); //주문번호는 중복불가
+    var pk = document.getElementById("id").value; //공연정보 아이디를 들고옴
+    var userAndPk = orderId + '-' + pk; //증가,감소할때 공연정보 아이디가 필요해서 주문번호랑 같이 값넘김
     
     button.addEventListener("click", function () {
         var method = document.querySelector('input[name=method]:checked').value; // "카드" 혹은 "휴대폰" 혹은 "상품권"
     	var amount=document.querySelector('#num1').value;
         
-    	if(parseInt(amount) >= parseInt(minfund)){
+    	if(parseInt(amount) >= parseInt(minfund)){ //최소펀딩금액 보다 커야지 결제가능
 	        var paymentData = {
 	            amount: amount,
 	            orderId: userAndPk,
 	            orderName: '[[${fundBoard.subject}]]',
 	            customerName: '[[${userData.nickname}]]',
-	            successUrl: window.location.origin + "/pay/success1",
-	            failUrl: window.location.origin + "/pay/fail1",
+	            successUrl: window.location.origin + "/pay/success",
+	            failUrl: window.location.origin + "/pay/fail",
 	        };
 	        tossPayments.requestPayment(method, paymentData);
         } else {

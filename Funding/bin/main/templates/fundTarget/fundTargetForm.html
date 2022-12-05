@@ -30,7 +30,7 @@
 			<form th:object="${targetForm}" method="post" enctype="multipart/form-data">
 
 				<div class="title">
-					<h2>지정 펀딩</h2>
+					<h2>지정 펀딩 작성</h2>
 				</div>
 				
 				<div class="int int_cate">
@@ -40,7 +40,7 @@
 					</select>
 				</div>
 				<div class="int int_title">
-					<label for="title">제목</label>
+					<label for="title">공연명</label>
 					<input class="subject" id="title" type="text" th:field="*{subject}" autocomplete="off">
 					<div class="errorList" style="display: none"></div>
 				</div>
@@ -55,13 +55,8 @@
 					<div class="errorList" style="display: none"></div>
 				</div>
 				<div class="int int_runtime">
-					<label for="runtime">공연 런타임</label>
+					<label for="runtime">공연 시간</label>
 					<input class="runtime" id="runtime" type="text" th:field="*{runtime}" autocomplete="off" placeholder="분 단위 입력">
-					<div class="errorList" style="display: none"></div>
-				</div>
-				<div class="int int_period">
-					<label for="duration">펀딩 기간 <span>(오늘부터 시작)</span></label>
-					<input class="fundDurationE" id="duration" type="date" th:field="*{fundDurationE}" th:min="${nowTime}" autocomplete="off">
 					<div class="errorList" style="display: none"></div>
 				</div>
 				<div class="int int_date">
@@ -69,13 +64,18 @@
 					<input id="date" class="startDate" type="datetime-local" th:field="*{startDate}" value="" autocomplete="off">	
 					<div class="errorList" style="display: none" ></div>
 				</div>
+				<div class="int int_period">
+					<label for="duration">펀딩 기간 <span>(오늘부터 시작)</span></label>
+					<input class="fundDurationE" id="duration" type="date" th:field="*{fundDurationE}" th:min="${nowTime}" autocomplete="off">
+					<div class="errorList" style="display: none"></div>
+				</div>
 				<div class="int int_minfund">
-					<label for="minFund">최소 펀딩 금액</label>
+					<label for="minFund">1인 최소 펀딩 금액</label>
 					<input class="minFund" id="minFund" type="number" th:field="*{minFund}" value="" autocomplete="off">
 					<div class="errorList" style="display: none"></div>
 				</div>
 				<div class="int int_amountFund">
-					<label for="fundAmount">총 펀딩금액</label>
+					<label for="fundAmount">펀딩 목표 금액</label>
 					<input class="fundAmount" id="fundAmount" type="number" th:field="*{fundAmount}" value="" autocomplete="off">
 					<div class="errorList" style="display: none"></div>
 				</div>

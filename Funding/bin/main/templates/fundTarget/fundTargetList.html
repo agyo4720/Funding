@@ -34,17 +34,18 @@
 				<a th:each="cate : ${cList}" class="cate" th:text="${cate.categorieName}"
 				th:href="@{|?cate=${cate.id}&page=0|}"></a>
 			</form>
-		</div>	
+		</div>
 
-		<div class="list_form" th:each="target : ${targetList}">
+		<div class="list_form" th:each="target, i : ${targetList}">
+			<div th:text="${i.count}" hidden></div>
 			<div class="con_list">
 				<a href="../fundTarget/fundTargetDetail.html" th:href="@{|/fundTarget/detail/${target.id}|}">
 					<div class="image">
 						<div th:if="${target.imgPath != null}">
-							<img th:src="${target.imgPath}" width="200" height="265">
+							<img th:src="${target.imgPath}" width="150px" height="215px" center>
 						</div>
 						<div th:if="${target.imgPath == null}">
-							<img th:src="|/fundTarget/img/${target.id}|" width="200" height="265">
+							<img th:src="|/fundTarget/img/${target.id}|" width="150px" height="215px" center>
 						</div>
 					</div>
 				</a>
@@ -68,12 +69,13 @@
 						
 						<div class="view">
 							<label for="startDate">공연일</label>
-							<p th:text="${#temporals.format(target.startDate, 'yyyy-MM-dd HH:mm')}">공연 시작</p>
+							<p th:text="${#temporals.format(target.startDate, 'yyyy-MM-dd (E) HH:mm')}">공연 시작</p>
 						</div>
 						
 						<div class="view">
 							<label for="fundDurationS">펀딩 기간</label>
-							<p th:text="${target.fundDurationS} + ' ~ ' + ${target.fundDurationE}">펀딩 기간</p>
+							<p th:text="${#temporals.format(target.fundDurationS, 'yyyy-MM-dd (E)')} + ' ~ '
+								+ ${#temporals.format(target.fundDurationE, 'yyyy-MM-dd (E)')}">펀딩 기간</p>
 						</div>
 						
 						<!-- <div>
@@ -88,7 +90,15 @@
 					</div>
 				</div>
 			</div>
+<<<<<<< HEAD
+
+			<hr th:class="|h${i.count}|"/>
+			<!-- <div th:text="#lists.size(target)"></div> -->
+
+=======
+>>>>>>> 1e56264a37879f9bda76850fd3102fc46b2f0d39
 		</div>
+
 		<!-- 페이징 -->
 		<div class="page" th:if="${!targetList.isEmpty()}">
 			<div th:if="${targetList.number > 0}">
@@ -97,7 +107,7 @@
 				</a>
 			</div>
 			<div th:each="page : ${#numbers.sequence(0,targetList.totalPages-1)}"
-			th:if="${targetList.number-3 < page and targetList.number+3 > page}">
+				th:if="${targetList.number-3 < page and targetList.number+3 > page}">
 				<a th:classappend="${page == targetList.number} ? 'active'" th:text="${page+1}" 
 				th:href="@{|?cate=${cate}&page=${page}|}"></a>
 			</div>
@@ -108,16 +118,18 @@
 			</div>
 		</div>
 		<!-- //페이징 -->
-		<a class="btn_create" href="fundTargetForm.html" th:href="@{/fundTarget/form}">펀딩 만들기</a>
+		<div sec:authorize="hasRole('ROLE_USER')">
+			<a class="btn_create" href="fundTargetForm.html" th:href="@{/fundTarget/form}">펀딩 만들기</a>
+		</div>
     </section>
     
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <script>
     	//url에서 카테고리 값 가져와서 active 추가해주기
     	let url = window.location.search
     	let Params = new URLSearchParams(url)
-    	let cate = Params.get('cate')
-    	cate = parseInt(cate) - 1
-    	console.log(cate)
+    	let cate = 0
+    	cate = parseInt(Params.get('cate')) - 1
     	let cateList = document.querySelectorAll('.cate')
     	
     	document.addEventListener("DOMContentLoaded", addActive)
@@ -126,11 +138,11 @@
     		cateList.forEach(function(e){
         		e.classList.remove('active')
         	})
-        	cateList[cate].classList.add('active')
+        	
+			cateList[cate].classList.add('active')
+			
     	}
-  
-
-    	
     </script>
+
 </body>
 </html>

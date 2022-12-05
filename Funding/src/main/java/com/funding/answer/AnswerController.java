@@ -40,16 +40,30 @@ public class AnswerController {
 		answerService.deleteAnswer(id);
 		if(where.equals("target")) {
 			return String.format("redirect:/fundTarget/detail/%s", bid);
+		}else {
+			return String.format("redirect:/fundBoard/detail/%s", bid);
 		}
-		return "redirect:/";
 	}
 	
 	
 	//미지정 댓글 생성,id는 부모글 id
-	@RequestMapping("board/create/{id}")
-	public void createBoardAnswer(@RequestParam("content")String content, @PathVariable("id")Integer id) {
+	@RequestMapping("/fundBoard/create/{id}")
+	public String createBoardAnswer(@RequestParam("content")String content, @PathVariable("id")Integer id
+			,Principal principal) {
+		
 		FundBoard fundBoard = fundBoardService.findById(id);
-		answerService.createBoardAnswer(content, fundBoard);
+		Optional<FundUser> user = fundUserService.findByuserName(principal.getName());
+		// 아티스트 일때  저장
+		if(user.isEmpty()) {
+			Optional<FundArtist> artiest = fundArtistService.findByuserName(principal.getName());
+			answerService.createBoardAnswerArt(content, fundBoard, artiest.get());
+			alertService.answerAlertBoard(fundBoard, principal.getName(), content);
+			return String.format("redirect:/fundBoard/detail/%s", id);
+		}
+		
+		alertService.answerAlertBoard(fundBoard, principal.getName(), content);
+		answerService.createBoardAnswerUser(content, fundBoard, user.get());
+		return String.format("redirect:/fundBoard/detail/%s", id);
 		
 	}
 	
@@ -74,16 +88,5 @@ public class AnswerController {
 		return String.format("redirect:/fundTarget/detail/%s", id);
 	}
 	
-	@RequestMapping("/fundBoard/create/{id}")
-	public String createFundBoardAnswer(
-			@RequestParam("content")String content,
-			@PathVariable("id")Integer id) {
-		
-		FundBoard fundBoard = this.fundBoardService.findById(id);
-		this.answerService.createBoardAnswer(content, fundBoard);
-		
-		return String.format("redirect:/fundBoard/detail/%s", id);
-		
-	}
 	
 }
