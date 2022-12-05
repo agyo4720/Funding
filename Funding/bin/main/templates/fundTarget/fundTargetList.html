@@ -123,6 +123,7 @@
     	let Params = new URLSearchParams(url)
     	let cate = 0
     	cate = parseInt(Params.get('cate')) - 1
+    	console.log("뺴고나서 값 : " + cate)
     	let cateList = document.querySelectorAll('.cate')
     	
     	document.addEventListener("DOMContentLoaded", addActive)

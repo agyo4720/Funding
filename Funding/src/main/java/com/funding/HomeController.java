@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.funding.alert.AlertService;
 import com.funding.fundArtist.FundArtist;
 import com.funding.fundArtist.FundArtistService;
 import com.funding.fundBoardTarget.FundBoardTarget;
@@ -26,10 +27,11 @@ public class HomeController {
 	private final FundUserService fundUserService;
 	private final FundArtistService fundArtistService;
 	private final FundTargetService fundTargetService;
+	private final AlertService alertService;
 	
 	// 메인페이지 요청시 로그인된 사용자 정보를 같이 넘겨준다
 	@RequestMapping("/")
-	public String home(Model model, Principal principal) {
+	public String home(Model model, Principal principal, Integer alertId) {
 		
 	
 		if(principal != null) {
@@ -45,6 +47,11 @@ public class HomeController {
 			}
 		}
 		Page<FundBoardTarget> page = fundTargetService.findAll(0); 
+		
+		//알림삭제
+		if(alertId != null) {
+			alertService.deleteAlert(alertId);
+		}
 		
 		model.addAttribute("page", page);
 		return "main/home";
