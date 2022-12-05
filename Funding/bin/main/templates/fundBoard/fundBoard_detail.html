@@ -104,7 +104,7 @@
 				<a id="btn1" th:href="@{|/fundArtistList/join/${fundBoard.id}|}"><button>참여하기</button></a>
 			</div>
 			<div th:each="fundArtistList : ${fundArtistList}">
-				<span th:text="${fundArtistList.fundArtist.nickname}"></span>
+				<a th:href="@{|/selfBoard/detail/${fundArtistList.fundArtist.nickname}|}" th:text="${fundArtistList.fundArtist.nickname}">자기소개 보기</a>
 			<input hidden class="fundArtistList" th:value="${fundArtistList.fundArtist.username}">
 			<!-- 참여 아티스트 유효성 검사 끝 -->
 			
