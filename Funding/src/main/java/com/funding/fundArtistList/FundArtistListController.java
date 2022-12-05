@@ -2,6 +2,8 @@ package com.funding.fundArtistList;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -53,10 +55,28 @@ public class FundArtistListController {
 	}
 	
 	// 펀드 참여 아티스트 투표하기
-	@RequestMapping("/score/{id}")
+	@RequestMapping("/score/{id}/{bid}")
 	public String score(
 			@PathVariable("id") Integer id,
-			Principal principal) {
+			@PathVariable("bid") Integer bid,
+			Principal principal,
+			Model model) {
+
+		// 로그인한 유저정보 == 투표한 유저 정보
+		FundArtistList fundAl = this.fundArtistListService.findById(id);
+		
+		Set<FundUser> sfu = fundAl.getFundUserList();
+		
+		Optional<FundUser> fu = this.fundUserService.findByuserName(principal.getName());
+		
+		sfu.contains(fu);
+		
+		if(sfu.contains(fu)) {
+			
+			model.addAttribute("msg", "ture");
+			
+			return String.format("redirect:/fundBoard/detail/%s", bid);
+		}
 		
 		// 해당 펀드아티스트리스트 아이디
 		FundArtistList fundArtistList = this.fundArtistListService.findById(id);
@@ -64,7 +84,6 @@ public class FundArtistListController {
 		// 투표하기한 유저정보
 		FundUser fundUser = this.fundUserService.findByuserName(principal.getName()).get();
 		
-		//this.fundArtistListService.score(fundArtistList, fundUser);
 		this.fundArtistListService.addvote(
 				fundArtistList.getFundBoard(),
 				fundArtistList.getFundArtist(),
