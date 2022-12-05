@@ -20,7 +20,7 @@
 	<div>
 		<nav th:replace="/sidebar/sidebar"></nav>
 	</div>
-	
+
     <!-- 홈페이지 상단 nav-->
 	<header th:replace="/main/nav"></header>
 
@@ -46,10 +46,10 @@
 				<a th:href="@{|/fundBoard/detail/${fundBoard.id}|}">
 					<div class="image">
 						<div th:if="${fundBoard.imgPath != null}">
-							<img th:src="${fundBoard.imgPath}" height="300">
+							<img th:src="${fundBoard.imgPath}" width="150px" height="215px" center>
 						</div>
 						<div th:if="${fundBoard.filePath != null}">
-							<img th:src="|/fundBoard/img/${fundBoard.id}|" height="300">
+							<img th:src="|/fundBoard/img/${fundBoard.id}|" width="150px" height="215px" center>
 						</div>
 					</div>
 
@@ -72,12 +72,13 @@
 
 							<div class="view">
 								<label for="startDate">공연일</label>
-								<p th:text="${#temporals.format(fundBoard.startDateTime, 'yyyy-MM-dd HH:mm')}">공연일</p>
+								<p th:text="${#temporals.format(fundBoard.startDateTime, 'yyyy-MM-dd (E) HH:mm')}">공연일</p>
 							</div>
 
 							<div class="view">
 								<label for="fundDuration">펀딩 기간</label>
-								<p th:text="|${#temporals.format(fundBoard.createDate, 'yyyy-MM-dd')} ~ ${fundBoard.fundDuration}|"></p>
+								<p th:text="|${#temporals.format(fundBoard.createDate, 'yyyy-MM-dd (E)')}
+									 ~ ${#temporals.format(fundBoard.fundDuration, 'yyyy-MM-dd (E)')}|"></p>
 							</div>
 
 							<div class="view">
@@ -98,7 +99,7 @@
 					<i class="fas fa-chevron-left"></i>
 				</a>
 			</div>
-			
+
 			<!-- 페이지 리스트 루프 -->
 			<!-- 현재 페이지와 같으면 active 적용-->
 			<div th:each="page: ${#numbers.sequence(0, fundBoardList.totalPages-1)}"
@@ -106,7 +107,7 @@
 				<a th:classappend="${page == fundBoardList.number} ? 'active'"
 				th:text="${page+1}" th:href="@{|?page=${page}|}"></a>
 			</div>
-			
+
 			<!-- 다음 페이지가 없으면 비활성화 -->
 			<div th:if="${fundBoardList.number < fundBoardList.totalPages-1}">
 				<a th:href="@{|?page=${fundBoardList.number+1}|}">
@@ -118,7 +119,7 @@
 
 		<a class="btn_create" href="/fundBoard/create">등록하기</a>
 	</section>
-	
+
 	<script>
 		let url = window.location.href;
 		let cate = url.split('/')
