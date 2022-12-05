@@ -257,7 +257,7 @@ public class FundBoardController {
 						sale.get(i).getCheckin(),sale.get(i).getFundUser(),sale.get(i).getUsername());
 			}
 		}
-<<<<<<< HEAD
+
 		
 		//미지정 리스트 삭제
 		List<FundList> fList = fundListService.findByFundBoard(nick);
@@ -267,14 +267,13 @@ public class FundBoardController {
 		}
 		
 		fundBoardService.delete(id);
-=======
+
 
 		this.fundBoardService.delete(id);
 
->>>>>>> namgo
 		return "redirect:/fundBoard/list";
 	}
 	
-	// 2022/12/02 - 7 작업중
+	// 2022/12/05 - 1 작업중
 
 }
