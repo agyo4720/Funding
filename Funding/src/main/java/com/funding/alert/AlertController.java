@@ -157,15 +157,22 @@ public class AlertController {
 				//기간 지나고 100% 미달성시 환불 시킴
 				if(targetList.get(i).getFundCurrent() < targetList.get(i).getFundAmount()) {
 					List<Sale> sale = saleRepository.findByFundBoardTarget(targetList.get(i).getSubject());
-					for(int j=0; i<sale.size(); j++){
-						cancelsController.totalCancel(sale.get(j).getPayCode(),"기간만료 환불");
-						cancelsService.totalCancelInfo(
-								sale.get(j).getOrederId()
-								, sale.get(i).getPayMoney()
-								, sale.get(i).getOrderName()
-								, "기간만료 환불"
-								, sale.get(i).getFundUser()
-								, sale.get(i).getUsername());
+					log.info("환불 진행함 (기간만료 자동 환불)");
+					for(int j=0; j<sale.size(); j++){
+						if(sale.get(j).getCheckin().equals("결제완료")) {
+							sale.get(j).getPayCode();
+							log.info("삭제 실행 sale.get(j).getPayCode() : "+sale.get(j).getPayCode());
+							sale.get(j).setCheckin("게시글 삭제");
+							
+							cancelsController.totalCancel(sale.get(j).getPayCode(),"기간만료 환불");
+							cancelsService.totalCancelInfo(
+									sale.get(j).getOrederId()
+									, Integer.valueOf(sale.get(j).getPayMoney()).intValue()
+									, sale.get(j).getOrderName()
+									, "기간만료 환불"
+									, sale.get(j).getFundUser()
+									, sale.get(j).getUsername());
+						}
 					}
 				}
 				
