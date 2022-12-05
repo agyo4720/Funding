@@ -5,7 +5,10 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>fundBoard_detail</title>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1e56264a37879f9bda76850fd3102fc46b2f0d39
 	<!-- CSS -->
 	<link rel="stylesheet" href="/css/fundBoard/fundBoard_detail.css">
 	
@@ -49,7 +52,7 @@
 				</div>
 				<div class="view">
 					<label for="startDate">공연일</label>
-					<p th:text="${#temporals.format(fundBoard.startDateTime, 'yyyy-MM-dd HH:mm')}">공연일</p>
+					<p th:text="${#temporals.format(fundBoard.startDateTime, 'yyyy-MM-dd (E) HH:mm')}">공연일</p>
 				</div>
 				<div class="view">
 					<label for="place">공연장</label>
@@ -74,7 +77,8 @@
 				</div>
 				<div class="view">
 					<label for="duration">펀딩기간</label>
-					<p th:text="${fundBoard.fundDuration}"></p>
+					<p th:text="|${#temporals.format(fundBoard.createDate, 'yyyy-MM-dd (E)')} ~ 
+						${#temporals.format(fundBoard.fundDuration, 'yyyy-MM-dd (E)')}|"></p>
 				</div>
 				<div class="view">
 					<label for="count">현재 인원</label>
@@ -88,6 +92,10 @@
 					<button th:if="${result == true}" class="con_btn" th:onclick="'location.href=\''+ @{/pay/can/cancel(paymentKey=${payCode})} + '\''" type="submit">환불하기</button>
 					<button th:if="${result == false}" class="con_btn" th:onclick="'location.href=\''+ @{|/pay/tossPay/${fundBoard.id}|} + '\''">결제하기</button>
 				</div>
+<<<<<<< HEAD
+=======
+				
+>>>>>>> 1e56264a37879f9bda76850fd3102fc46b2f0d39
 			</div>
 		</div>
 		
@@ -103,6 +111,9 @@
 			</div>
 			<div th:each="fundArtistList : ${fundArtistList}">
 				<span th:text="${fundArtistList.fundArtist.nickname}"></span>
+				<div sec:authorize="!hasRole('ROLE_USER')">
+					<a id="btn1" th:href="@{|/fundArtistList/join/${fundBoard.id}|}"><button>참여하기</button></a>
+				</div>
 			<input hidden class="fundArtistList" th:value="${fundArtistList.fundArtist.username}">
 				<a sec:authorize="hasRole('ROLE_USER')" th:href="@{|/fundArtistList/score/${fundArtistList.id}|}">투표하기</a>
 				<span th:text="|${fundArtistList.fundUserList.size()}개|"></span>
@@ -141,8 +152,13 @@
 			<div class="cmt_view" th:each="answer : ${answerList}">
 				<div class="cmt">
 					<div class="cmt_head">
+<<<<<<< HEAD
 						<p class="id" th:text="${answer.fundUser.username}">아이디</p>
 						<p class="time" th:text="${#temporals.format(answer.createDate, 'MM-dd HH:mm:ss')}">댓글 시간</p>
+=======
+						<p class="id">아이디</p>
+						<p class="time" th:text="${#temporals.format(answer.createDate, 'MM-dd HH:mm:ss (E)')}">댓글 시간</p>
+>>>>>>> 1e56264a37879f9bda76850fd3102fc46b2f0d39
 						<a class="cmt_delete" th:href="@{|/answer/delete/${answer.id}?location=board&id=${fundBoard.id}|}">삭제</a>
 					</div>
 					<p th:text="${answer.content}">댓글 내용</p>
@@ -150,7 +166,11 @@
 			</div>
 		</div>
 	</section>
+<<<<<<< HEAD
 		
+=======
+
+>>>>>>> 1e56264a37879f9bda76850fd3102fc46b2f0d39
 	<script>
 
 		let username = document.querySelector('.username').value;
@@ -181,6 +201,9 @@
 		}
 		
 	</script>
+<<<<<<< HEAD
 	
+=======
+>>>>>>> 1e56264a37879f9bda76850fd3102fc46b2f0d39
 </body>
 </html>

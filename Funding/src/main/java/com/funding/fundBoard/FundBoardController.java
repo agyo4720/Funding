@@ -266,11 +266,18 @@ public class FundBoardController {
 			fundListService.deleteFund(fList.get(i).getFundUser(), nick);
 		}
 		
+<<<<<<< HEAD
 		fundBoardService.delete(id);
+=======
+>>>>>>> 1e56264a37879f9bda76850fd3102fc46b2f0d39
 
 
 		this.fundBoardService.delete(id);
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1e56264a37879f9bda76850fd3102fc46b2f0d39
 		return "redirect:/fundBoard/list";
 	}
 	

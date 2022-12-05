@@ -34,7 +34,7 @@
 				<a th:each="cate : ${cList}" class="cate" th:text="${cate.categorieName}"
 				th:href="@{|?cate=${cate.id}&page=0|}"></a>
 			</form>
-		</div>	
+		</div>
 
 		<div class="list_form" th:each="target, i : ${targetList}">
 			<div th:text="${i.count}" hidden></div>
@@ -42,10 +42,10 @@
 				<a href="../fundTarget/fundTargetDetail.html" th:href="@{|/fundTarget/detail/${target.id}|}">
 					<div class="image">
 						<div th:if="${target.imgPath != null}">
-							<img th:src="${target.imgPath}" width="200" height="265">
+							<img th:src="${target.imgPath}" width="150px" height="215px" center>
 						</div>
 						<div th:if="${target.imgPath == null}">
-							<img th:src="|/fundTarget/img/${target.id}|" width="200" height="265">
+							<img th:src="|/fundTarget/img/${target.id}|" width="150px" height="215px" center>
 						</div>
 					</div>
 				</a>
@@ -69,12 +69,13 @@
 						
 						<div class="view">
 							<label for="startDate">공연일</label>
-							<p th:text="${#temporals.format(target.startDate, 'yyyy-MM-dd HH:mm (E)')}">공연 시작</p>
+							<p th:text="${#temporals.format(target.startDate, 'yyyy-MM-dd (E) HH:mm')}">공연 시작</p>
 						</div>
 						
 						<div class="view">
 							<label for="fundDurationS">펀딩 기간</label>
-							<p th:text="${#temporals.format(target.fundDurationS, 'yyyy-MM-dd (E)')} + ' ~ ' + ${target.fundDurationE}">펀딩 기간</p>
+							<p th:text="${#temporals.format(target.fundDurationS, 'yyyy-MM-dd (E)')} + ' ~ '
+								+ ${#temporals.format(target.fundDurationE, 'yyyy-MM-dd (E)')}">펀딩 기간</p>
 						</div>
 						
 						<!-- <div>
@@ -89,10 +90,13 @@
 					</div>
 				</div>
 			</div>
+<<<<<<< HEAD
 
 			<hr th:class="|h${i.count}|"/>
 			<!-- <div th:text="#lists.size(target)"></div> -->
 
+=======
+>>>>>>> 1e56264a37879f9bda76850fd3102fc46b2f0d39
 		</div>
 
 		<!-- 페이징 -->
