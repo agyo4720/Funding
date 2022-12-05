@@ -8,6 +8,7 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -54,5 +55,23 @@ public class FileController {
 		return new UrlResource("file:" + filePath);
 		
 	}
+	
+	// 아티스트 대표이미지 등록폼
+	@GetMapping("/representativeImageUpload")
+	public String representativeImageUploadForm (MultipartFile file) throws IllegalStateException, IOException {
+		fileService.saveFile(file);
+		
+		return "";
+	}
+	
+	// 아티스트 대표이미지 등록
+	@PostMapping("/representativeImageUpload")
+	public String representativeImageUpload (MultipartFile file) throws IllegalStateException, IOException {
+		fileService.saveFile(file);
+		
+		return "";
+	}
+	
+	
 	
 }
