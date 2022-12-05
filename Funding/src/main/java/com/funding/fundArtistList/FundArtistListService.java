@@ -64,22 +64,21 @@ public class FundArtistListService {
 		return fundArtistList.get();
 	}
 	
+//	// 미지정 펀드 아티스트 투표하기
+//	public void score(FundArtistList fundArtistList, FundUser fundUser) {
+//		
+//		List<FundArtistList> fal = this.fundArtistListRepository.findByFundUser(fundUser);
+//
+//		Integer i = fundArtistList.getLikeConut();
+//		i++;
+//		
+//		fundArtistList.setLikeConut(i);
+//		
+//		this.fundArtistRepository.save(fundArtistList);
+//		
+//	}
+	
 	// 미지정 펀드 아티스트 투표하기
-	public void score(FundArtistList fundArtistList, FundUser fundUser) {
-		
-		//List<FundArtistList> fal = this.fundArtistListRepository.findByFundUser(fundUser);
-		
-	
-		
-		Integer i = fundArtistList.getLikeConut();
-		i++;
-		
-		fundArtistList.setLikeConut(i);
-		
-		this.fundArtistRepository.save(fundArtistList);
-		
-	}
-	
 	public void addvote(FundBoard fundBoard, FundArtist fundArtist, FundUser fundUser, Integer id) {
 		
 		//List<FundArtistList> fList = this.fundArtistListRepository.findByFundBoardAndFundArtist(fundBoard, fundArtist);
