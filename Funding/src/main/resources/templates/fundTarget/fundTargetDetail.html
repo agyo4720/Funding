@@ -68,16 +68,8 @@
                 <div class="con_hr_detail">
                     <hr/>
                 </div>
-
-
-                
-                <!-- <div class="view">
-                    <div class="progress" style="height: 10px">
-                        <div class="progress-bar" style="width: 40%; height: 10px"></div>
-                    </div>
-                </div> -->
                     
-                <div>
+                <div class="view int_progress">
                 	<progress th:value="|${fundBoardTarget.fundCurrent * 100 / fundBoardTarget.fundAmount}|" max="100"></progress>
                 	<span th:text="|${fundBoardTarget.fundCurrent * 100 / fundBoardTarget.fundAmount}%|"></span>
                 </div>
