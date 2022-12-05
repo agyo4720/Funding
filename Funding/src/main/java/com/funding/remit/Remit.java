@@ -35,6 +35,6 @@ public class Remit {
 	private LocalDateTime requestedAt ; //등록날짜
 	
 	@Column(name = "payoutDate  ")
-	private String  payoutDate  ; //공연완료날짜
+	private LocalDateTime  payoutDate  ; //공연완료날짜
 	
 }

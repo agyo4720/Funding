@@ -21,9 +21,7 @@
     <h2>환불하기</h2>
     <p>----------------------</p>
     <form th:action="@{/pay/can/cancelRquest}" method="GET">
-	    <div><label><input type="radio" name="method" value="환불하기" checked/>환불하기</label></div>
-	    <p>----------------------</p>
-	    <input type="text"  id="cancelReason" placeholder="환불사유" name="cancelReason" value="" />
+	    <input type="text"  id="cancelReason" placeholder="환불사유" name="cancelReason" value="" /> <!-- 필수값 환불사유 -->
 	    <button id="cancel-button" type="submit">환불하기</button>
     </form>
 </section>

@@ -40,27 +40,28 @@ public class EnrollController {
 			@RequestParam("representativeName")String representativeName, @RequestParam("businessNumber")String businessNumber,
 			@RequestParam("bank")String bank, @RequestParam("accountNumber")String accountNumber,Model model) throws Exception {
 			HttpRequest request = HttpRequest.newBuilder()
-			    .uri(URI.create("https://api.tosspayments.com/v1/payouts/sub-malls"))
-    		    .header("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()))
-    		    .header("Content-Type", "application/json")
+			    .uri(URI.create("https://api.tosspayments.com/v1/payouts/sub-malls"))//토스에서 요구하는 주소
+    		    .header("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()))//토스에서 개인식별(시크릿키)
+    		    .header("Content-Type", "application/json")//json형식 사용
 			    .method("POST", HttpRequest.BodyPublishers.ofString("{\"subMallId\":\""+subMallId+"\","
 			    		+ "\"type\":\"CORPORATE\",\"companyName\":\""+companyName+"\",\"representativeName\":\""+representativeName+"\","
-			    		+ "\"businessNumber\":\""+businessNumber+"\",\"account\":{\"bank\":\""+bank+"\",\"accountNumber\":\""+accountNumber+"\"}}"))
+			    		+ "\"businessNumber\":\""+businessNumber+"\",\"account\":{\"bank\":\""+bank+"\",\"accountNumber\":\""+accountNumber+"\"}}"))//필수입력 값
 			    .build();
-			HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+			HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());// JSON -> String
 
     		if(response.statusCode() == 200) {//요청응답코드 200=성공
     			enrollService.enrollInfo(subMallId, companyName, representativeName, businessNumber, bank, accountNumber);
-    			model.addAttribute("msg","SUCcess");
-    			return "/main/nav";
+    			model.addAttribute("msg","SUCcess");//alert 사용
+    			return "/pay/loo/lookup";
     		}else {
+    			//심플JSON 사용
         		JSONParser parser = new JSONParser();
         		Object obj = parser.parse(response.body());
         		JSONObject jsonObj = (JSONObject)obj;
-    			String message = (String)jsonObj.get("message");
-    			model.addAttribute("message",message);
-    			model.addAttribute("msg","FAIl");
-    			return "/main/nav";
+    			String message = (String)jsonObj.get("message");//토스에서 실패한 코드를 String 변경
+    			model.addAttribute("message",message);//실패사유
+    			model.addAttribute("msg","FAIl");//alert 사용
+    			return "/pay/loo/lookup";
     		}
 	}
 	
@@ -74,57 +75,55 @@ public class EnrollController {
 			@RequestParam("representativeName")String representativeName,@RequestParam("businessNumber")String businessNumber,
 			@RequestParam("accountNumber")String accountNumber, Model model)throws Exception {
 		HttpRequest request = HttpRequest.newBuilder()
-			    .uri(URI.create("https://api.tosspayments.com/v1/payouts/sub-malls/"+subMallId))
-    		    .header("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()))
-    		    .header("Content-Type", "application/json")
+			    .uri(URI.create("https://api.tosspayments.com/v1/payouts/sub-malls/"+subMallId))//토스에서 요구하는 주소
+    		    .header("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()))//토스에서 개인식별(시크릿키)
+    		    .header("Content-Type", "application/json")//json형식 사용
 			    .method("POST", HttpRequest.BodyPublishers.ofString("{\"subMallId\":\""+subMallId+"\","
 			    		+ "\"type\":\"CORPORATE\",\"companyName\":\""+companyName+"\",\"representativeName\":\""+representativeName+"\","
-			    		+ "\"businessNumber\":\""+businessNumber+"\",\"account\":{\"bank\":\""+bank+"\",\"accountNumber\":\""+accountNumber+"\"}}"))
+			    		+ "\"businessNumber\":\""+businessNumber+"\",\"account\":{\"bank\":\""+bank+"\",\"accountNumber\":\""+accountNumber+"\"}}"))//필수입력 값
 			    .build();
-			HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+			HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());// JSON -> String
 
     		if(response.statusCode() == 200) {//요청응답코드 200=성공
     			enrollService.reviseInfo(subMallId, companyName, representativeName, businessNumber, bank, accountNumber);
-    			model.addAttribute("msg","SUccess");
-    			return "/main/nav";
+    			model.addAttribute("msg","SUccess");//alert 사용
+    			return "/pay/loo/lookup";
     		}else {
+    			//심플JSON 사용
         		JSONParser parser = new JSONParser();
         		Object obj = parser.parse(response.body());
         		JSONObject jsonObj = (JSONObject)obj;
-    			String message = (String)jsonObj.get("message");
-    			model.addAttribute("message",message);
-    			model.addAttribute("msg","FAil");
-    			return "/main/nav";
+    			String message = (String)jsonObj.get("message"); //토스에서 실패한 코드를 String 변경
+    			model.addAttribute("message",message);//실패사유
+    			model.addAttribute("msg","FAil");//alert 사용
+    			return "/pay/loo/lookup";
     		}
 	}
 
 	//계좌삭제
-	@RequestMapping("/rem/deletion")
-	public String deletion(){
-			return "/pay/rem/deletion";
-	}
 	@RequestMapping("/rem/deletionRequest")
 	public String deletionRequest(@RequestParam("subMallId")String subMallId,Model model)throws Exception {
 			HttpRequest request = HttpRequest.newBuilder()
-			.uri(URI.create("https://api.tosspayments.com/v1/payouts/sub-malls/"+subMallId+"/delete"))
-	    	.header("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()))
-	    	.header("Content-Type", "application/json")
-	    	.method("POST", HttpRequest.BodyPublishers.ofString(""))
+			.uri(URI.create("https://api.tosspayments.com/v1/payouts/sub-malls/"+subMallId+"/delete"))//토스에서 요구하는 주소
+	    	.header("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()))//토스에서 개인식별(시크릿키)
+	    	.header("Content-Type", "application/json")//json형식 사용
+	    	.method("POST", HttpRequest.BodyPublishers.ofString(""))// JSON -> String
 	    	.build();
 			HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
 			
     		if(response.statusCode() == 200) {//요청응답코드 200=성공
     			enrollService.deletionInfo(subMallId);
-    			model.addAttribute("msg","SUCCess");
-    			return "/main/nav";
+    			model.addAttribute("msg","SUCCess");//alert 사용
+    			return "/pay/loo/lookup";
     		}else {
+    			//심플JSON 사용
         		JSONParser parser = new JSONParser();
         		Object obj = parser.parse(response.body());
         		JSONObject jsonObj = (JSONObject)obj;
-    			String message = (String)jsonObj.get("message");
-    			model.addAttribute("message",message);
-    			model.addAttribute("msg","FAIL");
-    			return "/main/nav";
+    			String message = (String)jsonObj.get("message");//토스에서 실패한 코드를 String 변경
+    			model.addAttribute("message",message);//실패사유
+    			model.addAttribute("msg","FAIL");//alert 사용
+    			return "/pay/loo/lookup";
     		}
 	}
 	
