@@ -38,10 +38,12 @@
                     <div class="status">
                         <div th:text="${fundBoardTarget.status}">상태</div>
                     </div>
-                    <div th:if="${fundBoardTarget.fundUser != null and fundBoardTarget.fundUser.username == #authentication.getPrincipal().getUsername()}">
-                    	<div th:if="${!fundBoardTarget.status.toString().equals('100%⇑⇑⇑')}">
-		                    <a class="con_del" th:href="@{|/fundTarget/delete/${fundBoardTarget.id}|}">삭제</a>
-                    	</div>
+                    <div sec:authorize="hasRole('ROLE_USER')">
+	                    <div th:if="${fundBoardTarget.fundUser != null and fundBoardTarget.fundUser.username == #authentication.getPrincipal().getUsername()}">
+	                    	<div th:if="${!fundBoardTarget.status.toString().equals('100%⇑⇑⇑')}">
+			                    <a class="con_del" th:href="@{|/fundTarget/delete/${fundBoardTarget.id}|}">삭제</a>
+	                    	</div>
+	                    </div>
                     </div>
                 </div>
                 <div class="view">
