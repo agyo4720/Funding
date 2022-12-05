@@ -4,9 +4,8 @@ section {
 }
 
 /* 타이틀 */
-section .s_title {
-    margin: 10px auto;
-    width: 100px;
+.title {
+    text-align: center;
 }
 
 /* 카테고리 */

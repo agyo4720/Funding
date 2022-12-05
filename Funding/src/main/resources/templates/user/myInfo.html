@@ -29,7 +29,14 @@
             </div>
 
             <div class="view"><p>아이디</p><span th:text="${myInfo.username}"></span></div>
-            <div class="view"><p>비밀번호</p><span>***********</span><button>변경</button></div>
+            <div id="pwdHidden"><p>비밀번호</p><span>***********</span><button id="pwdBtn1">변경</button></div>
+            <form hidden id="form2" action="/user/resetPwdConfirm2" method="post"> 
+            	<div><input id="password1" name="pwd" type="password"></input></div>
+            	<div id="pwd1CheckResult"></div>
+            	<div><input id="password2" name="pwdCheck" type="password"></input></div>
+            	<div id="pwd2CheckResult"></div>
+            	<input id="changePwdBtn" type="submit" value="저장"></input>
+            </form>
             <div class="view"><p>이름</p><span th:text="${myInfo.nickname}"></span></div>
             
             <div id="mobile1" ><p>전화번호</p><span id="mob" th:text="${myInfo.mobile}"></span><button id="mobileBtn1">변경</button></div>
@@ -38,7 +45,7 @@
             </form>
             <div id="mobileCheckResult"></div>
             
-            <div class="view"><p>이메일</p><span th:text="${myInfo.email}"></span><button>변경</button></div>
+            <div class="view"><p>이메일</p><span th:text="${myInfo.email}"></span></div>
             <div>생년월일 <span th:text="${#dates.format(myInfo.birth, 'yyyy-MM-dd')}"></span></div>
             <div class="view"><p>성별</p><span th:text="${myInfo.gender}"></span></div>
             <div class="view"><p>권한</p><span th:text="${myInfo.role}"></span></div>
@@ -68,6 +75,75 @@
 	})
 	
 	
+</script>
+
+<!-- 비밀번호 유효성 검사 -->
+<script>
+	$('#pwdBtn1').click(function(){
+		$('#form2').removeAttr('hidden')		
+		$('#pwdHidden').attr('hidden','hidden')
+	})
+
+
+	$('#password1').focusout(function() {
+    	let pwdval = $('#password1').val()
+        let pwdcheck =  /^[a-zA-Z0-9~!@#$%^&*()`_+?:;'"{}]{1,16}$/
+	
+        if (!pwdcheck.test(pwdval) || pwdval.length<8){
+			$('#pwd1CheckResult').html('비밀번호는 영대소문자,숫자로 구성된 8글자 이상으로 조합하시오.')
+        	return false
+        }
+        $("#pwd1CheckResult").html('')
+	});
+	
+	$('#form2').on('submit', function() {
+		let pwdval = $('#password1').val()
+        let pwdcheck =  /^[a-zA-Z0-9~!@#$%^&*()`_+?:;'"{}]{1,16}$/
+	
+        if (!pwdcheck.test(pwdval) || pwdval.length<8){
+			$('#pwd1CheckResult').html('비밀번호는 영대소문자,숫자로 구성된 8글자 이상으로 조합하시오.')
+			$('#password1').focus()
+        	return false
+        }
+        
+        let pwdokval = $('#password2').val()
+	    
+        	if (pwdokval){
+            	if (pwdval!==pwdokval){
+					$('#pwd2CheckResult').html('비밀번호가 일치하지 않습니다.')
+					$('#password2').focus()
+                    return false
+                } 
+	            } else {
+					$('#pwd2CheckResult').html('비밀번호확인을 입력하시오.')
+					$('#password2').focus()
+	                return false
+	            }
+	        
+	        $("#pwd2CheckResult").html('')
+        
+        $("#pwd1CheckResult").html('')
+        alert('변경 되었습니다!')
+	})
+
+	$('#password2').focusout(function() {
+		let pwdval = $('#password1').val()
+        let pwdokval = $('#password2').val()
+    
+    	if (pwdokval){
+        	if (pwdval!==pwdokval){
+				$('#pwd2CheckResult').html('비밀번호가 일치하지 않습니다.')
+                return false
+            } 
+            } else {
+				$('#pwd2CheckResult').html('비밀번호확인을 입력하시오.')
+                return false
+            }
+        
+        $("#pwd2CheckResult").html('')
+	});
+	
+
 </script>
 
 </html>
