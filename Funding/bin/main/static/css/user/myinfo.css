@@ -34,3 +34,37 @@ section {position: relative;}
 .view button:hover {
     background: #5c5c5c;
 }
+
+.myinfo button{
+    cursor: pointer;
+    margin-left: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    background: #838383;
+    color: #fff;
+    letter-spacing: 2px;
+    line-height: 50%;
+    transition: 0.3s;
+}
+
+.myinfo button:hover {
+	background: #5c5c5c;
+}
+
+#changePwdBtn{
+    cursor: pointer;
+    margin-left: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    background: #838383;
+    color: #fff;
+    letter-spacing: 2px;
+    line-height: 50%;
+    transition: 0.3s;
+}
+
+#changePwdBtn:hover {
+	background: #5c5c5c;
+}

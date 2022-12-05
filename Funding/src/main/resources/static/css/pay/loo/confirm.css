@@ -35,3 +35,8 @@ button {
     cursor: pointer;
     padding: 3px 6px;
 }
+
+/* 페이징 */
+.page {
+    display: flex;
+}
