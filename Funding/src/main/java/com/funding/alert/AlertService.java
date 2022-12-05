@@ -219,9 +219,11 @@ public class AlertService {
 	public void deleteBoardThenAlert(List<FundList> fundList) {
 		for(FundList fl : fundList) {
 			Alert alert = new Alert();
-			alert.setContent("게시글이 삭제되어 펀딩이 취소되었습니다.");
+			alert.setContent(fl.getFundBoard().getSubject() + "게시글이 삭제되어 펀딩이 취소되었습니다.");
 			alert.setHostUser(fl.getFundUser());
 			alert.setWitchAlert("취소");
+			
+			alertRepository.save(alert);
 		}
 	}
 		
