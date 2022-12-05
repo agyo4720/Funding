@@ -44,7 +44,7 @@ section .s_title {
     padding: 10px 20px;
     margin: 30px auto;
     width: 900px;
-    border: 1px solid #7c7c7c;
+    border: 1px solid #bfbfbf;
     border-radius: 30px;
 }
 
@@ -76,6 +76,7 @@ img {object-fit: cover;}
 .con_title p {color: #7c7c7c;}
 
 .con_title a h3 {
+    display: inline-block;
     cursor: pointer;
     margin-top: 7px;
     letter-spacing: 2px;

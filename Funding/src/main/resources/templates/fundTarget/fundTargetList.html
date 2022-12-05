@@ -42,10 +42,10 @@
 				<a href="../fundTarget/fundTargetDetail.html" th:href="@{|/fundTarget/detail/${target.id}|}">
 					<div class="image">
 						<div th:if="${target.imgPath != null}">
-							<img th:src="${target.imgPath}" width="150" height="215">
+							<img th:src="${target.imgPath}" width="150px" height="215px" center>
 						</div>
 						<div th:if="${target.imgPath == null}">
-							<img th:src="|/fundTarget/img/${target.id}|" width="150" height="215">
+							<img th:src="|/fundTarget/img/${target.id}|" width="150px" height="215px" center>
 						</div>
 					</div>
 				</a>
@@ -74,7 +74,8 @@
 						
 						<div class="view">
 							<label for="fundDurationS">펀딩 기간</label>
-							<p th:text="${#temporals.format(target.fundDurationS, 'yyyy-MM-dd (E)')} + ' ~ ' + ${target.fundDurationE}">펀딩 기간</p>
+							<p th:text="${#temporals.format(target.fundDurationS, 'yyyy-MM-dd (E)')} + ' ~ '
+								+ ${#temporals.format(target.fundDurationE, 'yyyy-MM-dd (E)')}">펀딩 기간</p>
 						</div>
 						
 						<!-- <div>

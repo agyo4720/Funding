@@ -78,6 +78,7 @@ img {object-fit: cover;}
 .con_title p {color: #7c7c7c;}
 
 .con_title a h3 {
+    display: inline-block;
     cursor: pointer;
     margin-top: 7px;
     letter-spacing: 2px;

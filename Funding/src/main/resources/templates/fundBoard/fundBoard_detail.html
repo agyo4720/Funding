@@ -47,7 +47,7 @@
 				</div>
 				<div class="view">
 					<label for="startDate">공연일</label>
-					<p th:text="${#temporals.format(fundBoard.startDateTime, 'yyyy-MM-dd HH:mm')}">공연일</p>
+					<p th:text="${#temporals.format(fundBoard.startDateTime, 'yyyy-MM-dd (E) HH:mm')}">공연일</p>
 				</div>
 				<div class="view">
 					<label for="place">공연장</label>
@@ -72,7 +72,8 @@
 				</div>
 				<div class="view">
 					<label for="duration">펀딩기간</label>
-					<p th:text="${fundBoard.fundDuration}"></p>
+					<p th:text="|${#temporals.format(fundBoard.createDate, 'yyyy-MM-dd (E)')} ~ 
+						${#temporals.format(fundBoard.fundDuration, 'yyyy-MM-dd (E)')}|"></p>
 				</div>
 				<div class="view">
 					<label for="count">현재 인원</label>
@@ -137,7 +138,7 @@
 				<div class="cmt">
 					<div class="cmt_head">
 						<p class="id">아이디</p>
-						<p class="time" th:text="${#temporals.format(answer.createDate, 'MM-dd HH:mm:ss')}">댓글 시간</p>
+						<p class="time" th:text="${#temporals.format(answer.createDate, 'MM-dd HH:mm:ss (E)')}">댓글 시간</p>
 						<a class="cmt_delete" th:href="@{|/answer/delete/${answer.id}?location=board&id=${fundBoard.id}|}">삭제</a>
 					</div>
 					<p th:text="${answer.content}">댓글 내용</p>
