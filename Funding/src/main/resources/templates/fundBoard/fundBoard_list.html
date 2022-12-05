@@ -46,10 +46,10 @@
 				<a th:href="@{|/fundBoard/detail/${fundBoard.id}|}">
 					<div class="image">
 						<div th:if="${fundBoard.imgPath != null}">
-							<img th:src="${fundBoard.imgPath}" height="300">
+							<img th:src="${fundBoard.imgPath}" width="150px" height="215px" center>
 						</div>
 						<div th:if="${fundBoard.filePath != null}">
-							<img th:src="|/fundBoard/img/${fundBoard.id}|" height="300">
+							<img th:src="|/fundBoard/img/${fundBoard.id}|" width="150px" height="215px" center>
 						</div>
 					</div>
 
