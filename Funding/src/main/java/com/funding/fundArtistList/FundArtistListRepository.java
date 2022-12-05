@@ -14,7 +14,7 @@ public interface FundArtistListRepository extends JpaRepository<FundArtistList, 
 	
 	public List<FundArtistList> findByFundBoard(FundBoard fundBoard);
 	
-	//public List<FundArtistList> findByFundUser(FundUser fundUser);
+	public List<FundArtistList> findByFundUserList(FundUser fundUserList);
 	
 	public List<FundArtistList> findByFundBoardAndFundArtist(FundBoard board, FundArtist artist);
 }

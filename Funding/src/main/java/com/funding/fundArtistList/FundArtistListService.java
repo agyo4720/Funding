@@ -90,6 +90,10 @@ public class FundArtistListService {
 		this.fundArtistListRepository.save(fundArtistList.get());
 				
 	}
-
 	
+	public void findByFundBoardAndFundArtist() {
+		
+		
+	}
+
 }
