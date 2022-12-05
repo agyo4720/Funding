@@ -219,7 +219,7 @@ public class AlertController {
 				
 			//펀딩기간 만료시 알림
 			LocalDate d12 = LocalDate.parse("2023-12-05",DateTimeFormatter.ISO_DATE);
-			if(bList.get(i).getFundDuration().isBefore(d12) &&
+			if(bList.get(i).getFundDuration().isBefore(LocalDate.now()) &&
 					bList.get(i).getState().equals("진행중")) {
 				
 				log.info("날짜 지났어용    : " + bList.get(i).getSubject());
