@@ -28,14 +28,18 @@
                 <h2>회원 정보</h2>
             </div>
 
-            <div class="view"><p>아이디</p><span th:text="${myInfo.username}"></span></div>
+            <div class="view">
+            	<p>아이디</p>
+            	<span th:text="${myInfo.username}"></span>
+            </div>
+            
             <div id="pwdHidden"><p>비밀번호</p><span>***********</span><button id="pwdBtn1">변경</button></div>
             <form hidden id="form2" action="/user/resetPwdConfirm2" method="post"> 
             	<div><input id="password1" name="pwd" type="password"></input></div>
             	<div id="pwd1CheckResult"></div>
             	<div><input id="password2" name="pwdCheck" type="password"></input></div>
             	<div id="pwd2CheckResult"></div>
-            	<input id="changePwdBtn" type="submit" value="저장"></input>
+            	<input id="changePwdBtn" type="submit" value="저장" />
             </form>
             <div class="view"><p>이름</p><span th:text="${myInfo.nickname}"></span></div>
             
