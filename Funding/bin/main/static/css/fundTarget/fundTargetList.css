@@ -33,8 +33,7 @@ section .s_title {
 .categorie form a:last-child {margin-right: 0;}
 
 .categorie form a:last-child::after {
-    padding: 0;
-    margin-left: 0;
+    padding: 0; margin-left: 0;
 }
 
 .cate.active{color: #B00E0E;}
@@ -42,15 +41,20 @@ section .s_title {
 /* 공연 리스트 Form */
 .list_form {
     padding: 10px 20px;
-    margin: 30px auto;
+    margin: 20px auto;
     width: 900px;
-    /* border: 1px solid #7c7c7c; */
-    /* border-radius: 30px; */
+    border: 1px solid #bfbfbf;
+    border-radius: 30px;
 }
 
-.con_list {display: flex;}
+.con_list {
+    display: flex;
+    align-items: center;
+}
 
 .image {margin: 10px;}
+
+img {object-fit: cover;}
 
 .con {
     margin: 20px 0 20px 40px;
@@ -74,6 +78,7 @@ section .s_title {
 .con_title p {color: #7c7c7c;}
 
 .con_title a h3 {
+    display: inline-block;
     cursor: pointer;
     margin-top: 7px;
     letter-spacing: 2px;
@@ -98,11 +103,6 @@ section .s_title {
 .view label {width: 120px;}
 
 .view:last-child {margin: 0 auto;}
-
-hr {
-    border-top: 1px solid;
-    margin: 30px 0 0;
-}
 
 /* 페이징 */
 .page {

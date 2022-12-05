@@ -50,7 +50,7 @@
                 </div>
                 <div class="view">
                     <label for="startDate">공연일</label>
-                    <p th:text="${#temporals.format(fundBoardTarget.startDate, 'yyyy-MM-dd HH:mm')}">공연일</p>
+                    <p th:text="${#temporals.format(fundBoardTarget.startDate, 'yyyy-MM-dd (E) HH:mm')}">공연일</p>
                 </div>
                 <div class="view">
                     <label for="place">공연장</label>
@@ -80,25 +80,25 @@
                 
                 <div class="view" id="fundCurrent">
                     <label for="fundCurrent">현재 펀딩 금액</label>
-                    <p th:text="${#numbers.formatInteger(fundBoardTarget.fundCurrent, 1,'COMMA')+' 원'}">7,600,000</p>
+                    <p th:text="${#numbers.formatInteger(fundBoardTarget.fundCurrent, 1,'COMMA')+'원'}">7,600,000</p>
                 </div>
                 <div class="view" id="fundAmount">
                     <label for="fundAmount">총 펀딩 금액</label>
-                    <p th:text="${#numbers.formatInteger(fundBoardTarget.fundAmount, 3,'COMMA')+' 원'}">8,000,000</p>
+                    <p th:text="${#numbers.formatInteger(fundBoardTarget.fundAmount, 3,'COMMA')+'원'}">8,000,000</p>
                 </div>
 
                 <div class="view">
                     <label for="duration">펀딩기간</label>
-                    <p th:text="${fundBoardTarget.fundDurationS}
-                        + ' ~ ' + ${fundBoardTarget.fundDurationE}">2022.11.19 (토) ~ 2022.12.19 (일)</p>
+                    <p th:text="${#temporals.format(fundBoardTarget.fundDurationS, 'yyyy-MM-dd (E)')}
+                        + ' ~ ' + ${#temporals.format(fundBoardTarget.fundDurationE, 'yyyy-MM-dd (E)')}">2022.11.19 (토) ~ 2022.12.19 (일)</p>
                 </div>
                 <div class="view">
                     <label for="count">현재 인원</label>
-                    <p th:text="${fundBoardTarget.CurrentMember}">76명</p>
+                    <p th:text="|${fundBoardTarget.CurrentMember}명|">76명</p>
                 </div>
                 <div class="view minFund">
                     <label for="minFund">최소 펀딩 금액</label>
-                    <p th:text="${#numbers.formatInteger(fundBoardTarget.minFund, 3,'COMMA')+' 원'}">100,000원</p>
+                    <p th:text="${#numbers.formatInteger(fundBoardTarget.minFund, 3,'COMMA')+'원'}">100,000원</p>
                 </div>
                 <div sec:authorize="hasRole('ROLE_USER')">
                     <button th:if="${result == true}" class="con_btn" th:onclick="'location.href=\''+ @{/pay/can/tarCancel(paymentKey=${payCode})} + '\''" type="submit">환불하기</button>
@@ -155,7 +155,7 @@
                     <div class="cmt_head">
                         <p class="id" th:text="${answer.fundUser} != null ? 
                         ${answer.fundUser.username} : ${answer.fundArtist.username}">아이디</p>
-                        <p class="time" th:text="${#temporals.format(answer.createDate, 'yyyy-MM-dd HH:mm')}">2022-11-21 10:25</p>
+                        <p class="time" th:text="${#temporals.format(answer.createDate, 'yyyy-MM-dd HH:mm (E)')}">2022-11-21 10:25</p>
                         <a class="cmt_delete" th:href="@{|/answer/delete/${answer.id}?location=target&id=${fundBoardTarget.id}|}">삭제</a>
                     </div>
                     <p th:text="${answer.content}">댓글 내용</p>

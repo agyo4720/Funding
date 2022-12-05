@@ -46,10 +46,10 @@
 				<a th:href="@{|/fundBoard/detail/${fundBoard.id}|}">
 					<div class="image">
 						<div th:if="${fundBoard.imgPath != null}">
-							<img th:src="${fundBoard.imgPath}" height="300">
+							<img th:src="${fundBoard.imgPath}" width="150px" height="215px" center>
 						</div>
 						<div th:if="${fundBoard.filePath != null}">
-							<img th:src="|/fundBoard/img/${fundBoard.id}|" height="300">
+							<img th:src="|/fundBoard/img/${fundBoard.id}|" width="150px" height="215px" center>
 						</div>
 					</div>
 
@@ -72,12 +72,13 @@
 
 							<div class="view">
 								<label for="startDate">공연일</label>
-								<p th:text="${#temporals.format(fundBoard.startDateTime, 'yyyy-MM-dd HH:mm')}">공연일</p>
+								<p th:text="${#temporals.format(fundBoard.startDateTime, 'yyyy-MM-dd (E) HH:mm')}">공연일</p>
 							</div>
 
 							<div class="view">
 								<label for="fundDuration">펀딩 기간</label>
-								<p th:text="|${#temporals.format(fundBoard.createDate, 'yyyy-MM-dd')} ~ ${fundBoard.fundDuration}|"></p>
+								<p th:text="|${#temporals.format(fundBoard.createDate, 'yyyy-MM-dd (E)')}
+									 ~ ${#temporals.format(fundBoard.fundDuration, 'yyyy-MM-dd (E)')}|"></p>
 							</div>
 
 							<div class="view">
