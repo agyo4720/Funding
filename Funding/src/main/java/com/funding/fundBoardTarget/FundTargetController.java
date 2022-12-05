@@ -249,10 +249,11 @@ public class FundTargetController {
 		log.info("삭제컨트롤로 실행됨");
 		//지정리스트 삭제
 		List<FundTargetList> fList = fundTargetListService.findByFundBoardTarget(nick);
-		alertService.deleteTargetThenAlert(fList);
 		for(int i=0;i>fList.size();i++) {
 			fundTargetListService.delete(fList.get(i).getFundUser(), nick);
 		}
+		//삭제 알림 추가
+		alertService.deleteTargetThenAlert(fList);
 		
 		fundTargetService.delete(id);
 		return "redirect:/";

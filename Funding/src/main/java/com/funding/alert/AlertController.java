@@ -2,6 +2,8 @@ package com.funding.alert;
 
 
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -133,7 +135,7 @@ public class AlertController {
 	}
 	
 	
-	//펀딩 기간 마감시 업데이트
+	//지정펀딩 기간 마감시 업데이트
 	@RequestMapping("/update")
 	@ResponseBody
 	public String fundEndDate() throws Exception{
@@ -142,8 +144,8 @@ public class AlertController {
 		for(int i=0; i<targetList.size(); i++) {
 			
 			//펀딩기간 만료시 알림
-			//LocalDate d1 = LocalDate.parse("2022-12-05",DateTimeFormatter.ISO_DATE);
-			if(targetList.get(i).getFundDurationE().isBefore(LocalDate.now()) &&
+			LocalDate d1 = LocalDate.parse("2022-12-25",DateTimeFormatter.ISO_DATE);
+			if(targetList.get(i).getFundDurationE().isBefore(d1) &&
 					targetList.get(i).getStatus().equals("진행중")) {
 				
 				log.info("날짜 지났어용    : " + targetList.get(i).getSubject());
