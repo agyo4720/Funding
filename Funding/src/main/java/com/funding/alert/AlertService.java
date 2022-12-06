@@ -205,8 +205,8 @@ public class AlertService {
 		
 			List<FundArtistList> faList = fundArtistListService.findByFundBoard(fundBoard);
 			
-			if(faList != null) {
-				
+			if(faList.size() != 0) {
+				log.info("아티스트 있어서 추려냄");
 				FundArtist finalFundArtist = null;
 				Set<FundUser> sUser = new HashSet<>();
 				int index = 0;
@@ -224,6 +224,7 @@ public class AlertService {
 				
 			//아티스트가 아무도 없으면 환불
 			}else {
+				log.info("아티스트 없어서 환불");
 				List<Sale> sList = saleService.findByFundBoard(fundBoard.getSubject());
 				for(Sale s : sList) {
 					Optional<FundUser> fUser = fundUserService.findByuserName(s.getUsername());

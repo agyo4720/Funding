@@ -181,6 +181,7 @@ public class FundBoardController {
 		model.addAttribute("answerList", answerList);
 		List<FundArtistList> fundArtistList = this.fundArtistListService.findByFundBoard(fundBoard);
 		model.addAttribute("fundArtistList", fundArtistList);
+		
 		//알람으로 들어왔을 시 알람 삭제
 		if(alertId != null) {
 			alertService.deleteAlert(alertId);
@@ -212,7 +213,6 @@ public class FundBoardController {
 		
 		//펀딩 기간 체크해서 마감시 공연자 선정
 		if(!fundBoard.getState().equals("진행중")) {
-			log.info("아티스트 추려냄");
 			alertService.fundBoardSuccess(fundBoard);
 		}
 
