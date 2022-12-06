@@ -8,6 +8,7 @@ import com.funding.fundArtistList.FundArtistList;
 
 public interface FundArtistRepository extends JpaRepository<FundArtist, Integer>{
 	Optional<FundArtist> findByusername(String username);
+	Optional<FundArtist> findByNickname(String nickname);
 
 	void save(FundArtistList fundArtistList);
 }

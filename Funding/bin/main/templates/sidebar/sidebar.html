@@ -9,8 +9,8 @@
 </div>
 <div class="sidebar">
 	<div sec:authorize="isAuthenticated()">
-		<input hidden class="user" th:value="${#authentication.getPrincipal().getUsername()}"/>
-		<input hidden class="artist" th:value="${#authentication.getPrincipal().getUsername()}"/>
+		<input hidden class="user" sec:authorize="hasRole('ROLE_USER')" th:value="${#authentication.getPrincipal().getUsername()}"/>
+		<input hidden class="artist" sec:authorize="hasRole('ROLE_ARTIST')" th:value="${#authentication.getPrincipal().getUsername()}"/>
 	</div>
 	<!--  유저일떄 화면    -->
 	<div sec:authorize="hasRole('ROLE_USER')">
@@ -34,18 +34,23 @@
 	<div sec:authorize="hasRole('ROLE_ARTIST')">
 		<h4>현재 신청한 펀딩목록</h4>
 		<div class="fundList2"></div>
+		
+		<h4>공연 디테일 지정</h4>
+		<div class="fundModify"></div>
 	</div>
 
 
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <script>
 
 	$(document).ready(function(){
 		let user = $(".user").val()
+		let artist = $(".artist").val()
+		let token = $("meta[name='_csrf']").attr("content");
+		let header = $("meta[name='_csrf_header']").attr("content");
+
 		if(user != null){
 			
-			let token = $("meta[name='_csrf']").attr("content");
-			let header = $("meta[name='_csrf_header']").attr("content");
 			//알림 불러오는 ajax
 			$.ajax({
 				url : '/alert/show'
@@ -118,6 +123,38 @@
 					alert("에러발생")
 				}
 			})
+		}else{
+			//아티스트 참여목록 불러오는 ajax
+			$.ajax({
+				url : '/fundArtistList/show'
+				,data : "artist=" + artist
+				,beforeSend : function(xhr){
+					xhr.setRequestHeader(header, token);
+				}
+				,success : function(result){
+					$.each(result, function(index, item){					
+						$('.fundList2').append("<a href=\"" + item.url + "\"><div><br>" + item.status + "</br>" + 
+								item.fundName + " 진행도 " + item.percent + "</div></a>")
+					})
+				}
+			})
+			
+			
+			//아티스트 선정 후 개시글 수정 ajax
+			$.ajax({
+				url : '/fundBoard/modify/fundBoard'
+				,data : "artist=" + artist
+				,beforeSend : function(xhr){
+					xhr.setRequestHeader(header, token);
+				}
+				,success : function(result){
+					$.each(result, function(index, item){					
+						$('.fundModify').append("<a href=\"" + item.url + "\"><div><br>" + item.status + "</br>" + 
+								item.fundName + " 진행도 " + item.percent + "</div></a>")
+					})
+				}
+			})
+			
 		}
 	})
 	

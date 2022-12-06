@@ -11,22 +11,24 @@
 	
     <!-- favicon -->
     <link rel="shortcut icon" href="/img/favicon/ms-icon-310x310.png" type="image/x-icon" />
-    
-    
 </head>
 <body>
 	<!-- 홈페이지 상단 nav -->
     <header th:replace="/main/nav"></header>
 
 	<section>
+		<!-- 공연 정보 -->
 		<div class="con">
-			
+			<!-- 좌측 -->
 			<div class="left">
+				<!-- 카테고리 -->
 				<div class="cate">
 					<a href="/fundBoard/list"
 					th:text="|미지정 펀딩 > ${fundBoard.categorieName}|"></a>
 				</div>
+				<!-- 공연명 -->
 				<h3 th:text="${fundBoard.subject}">공연 이름</h3>
+				<!-- 이미지 -->
 				<div class="image">
 					<div th:if="${fundBoard.imgPath != null}">
 						<img th:src="${fundBoard.imgPath}" height="300">
@@ -36,41 +38,54 @@
 					</div>
 				</div>
 			</div>
+			<!-- // 좌측 -->
 		
+			<!-- 우측 -->
 			<div class="right">
+				<!-- 공연 상세 정보 -->
+				<!-- 공연 진행 상태 -->
 				<div class="view">
 					<div class="status">
 						<div th:text="${fundBoard.state}">상태</div>
 					</div>
 				</div>
+				<!-- 작성자 -->
 				<div class="view">
 					<label for="writer">작성자</label>
 					<p th:text="${fundBoard.fundUser.username}"></p>
 				</div>
+				<!-- 공연일 -->
 				<div class="view">
 					<label for="startDate">공연일</label>
 					<p th:text="${#temporals.format(fundBoard.startDateTime, 'yyyy-MM-dd (E) HH:mm')}">공연일</p>
 				</div>
+				<!-- 공연장 -->
 				<div class="view">
 					<label for="place">공연장</label>
 					<p th:text="${fundBoard.place}"></p>
 				</div>
+				<!-- 공연 시간 -->
 				<div class="view">
 					<label for="runtime">공연시간</label>
 					<p th:text="|${fundBoard.runtime}분|">공연시간</p>
 				</div>
-				
+				<!-- // 공연 상세 정보 -->
 				<div class="con_hr_detail">
 					<hr/>
 				</div>
 				
+				<div class="view int_progress">
+                	<progress th:value="|${fundBoard.fundCurrent * 100 / fundBoard.fundAmount}|" max="100"></progress>
+                	<span th:text="|${fundBoard.fundCurrent * 100 / fundBoard.fundAmount}%|"></span>
+                </div>
+
 				<div class="view" id="fundCurrent">
 					<label for="fundCurrent">현재 펀딩 금액</label>
-					<p th:text="|${fundBoard.fundCurrent}원|"></p>
+					<p th:text="|${#numbers.formatInteger(fundBoard.fundCurrent, 1, 'COMMA')}원|"></p>
 				</div>
 				<div class="view" id="fundAmount">
 					<label for="fundAmount">총 펀딩 금액</label>
-					<p th:text="|${fundBoard.fundAmount}원|"></p>
+					<p th:text="|${#numbers.formatInteger(fundBoard.fundAmount, 3, 'COMMA')}원|"></p>
 				</div>
 				<div class="view">
 					<label for="duration">펀딩기간</label>
@@ -83,51 +98,57 @@
 				</div>
 				<div class="view minFund">
 					<label for="minFund">최소 펀딩 금액</label>
-					<p th:text="|${fundBoard.minFund}원|"></p>
+					<p th:text="|${#numbers.formatInteger(fundBoard.minFund, 3, 'COMMA')}원|"></p>
 				</div>
 				<div sec:authorize="hasRole('ROLE_USER')">
 					<button th:if="${result == true}" class="con_btn" th:onclick="'location.href=\''+ @{/pay/can/cancel(paymentKey=${payCode})} + '\''" type="submit">환불하기</button>
 					<button th:if="${result == false}" class="con_btn" th:onclick="'location.href=\''+ @{|/pay/tossPay/${fundBoard.id}|} + '\''">결제하기</button>
 				</div>
 			</div>
+			<!-- // 우측 -->
 		</div>
+		<!-- // 공연 정보 -->
 		
 		<div class="con_hr">
 			<hr/>
 		</div>
 
+		<!-- 참여 아티스트 -->
 		<div>
 			<!-- 참여 아티스트 유효성 검사 시작 -->
-			<input hidden class="username" th:value="${#authentication.getPrincipal().getUsername()}">
+			<input hidden class="username1" th:value="${#authentication.getPrincipal().getUsername()}">
+			
 			<div>현재 참여중인 아티스트</div>
-			<div sec:authorize="!hasRole('ROLE_USER')">					
+			
+			<div sec:authorize="!hasRole('ROLE_USER')">			
 				<a id="btn1" th:href="@{|/fundArtistList/join/${fundBoard.id}|}"><button>참여하기</button></a>
 			</div>
-			<div th:each="fundArtistList : ${fundArtistList}">
-				<span th:text="${fundArtistList.fundArtist.nickname}"></span>
-			<input hidden class="fundArtistList" th:value="${fundArtistList.fundArtist.username}">
-			<!-- 참여 아티스트 유효성 검사 끝 -->
 			
-			<!-- 참여 아티스트 투표하기 유효성 검사 시작 -->
-			<input hidden class="username" th:value="${#authentication.getPrincipal().getUsername()}">
-				<a sec:authorize="hasRole('ROLE_USER')" th:href="@{|/fundArtistList/score/${fundArtistList.id}|}">투표하기</a>
+			<div th:each="fundArtistList : ${fundArtistList}">
+				<img th:src="|/selfBoard/img/${fundArtistList.fundArtist.selfBoard.id}|" width="30" height="35">
+				<a th:href="@{|/selfBoard/detail/${fundArtistList.fundArtist.nickname}|}" th:text="${fundArtistList.fundArtist.nickname}">자기소개 보기</a>
+				<input hidden class="username" th:value="${#authentication.getPrincipal().getUsername()}">
+				<a id="btn2" sec:authorize="hasRole('ROLE_USER')" th:href="@{|/fundArtistList/score/${fundArtistList.id}/${fundBoard.id}|}">투표하기</a>
 				<span th:text="|${fundArtistList.fundUserList.size()}개|"></span>
-			<input hidden class="fundUser" th:value="${fundArtistList.fundArtist.username}">
-			<!-- 참여 아티스트 투표하기 유효성 검사 끝 테스트 -->
+				<input hidden class="fundArtistList" th:value="${fundArtistList.fundArtist.username}">
 			</div>
+			<!-- 참여 아티스트 유효성 검사 끝 -->
 		</div>
-
+		<!-- // 참여 아티스트 -->
+		
 		<div class="con_hr">
 			<hr/>
 		</div>
 
+		<!-- 공연 내용 -->
 		<div class="con_text">
 			<div class="title">
-                <h2>콘서트 내용</h2>
+                <h2>공연 내용</h2>
 			</div>
 
 			<div th:utext="${fundBoard.content}">설명</div>
 		</div>
+		<!-- // 공연 내용 -->
 
 		<div class="con_hr">
             <hr/>
@@ -157,18 +178,20 @@
 				</div>
 			</div>
 		</div>
+		<!-- // 댓글 -->
+
 		<div>
 			<a th:href="@{|/fundBoard/delete/${fundBoard.id}|}">삭제</a>
 		</div>
 	</section>
 	
 	<script>
-
-		let username = document.querySelector('.username').value;
+		// 참여 아티스트 유효성 검사 시작
+		let username1 = document.querySelector('.username1').value;
 		let fundArtistList = document.querySelectorAll('.fundArtistList');
-		let btn = document.querySelector('#btn1');
+		let btn1 = document.querySelector('#btn1');
 
-		btn.addEventListener('click', check);
+		btn1.addEventListener('click', check);
 
 		function check(){
 
@@ -178,7 +201,7 @@
 
 			fundArtistList.forEach(function(e){
 
-				if(e.value == username){
+				if(e.value == username1){
 					bol = false;
 				}
 			})
@@ -190,8 +213,12 @@
 			}
 		
 		}
-		
+		// 참여 아티스트 유효성 검사 끝	
 	</script>
+	
+	
+	
+	
 
 </body>
 </html>

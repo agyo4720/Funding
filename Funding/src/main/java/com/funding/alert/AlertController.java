@@ -295,6 +295,8 @@ public class AlertController {
 		}
 		
 		
+		
+		
 		//미지정펀딩 공연 날짜 7일 지나면 리스트에서 삭제
 		List<FundList> fbList = fundListService.findByFundUser(user1);
 		
@@ -305,7 +307,7 @@ public class AlertController {
 			if(i.getFundBoard().getStartDateTime().isBefore(LocalDateTime.now().plusDays(7))) {
 				fundListService.deleteFund(user1, i.getFundBoard());
 			}
-		}		
+		}
 		
 			
 		return "알림 정리 했어요";

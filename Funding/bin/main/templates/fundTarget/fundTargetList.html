@@ -83,10 +83,12 @@
 								<div th:text="|글 등록한 사람 : ${target.fundUser.nickname}|"></div>
 							</div>
 						</div> -->
-						<div class="view">
-							<label for="graph">진행도</label>
-							<p th:text="|${target.fundCurrent * 100 / target.fundAmount}%|"></p>
-						</div>
+					</div>
+				</div>
+				<div class="graph">
+					<div class="graph_view">
+						<p>진행도</p>
+						<h1 th:text="|${target.fundCurrent * 100 / target.fundAmount}%|"></h1>
 					</div>
 				</div>
 			</div>

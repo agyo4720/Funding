@@ -20,7 +20,7 @@
     <section>
 		<h2>지정 펀딩</h2>
 		<div class="sec_fund">
-			<div class="list_form" th:each="target : ${page}">
+			<div class="list_form" th:each="target : ${targetList}">
 				<div class="con_list">
 					<a href="../fundTarget/fundTargetDetail.html" th:href="@{|/fundTarget/detail/${target.id}|}">
 						<div class="image">
@@ -39,6 +39,26 @@
 			</div>
 		</div>
 
+		<h2>미지정 펀딩</h2>
+		<div class="sec_fund">
+			<div class="list_form" th:each="boardList : ${boardList}">
+				<div class="con_list">
+					<a href="../fundBoard/fundBoard_detail.html" th:href="@{|/fundBoard/detail/${boardList.id}|}">
+						<div class="image">
+							<div th:if="${boardList.imgPath != null}">
+								<img th:src="${boardList.imgPath}" width="200px" height="265px" center>
+							</div>
+							<div th:if="${boardList.imgPath == null}">
+								<img th:src="|/fundTarget/img/${boardList.id}|" width="200px" height="265px" center>
+							</div>
+						</div>
+						<div class="con">
+							<p th:text="${boardList.subject}">공연 이름</p>
+						</div>
+					</a>
+				</div>
+			</div>
+		</div>
 
     </section>
 </body>

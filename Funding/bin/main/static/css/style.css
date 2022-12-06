@@ -45,14 +45,19 @@ header {
 }
 
 /* 로고 */
-.logo {}
-
 .logo a {
+    display: inline-flex;
+    align-items: center;
     cursor: pointer;
     font-size: 30px;
     font-weight: bold;
     font-family: 'Do Hyeon', sans-serif;
     letter-spacing: 2px;
+}
+
+.logo a h5 {
+    cursor: pointer;
+    margin-left: 20px;
 }
 
 /* 메뉴 */

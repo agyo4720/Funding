@@ -60,9 +60,9 @@ public class CancelsService {
 		
 		List<Sale> sList = saleRepository.findByOrederId(orederId);
 		for(int i=0; i<sList.size(); i++) { //1명이 아니고 여러명 이라서 for문 사용
-			sList.get(i).setCheckin(cancelReason);//상태를 변경
 			sList.get(i).setCancelReason(cancelReason);
 			sList.get(i).setCancelDate(LocalDateTime.now());
+			sList.get(i).setCheckin(cancelReason);
 			saleRepository.saveAll(sList);
 		}
 	}
