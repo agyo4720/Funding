@@ -62,7 +62,7 @@ public class CancelsService {
 		for(int i=0; i<sList.size(); i++) { //1명이 아니고 여러명 이라서 for문 사용
 			sList.get(i).setCancelReason(cancelReason);
 			sList.get(i).setCancelDate(LocalDateTime.now());
-			sList.get(i).setCheckin("게시글 삭제");
+			sList.get(i).setCheckin(cancelReason);
 			saleRepository.saveAll(sList);
 		}
 	}
