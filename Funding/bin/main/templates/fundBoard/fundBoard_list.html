@@ -118,8 +118,10 @@
 			</div>
 		</div>
 		<!-- 페이징 끝 -->
-
-		<a id="btn1" class="btn_create" href="/fundBoard/create">등록하기</a>
+		<div sec:authorize="hasRole('ROLE_USER')">
+			<a id="btn1" class="btn_create" href="/fundBoard/create">등록하기</a>
+		</div>
+		
 		
 	</section>
 
