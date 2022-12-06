@@ -31,6 +31,9 @@
                 <label for="pw">비밀번호</label>
                 <input id="pw" type="password" name="password">
             </div>
+            <div class="error" th:if="${param.error}">
+                <P>사용자ID 또는 비밀번호를 확인해 주세요.</P>
+            </div>
             <div class="sub_login">
                 <input id="login" class="btn" type="submit" value="로그인">
                 <a class="btn_pw" href="/user/resetPwd">비밀번호 찾기</a>
@@ -38,11 +41,6 @@
                     <p>아직 회원이 아니십니까?</p>
                     <a href="../user/userCreateForm.html" th:href="@{/user/register}">회원가입</a>
                 </div>
-                <div th:if="${param.error}">
-            <div>
-                사용자ID 또는 비밀번호를 확인해 주세요.
-            </div>
-        </div>
             </div>
         </form>
     </section>

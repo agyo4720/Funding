@@ -23,6 +23,12 @@ section {
     height: 25px;
 }
 
+.error {
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 15px;
+}
+
 /* 로그인 버튼 */
 .sub_login {}
 
