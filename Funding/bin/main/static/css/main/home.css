@@ -7,7 +7,6 @@ section {
 
 .view {
     width: 1000px;
-    /* background-color: #dedede; */
     margin: 10px 0;
 }
 
@@ -16,7 +15,8 @@ section {
 .list {
     display: flex;
     justify-content: space-evenly;
-    padding: 0 30px;
+    padding: 30px;
+    background-color: #dedede;
 }
 
 .list_form {
