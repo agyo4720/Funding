@@ -125,8 +125,9 @@
 			</div>
 			
 			<div th:each="fundArtistList : ${fundArtistList}">
+				<img th:src="|/selfBoard/img/${fundArtistList.fundArtist.selfBoard.id}|" width="30" height="35">
 				<a th:href="@{|/selfBoard/detail/${fundArtistList.fundArtist.nickname}|}" th:text="${fundArtistList.fundArtist.nickname}">자기소개 보기</a>
-				<input hidden class="username" th:value="${#authentication.getPrincipal().getUsername()}">
+				    <input hidden class="username" th:value="${#authentication.getPrincipal().getUsername()}">
 				<a id="btn2" sec:authorize="hasRole('ROLE_USER')" th:href="@{|/fundArtistList/score/${fundArtistList.id}/${fundBoard.id}|}">투표하기</a>
 				<span th:text="|${fundArtistList.fundUserList.size()}개|"></span>
 				<input hidden class="fundArtistList" th:value="${fundArtistList.fundArtist.username}">
