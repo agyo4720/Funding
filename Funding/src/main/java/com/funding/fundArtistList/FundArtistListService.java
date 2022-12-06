@@ -91,9 +91,5 @@ public class FundArtistListService {
 				
 	}
 	
-	public void findByFundBoardAndFundArtist() {
-		
-		
-	}
 
 }
