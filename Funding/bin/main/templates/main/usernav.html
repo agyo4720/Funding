@@ -20,11 +20,9 @@
     let url = window.location.search
     let Params = new URLSearchParams(url)
     let artist = $(".artist").val()
+    
     let info = document.querySelector(".info")
     let infoUrl = "/selfBoard/detail/"
-    console.log("info: "+info)
-    console.log("artist: "+artist)
-    
     
 		$.ajax({
 		url : '/user/myInfo/ajax'

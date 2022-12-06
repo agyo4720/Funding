@@ -76,6 +76,7 @@ public class UserController {
 		return "user/myInfo";
 	}
 	
+	//계좌관리에 사이드바 사용
 	@RequestMapping("/myInfo/ajax")
 	@ResponseBody
 	public String myInfoAjax(@RequestParam("artist") String artist) {
