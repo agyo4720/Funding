@@ -4,7 +4,6 @@
 <link rel="stylesheet" href="/css/sidebar/sidebar.css">
 
 <div class="sidebarbtn" sec:authorize="isAuthenticated()">
-
 	<h1>&lt;&lt;</h1>
 </div>
 <div class="sidebar">
@@ -14,10 +13,6 @@
 	</div>
 	<!--  유저일떄 화면    -->
 	<div sec:authorize="hasRole('ROLE_USER')">
-		<h4>Sidebar</h4>
-	
-		<hr/>
-		
 		<h4>알림</h4>
 		<div class="alert"></div>
 	
@@ -25,6 +20,8 @@
 	
 		<h4>현재 펀딩중인 목록(지정)</h4>
 		<div class="fundTargetList"></div>
+
+		<hr/>
 		
 		<h4>현재 펀딩중인 목록(미지정)</h4>
 		<div class="fundList"></div>
@@ -56,23 +53,28 @@
 				,success : function(result){
 					$.each(result, function(index, item){	
 						if(item.type == "댓글"){
-							$('.alert').append("<div class=\"alertbox\"><a href=\"" + item.url + "?alertId=" + 
-								item.alertId + "\"><div>" + item.Guestname + 
-								"님이 댓글을 달았습니다.</div>[" + item.content + "]</a></div>")
+							$('.alert').append(
+								"<a href=\"" + item.url + "?alertId=" + item.alertId + "\">"
+								+ "<div class=\"alertbox\">"
+								+ item.Guestname + "님이 댓글을 달았습니다."
+								+ "<div class=\"alert_con\">" + item.content + "</div></div></a>")
 								
 						}else if(item.type == "마감"){
-							$('.alert').append("<a href=\"" + item.url + "?alertId=" + 
-									item.alertId + "\"><div class=\"alertbox\">[" + item.content +
-									"]</div></a>")
+							$('.alert').append(
+								"<a href=\"" + item.url + "?alertId=" + item.alertId + "\">"
+								+ "<div class=\"alertbox\">"
+								+ "<div class=\"alert_con\">" + item.content + "</div></div></a>")
 						}else if(item.type == "펀딩"){
-							$('.alert').append("<a href=\"" + item.url + "?alertId=" + 
-									item.alertId + "\"><div class=\"alertbox\">[" + item.content +
-									"]</div></a>")
+							$('.alert').append(
+								"<a href=\"" + item.url + "?alertId=" + item.alertId + "\">"
+								+ "<div class=\"alertbox\">"
+								+ "<div class=\"alert_con\">" + item.content + "</div></div></a>")
 						}else if(item.type == "취소"){
-							$('.alert').append("<a href=\"" +  "/?alertId=" + item.alertId + "\"><div>[" + item.content +
-									"]</div></a>")
+							$('.alert').append(
+								"<a href=\"" +  "/?alertId=" + item.alertId + "\">"
+								+ "<div class=\"alertbox\">"
+								+ "<div class=>\"alert_con\">" + item.content + "</div></div></a>")
 						}
-						
 					})
 				}
 			})
@@ -86,8 +88,14 @@
 				}
 				,success : function(result){
 					$.each(result, function(index, item){					
-						$('.fundTargetList').append("<a href=\"" + item.url + "\"><div><br>" + item.status + "</br>" + 
-								item.fundName + " 진행도 " + item.percent + "</div></a>")
+						$('.fundTargetList').append(
+							"<a href=\"" + item.url + "\">"
+							+ "<div class=\"alertbox\">"
+							+ "<div class=\"alert_status\">"
+							+ item.status + " "
+							+ item.percent + "</div>"
+							+ "<div class=\"alert_con\">"
+							+ item.fundName + "</div></div></a>")
 					})
 				}
 			})
@@ -101,8 +109,14 @@
 				}
 				,success : function(result){
 					$.each(result, function(index, item){					
-						$('.fundList').append("<a href=\"" + item.url + "\"><div><br>" + item.status + "</br>" + 
-								item.fundName + " 진행도 " + item.percent + "</div></a>")
+						$('.fundList').append(
+							"<a href=\"" + item.url + "\">"
+							+ "<div class=\"alertbox\">"
+							+ "<div class=\"alert_status\">"
+							+ item.status + " "
+							+ item.percent + "</div>"
+							+ "<div class=\"alert_con\">"
+							+ item.fundName + "</div></div></a>")
 					})
 				}
 			})
@@ -121,9 +135,8 @@
 		}
 	})
 	
-	//사이드바 액션
+	// 사이드바 액션
 	$(document).ready(function(){
-		
 		$(".sidebarbtn").click(function(){
 			if($(".sidebar").hasClass('active') == true){
 				$(".sidebar").removeClass('active')
@@ -136,6 +149,5 @@
 			}
 		})
 	})
-	// 주석이요
 </script>
 
