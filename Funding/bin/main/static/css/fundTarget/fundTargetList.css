@@ -136,9 +136,7 @@ img {object-fit: cover;}
     text-underline-position: under;
 }
 
-.page .active {
-    color: #B00E0E;
-}
+.page .active {color: #B00E0E;}
 
 /* 펀딩 만들기 버튼 */
 .btn_create {
