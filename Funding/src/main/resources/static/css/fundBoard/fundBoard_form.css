@@ -40,6 +40,8 @@ section select, input[type=radio], img {cursor: pointer;}
     margin-bottom: 5px;
 }
 
+.img img {border-radius: 5px;}
+
 /* SummerNote */
 .note-toolbar {
     display: flex;

@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.funding.fundArtist.FundArtist;
@@ -73,6 +74,13 @@ public class UserController {
 		}
 		
 		return "user/myInfo";
+	}
+	
+	@RequestMapping("/myInfo/ajax")
+	@ResponseBody
+	public String myInfoAjax(@RequestParam("artist") String artist) {
+		Optional<FundArtist> FA = this.fundArtistService.findByuserName(artist);
+		return FA.get().getNickname();
 	}
 	
 	// 비밀번호 초기화 하기위한 id 입력 폼 요청

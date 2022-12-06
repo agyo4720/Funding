@@ -102,4 +102,5 @@ public class FundArtistListService {
 		fundArtistListRepository.deleteAll(faList);
 	}
 
+
 }

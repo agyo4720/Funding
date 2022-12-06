@@ -30,7 +30,6 @@
 				<h2>미지정 펀딩</h2>
 			</div>
 
-			<!-- 공연 정보 -->
 			<!-- 카테고리 -->
 			<div class="int int_cate">
 				<label for="categorieName">카테고리</label>
@@ -48,13 +47,6 @@
 				<span class="errors" style="display: none">에러출력</span>
 			</div>
 			
-			<!-- 공연일 -->
-			<div class="int int_date">
-				<label for="startDateTime">공연일</label>
-				<input type="datetime-local" id="startDateTime" th:field="*{startDateTime}" th:min="${nowTime}">
-				<span class="errors" style="display: none">에러출력</span>
-			</div>
-
 			<!-- 공연장 -->
 			<div class="int int_place">
 				<label for="place">공연장</label>
@@ -68,15 +60,18 @@
 				<input type="number" id="runtime" th:field="*{runtime}" autocomplete="off" placeholder="분 단위로 입력 입력하세요.">
 				<span class="errors" style="display: none">에러출력</span>
 			</div>
-			<!-- // 공연 정보 -->
 
-			<hr/>
-
-			<!-- 펀딩 정보 -->
-			<!-- 펀딩 기간 -->
+			<!-- 펀딩기간 -->
 			<div class="int int_period">
 				<label for="fundDuration">펀딩기간<span>(오늘부터 시작)</span></label>
 				<input type="date" id="fundDuration" th:field="*{fundDuration}" th:min="${nowTime}" autocomplete="off">
+				<span class="errors" style="display: none">에러출력</span>
+			</div>
+
+			<!-- 공연일 -->
+			<div class="int int_date">
+				<label for="startDateTime">공연일</label>
+				<input type="datetime-local" id="startDateTime" th:field="*{startDateTime}" th:min="${nowTime}">
 				<span class="errors" style="display: none">에러출력</span>
 			</div>
 			
@@ -209,42 +204,42 @@
 			}
 		}
 
-		function checkStartDateTime(){
-			if(startDateTime.value === ""){
-				errors[2].innerHTML='공연일은 필수항목 입니다.';
+		function checkPlace(){
+			if(place.value === ""){
+				errors[2].innerHTML='공연장은 필수항목 입니다.';
 				errors[2].style.display='block';
 			}else{
 				errors[2].style.display='none';
 			}
 		}
 		
-		function checkPlace(){
-			if(place.value === ""){
-				errors[3].innerHTML='공연장은 필수항목 입니다.';
-				errors[3].style.display='block';
-			}else{
-				errors[3].style.display='none';
-			}
-		}
-		
 		function checkRuntime(){
 			if(runtime.value === ""){
-				errors[4].innerHTML='공연시간은 필수항목 입니다.'
+				errors[3].innerHTML='공연시간은 필수항목 입니다.'
+				errors[3].style.display='block'
+			}else{
+				errors[3].style.display='none'
+			}
+		}
+
+		function checkFundDuration(){
+			if(fundDuration.value === ""){
+				errors[4].innerHTML='펀딩 기간은 필수항목 입니다.'
 				errors[4].style.display='block'
 			}else{
 				errors[4].style.display='none'
-			}
-		}
-		
-		function checkFundDuration(){
-			if(fundDuration.value === ""){
-				errors[5].innerHTML='펀딩 기간은 필수항목 입니다.'
-				errors[5].style.display='block'
-			}else{
-				errors[5].style.display='none'
 				fundTime = document.querySelector('.fundDuration').value
         		fundTime += 'T00:00'
         		startDate.min = fundTime
+			}
+		}
+
+		function checkStartDateTime(){
+			if(startDateTime.value === ""){
+				errors[5].innerHTML='공연일은 필수항목 입니다.';
+				errors[5].style.display='block';
+			}else{
+				errors[5].style.display='none';
 			}
 		}
 		

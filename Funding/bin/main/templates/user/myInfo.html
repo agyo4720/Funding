@@ -41,11 +41,15 @@
 				<button id="pwdBtn1">변경</button>
 			</div>
             <form hidden id="form2" action="/user/resetPwdConfirm2" method="post"> 
-            	<div>비밀번호<input id="password1" name="pwd" type="password"></input></div>
-            	<div id="pwd1CheckResult"></div>
-            	<div>비밀번호 확인<input id="password2" name="pwdCheck" type="password"></input></div>
-            	<div id="pwd2CheckResult"></div>
-            	<input id="changePwdBtn" type="submit" value="저장" />
+				<div class="view">
+					<p>비밀번호</p>
+					<input id="password1" name="pwd" type="password"/>
+					<div id="pwd1CheckResult"></div>
+					<p>비밀번호 확인</p>
+					<input id="password2" name="pwdCheck" type="password"/>
+					<div id="pwd2CheckResult"></div>
+					<input id="changePwdBtn" type="submit" value="저장" />
+				</div>
             </form>
 
 			<!-- 이름 -->
@@ -57,7 +61,7 @@
 				<span id="mob" th:text="${myInfo.mobile}"></span>
 				<button id="mobileBtn1">변경</button></div>
             <form id="form" action="/user/resetMobile" method="post">
-            	<div id="mobile2" hidden>
+            	<div hidden id="mobile2" class="view">
 					<p>전화번호</p>
 					<input id="mobileModi" type="text" name="mobile" th:value="${myInfo.mobile}"></input>
 					<button id="mobileBtn2">저장</button>
@@ -72,7 +76,7 @@
 			</div>
 
 			<!-- 생년월일 -->
-            <div>
+            <div class="view">
 				<p>생년월일</p>
 				<span th:text="${#dates.format(myInfo.birth, 'yyyy-MM-dd')}"></span>
 			</div>

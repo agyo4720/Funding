@@ -60,27 +60,28 @@ public class FundArtistListController {
 	}
 	
 	// 펀드 참여 아티스트 투표하기
-	@RequestMapping("/score/{id}/{bid}")
+	@RequestMapping("/score/{id}")
 	public String score(
 			@PathVariable("id") Integer id,
-			@PathVariable("bid") Integer bid,
+			@PathVariable("fbid") Integer fbid,
 			Principal principal,
 			Model model) {
 
 		// 로그인한 유저정보 == 투표한 유저 정보
-		FundArtistList fundAl = this.fundArtistListService.findById(id);
 		
-		Set<FundUser> sfu = fundAl.getFundUserList();
+		// 해당 아티스트의 id
+		FundArtistList fal = this.fundArtistListService.findById(id);
 		
+		// 현재 유저 id에서 투표한 유저리스트
+		Set<FundUser> sfu = fal.getFundUserList();
+		
+		// 지금 로그인한 유저정보
 		Optional<FundUser> fu = this.fundUserService.findByuserName(principal.getName());
 		
 		sfu.contains(fu);
 		
 		if(sfu.contains(fu)) {
-			
-			model.addAttribute("msg", "ture");
-			
-			return String.format("redirect:/fundBoard/detail/%s", bid);
+			return String.format("redirect:/fundBoard/detail/%s", fbid);
 		}
 		
 		// 해당 펀드아티스트리스트 아이디

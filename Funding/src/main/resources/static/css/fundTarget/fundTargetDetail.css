@@ -3,13 +3,7 @@ section {
     width: 1000px;
 }
 
-.s_title {
-    margin-left: 30px;
-}
-
-.title {
-    margin: 20px 0;
-}
+.title {margin: 20px 0;}
 
 .con_hr_detail hr {
     border-top: 1px solid #bfbfbf;
@@ -35,9 +29,9 @@ section {
     letter-spacing: 1px;
 }
 
-.image {
-    margin-top: 10px;
-}
+.image {margin-top: 10px;}
+
+.image img {border-radius: 5px;}
 
 /* right */
 .right {

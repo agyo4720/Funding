@@ -3,13 +3,7 @@ section {
     width: 1000px;
 }
 
-.s_title {
-    margin-left: 30px;
-}
-
-.title {
-    margin: 20px 0;
-}
+.title {margin: 20px 0;}
 
 .con_hr_detail hr {
     border-top: 1px solid #6a6a6a;
@@ -35,9 +29,9 @@ section {
     letter-spacing: 1px;
 }
 
-.image {
-    margin-top: 10px;
-}
+.image {margin-top: 10px;}
+
+.image img {border-radius: 5px;}
 
 /* right */
 .right {
@@ -123,6 +117,61 @@ section {
 }
 
 .con_btn:hover {
+    color: #fff;
+    background-color: #5e5252;
+}
+
+/* 아티스트 */
+.art_head {display: flex; align-items: center;}
+
+.art_part a {
+    margin-left: 20px;
+    padding: 5px 10px;
+    background-color: #3E3636;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 15px;
+    letter-spacing: 2px;
+    transition: 0.5s;
+}
+
+.art_part a:hover {
+    color: #fff;
+    background-color: #5e5252;
+}
+
+.art_con {
+    display: flex;
+    align-items: center;
+}
+
+.art_con img {
+    object-fit: cover;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+}
+
+.profile {
+    margin: 0 30px;
+}
+
+.vote span {}
+
+.vote a {
+    margin-left: 10px;
+    padding: 5px 10px;
+    background-color: #3E3636;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 14px;
+    letter-spacing: 2px;
+    transition: 0.5s;
+}
+
+.vote a:hover {
     color: #fff;
     background-color: #5e5252;
 }

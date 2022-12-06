@@ -4,9 +4,7 @@ section {
 }
 
 /* 타이틀 */
-.title {
-    text-align: center;
-}
+.title {text-align: center;}
 
 /* 카테고리 */
 .categorie {
@@ -43,8 +41,9 @@ section {
     padding: 10px 20px;
     margin: 30px auto;
     width: 900px;
-    border: 1px solid #bfbfbf;
-    border-radius: 30px;
+    background-color: #f8f8f8;
+    border: 0.1px solid #bfbfbf;
+    border-radius: 15px;
 }
 
 .con_list {
@@ -54,7 +53,7 @@ section {
 
 .image {margin: 10px;}
 
-img {object-fit: cover;}
+.image img {object-fit: cover; border-radius: 5px;}
 
 .con {
     margin: 20px 0 20px 40px;
@@ -65,15 +64,14 @@ img {object-fit: cover;}
     display: inline-block;
     padding: 3px 15px;
     margin-bottom: 7px;
+    background-color: #B00E0E;
     border: 2px solid #B00E0E;
     border-radius: 20px;
     font-weight: bold;
-    color: #B00E0E;
+    color: #fff;
 }
 
-.con_title {
-    margin-left: 10px;
-}
+.con_title {margin-left: 10px;}
 
 .con_title p {color: #7c7c7c;}
 
@@ -109,8 +107,9 @@ img {object-fit: cover;}
     margin-right: 25px;
     width: 150px;
     height: 150px;
+    color: #fff;
     border-radius: 50%;
-    background: #eba7a7;
+    background: #cf4b4b;
     text-align: center;
 }
 
@@ -137,9 +136,7 @@ img {object-fit: cover;}
     text-underline-position: under;
 }
 
-.paging .active {
-    color: #B00E0E;
-}
+.paging .active {color: #B00E0E;}
 
 /* 펀딩 만들기 버튼 */
 .btn_create {
