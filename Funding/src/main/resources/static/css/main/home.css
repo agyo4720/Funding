@@ -10,13 +10,15 @@ section {
     margin: 10px 0;
 }
 
-.view h2 {margin: 20px 60px;}
+.view h2 {margin: 20px 5px;}
 
 .list {
     display: flex;
     justify-content: space-evenly;
     padding: 30px;
-    background-color: #dedede;
+    background-color: #f8f8f8;
+    border: 0.1px solid #dddddd;
+    border-radius: 10px;
 }
 
 .list_form {
@@ -45,6 +47,9 @@ section {
     width: 150px;
     height: 215px;
     border-radius: 5px;
+    filter: brightness(100%) drop-shadow(2px 2px 2px rgb(83, 83, 83));
 }
 
-.image:hover img {filter: brightness(70%);}
+.image:hover img {
+    filter: brightness(50%) drop-shadow(2px 2px 2px rgb(83, 83, 83));
+}

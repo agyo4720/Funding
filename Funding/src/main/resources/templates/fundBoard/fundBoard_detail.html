@@ -123,22 +123,38 @@
 		<div>
 			<!-- 참여 아티스트 유효성 검사 시작 -->
 			<input hidden class="username1" th:value="${#authentication.getPrincipal().getUsername()}">
-			<div>현재 참여중인 아티스트</div>
-			
-			<div sec:authorize="hasRole('ROLE_ARTIST')">			
-				<a id="btn1" th:href="@{|/fundArtistList/join/${fundBoard.id}|}"><button>참여하기</button></a>
+			<div class="art_head">
+				<div class="title">
+					<h2>현재 참여중인 아티스트</h2>
+				</div>
+				
+				<div class="art_part" sec:authorize="hasRole('ROLE_ARTIST')">			
+					<a id="btn1" th:href="@{|/fundArtistList/join/${fundBoard.id}|}">참여하기</a>
+				</div>
 			</div>
 			
-			<div th:each="fundArtistList : ${fundArtistList}">
-				<img th:src="|/selfBoard/img/${fundArtistList.fundArtist.selfBoard.id}|" width="30" height="35">
-				<a th:href="@{|/selfBoard/detail/${fundArtistList.fundArtist.nickname}|}"
-					th:text="${fundArtistList.fundArtist.nickname}">자기소개 보기</a>
-				<input hidden class="username" th:value="${#authentication.getPrincipal().getUsername()}">
-				<a id="btn2" sec:authorize="hasRole('ROLE_USER')"
-					th:href="@{|/fundArtistList/score/${fundArtistList.id}/${fundBoard.id}|}">투표하기</a>
-				<span th:text="|${fundArtistList.fundUserList.size()}개|"></span>
-				<input hidden class="fundArtistList"
-					th:value="${fundArtistList.fundArtist.username}">
+			<div class="art_con" th:each="fundArtistList : ${fundArtistList}">
+				<!-- 프로필 사진 -->
+				<div class="image">
+					<img th:src="|/selfBoard/img/${fundArtistList.fundArtist.selfBoard.id}|"/>
+				</div>
+
+				<!-- 프로필 -->
+				<div class="profile">
+					<h3><a th:href="@{|/selfBoard/detail/${fundArtistList.fundArtist.nickname}|}"
+					th:text="${fundArtistList.fundArtist.nickname}">자기소개 보기</a></h3>
+					<input hidden class="username" th:value="${#authentication.getPrincipal().getUsername()}"/>
+				</div>
+
+				<!-- 투표수 -->
+				<div class="vote">
+					<span th:text="|${fundArtistList.fundUserList.size()}개|"></span>
+					<!-- 투표 버튼 -->
+					<a id="btn2" sec:authorize="hasRole('ROLE_USER')"
+						th:href="@{|/fundArtistList/score/${fundArtistList.id}/${fundBoard.id}|}">투표하기</a>
+					<input hidden class="fundArtistList" 
+						th:value="${fundArtistList.fundArtist.username}"/>
+				</div>
 			</div>
 			<!-- 참여 아티스트 유효성 검사 끝 -->
 		</div>
