@@ -53,7 +53,10 @@ section {
 
 .image {margin: 10px;}
 
-img {object-fit: cover;}
+.image img {
+    object-fit: cover;
+    border-radius: 5px;
+}
 
 .con {
     margin: 20px 0 20px 40px;
