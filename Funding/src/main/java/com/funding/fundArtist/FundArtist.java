@@ -7,6 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+
+import com.funding.selfBoard.SelfBoard;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -31,6 +35,9 @@ public class FundArtist {
 	private Date birth;			// 생년월일
 	private String role;		// 권한등급
 	private Integer likeCount;	// 추천 수
-
+	
+	@JoinColumn(unique = true)
+	@OneToOne(mappedBy = "fundArtist")
+	private SelfBoard selfBoard;
 	
 }

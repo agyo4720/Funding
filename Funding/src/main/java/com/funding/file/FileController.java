@@ -56,22 +56,4 @@ public class FileController {
 		
 	}
 	
-	// 아티스트 대표이미지 등록폼
-	@GetMapping("/representativeImageUpload")
-	public String representativeImageUploadForm (MultipartFile file) throws IllegalStateException, IOException {
-		fileService.saveFile(file);
-		
-		return "";
-	}
-	
-	// 아티스트 대표이미지 등록
-	@PostMapping("/representativeImageUpload")
-	public String representativeImageUpload (MultipartFile file) throws IllegalStateException, IOException {
-		fileService.saveFile(file);
-		
-		return "";
-	}
-	
-	
-	
 }
