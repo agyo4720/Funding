@@ -16,6 +16,7 @@ import com.funding.fundArtist.FundArtist;
 import com.funding.fundBoard.FundBoard;
 import com.funding.fundBoardTarget.FundBoardTarget;
 import com.funding.fundUser.FundUser;
+import com.funding.selfBoard.SelfBoard;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -45,6 +46,10 @@ public class Answer {
 	@ManyToOne
 	private FundArtist fundArtist;
 	
+	@ManyToOne
+	private SelfBoard selfBoard;
+	
 	@OneToMany(mappedBy = "answer", cascade = CascadeType.REMOVE)
 	private List<AnswerAns> answerAnsList;
+	
 }

@@ -38,7 +38,13 @@
                     <div class="status">
                         <div th:text="${fundBoardTarget.status}">상태</div>
                     </div>
-                    <a class="con_del" th:href="@{|/fundTarget/delete/${fundBoardTarget.id}|}">삭제</a>
+                    <div sec:authorize="hasRole('ROLE_USER')">
+	                    <div th:if="${fundBoardTarget.fundUser != null and fundBoardTarget.fundUser.username == #authentication.getPrincipal().getUsername()}">
+	                    	<div th:if="${!fundBoardTarget.status.toString().equals('100%⇑⇑⇑')}">
+			                    <a class="con_del" th:href="@{|/fundTarget/delete/${fundBoardTarget.id}|}">삭제</a>
+	                    	</div>
+	                    </div>
+                    </div>
                 </div>
                 <div class="view">
                     <label for="writer">작성자</label>
@@ -64,16 +70,8 @@
                 <div class="con_hr_detail">
                     <hr/>
                 </div>
-
-
-                
-                <!-- <div class="view">
-                    <div class="progress" style="height: 10px">
-                        <div class="progress-bar" style="width: 40%; height: 10px"></div>
-                    </div>
-                </div> -->
                     
-                <div>
+                <div class="view int_progress">
                 	<progress th:value="|${fundBoardTarget.fundCurrent * 100 / fundBoardTarget.fundAmount}|" max="100"></progress>
                 	<span th:text="|${fundBoardTarget.fundCurrent * 100 / fundBoardTarget.fundAmount}%|"></span>
                 </div>
@@ -100,9 +98,11 @@
                     <label for="minFund">최소 펀딩 금액</label>
                     <p th:text="${#numbers.formatInteger(fundBoardTarget.minFund, 3,'COMMA')+'원'}">100,000원</p>
                 </div>
-                <div sec:authorize="hasRole('ROLE_USER')">
-                    <button th:if="${result == true}" class="con_btn" th:onclick="'location.href=\''+ @{/pay/can/tarCancel(paymentKey=${payCode})} + '\''" type="submit">환불하기</button>
-                    <button th:if="${result == false}"class="con_btn" th:onclick="'location.href=\''+ @{|/pay/tossPayTar/${fundBoardTarget.id}|} + '\''">펀딩하기</button>
+                <div th:if="${!fundBoardTarget.status.toString().equals('만료됨')}">
+	                <div sec:authorize="hasRole('ROLE_USER')">
+	                    <button th:if="${result == true}" class="con_btn" th:onclick="'location.href=\''+ @{/pay/can/tarCancel(paymentKey=${payCode})} + '\''" type="submit">환불하기</button>
+	                    <button th:if="${result == false}"class="con_btn" th:onclick="'location.href=\''+ @{|/pay/tossPayTar/${fundBoardTarget.id}|} + '\''">펀딩하기</button>
+	                </div>
                 </div>
             </div>
         </div>

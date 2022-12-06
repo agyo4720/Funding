@@ -2,6 +2,8 @@ package com.funding.alert;
 
 
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -133,7 +135,7 @@ public class AlertController {
 	}
 	
 	
-	//펀딩 기간 마감시 업데이트
+	//지정펀딩 기간 마감시 업데이트
 	@RequestMapping("/update")
 	@ResponseBody
 	public String fundEndDate() throws Exception{
@@ -142,7 +144,7 @@ public class AlertController {
 		for(int i=0; i<targetList.size(); i++) {
 			
 			//펀딩기간 만료시 알림
-			//LocalDate d1 = LocalDate.parse("2022-12-05",DateTimeFormatter.ISO_DATE);
+			LocalDate d1 = LocalDate.parse("2022-12-25",DateTimeFormatter.ISO_DATE);
 			if(targetList.get(i).getFundDurationE().isBefore(LocalDate.now()) &&
 					targetList.get(i).getStatus().equals("진행중")) {
 				
@@ -155,15 +157,18 @@ public class AlertController {
 				//기간 지나고 100% 미달성시 환불 시킴
 				if(targetList.get(i).getFundCurrent() < targetList.get(i).getFundAmount()) {
 					List<Sale> sale = saleRepository.findByFundBoardTarget(targetList.get(i).getSubject());
-					for(int j=0; i<sale.size(); j++){
-						cancelsController.totalCancel(sale.get(j).getPayCode(),"기간만료 환불");
-						cancelsService.totalCancelInfo(
-								sale.get(j).getOrederId()
-								, sale.get(i).getPayMoney()
-								, sale.get(i).getOrderName()
-								, "기간만료 환불"
-								, sale.get(i).getFundUser()
-								, sale.get(i).getUsername());
+					for(int j=0; j<sale.size(); j++){
+						if(sale.get(j).getCheckin().equals("결제완료")) {
+							
+							cancelsController.totalCancel(sale.get(j).getPayCode(),"기간만료 환불");
+							cancelsService.totalCancelInfo(
+									sale.get(j).getOrederId()
+									, Integer.valueOf(sale.get(j).getPayMoney()).intValue()
+									, sale.get(j).getOrderName()
+									, "기간만료 환불"
+									, sale.get(j).getFundUser()
+									, sale.get(j).getUsername());
+						}
 					}
 				}
 				
@@ -202,13 +207,18 @@ public class AlertController {
 		}
 		
 		
+		
+		
+		
+		
+		
 		//미지정 알림업데이트
 		List<FundBoard> bList = fundBoardService.findAllList();
 			
 		for(int i=0; i<bList.size(); i++) {
 				
 			//펀딩기간 만료시 알림
-			//LocalDate d1 = LocalDate.parse("2022-12-05",DateTimeFormatter.ISO_DATE);
+			LocalDate d12 = LocalDate.parse("2023-12-05",DateTimeFormatter.ISO_DATE);
 			if(bList.get(i).getFundDuration().isBefore(LocalDate.now()) &&
 					bList.get(i).getState().equals("진행중")) {
 				
@@ -221,15 +231,18 @@ public class AlertController {
 				//기간 지나고 100% 미달성시 환불 시킴
 				if(bList.get(i).getFundCurrent() < bList.get(i).getFundAmount()) {
 					List<Sale> sale = saleRepository.findByFundBoard(bList.get(i).getSubject());
-					for(int j=0; i<sale.size(); j++){
-						cancelsController.totalCancel(sale.get(j).getPayCode(),"기간만료 환불");
-						cancelsService.totalCancelInfo(
-								sale.get(j).getOrederId()
-								, sale.get(i).getPayMoney()
-								, sale.get(i).getOrderName()
-								, "기간만료 환불"
-								, sale.get(i).getFundUser()
-								, sale.get(i).getUsername());
+					for(int j=0; j<sale.size(); j++){
+						if(sale.get(j).getCheckin().equals("결제완료")) {
+							
+							cancelsController.totalCancel(sale.get(j).getPayCode(),"기간만료 환불");
+							cancelsService.totalCancelInfo(
+									sale.get(j).getOrederId()
+									, Integer.valueOf(sale.get(i).getPayMoney()).intValue()
+									, sale.get(i).getOrderName()
+									, "기간만료 환불"
+									, sale.get(i).getFundUser()
+									, sale.get(i).getUsername());
+						}
 					}
 				}
 				

@@ -305,19 +305,18 @@
 	$('#nickname').focusout(function() {
 		
 		let nickname = $('#nickname').val()
-        let nicknameCheck =  /^[가-힣]{2,4}$/
+        let nicknameCheck =  /^[가-힣a-zA-Z]{2,15}$/
         if (!nicknameCheck.test(nickname)){
-			$('#nicknameCheckResult').html('한글 이름 2~4자 이내.')
+			$('#nicknameCheckResult').html('한글, 영문 이름 2~15자 이내.')
         	return false
         }
         $('#nicknameCheckResult').html('')
 	});
-	
 	$('#form').on('submit', function() {
 		let nickname = $('#nickname').val()
-        let nicknameCheck =  /^[가-힣]{2,4}$/
+        let nicknameCheck =  /^[가-힣a-zA-Z]{2,15}$/
         if (!nicknameCheck.test(nickname)){
-			$('#nicknameCheckResult').html('한글 이름 2~4자 이내.')
+			$('#nicknameCheckResult').html('한글, 영문 이름 2~15자 이내.')
 			$('#nickname').focus()
         	return false
         }

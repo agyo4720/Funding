@@ -118,6 +118,40 @@ public class UserController {
 		
 		return "redirect:/user/login";
 	}
+	
+	// 비밀번호 수정2
+	@PostMapping("/resetPwdConfirm2")
+	public String resetPwdConfirm3(String pwd, Principal principal){
+
+		Optional<FundUser> FU = this.fundUserService.findByuserName(principal.getName());
+		Optional<FundArtist> FA = this.fundArtistService.findByuserName(principal.getName());
+		
+		if(FU.isPresent()) {
+			this.fundUserService.resetPwd(FU.get().getUsername(), pwd);
+		}
+		
+		if(FA.isPresent()) {
+			this.fundArtistService.resetPwd(FA.get().getUsername(), pwd);
+		}
+		
+		
+		return "redirect:/user/myInfo";
+	}
+	
+	// 전화번호 수정
+	@PostMapping("/resetMobile")
+	public String resetMobile(Principal principal, String mobile) {
+		Optional<FundUser> FU = this.fundUserService.findByuserName(principal.getName());
+		Optional<FundArtist> FA = this.fundArtistService.findByuserName(principal.getName());
+		if(FU.isPresent()) {
+			this.fundUserService.resetMobile(FU.get(),mobile);
+		}
+		if(FA.isPresent()) {
+			this.fundArtistService.resetMobile(FA.get(),mobile);
+		}
+		
+		return "redirect:/user/myInfo";
+	}
 
 	
 	

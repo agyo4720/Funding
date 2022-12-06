@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.funding.fundUser.FundUser;
 import com.funding.user.RegisterValidation;
 
 import lombok.RequiredArgsConstructor;
@@ -51,5 +50,11 @@ public class FundArtistService {
 
 		this.fundArtistRepository.save(FA.get());
 
+	}
+
+	// 전화번호 수정
+	public void resetMobile(FundArtist fundArtist, String mobile) {
+		fundArtist.setMobile(mobile);
+		this.fundArtistRepository.save(fundArtist);
 	}
 }
