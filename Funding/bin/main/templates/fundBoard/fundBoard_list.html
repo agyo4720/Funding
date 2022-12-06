@@ -25,10 +25,12 @@
 	<header th:replace="/main/nav"></header>
 
 	<section>
+		<!-- 타이틀 -->
 		<div class="title">
 			<h2>미지정 펀딩</h2>
 		</div>
 
+		<!-- 카테고리 -->
 		<div class="categorie">
 			<ul>
 				<li>
@@ -41,32 +43,36 @@
 			</ul>
 		</div>
 		
-		
-
+		<!-- 공연 리스트 -->
 		<div class="list_form" th:each="fundBoard , loop : ${fundBoardList}">
 			<div class="con_list">
-				<a th:href="@{|/fundBoard/detail/${fundBoard.id}|}">
-					<div class="image">
+				<!-- 이미지 -->
+				<div class="image">
+					<a th:href="@{|/fundBoard/detail/${fundBoard.id}|}">
 						<div th:if="${fundBoard.imgPath != null}">
 							<img th:src="${fundBoard.imgPath}" width="150px" height="215px" center>
 						</div>
 						<div th:if="${fundBoard.filePath != null}">
 							<img th:src="|/fundBoard/img/${fundBoard.id}|" width="150px" height="215px" center>
 						</div>
-					</div>
-				</a>
+					</a>
+				</div>
 
+				<!-- 공연 정보 -->
 				<div class="con">
+					<!-- 공연 진행 상태 -->
 					<div class="status">
 						<p th:text="${fundBoard.state}">상태</p>
 					</div>
 
+					<!-- 공연 이름 -->
 					<div class="con_title">
 						<a th:href="@{|/fundBoard/detail/${fundBoard.id}|}">
 							<h3 th:text="${fundBoard.subject}">공연 이름</h3>
 						</a>
 					</div>
 
+					<!-- 공연 상세정보 -->
 					<div class="con_detail">
 						<div class="view">
 							<label for="place">장소</label>
@@ -85,7 +91,10 @@
 						</div>
 
 					</div>
+					<!-- // 공연 상세정보 -->
 				</div>
+
+				<!-- 펀딩 진행도 -->
 				<div class="graph">
 					<div class="graph_view">
 						<p>진행도</p>
@@ -94,8 +103,9 @@
 				</div>
 			</div>
 		</div>
+		<!-- // 공연 리스트 -->
 
-		<!-- 페이징 시작 -->
+		<!-- 페이징 -->
 		<div class="paging" th:if="${!fundBoardList.isEmpty()}">
 			<!-- 이전 페이지가 없으면 비활성화 -->
 			<div th:if="${fundBoardList.number > 0}">
@@ -119,10 +129,15 @@
 				</a>
 			</div>
 		</div>
-		<!-- 페이징 끝 -->
+		<!-- // 페이징 -->
 
+<<<<<<< HEAD
 		<a id="btn1" class="btn_create" href="/fundBoard/create">등록하기</a>
 		
+=======
+		<!-- 공연 등록하기 -->
+		<a class="btn_create" href="/fundBoard/create">등록하기</a>
+>>>>>>> 869f71b10f6fd2942e69b9371a7042710054009c
 	</section>
 
 	<script>

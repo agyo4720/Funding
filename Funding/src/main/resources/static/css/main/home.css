@@ -26,3 +26,5 @@ section h2 {
     white-space: nowrap;
     font-weight: bold;
 }
+
+img {object-fit: cover;}

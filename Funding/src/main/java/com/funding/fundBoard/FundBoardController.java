@@ -64,8 +64,6 @@ public class FundBoardController {
 	private final CancelsService cancelsService;
 	private final AlertService alertService;
 
-
-
 	// 미지정 펀드 리스트(페이징)
 	// URL에 페이지 변수 page가 전달되지 않은 경우 디폴트 값으로 0이 되도록 설정
 	@RequestMapping("/list")
@@ -249,12 +247,9 @@ public class FundBoardController {
 		List<Sale> sale = saleRepository.findByFundBoard(nick.getSubject());
 		for(int i=0; i<sale.size(); i++){
 			if(sale.get(i).getCheckin().equals("결제완료")) {
-				sale.get(i).getPayCode();
-				sale.get(i).setCheckin("게시글 삭제");
-
 				cancelsController.totalCancel(sale.get(i).getPayCode(),"게시글 삭제");
 				cancelsService.totalCancelInfo(sale.get(i).getOrederId(), Integer.valueOf(sale.get(i).getPayMoney()).intValue(), sale.get(i).getOrderName(),
-						sale.get(i).getCheckin(),sale.get(i).getFundUser(),sale.get(i).getUsername());
+						"게시글 삭제",sale.get(i).getFundUser(),sale.get(i).getUsername());
 			}
 		}
 
