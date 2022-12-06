@@ -64,33 +64,19 @@ public class AlertController {
 			Optional<FundArtist> art = fundArtistService.findByuserName(username);
 			List<Alert> artList = alertService.findByHostArtist(art.get());
 			List<HashMap<String, String>> alretList = new ArrayList<>();
+			log.info("아티스트 아이디 : " + art.get().toString());
+			log.info("알림 출력 여기까지는 됨" + artList);
+			
 			for(int i=0; i<artList.size(); i++) {
 				HashMap<String, String> map = new HashMap<>();
 				map.put("alertId", artList.get(i).getId().toString());
-				
-				boolean guestcheck = true;
-				if(artList.get(i).getGuestUser() != null) {
-					map.put("Guestname", artList.get(i).getGuestUser().getUsername());
-				}else if(artList.get(i).getGuestArtist() != null) {
-					map.put("Guestname", artList.get(i).getGuestArtist().getUsername());
-				}else {
-					guestcheck = false;
-				}
-				
-				//접속자와 댓글 생성자 같으면 출력 안함
-				if(guestcheck) {
-					String userequals = artList.get(i).getGuestUser().getUsername();
-					if(art.get().getUsername().equals(userequals)) {
-						continue;
-					}
-				}
 				map.put("content", artList.get(i).getContent());
 				map.put("url", artList.get(i).getUrl());
 				map.put("type", artList.get(i).getWitchAlert());
 				alretList.add(map);
-				
-				return alretList;
 			}
+			
+			return alretList;
 		}
 		
 

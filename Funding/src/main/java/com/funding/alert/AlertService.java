@@ -207,20 +207,21 @@ public class AlertService {
 			
 			if(faList.size() != 0) {
 				log.info("아티스트 있어서 추려냄");
-				FundArtist finalFundArtist = null;
 				Set<FundUser> sUser = new HashSet<>();
 				int index = 0;
+				FundArtistList fundArtistList = faList.get(0); 
 				//투표 수 가장 많은 사람 찾아내기
 				for(int i=0; i<faList.size(); i++) {
 					if(faList.get(i).getFundUserList().size() > sUser.size()) {
 						sUser = faList.get(i).getFundUserList();
-						finalFundArtist = faList.get(i).getFundArtist();
+						fundArtistList = faList.get(i);
 						index = i;
 					}
 				}
 				//나머지 아티스트 제거
 				faList.remove(index);
 				fundArtistListService.deleteList(faList);
+				modifyBoardAlert(fundArtistList);
 				
 			//아티스트가 아무도 없으면 환불
 			}else {
@@ -290,5 +291,18 @@ public class AlertService {
 			alertRepository.save(alert);
 		}
 	}
+	
+	//아티스트 선정 후 수정 url 주기
+	public void modifyBoardAlert(FundArtistList fundArtistList) {
+		Alert alert = new Alert();
+		alert.setContent(fundArtistList.getFundBoard().getSubject() + "펀딩에 선정 되었습니다. 공연세부정보를 수정해 주세요!");
+		alert.setHostArtist(fundArtistList.getFundArtist());
+		alert.setWitchAlert("수정");
+		alert.setUrl("/fundBoard/modify/" + fundArtistList.getFundBoard().getId());
+		
+		alertRepository.save(alert);
+	}
+	
+	
 		
 }

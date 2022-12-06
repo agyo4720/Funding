@@ -14,7 +14,9 @@ import com.funding.selfBoard.SelfBoard;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
+@ToString
 @Getter
 @Setter
 @Entity
