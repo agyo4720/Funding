@@ -2,6 +2,7 @@ package com.funding.alert;
 
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -138,7 +139,7 @@ public class AlertController {
 	//지정펀딩 기간 마감시 업데이트
 	@RequestMapping("/update")
 	@ResponseBody
-	public String fundEndDate() throws Exception{
+	public String fundEndDate(@RequestParam("user")String username) throws Exception{
 		List<FundBoardTarget> targetList = fundTargetService.findAllList();
 		
 		for(int i=0; i<targetList.size(); i++) {
@@ -203,6 +204,20 @@ public class AlertController {
 					FundUser user = fListList.get(j).getFundUser();
 					alertService.fundEndAmount(fundBoardTarget, user.getUsername());
 				}
+			}
+		}
+		
+		//지정펀딩 공연 날짜 7일 지나면 리스트에서 삭제
+		FundUser user1 = fundUserService.findByuserName(username).get();
+		List<FundTargetList> tList = fundTargetListService.findByFundUser(user1);
+		
+		//DateTimeFormatter format1 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		//LocalDateTime testDate = LocalDateTime.parse("2023-12-25 12:00", format1);
+		//LocalDateTime.now().plusDays(7);
+		for(FundTargetList i : tList) {
+			if(i.getFundBoardTarget().getStartDate().isBefore(LocalDateTime.now().plusDays(7))) {
+				log.info("리스트 삭제 할까요?");
+				fundTargetListService.delete(user1, i.getFundBoardTarget());
 			}
 		}
 		
@@ -277,10 +292,20 @@ public class AlertController {
 					alertService.fundBoardEndAmount(fundBoard, user.getUsername());
 				}
 			}
-			
-			
 		}
-				
+		
+		
+		//미지정펀딩 공연 날짜 7일 지나면 리스트에서 삭제
+		List<FundList> fbList = fundListService.findByFundUser(user1);
+		
+		//DateTimeFormatter format1 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		//LocalDateTime testDate = LocalDateTime.parse("2023-12-25 12:00", format1);
+		//LocalDateTime.now().plusDays(7);
+		for(FundList i : fbList) {
+			if(i.getFundBoard().getStartDateTime().isBefore(LocalDateTime.now().plusDays(7))) {
+				fundListService.deleteFund(user1, i.getFundBoard());
+			}
+		}		
 		
 			
 		return "알림 정리 했어요";
