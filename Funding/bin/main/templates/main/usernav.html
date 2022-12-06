@@ -23,18 +23,19 @@
     
     let info = document.querySelector(".info")
     let infoUrl = "/selfBoard/detail/"
-    
-		$.ajax({
-		url : '/user/myInfo/ajax'
-		,data : 'artist='+artist
-		,success : function(result){
-			infoUrl += result
-			info.href= infoUrl
-		}
-		,error: function(){
-			alert("에러발생")
-		}
-	})
+    if(info != null){
+    	$.ajax({
+    		url : '/user/myInfo/ajax'
+    		,data : 'artist='+artist
+    		,success : function(result){
+    			infoUrl += result
+    			info.href= infoUrl
+    		}
+    		,error: function(){
+    			alert("에러발생")
+    			}
+   		})
+    }
     
     
     // let cateList = document.querySelectorAll('.cate')
