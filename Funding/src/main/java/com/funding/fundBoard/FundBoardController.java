@@ -64,8 +64,6 @@ public class FundBoardController {
 	private final CancelsService cancelsService;
 	private final AlertService alertService;
 
-
-
 	// 미지정 펀드 리스트(페이징)
 	// URL에 페이지 변수 page가 전달되지 않은 경우 디폴트 값으로 0이 되도록 설정
 	@RequestMapping("/list")
