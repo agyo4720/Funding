@@ -15,6 +15,7 @@
     
 </head>
 <body>
+	
 	<!-- 홈페이지 상단 nav -->
     <header th:replace="/main/nav"></header>
 
@@ -99,17 +100,16 @@
 		<div>
 			<!-- 참여 아티스트 유효성 검사 시작 -->
 			<input hidden class="username1" th:value="${#authentication.getPrincipal().getUsername()}">
-			
 			<div>현재 참여중인 아티스트</div>
 			
-			<div sec:authorize="!hasRole('ROLE_USER')">			
+			<div sec:authorize="hasRole('ROLE_ARTIST')">			
 				<a id="btn1" th:href="@{|/fundArtistList/join/${fundBoard.id}|}"><button>참여하기</button></a>
 			</div>
 			
-			
 			<div th:each="fundArtistList : ${fundArtistList}">
-			<input hidden class="", th:value="${}">
+			
 				<span th:text="${fundArtistList.fundArtist.nickname}"></span>
+			
 				<a id="btn2" sec:authorize="hasRole('ROLE_USER')" th:href="@{|/fundArtistList/score/${fundArtistList.id}/${fundBoard.id}|}">투표하기</a>
 				<span th:text="|${fundArtistList.fundUserList.size()}개|"></span>
 			<input hidden class="fundArtistList" th:value="${fundArtistList.fundArtist.username}">
@@ -184,13 +184,12 @@
 			if(bol == true){
 				alert("참여 완료되었습니다.");
 			}else{
-				alert("이미 참여하셨습니다.");
+				alert("이미 참여하였습니다.");
 			}
 		
 		}
 		// 참여 아티스트 유효성 검사 끝	
 	</script>
-	
 	
 	
 	
