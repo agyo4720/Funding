@@ -6,6 +6,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.Calendar;
@@ -44,13 +45,12 @@ public class RemitController {
 
         cal.add(Calendar.DATE, +3);//지금 날짜에서 +3일
         String nowTime = df.format(cal.getTime()); //오늘로 부터 3일후 부터 클릭가능
-        
         model.addAttribute("nowTime", nowTime);
 			return "/pay/rem/remit";
 	}
 	@RequestMapping("/rem/remitRquest")
 	public String remitRquest(@RequestParam("subMallId")String subMallId, @RequestParam("payoutAmount")Integer payoutAmount,
-			@RequestParam("payoutDate")LocalDateTime payoutDate,Model model) throws Exception {
+			@RequestParam("payoutDate")String payoutDate,Model model) throws Exception {
 		HttpRequest request = HttpRequest.newBuilder()
 			    .uri(URI.create("https://api.tosspayments.com/v1/payouts/sub-malls/settlements"))//토스에서 요구하는 주소
     		    .header("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()))//토스에서 개인식별(시크릿키)
