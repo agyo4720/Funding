@@ -46,7 +46,7 @@
 			<h2>미지정 펀딩</h2>
 			<div class="list">
 				<div class="list_form" th:each="boardList : ${boardList}">
-					<a href="../fundBoard/fundBoard_detail.html" th:href="@{|/fundTarget/detail/${boardList.id}|}" >
+					<a href="../fundBoard/fundBoard_detail.html" th:href="@{|/fundBoard/detail/${boardList.id}|}" >
 						<div class="image">
 							<div th:if="${boardList.imgPath != null}">
 								<img th:src="${boardList.imgPath}">
