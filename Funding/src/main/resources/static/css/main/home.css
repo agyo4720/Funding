@@ -1,8 +1,19 @@
-section h2 {
-    margin: 20px 60px;
+section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 0 100px;
 }
 
-.sec_fund {
+.view {
+    width: 1000px;
+    /* background-color: #dedede; */
+    margin: 10px 0;
+}
+
+.view h2 {margin: 20px 60px;}
+
+.list {
     display: flex;
     justify-content: space-evenly;
     padding: 0 30px;
@@ -10,21 +21,30 @@ section h2 {
 
 .list_form {
     cursor: pointer;
-    padding: 22px 20px;
-    width: 210px;
-    height: 300px;
-    border: 1px solid;
-    border-radius: 25px;
+    width: 160px;
+    height: 250px;
     text-align: center;
 }
 
 .list_form p {
     cursor: pointer;
-    margin-top: 10px;
-    overflow:hidden;
+    width: 150px;
+    margin-top: 5px;
+    overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     font-weight: bold;
 }
 
-img {object-fit: cover;}
+.image img {
+    opacity: 1;
+    display: block;
+    transition: .5s ease;
+    backface-visibility: hidden;
+    object-fit: cover;
+    width: 150px;
+    height: 215px;
+    border-radius: 5px;
+}
+
+.image:hover img {filter: brightness(70%);}

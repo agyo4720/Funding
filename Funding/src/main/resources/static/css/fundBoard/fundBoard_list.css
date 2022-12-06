@@ -4,9 +4,7 @@ section {
 }
 
 /* 타이틀 */
-.title {
-    text-align: center;
-}
+.title {text-align: center;}
 
 /* 카테고리 */
 .categorie {
@@ -43,7 +41,7 @@ section {
     padding: 10px 20px;
     margin: 30px auto;
     width: 900px;
-    border: 1px solid #bfbfbf;
+    border: 0.1px solid #bfbfbf;
     border-radius: 30px;
 }
 
@@ -71,9 +69,7 @@ img {object-fit: cover;}
     color: #B00E0E;
 }
 
-.con_title {
-    margin-left: 10px;
-}
+.con_title {margin-left: 10px;}
 
 .con_title p {color: #7c7c7c;}
 
@@ -137,9 +133,7 @@ img {object-fit: cover;}
     text-underline-position: under;
 }
 
-.paging .active {
-    color: #B00E0E;
-}
+.paging .active {color: #B00E0E;}
 
 /* 펀딩 만들기 버튼 */
 .btn_create {
