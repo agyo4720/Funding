@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,6 +39,7 @@ import com.funding.fundArtistList.FundArtistList;
 import com.funding.fundArtistList.FundArtistListService;
 import com.funding.fundList.FundList;
 import com.funding.fundList.FundListService;
+import com.funding.fundTargetList.FundTargetList;
 import com.funding.fundUser.FundUser;
 import com.funding.fundUser.FundUserService;
 import com.funding.sale.Sale;
@@ -169,7 +172,7 @@ public class FundBoardController {
 			@PathVariable ("id") Integer id,
 			Principal principal,
 			Model model,
-			Integer alertId){
+			Integer alertId) throws Exception{
 
 		FundBoard fundBoard = this.fundBoardService.findById(id);
 		model.addAttribute("fundBoard", fundBoard);
@@ -178,6 +181,7 @@ public class FundBoardController {
 		model.addAttribute("answerList", answerList);
 		List<FundArtistList> fundArtistList = this.fundArtistListService.findByFundBoard(fundBoard);
 		model.addAttribute("fundArtistList", fundArtistList);
+		
 		//알람으로 들어왔을 시 알람 삭제
 		if(alertId != null) {
 			alertService.deleteAlert(alertId);
@@ -206,6 +210,11 @@ public class FundBoardController {
 			}
 		}
 		model.addAttribute("result", result);
+		
+		//펀딩 기간 체크해서 마감시 공연자 선정
+		if(!fundBoard.getState().equals("진행중")) {
+			alertService.fundBoardSuccess(fundBoard);
+		}
 
 		return "/fundBoard/fundBoard_detail";
 	}
@@ -267,6 +276,32 @@ public class FundBoardController {
 
 		return "redirect:/fundBoard/list";
 	}
+	
+	
+	
+	
+	//아티스트가 수정하기 위한 링크 보내주기(ajax)
+	//@RequestMapping("/modify/fundBoard")
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	// 2022/12/05 - 1 작업중
 

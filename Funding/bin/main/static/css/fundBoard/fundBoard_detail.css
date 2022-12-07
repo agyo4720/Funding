@@ -121,6 +121,75 @@ section {
     background-color: #5e5252;
 }
 
+/* 아티스트 */
+.art_head {display: flex; align-items: center;}
+
+.art_part a {
+    margin-left: 20px;
+    padding: 5px 10px;
+    background-color: #3E3636;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 15px;
+    letter-spacing: 2px;
+    transition: 0.5s;
+}
+
+.art_part a:hover {
+    color: #fff;
+    background-color: #5e5252;
+}
+
+.art_view {
+    display: flex;
+    justify-content: center;
+}
+
+.art_con {
+    display: inline-flex;
+    align-items: center;
+    margin: 10px 30px 0 0;
+    padding: 10px 33px 13px 30px;
+    background-color: #f3f3f3;
+    border: 0.1px solid #707070;
+    border-radius: 10px;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+}
+
+.profile img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.pr {
+    width: 200px;
+    text-align: center;
+}
+
+.vote a {
+    margin-left: 10px;
+    padding: 5px 10px;
+    background-color: #3E3636;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 14px;
+    letter-spacing: 2px;
+    transition: 0.5s;
+}
+
+.vote a:hover {
+    color: #fff;
+    background-color: #5e5252;
+}
+
 /* 콘서트 내용 */
 .con_text {}
 

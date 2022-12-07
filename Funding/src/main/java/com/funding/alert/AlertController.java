@@ -2,6 +2,7 @@ package com.funding.alert;
 
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -63,33 +64,19 @@ public class AlertController {
 			Optional<FundArtist> art = fundArtistService.findByuserName(username);
 			List<Alert> artList = alertService.findByHostArtist(art.get());
 			List<HashMap<String, String>> alretList = new ArrayList<>();
+			log.info("아티스트 아이디 : " + art.get().toString());
+			log.info("알림 출력 여기까지는 됨" + artList);
+			
 			for(int i=0; i<artList.size(); i++) {
 				HashMap<String, String> map = new HashMap<>();
 				map.put("alertId", artList.get(i).getId().toString());
-				
-				boolean guestcheck = true;
-				if(artList.get(i).getGuestUser() != null) {
-					map.put("Guestname", artList.get(i).getGuestUser().getUsername());
-				}else if(artList.get(i).getGuestArtist() != null) {
-					map.put("Guestname", artList.get(i).getGuestArtist().getUsername());
-				}else {
-					guestcheck = false;
-				}
-				
-				//접속자와 댓글 생성자 같으면 출력 안함
-				if(guestcheck) {
-					String userequals = artList.get(i).getGuestUser().getUsername();
-					if(art.get().getUsername().equals(userequals)) {
-						continue;
-					}
-				}
 				map.put("content", artList.get(i).getContent());
 				map.put("url", artList.get(i).getUrl());
 				map.put("type", artList.get(i).getWitchAlert());
 				alretList.add(map);
-				
-				return alretList;
 			}
+			
+			return alretList;
 		}
 		
 
@@ -138,7 +125,7 @@ public class AlertController {
 	//지정펀딩 기간 마감시 업데이트
 	@RequestMapping("/update")
 	@ResponseBody
-	public String fundEndDate() throws Exception{
+	public String fundEndDate(@RequestParam("user")String username) throws Exception{
 		List<FundBoardTarget> targetList = fundTargetService.findAllList();
 		
 		for(int i=0; i<targetList.size(); i++) {
@@ -203,6 +190,20 @@ public class AlertController {
 					FundUser user = fListList.get(j).getFundUser();
 					alertService.fundEndAmount(fundBoardTarget, user.getUsername());
 				}
+			}
+		}
+		
+		//지정펀딩 공연 날짜 7일 지나면 리스트에서 삭제
+		FundUser user1 = fundUserService.findByuserName(username).get();
+		List<FundTargetList> tList = fundTargetListService.findByFundUser(user1);
+		
+		//DateTimeFormatter format1 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		//LocalDateTime testDate = LocalDateTime.parse("2023-12-25 12:00", format1);
+		//LocalDateTime.now().plusDays(7);
+		for(FundTargetList i : tList) {
+			if(i.getFundBoardTarget().getStartDate().isBefore(LocalDateTime.now().plusDays(7))) {
+				log.info("리스트 삭제 할까요?");
+				fundTargetListService.delete(user1, i.getFundBoardTarget());
 			}
 		}
 		
@@ -277,10 +278,22 @@ public class AlertController {
 					alertService.fundBoardEndAmount(fundBoard, user.getUsername());
 				}
 			}
-			
-			
 		}
-				
+		
+		
+		
+		
+		//미지정펀딩 공연 날짜 7일 지나면 리스트에서 삭제
+		List<FundList> fbList = fundListService.findByFundUser(user1);
+		
+		//DateTimeFormatter format1 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		//LocalDateTime testDate = LocalDateTime.parse("2023-12-25 12:00", format1);
+		//LocalDateTime.now().plusDays(7);
+		for(FundList i : fbList) {
+			if(i.getFundBoard().getStartDateTime().isBefore(LocalDateTime.now().plusDays(7))) {
+				fundListService.deleteFund(user1, i.getFundBoard());
+			}
+		}
 		
 			
 		return "알림 정리 했어요";

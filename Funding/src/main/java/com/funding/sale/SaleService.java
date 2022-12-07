@@ -67,4 +67,10 @@ public class SaleService {
 		Page<Sale> sList = saleRepository.findByUsername(user,pageable);//페이징(아이디일치)
 		return sList;
 	}
+	
+	//게시글로 결제목록 불러오기
+	public List<Sale> findByFundBoard(String fundBoard){
+		List<Sale> sList = saleRepository.findByFundBoard(fundBoard);
+		return sList;
+	}
 }

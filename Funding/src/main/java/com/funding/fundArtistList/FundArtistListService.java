@@ -91,5 +91,16 @@ public class FundArtistListService {
 				
 	}
 	
+	//아티스트로 찾기
+	public List<FundArtistList> findByFundArtist(FundArtist artist) {
+		List<FundArtistList> faList = fundArtistListRepository.findByFundArtist(artist);
+		return faList;
+	}
+	
+	//해당 리스트 지우기
+	public void deleteList(List<FundArtistList> faList) {
+		fundArtistListRepository.deleteAll(faList);
+	}
+
 
 }
