@@ -1,5 +1,5 @@
 nav {
-    position: absolute;
+    position: fixed;
     padding: 30px 40px;
     left: 50px;
     width: 100px;

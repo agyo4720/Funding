@@ -86,7 +86,7 @@ public class AlertService {
 			
 			
 			Alert alert = new Alert();
-			alert.setContent(fundBoardTarget.getSubject() + " 펀딩기간이 만료되었습니다");
+			alert.setContent(fundBoardTarget.getSubject() + "<br/>펀딩기간 만료");
 			alert.setUrl(url);
 			alert.setWitchAlert("마감");
 			alert.setHostArtist(artist.get());
@@ -97,7 +97,7 @@ public class AlertService {
 		}
 		
 		Alert alert = new Alert();
-		alert.setContent(fundBoardTarget.getSubject() + " 펀딩기간이 만료되었습니다");
+		alert.setContent(fundBoardTarget.getSubject() + "<br/>펀딩기간이 만료");
 		alert.setUrl(url);
 		alert.setWitchAlert("마감");
 		alert.setHostUser(user.get());
@@ -113,7 +113,7 @@ public class AlertService {
 		String url = "/fundTarget/detail/" + fundBoardTarget.getId();
 		
 		Alert alert = new Alert();
-		alert.setContent(fundBoardTarget.getSubject() + " 펀딩 100% 달성");
+		alert.setContent(fundBoardTarget.getSubject() + "<br/>펀딩 100% 달성");
 		alert.setUrl(url);
 		alert.setWitchAlert("펀딩");
 		alert.setHostUser(user.get());

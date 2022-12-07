@@ -29,6 +29,8 @@
 
 	<div class="payinfo">
 		<div class="con">
+			<button th:onclick="'window.open(location.href=\'' + @{/pay/rem/enroll} + '\'
+				, \'window_name\', \'width=430, height=500, location=no, status=no, scrollbars=yes\')'" type="submit">계좌등록</button>
 			<button th:onclick="'location.href=\'' + @{/pay/rem/enroll} + '\''" type="submit">계좌등록</button>
 			<button th:onclick="'location.href=\'' + @{/pay/rem/revise} + '\''" type="submit">계좌수정</button>
 			
@@ -94,35 +96,35 @@
 
 
 
-<script>
+	<script>
 
-var result= document.querySelector('#msg').value;
-console.log(result);
-var message= document.querySelector('#message').value;
-if(result === "Success"){
-	alert("송금완료!");
-} else if(result === "Fail"){
-	alert(message);
-}
+		var result= document.querySelector('#msg').value;
+		console.log(result);
+		var message= document.querySelector('#message').value;
+		if(result === "Success"){
+			alert("송금완료!");
+		} else if(result === "Fail"){
+			alert(message);
+		}
 
-else if(result === "SUccess"){
-	alert("수정완료!");
-}else if(result === "FAil"){
-	alert(message);
-}
+		else if(result === "SUccess"){
+			alert("수정완료!");
+		}else if(result === "FAil"){
+			alert(message);
+		}
 
-else if(result === "SUCcess"){
-	alert("등록성공!");
-}else if(result === "FAIl"){
-	alert(message);
-}
+		else if(result === "SUCcess"){
+			alert("등록성공!");
+		}else if(result === "FAIl"){
+			alert(message);
+		}
 
-else if(result === "SUCCess"){
-	alert("삭제성공!");
-}else if(result === "FAIL"){
-	alert(message);
-}
+		else if(result === "SUCCess"){
+			alert("삭제성공!");
+		}else if(result === "FAIL"){
+			alert(message);
+		}
 
-</script>
+	</script>
 </body>
 </html>
