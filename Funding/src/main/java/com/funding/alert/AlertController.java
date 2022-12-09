@@ -64,8 +64,7 @@ public class AlertController {
 			Optional<FundArtist> art = fundArtistService.findByuserName(username);
 			List<Alert> artList = alertService.findByHostArtist(art.get());
 			List<HashMap<String, String>> alretList = new ArrayList<>();
-			log.info("아티스트 아이디 : " + art.get().toString());
-			log.info("알림 출력 여기까지는 됨" + artList);
+			
 			
 			for(int i=0; i<artList.size(); i++) {
 				HashMap<String, String> map = new HashMap<>();
@@ -190,6 +189,11 @@ public class AlertController {
 					FundUser user = fListList.get(j).getFundUser();
 					alertService.fundEndAmount(fundBoardTarget, user.getUsername());
 				}
+			}else if(targetList.get(i).getFundCurrent() < targetList.get(i).getFundAmount() && 
+					targetList.get(i).getStatus().equals("100%⇑⇑⇑")) {
+				targetList.get(i).setStatus("진행중");
+				fundTargetService.addTargetFund(targetList.get(i));
+				
 			}
 		}
 		
