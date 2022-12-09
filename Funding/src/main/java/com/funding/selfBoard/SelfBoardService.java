@@ -37,8 +37,8 @@ public class SelfBoardService {
 	}
 	
 	// 유저네임으로 찾기
-	public SelfBoard findByUsername(String nickname) {
-		Optional<FundArtist> fundArtist = fundArtistRepository.findByNickname(nickname);
+	public SelfBoard findByUsername(String username) {
+		Optional<FundArtist> fundArtist = fundArtistRepository.findByNickname(username);
 		Optional<SelfBoard> selfBoard = selfBoardRepository.findByFundArtist(fundArtist.get());
 		return selfBoard.get();
 	}
