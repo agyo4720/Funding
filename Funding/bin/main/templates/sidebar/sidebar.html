@@ -78,7 +78,7 @@
 								+ "</div></div></a>")
 						}else if(item.type == "취소"){
 							$('.alert').append(
-								"<a href=\"" +  "/?alertId=" + item.alertId + "\">"
+								"<a href=\"" + "/?alertId=" + item.alertId + "\">"
 								+ "<div class=\"alertbox\">"
 								+ "<div class=>\"alert_con\">" + item.content
 								+ "</div></div></a>")
@@ -152,8 +152,16 @@
 				}
 				,success : function(result){
 					$.each(result, function(index, item){					
-						$('.fundList2').append("<a href=\"" + item.url + "\"><div><br>" + item.status + "</br>" + 
-								item.fundName + " 진행도 " + item.percent + "</div></a>")
+						$('.fundList2').append(
+							"<a href=\"" + item.url + "\">"
+							+ "<div class=\"alertbox\">"
+							+ "<div class=\"alert_con\">"
+							+ item.fundName + "</div>"
+							+ "<div class=\"alert_status\">"
+							+ item.status + " "
+							+ item.percent + "</div>"
+							+ "</div></a>"
+							)
 					})
 				}
 			})
@@ -168,8 +176,11 @@
 				,success : function(result){
 					$.each(result, function(index, item){	
 						if(item.type == "수정"){
-							$('.fundModify').append("<div class=\"alertbox\"><a href=\"" + item.url + "?alertId=" + 
-								item.alertId + "\"><div>" + "</div>[" + item.content + "]</a></div>")
+							$('.fundModify').append(
+								"<a href=\"" + item.url + "?alertId=" + item.alertId + "\">"
+								+ "<div class=\"alertbox\">"
+								+ item.content
+								+ "</div></a>")
 								
 						}
 						
