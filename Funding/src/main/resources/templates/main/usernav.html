@@ -10,7 +10,7 @@
         <li sec:authorize="hasRole('ROLE_USER')"><a href="/pay/loo/confirm">결제</a></li>
         <li><a href="/categorie/list">카테고리 리스트</a></li>
         <li sec:authorize="hasRole('ROLE_ARTIST')"><a href="/pay/loo/lookup">계좌관리</a></li>
-        <li sec:authorize="hasRole('ROLE_ARTIST')"><a th:href="@{|/selfBoard/detail/${myInfo.username}|}">자기소개 보기</a></li>
+        <li sec:authorize="hasRole('ROLE_ARTIST')"><a class="info">자기소개 보기</a></li>
         <li sec:authorize="hasRole('ROLE_ARTIST')"><a href="/selfBoard/form">자기소개 작성</a></li>
     </ul>
 </nav>
@@ -33,7 +33,7 @@
     		}
     		,error: function(){
     			alert("에러발생")
-    			}
+			}
    		})
     }
     
