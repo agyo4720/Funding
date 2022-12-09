@@ -9,21 +9,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin
+
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.funding.fundArtistList.FundArtistList;
-<<<<<<< HEAD
-=======
+
 import javax.persistence.OneToOne;
 
->>>>>>> 06d4aa52b968978e032064d67137e33a72aa01b8
-=======
->>>>>>> origin
 import com.funding.selfBoard.SelfBoard;
 
 import lombok.Getter;
@@ -51,19 +44,10 @@ public class FundArtist {
 	private Date birth;			// 생년월일
 	private String role;		// 권한등급
 	private Integer likeCount;	// 추천 수
-<<<<<<< HEAD
-=======
-	
+
 	@OneToOne(mappedBy = "fundArtist")
 	private SelfBoard selfBoard;
->>>>>>> 06d4aa52b968978e032064d67137e33a72aa01b8
-	
-<<<<<<< HEAD
-	@OneToOne(mappedBy = "fundArtist")
-	private SelfBoard selfBoard;
-	
-=======
->>>>>>> origin
+
 	@OneToMany(mappedBy = "fundArtist")
 	private List<FundArtistList> fundArtistList;
 }

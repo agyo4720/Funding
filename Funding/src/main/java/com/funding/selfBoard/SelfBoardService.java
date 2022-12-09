@@ -36,15 +36,10 @@ public class SelfBoardService {
 		return selfBoard.get();
 	}
 	
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin
 
 	// 유저네임으로 찾기 // 중복에러뜸
 	public Optional<SelfBoard> findByUsername(String username) {
 		Optional<FundArtist> fundArtist = fundArtistRepository.findByusername(username);
-<<<<<<< HEAD
 		Optional<SelfBoard> selfBoard = selfBoardRepository.findByFundArtist(fundArtist.get());
 		return selfBoard;
 	}
@@ -54,24 +49,6 @@ public class SelfBoardService {
 		
 		return this.selfBoardRepository.findByFundArtist(fundArtist).get();
 		
-=======
-	// 유저네임으로 찾기
-	public SelfBoard findByUsername(String nickname) {
-		Optional<FundArtist> fundArtist = fundArtistRepository.findByNickname(nickname);
-		Optional<SelfBoard> selfBoard = selfBoardRepository.findByFundArtist(fundArtist.get());
-		return selfBoard.get();
->>>>>>> 06d4aa52b968978e032064d67137e33a72aa01b8
-=======
-		Optional<SelfBoard> selfBoard = selfBoardRepository.findByFundArtist(fundArtist.get());
-		return selfBoard;
-	}
-	
-
-	public SelfBoard findByFundArtist(FundArtist fundArtist) {
-		
-		return this.selfBoardRepository.findByFundArtist(fundArtist).get();
-		
->>>>>>> origin
 	}
 
 }

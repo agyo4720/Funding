@@ -2,14 +2,7 @@ package com.funding.alert;
 
 
 import java.time.LocalDate;
-<<<<<<< HEAD
-<<<<<<< HEAD
 import java.time.LocalDateTime;
-=======
->>>>>>> 06d4aa52b968978e032064d67137e33a72aa01b8
-=======
-import java.time.LocalDateTime;
->>>>>>> origin
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -201,22 +194,6 @@ public class AlertController {
 				targetList.get(i).setStatus("진행중");
 				fundTargetService.addTargetFund(targetList.get(i));
 				
-<<<<<<< HEAD
-=======
-			}
-		}
-		
-		//지정펀딩 공연 날짜 7일 지나면 리스트에서 삭제
-		FundUser user1 = fundUserService.findByuserName(username).get();
-		List<FundTargetList> tList = fundTargetListService.findByFundUser(user1);
-		
-		//DateTimeFormatter format1 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-		//LocalDateTime testDate = LocalDateTime.parse("2023-12-25 12:00", format1);
-		//LocalDateTime.now().plusDays(7);
-		for(FundTargetList i : tList) {
-			if(i.getFundBoardTarget().getStartDate().plusDays(7).isBefore(LocalDateTime.now())) {
-				fundTargetListService.delete(user1, i.getFundBoardTarget());
->>>>>>> origin
 			}
 		}
 		
@@ -232,11 +209,6 @@ public class AlertController {
 				fundTargetListService.delete(user1, i.getFundBoardTarget());
 			}
 		}
-		
-		
-		
-		
-		
 		
 		
 		

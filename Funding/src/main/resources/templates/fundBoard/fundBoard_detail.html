@@ -46,91 +46,37 @@
 			<!-- 우측 -->
 			<div class="right">
 				<!-- 공연 상세 정보 -->
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-				<!-- 공연 진행 상태 -->
->>>>>>> 06d4aa52b968978e032064d67137e33a72aa01b8
-=======
->>>>>>> origin
 				<div class="view">
 					<div class="status">
 						<div th:text="${fundBoard.state}">상태</div>
 					</div>
 				</div>
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
-				<!-- 작성자 -->
->>>>>>> 06d4aa52b968978e032064d67137e33a72aa01b8
-=======
-
->>>>>>> origin
 				<div class="view">
 					<label for="writer">작성자</label>
 					<p th:text="${fundBoard.fundUser.username}"></p>
 				</div>
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
-				<!-- 공연일 -->
->>>>>>> 06d4aa52b968978e032064d67137e33a72aa01b8
-=======
-
->>>>>>> origin
 				<div class="view">
 					<label for="startDate">공연일</label>
 					<p th:text="${#temporals.format(fundBoard.startDateTime, 'yyyy-MM-dd (E) HH:mm')}">공연일</p>
 				</div>
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
-				<!-- 공연장 -->
->>>>>>> 06d4aa52b968978e032064d67137e33a72aa01b8
-=======
-
->>>>>>> origin
 				<div class="view">
 					<label for="place">공연장</label>
 					<p th:text="${fundBoard.place}"></p>
 				</div>
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
-				<!-- 공연 시간 -->
->>>>>>> 06d4aa52b968978e032064d67137e33a72aa01b8
-=======
-
->>>>>>> origin
 				<div class="view">
 					<label for="runtime">공연시간</label>
 					<p th:text="|${fundBoard.runtime}분|">공연시간</p>
 				</div>
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
-				<!-- // 공연 상세 정보 -->
->>>>>>> 06d4aa52b968978e032064d67137e33a72aa01b8
-=======
-
->>>>>>> origin
 				<div class="con_hr_detail">
 					<hr/>
 				</div>
 				
-<<<<<<< HEAD
-<<<<<<< HEAD
 				<!-- 펀딩 정보 -->
-=======
->>>>>>> 06d4aa52b968978e032064d67137e33a72aa01b8
-=======
-				<!-- 펀딩 정보 -->
->>>>>>> origin
 				<div class="view int_progress">
                 	<progress th:value="|${fundBoard.fundCurrent * 100 / fundBoard.fundAmount}|" max="100"></progress>
                 	<span th:text="|${fundBoard.fundCurrent * 100 / fundBoard.fundAmount}%|"></span>

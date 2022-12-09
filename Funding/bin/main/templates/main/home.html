@@ -18,25 +18,12 @@
     <header th:replace="/main/nav"></header>
     
     <section>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin
 		<!-- 지정펀딩 -->
 		<div class="view top">
 			<h2>지정 펀딩</h2>
 			<div class="list">
 				<div class="list_form" th:each="target : ${targetList}">
 					<div class="con_list">
-<<<<<<< HEAD
-=======
-		<h2>지정 펀딩</h2>
-		<div class="sec_fund">
-			<div class="list_form" th:each="target : ${targetList}">
-				<div class="con_list">
->>>>>>> 06d4aa52b968978e032064d67137e33a72aa01b8
-=======
->>>>>>> origin
 					<a href="../fundTarget/fundTargetDetail.html" th:href="@{|/fundTarget/detail/${target.id}|}">
 						<div class="image">
 							<div th:if="${target.imgPath != null}">
@@ -53,17 +40,12 @@
 				</div>
 			</div>
 		</div>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin
 		<!-- 미지정 펀딩 -->
 		<div class="view bottm">
 			<h2>미지정 펀딩</h2>
 			<div class="list">
 				<div class="list_form" th:each="boardList : ${boardList}">
 					<a href="../fundBoard/fundBoard_detail.html" th:href="@{|/fundBoard/detail/${boardList.id}|}" >
-<<<<<<< HEAD
 						<div class="image">
 							<div th:if="${boardList.imgPath != null}">
 								<img th:src="${boardList.imgPath}">
@@ -75,27 +57,6 @@
 								<p th:text="${boardList.subject}">공연 이름</p>
 							</div>
 						</div>
-=======
-
-		<h2>미지정 펀딩</h2>
-		<div class="sec_fund">
-			<div class="list_form" th:each="boardList : ${boardList}">
-				<div class="con_list">
-					<a href="../fundBoard/fundBoard_detail.html" th:href="@{|/fundTarget/detail/${boardList.id}|}">
-=======
->>>>>>> origin
-						<div class="image">
-							<div th:if="${boardList.imgPath != null}">
-								<img th:src="${boardList.imgPath}">
-							</div>
-							<div th:if="${boardList.imgPath == null}">
-								<img th:src="|/fundTarget/img/${boardList.id}|">
-							</div>
-							<div class="con">
-								<p th:text="${boardList.subject}">공연 이름</p>
-							</div>
-						</div>
->>>>>>> 06d4aa52b968978e032064d67137e33a72aa01b8
 					</a>
 				</div>
 			</div>
