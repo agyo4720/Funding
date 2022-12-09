@@ -58,6 +58,9 @@ public class FundArtistService {
 		this.fundArtistRepository.save(fundArtist);
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin
 	
 	// 해당 id로 데이터 찾기(박남규)
 	public FundArtist findById(Integer id) {
@@ -67,6 +70,9 @@ public class FundArtistService {
 		return fundArtist.get();
 	}
 	
+<<<<<<< HEAD
 =======
 >>>>>>> 06d4aa52b968978e032064d67137e33a72aa01b8
+=======
+>>>>>>> origin
 }

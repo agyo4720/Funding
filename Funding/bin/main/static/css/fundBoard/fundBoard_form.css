@@ -45,6 +45,8 @@ section select, input[type=radio], img {cursor: pointer;}
 =======
 >>>>>>> 06d4aa52b968978e032064d67137e33a72aa01b8
 
+.img img {border-radius: 5px;}
+
 /* SummerNote */
 .note-toolbar {
     display: flex;

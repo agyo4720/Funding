@@ -4,13 +4,7 @@ section {
 }
 
 /* 타이틀 */
-<<<<<<< HEAD
 .title {text-align: center;}
-=======
-.title {
-    text-align: center;
-}
->>>>>>> 06d4aa52b968978e032064d67137e33a72aa01b8
 
 /* 카테고리 */
 .categorie {
@@ -113,14 +107,9 @@ section {
     margin-right: 25px;
     width: 150px;
     height: 150px;
-<<<<<<< HEAD
     color: #fff;
     border-radius: 50%;
     background: #cf4b4b;
-=======
-    border-radius: 50%;
-    background: #eba7a7;
->>>>>>> 06d4aa52b968978e032064d67137e33a72aa01b8
     text-align: center;
 }
 

@@ -135,11 +135,7 @@ public class FundBoardService {
 		List<Sort.Order> sorts = new ArrayList<>();
 		sorts.add(Sort.Order.desc("createDate"));
 		
-<<<<<<< HEAD
-		Pageable pageable = PageRequest.of(page, 3, Sort.by(sorts));
-=======
 		Pageable pageable = PageRequest.of(page, 5, Sort.by(sorts));
->>>>>>> 06d4aa52b968978e032064d67137e33a72aa01b8
 		
 		return this.fundBoardRepository.findAll(pageable);
 	}

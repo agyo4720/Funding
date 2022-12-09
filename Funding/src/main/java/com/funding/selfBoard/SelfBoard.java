@@ -7,9 +7,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import javax.persistence.JoinColumn;
 =======
 >>>>>>> 06d4aa52b968978e032064d67137e33a72aa01b8
+=======
+import javax.persistence.JoinColumn;
+>>>>>>> origin
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 

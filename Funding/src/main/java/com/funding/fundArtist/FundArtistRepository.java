@@ -11,10 +11,15 @@ public interface FundArtistRepository extends JpaRepository<FundArtist, Integer>
 	Optional<FundArtist> findByusername(String username);
 	Optional<FundArtist> findByNickname(String nickname);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	
 	
 =======
 
 >>>>>>> 06d4aa52b968978e032064d67137e33a72aa01b8
+=======
+	
+	
+>>>>>>> origin
 	void save(FundArtistList fundArtistList);
 }
