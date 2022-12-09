@@ -253,30 +253,5 @@
 		})
 	</script>
 	
-	<script>
-		let val2 = $('#val2').val()
-		let fdid2 = $('#fdid2').val()
-	
-		$('#btn2').click(function(){
-		
-			$.ajax({
-				url:val1,
-				type:'POST',
-				data: {
-					id:fdid2
-				},
-				success:
-					function(result){
-						alert(result);
-					}
-				,
-				error: function(xhr){
-					console.log(xhr);
-					alert('아이디를 찾을 수 없습니다.');
-				}
-			})
-		})
-	</script>
-	
 </body>
 </html>
