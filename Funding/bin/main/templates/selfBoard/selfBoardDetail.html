@@ -25,16 +25,17 @@
 					</div>
 					<div class="pro_con">
 						<div class="view">
-							<h3 th:text="${selfBoard.subject}"></h3>
+							<label>아티스트</label>
+							<p th:text="${selfBoard.fundArtist.nickname}"></p>
 						</div>
 						<div class="view">
 							<label>장르</label>
-							<p th:utext="${selfBoard.genre}"></p>
+							<p th:text="${selfBoard.genre}"></p>
 						</div>
 					</div>
 				</div>
 				<div class="pro_txt">
-					<label>콘서트 내용</label>
+					<h3 th:text="${selfBoard.subject}"></h3>
 					<div class="content" th:utext="${selfBoard.content}"></div>
 				</div>
 			</div>
