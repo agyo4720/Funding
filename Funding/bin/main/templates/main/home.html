@@ -18,12 +18,19 @@
     <header th:replace="/main/nav"></header>
     
     <section>
+<<<<<<< HEAD
 		<!-- 지정펀딩 -->
 		<div class="view top">
 			<h2>지정 펀딩</h2>
 			<div class="list">
 				<div class="list_form" th:each="target : ${targetList}">
 					<div class="con_list">
+=======
+		<h2>지정 펀딩</h2>
+		<div class="sec_fund">
+			<div class="list_form" th:each="target : ${targetList}">
+				<div class="con_list">
+>>>>>>> 06d4aa52b968978e032064d67137e33a72aa01b8
 					<a href="../fundTarget/fundTargetDetail.html" th:href="@{|/fundTarget/detail/${target.id}|}">
 						<div class="image">
 							<div th:if="${target.imgPath != null}">
@@ -40,6 +47,7 @@
 				</div>
 			</div>
 		</div>
+<<<<<<< HEAD
 		<!-- 미지정 펀딩 -->
 		<div class="view bottm">
 			<h2>미지정 펀딩</h2>
@@ -57,6 +65,25 @@
 								<p th:text="${boardList.subject}">공연 이름</p>
 							</div>
 						</div>
+=======
+
+		<h2>미지정 펀딩</h2>
+		<div class="sec_fund">
+			<div class="list_form" th:each="boardList : ${boardList}">
+				<div class="con_list">
+					<a href="../fundBoard/fundBoard_detail.html" th:href="@{|/fundTarget/detail/${boardList.id}|}">
+						<div class="image">
+							<div th:if="${boardList.imgPath != null}">
+								<img th:src="${boardList.imgPath}" width="200px" height="265px" center>
+							</div>
+							<div th:if="${boardList.imgPath == null}">
+								<img th:src="|/fundTarget/img/${boardList.id}|" width="200px" height="265px" center>
+							</div>
+						</div>
+						<div class="con">
+							<p th:text="${boardList.subject}">공연 이름</p>
+						</div>
+>>>>>>> 06d4aa52b968978e032064d67137e33a72aa01b8
 					</a>
 				</div>
 			</div>

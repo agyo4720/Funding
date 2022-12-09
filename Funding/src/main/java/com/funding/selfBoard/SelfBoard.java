@@ -6,7 +6,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+<<<<<<< HEAD
 import javax.persistence.JoinColumn;
+=======
+>>>>>>> 06d4aa52b968978e032064d67137e33a72aa01b8
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -32,6 +35,14 @@ public class SelfBoard {
 	private String filePath;
 	
 	private String genre;
+<<<<<<< HEAD
+=======
+	
+	private Integer starPoint;
+	
+	@OneToMany(mappedBy = "selfBoard")
+	private List<Answer> answer;
+>>>>>>> 06d4aa52b968978e032064d67137e33a72aa01b8
 	
 	private Integer starPoint;
 	

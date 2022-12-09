@@ -57,6 +57,7 @@ public class FundArtistService {
 		fundArtist.setMobile(mobile);
 		this.fundArtistRepository.save(fundArtist);
 	}
+<<<<<<< HEAD
 	
 	// 해당 id로 데이터 찾기(박남규)
 	public FundArtist findById(Integer id) {
@@ -66,4 +67,6 @@ public class FundArtistService {
 		return fundArtist.get();
 	}
 	
+=======
+>>>>>>> 06d4aa52b968978e032064d67137e33a72aa01b8
 }

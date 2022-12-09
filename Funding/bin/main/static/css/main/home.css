@@ -38,6 +38,7 @@ section {
     font-weight: bold;
 }
 
+<<<<<<< HEAD
 .image img {
     opacity: 1;
     display: block;
@@ -53,3 +54,6 @@ section {
 .image:hover img {
     filter: brightness(50%) drop-shadow(2px 2px 2px rgb(83, 83, 83));
 }
+=======
+img {object-fit: cover;}
+>>>>>>> 06d4aa52b968978e032064d67137e33a72aa01b8

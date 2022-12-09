@@ -30,6 +30,10 @@
 				<h2>미지정 펀딩</h2>
 			</div>
 
+<<<<<<< HEAD
+=======
+			<!-- 공연 정보 -->
+>>>>>>> 06d4aa52b968978e032064d67137e33a72aa01b8
 			<!-- 카테고리 -->
 			<div class="int int_cate">
 				<label for="categorieName">카테고리</label>
@@ -46,6 +50,7 @@
 				<input type="text" id="subject" th:field="*{subject}" autocomplete="off" placeholder="제목을 입력하세요.">
 				<span class="errors" style="display: none">에러출력</span>
 			</div>
+<<<<<<< HEAD
 			
 			<!-- 공연장 -->
 			<div class="int int_place">
@@ -68,12 +73,43 @@
 				<span class="errors" style="display: none">에러출력</span>
 			</div>
 
+=======
+			
+>>>>>>> 06d4aa52b968978e032064d67137e33a72aa01b8
 			<!-- 공연일 -->
 			<div class="int int_date">
 				<label for="startDateTime">공연일</label>
 				<input type="datetime-local" id="startDateTime" th:field="*{startDateTime}" th:min="${nowTime}">
 				<span class="errors" style="display: none">에러출력</span>
 			</div>
+<<<<<<< HEAD
+=======
+
+			<!-- 공연장 -->
+			<div class="int int_place">
+				<label for="place">공연장</label>
+				<input type="text" id="place" th:field="*{place}" autocomplete="off" placeholder="장소를 입력하세요.">
+				<span class="errors" style="display: none">에러출력</span>
+			</div>
+			
+			<!-- 공연시간 -->
+			<div class="int int_runtime">
+				<label for="runtime">공연시간</label>
+				<input type="number" id="runtime" th:field="*{runtime}" autocomplete="off" placeholder="분 단위로 입력 입력하세요.">
+				<span class="errors" style="display: none">에러출력</span>
+			</div>
+			<!-- // 공연 정보 -->
+
+			<hr/>
+
+			<!-- 펀딩 정보 -->
+			<!-- 펀딩 기간 -->
+			<div class="int int_period">
+				<label for="fundDuration">펀딩기간<span>(오늘부터 시작)</span></label>
+				<input type="date" id="fundDuration" th:field="*{fundDuration}" th:min="${nowTime}" autocomplete="off">
+				<span class="errors" style="display: none">에러출력</span>
+			</div>
+>>>>>>> 06d4aa52b968978e032064d67137e33a72aa01b8
 			
 			<!-- 최소 펀딩 금액 -->
 			<div class="int int_minFund">
@@ -226,35 +262,61 @@
 			}
 		}
 
+<<<<<<< HEAD
 		function checkPlace(){
 			if(place.value === ""){
 				errors[2].innerHTML='공연장은 필수항목 입니다.';
+=======
+		function checkStartDateTime(){
+			if(startDateTime.value === ""){
+				errors[2].innerHTML='공연일은 필수항목 입니다.';
+>>>>>>> 06d4aa52b968978e032064d67137e33a72aa01b8
 				errors[2].style.display='block';
 			}else{
 				errors[2].style.display='none';
 			}
 		}
 		
+		function checkPlace(){
+			if(place.value === ""){
+				errors[3].innerHTML='공연장은 필수항목 입니다.';
+				errors[3].style.display='block';
+			}else{
+				errors[3].style.display='none';
+			}
+		}
+		
 		function checkRuntime(){
 			if(runtime.value === ""){
+<<<<<<< HEAD
 				errors[3].innerHTML='공연시간은 필수항목 입니다.'
 				errors[3].style.display='block'
+=======
+				errors[4].innerHTML='공연시간은 필수항목 입니다.'
+				errors[4].style.display='block'
+>>>>>>> 06d4aa52b968978e032064d67137e33a72aa01b8
 			}else{
-				errors[3].style.display='none'
+				errors[4].style.display='none'
 			}
 		}
 
 		function checkFundDuration(){
 			if(fundDuration.value === ""){
-				errors[4].innerHTML='펀딩 기간은 필수항목 입니다.'
-				errors[4].style.display='block'
+				errors[5].innerHTML='펀딩 기간은 필수항목 입니다.'
+				errors[5].style.display='block'
 			}else{
+<<<<<<< HEAD
 				errors[4].style.display='none'
 				fundTime = document.querySelector('#fundDuration').value
+=======
+				errors[5].style.display='none'
+				fundTime = document.querySelector('.fundDuration').value
+>>>>>>> 06d4aa52b968978e032064d67137e33a72aa01b8
         		fundTime += 'T00:00'
         		startDateTime.min = fundTime
 			}
 		}
+<<<<<<< HEAD
 
 		function checkStartDateTime(){
 			if(startDateTime.value === ""){
@@ -264,6 +326,8 @@
 				errors[5].style.display='none';
 			}
 		}
+=======
+>>>>>>> 06d4aa52b968978e032064d67137e33a72aa01b8
 		
 		function checkMinFund(){
 			if(minFund.value === ""){

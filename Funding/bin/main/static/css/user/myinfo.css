@@ -48,11 +48,14 @@ section {position: relative;}
 	background: #5c5c5c;
 }
 
+<<<<<<< HEAD
 #form2 .view input {
     margin: 3px 0;
     height: 30px;
 }
 
+=======
+>>>>>>> 06d4aa52b968978e032064d67137e33a72aa01b8
 #changePwdBtn{
     cursor: pointer;
     margin-left: 10px;

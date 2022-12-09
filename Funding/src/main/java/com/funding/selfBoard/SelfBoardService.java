@@ -36,6 +36,7 @@ public class SelfBoardService {
 		return selfBoard.get();
 	}
 	
+<<<<<<< HEAD
 
 	// 유저네임으로 찾기 // 중복에러뜸
 	public Optional<SelfBoard> findByUsername(String username) {
@@ -49,6 +50,13 @@ public class SelfBoardService {
 		
 		return this.selfBoardRepository.findByFundArtist(fundArtist).get();
 		
+=======
+	// 유저네임으로 찾기
+	public SelfBoard findByUsername(String nickname) {
+		Optional<FundArtist> fundArtist = fundArtistRepository.findByNickname(nickname);
+		Optional<SelfBoard> selfBoard = selfBoardRepository.findByFundArtist(fundArtist.get());
+		return selfBoard.get();
+>>>>>>> 06d4aa52b968978e032064d67137e33a72aa01b8
 	}
 
 }

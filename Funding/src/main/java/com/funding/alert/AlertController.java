@@ -2,7 +2,10 @@ package com.funding.alert;
 
 
 import java.time.LocalDate;
+<<<<<<< HEAD
 import java.time.LocalDateTime;
+=======
+>>>>>>> 06d4aa52b968978e032064d67137e33a72aa01b8
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -209,6 +212,11 @@ public class AlertController {
 				fundTargetListService.delete(user1, i.getFundBoardTarget());
 			}
 		}
+		
+		
+		
+		
+		
 		
 		
 		
