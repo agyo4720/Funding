@@ -173,7 +173,8 @@ public class FundBoardController {
 
 		FundBoard fundBoard = this.fundBoardService.findById(id);
 		model.addAttribute("fundBoard", fundBoard);
-
+		
+		
 		List<Answer> answerList = this.answerService.findByFundBoard(fundBoard);
 		model.addAttribute("answerList", answerList);
 		List<FundArtistList> fundArtistList = this.fundArtistListService.findByFundBoard(fundBoard);
@@ -193,7 +194,7 @@ public class FundBoardController {
 			sale.get(i).getPayCode();
 			model.addAttribute("payCode",sale.get(i).getPayCode());
 		}
-
+		
 		//펀딩 유무 확인
 		boolean result = false;
 		if(principal != null) {
@@ -209,6 +210,7 @@ public class FundBoardController {
 
 		return "/fundBoard/fundBoard_detail";
 	}
+		
 
 	// id로 카테고리 리스트 가져오기
 	@RequestMapping("/categorie/{id}")
@@ -253,7 +255,6 @@ public class FundBoardController {
 			}
 		}
 
-		
 		//미지정 리스트 삭제
 		List<FundList> fList = fundListService.findByFundBoard(nick);
 		for(int i=0;i>fList.size();i++) {
@@ -268,6 +269,6 @@ public class FundBoardController {
 		return "redirect:/fundBoard/list";
 	}
 	
-	// 2022/12/05 - 1 작업중
+	// 2022/12/09 - 1 작업중
 
 }

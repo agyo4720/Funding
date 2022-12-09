@@ -64,7 +64,7 @@
 			<!-- 펀딩기간 -->
 			<div class="int int_period">
 				<label for="fundDuration">펀딩기간<span>(오늘부터 시작)</span></label>
-				<input type="date" id="fundDuration" th:field="*{fundDuration}" th:min="${nowTime}" autocomplete="off">
+				<input class="fundDuration" type="date" id="fundDuration" th:field="*{fundDuration}" th:min="${nowTime}" autocomplete="off">
 				<span class="errors" style="display: none">에러출력</span>
 			</div>
 
@@ -162,18 +162,21 @@
 	
 	<script>
 		// 유효성 검사 시작
-		var categorieName = document.querySelector('#categorieName'); 
-		var subjec = document.querySelector('#subject');
-		var place = document.querySelector('#place');
-		var startDateTime = document.querySelector('#startDateTime');
-		var fundDuration = document.querySelector('#fundDuration');
-		var runtime = document.querySelector('#runtime');
-		var minFund = document.querySelector('#minFund');
-		var fundAmount = document.querySelector('#fundAmount');
-		var fundAmount = document.querySelector('#fundAmount');
-		var content = document.querySelector('#content');
+		var btn = document.querySelector('#btn');
+		var valid = false
+		let fundTime
 		
-		var errors = document.querySelectorAll('.errors');
+		let categorieName = document.querySelector('#categorieName'); 
+		let subjec = document.querySelector('#subject');
+		let place = document.querySelector('#place');
+		let startDateTime = document.querySelector('#startDateTime');
+		let fundDuration = document.querySelector('#fundDuration');
+		let runtime = document.querySelector('#runtime');
+		let minFund = document.querySelector('#minFund');
+		let fundAmount = document.querySelector('#fundAmount');
+		let content = document.querySelector('#content');
+		
+		let errors = document.querySelectorAll('.errors');
 		
 		categorieName.addEventListener('focusout', checkCategorieName);
 		subject.addEventListener('focusout', checkSubject);
@@ -185,6 +188,25 @@
 		fundAmount.addEventListener('focusout', checkFundAmount);
 		content.addEventListener('focusout', checkContent);
 		summernote.addEventListener('focusout', checkSummernote);
+		
+		btn.addEventListener('click', function(e) {
+		    let count = 0;
+		    for(i=0; i < error.length ; i++){
+		        if(error[i].style.display == 'none'){
+		            count += 1
+		        }
+		    }
+		    
+		    if(count == error.length){
+		        valid = true
+		    }
+		    
+		    if(valid){
+		        
+		    }else{
+		        e.preventDefault();
+		    }
+		});
 		
 		function checkCategorieName(){
 			if(categorieName.value === ""){
@@ -230,7 +252,7 @@
 				errors[4].style.display='none'
 				fundTime = document.querySelector('.fundDuration').value
         		fundTime += 'T00:00'
-        		startDate.min = fundTime
+        		startDateTime.min = fundTime
 			}
 		}
 

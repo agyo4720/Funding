@@ -13,6 +13,8 @@
     <link rel="shortcut icon" href="/img/favicon/ms-icon-310x310.png" type="image/x-icon" />
 </head>
 <body>
+
+	<span th:text="${selfBoard}"></span>
 	
 	<!-- 홈페이지 상단 nav -->
     <header th:replace="/main/nav"></header>
@@ -117,27 +119,25 @@
 		<!-- 참여 아티스트 -->
 		<div>
 			<!-- 참여 아티스트 유효성 검사 시작 -->
-			<input hidden class="username1" th:value="${#authentication.getPrincipal().getUsername()}">
+			<input hidden class="username" th:value="${#authentication.getPrincipal().getUsername()}">
+			
 			<div>현재 참여중인 아티스트</div>
 			
 			<div sec:authorize="hasRole('ROLE_ARTIST')">			
-				<a id="btn1" th:href="@{|/fundArtistList/join/${fundBoard.id}|}"><button>참여하기</button></a>
+				<button id="btn1">참여하기</button>
+				<input hidden id="val1" th:value="@{|/fundArtistList/join/${fundBoard.id}|}">
+				<input hidden id="fbid1" th:value="${fundBoard.id}">
 			</div>
-			
+					
 			<div th:each="fundArtistList : ${fundArtistList}">
-<<<<<<< HEAD
-			
-				<span th:text="${fundArtistList.fundArtist.nickname}"></span>
-			
-=======
 				<img th:src="|/selfBoard/img/${fundArtistList.fundArtist.selfBoard.id}|" width="30" height="35">
 				<a th:href="@{|/selfBoard/detail/${fundArtistList.fundArtist.nickname}|}" th:text="${fundArtistList.fundArtist.nickname}">자기소개 보기</a>
-				<input hidden class="username" th:value="${#authentication.getPrincipal().getUsername()}">
->>>>>>> 869f71b10f6fd2942e69b9371a7042710054009c
 				<a id="btn2" sec:authorize="hasRole('ROLE_USER')" th:href="@{|/fundArtistList/score/${fundArtistList.id}/${fundBoard.id}|}">투표하기</a>
+				
 				<span th:text="|${fundArtistList.fundUserList.size()}개|"></span>
 				<input hidden class="fundArtistList" th:value="${fundArtistList.fundArtist.username}">
 			</div>
+			
 			<!-- 참여 아티스트 유효성 검사 끝 -->
 		</div>
 		<!-- // 참여 아티스트 -->
@@ -162,7 +162,7 @@
 		
 		<!-- 댓글 -->
 		<div class="con_comment">
-			<div class="tutke">
+			<div class="title">
 				<h2>댓글</h2>
 			</div>
 
@@ -176,7 +176,7 @@
 			<div class="cmt_view" th:each="answer : ${answerList}">
 				<div class="cmt">
 					<div class="cmt_head">
-						<p class="id" th:text="${answer.fundUser.username}">아이디</p>
+						<p class="id" th:text="${answer.fundUser} != null ? ${answer.fundUser.username} : ${answer.fundArtist.username}">아이디</p>
 						<p class="time" th:text="${#temporals.format(answer.createDate, 'MM-dd HH:mm:ss')}">댓글 시간</p>
 						<a class="cmt_delete" th:href="@{|/answer/delete/${answer.id}?location=board&id=${fundBoard.id}|}">삭제</a>
 					</div>
@@ -191,23 +191,28 @@
 		</div>
 	</section>
 	
+	<!--
 	<script>
 		// 참여 아티스트 유효성 검사 시작
-		let username1 = document.querySelector('.username1').value;
+		let username = document.querySelector('.username').value;
 		let fundArtistList = document.querySelectorAll('.fundArtistList');
+		let fundUserList = document.querySelectorAll('.fundUserList');
+		let selfBoard = document.querySelector('.selfBoard');
+	
 		let btn1 = document.querySelector('#btn1');
+		let btn2 = document.querySelector('#btn2');
 
 		btn1.addEventListener('click', check);
 
 		function check(){
 
 			console.log('실행되었습니다!');
-
+			
 			let bol = true;
 
 			fundArtistList.forEach(function(e){
 
-				if(e.value == username1){
+				if(e.value == username){
 					bol = false;
 				}
 			})
@@ -217,13 +222,61 @@
 			}else{
 				alert("이미 참여하였습니다.");
 			}
-		
 		}
 		// 참여 아티스트 유효성 검사 끝	
+		
+	</script>
+	-->
+	
+	<script>
+		let val1 = $('#val1').val()
+		let fdid1 = $('#fdid1').val()
+	
+		$('#btn1').click(function(){
+		
+			$.ajax({
+				url:val1,
+				type:'POST',
+				data: {
+					id:fdid1
+				},
+				success:
+					function(result){
+						alert(result);
+					}
+				,
+				error: function(xhr){
+					console.log(xhr);
+					alert('아이디를 찾을 수 없습니다.');
+				}
+			})
+		})
 	</script>
 	
+	<script>
+		let val2 = $('#val2').val()
+		let fdid2 = $('#fdid2').val()
 	
+		$('#btn2').click(function(){
+		
+			$.ajax({
+				url:val1,
+				type:'POST',
+				data: {
+					id:fdid2
+				},
+				success:
+					function(result){
+						alert(result);
+					}
+				,
+				error: function(xhr){
+					console.log(xhr);
+					alert('아이디를 찾을 수 없습니다.');
+				}
+			})
+		})
+	</script>
 	
-
 </body>
 </html>
