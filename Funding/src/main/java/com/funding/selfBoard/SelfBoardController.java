@@ -92,6 +92,7 @@ public class SelfBoardController {
 		
 		model.addAttribute("selfBoard", selfBoard.get());
 		return "/selfBoard/selfBoardDetail";
+//		sdf
 	}
 	
 	
