@@ -86,7 +86,7 @@ public class AlertService {
 			
 			
 			Alert alert = new Alert();
-			alert.setContent(fundBoardTarget.getSubject() + "<br/>펀딩기간 만료");
+			alert.setContent(fundBoardTarget.getSubject() + "<br/>펀딩기간 만료되었습니다.");
 			alert.setUrl(url);
 			alert.setWitchAlert("마감");
 			alert.setHostArtist(artist.get());
@@ -97,7 +97,7 @@ public class AlertService {
 		}
 		
 		Alert alert = new Alert();
-		alert.setContent(fundBoardTarget.getSubject() + "<br/>펀딩기간이 만료");
+		alert.setContent(fundBoardTarget.getSubject() + "<br/>펀딩기간이 만료되었습니다.");
 		alert.setUrl(url);
 		alert.setWitchAlert("마감");
 		alert.setHostUser(user.get());
@@ -172,7 +172,7 @@ public class AlertService {
 		String url = "/fundBoard/detail/" + fundBoard.getId();
 		
 		Alert alert = new Alert();
-		alert.setContent(fundBoard.getSubject() + " 펀딩기간이 만료되었습니다");
+		alert.setContent(fundBoard.getSubject() + "<br/>펀딩기간이 만료되었습니다");
 		alert.setUrl(url);
 		alert.setWitchAlert("마감");
 		alert.setHostUser(user.get());
@@ -187,7 +187,7 @@ public class AlertService {
 		String url = "/fundBoard/detail/" + fundBoard.getId();
 		
 		Alert alert = new Alert();
-		alert.setContent(fundBoard.getSubject() + " 펀딩 100% 달성");
+		alert.setContent(fundBoard.getSubject() + "<br/>펀딩 100% 달성");
 		alert.setUrl(url);
 		alert.setWitchAlert("펀딩");
 		alert.setHostUser(user.get());
@@ -230,7 +230,7 @@ public class AlertService {
 				for(Sale s : sList) {
 					Optional<FundUser> fUser = fundUserService.findByuserName(s.getUsername());
 					
-					cancelsController.totalCancel(s.getPayCode(), "아티스트 없어서 환불");
+					cancelsController.totalCancel(s.getPayCode(), "<br/>아티스트 미참여로 인한 환불");
 					cancelsService.cancelInfo(
 							s.getOrederId()
 							,s.getPayMoney()
@@ -246,7 +246,6 @@ public class AlertService {
 		}
 		
 	}
-	
 	
 	
 	
@@ -272,7 +271,7 @@ public class AlertService {
 		
 		for(FundTargetList fl : fundTargetList) {
 			Alert alert = new Alert();
-			alert.setContent(fl.getFundBoardTarget().getSubject() + " 게시글이 삭제되어 펀딩이 취소되었습니다.");
+			alert.setContent(fl.getFundBoardTarget().getSubject() + "<br/>게시글이 삭제되어 펀딩이 취소되었습니다.");
 			alert.setHostUser(fl.getFundUser());
 			alert.setWitchAlert("취소");
 			
@@ -284,7 +283,7 @@ public class AlertService {
 	public void deleteBoardThenAlert(List<FundList> fundList) {
 		for(FundList fl : fundList) {
 			Alert alert = new Alert();
-			alert.setContent(fl.getFundBoard().getSubject() + "게시글이 삭제되어 펀딩이 취소되었습니다.");
+			alert.setContent(fl.getFundBoard().getSubject() + "<br/>게시글이 삭제되어 펀딩이 취소되었습니다.");
 			alert.setHostUser(fl.getFundUser());
 			alert.setWitchAlert("취소");
 			
@@ -295,7 +294,7 @@ public class AlertService {
 	//아티스트 선정 후 수정 url 주기
 	public void modifyBoardAlert(FundArtistList fundArtistList) {
 		Alert alert = new Alert();
-		alert.setContent(fundArtistList.getFundBoard().getSubject() + "펀딩에 선정 되었습니다. 공연세부정보를 수정해 주세요!");
+		alert.setContent(fundArtistList.getFundBoard().getSubject() + "<br/>펀딩에 선정 되었습니다.<br/>공연세부정보를 수정해 주세요!");
 		alert.setHostArtist(fundArtistList.getFundArtist());
 		alert.setWitchAlert("수정");
 		alert.setUrl("/fundBoard/modify/" + fundArtistList.getFundBoard().getId());
