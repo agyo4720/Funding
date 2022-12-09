@@ -25,7 +25,7 @@
         </li>
 
         <li class="wli" sec:authorize="hasRole('ROLE_ARTIST')">
-            <a class="wa info" href="/">자기소개 보기</a>
+            <a class="wa info" th:href="@{|/selfBoard/detail/${myInfo.username}|}">자기소개 보기</a>
         </li>
 
         <li class="wli" sec:authorize="hasRole('ROLE_ARTIST')">
