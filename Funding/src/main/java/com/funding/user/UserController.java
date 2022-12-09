@@ -81,7 +81,7 @@ public class UserController {
 	@ResponseBody
 	public String myInfoAjax(@RequestParam("artist") String artist) {
 		Optional<FundArtist> FA = this.fundArtistService.findByuserName(artist);
-		return FA.get().getNickname();
+		return FA.get().getUsername();
 	}
 	
 	// 비밀번호 초기화 하기위한 id 입력 폼 요청
