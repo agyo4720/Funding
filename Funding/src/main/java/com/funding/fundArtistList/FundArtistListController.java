@@ -115,10 +115,6 @@ public class FundArtistListController {
 		return String.format("redirect:/fundBoard/detail/%s", fbid);
 	}
 	
-
-	
-	
-	
 	//미지정펀딩 참여한 목록 불러오기(ajax)
 	@RequestMapping("/show")
 	@ResponseBody
