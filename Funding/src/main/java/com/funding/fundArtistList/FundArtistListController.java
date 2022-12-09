@@ -60,7 +60,7 @@ public class FundArtistListController {
 	}
 	
 	// 펀드 참여 아티스트 투표하기
-	@RequestMapping("/score/{id}")
+	@RequestMapping("/score/{id}/{fbid}")
 	public String score(
 			@PathVariable("id") Integer id,
 			@PathVariable("fbid") Integer fbid,

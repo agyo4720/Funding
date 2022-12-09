@@ -280,6 +280,10 @@ public class AlertController {
 					FundUser user = fList.get(j).getFundUser();
 					alertService.fundBoardEndAmount(fundBoard, user.getUsername());
 				}
+			}else if(bList.get(i).getFundCurrent() < bList.get(i).getFundAmount() && 
+					bList.get(i).getState().equals("100%⇑⇑⇑")) {
+				bList.get(i).setState("진행중");
+				fundBoardService.addFundBoard(bList.get(i));
 			}
 		}
 		
