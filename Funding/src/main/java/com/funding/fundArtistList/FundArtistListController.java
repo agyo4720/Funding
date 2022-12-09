@@ -1,6 +1,8 @@
 package com.funding.fundArtistList;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -9,12 +11,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.funding.fundArtist.FundArtist;
 import com.funding.fundArtist.FundArtistService;
 import com.funding.fundBoard.FundBoard;
 import com.funding.fundBoard.FundBoardService;
+import com.funding.fundTargetList.FundTargetList;
 import com.funding.fundUser.FundUser;
 import com.funding.fundUser.FundUserService;
 import com.funding.selfBoard.SelfBoardService;
@@ -111,4 +116,36 @@ public class FundArtistListController {
 	}
 	
 
+	
+	
+	
+	//미지정펀딩 참여한 목록 불러오기(ajax)
+	@RequestMapping("/show")
+	@ResponseBody
+	public List<HashMap<String, String>> currentFundList(@RequestParam("artist")String username) {
+		
+		Optional<FundArtist> artist = fundArtistService.findByuserName(username);
+		
+		
+		//현재 펀딩목록 추가
+		List<FundArtistList> faList = fundArtistListService.findByFundArtist(artist.get());
+		List<HashMap<String, String>> fundList = new ArrayList<>();
+		for(int i=0; i<faList.size(); i++) {
+			HashMap<String, String> fmap = new HashMap<String, String>();
+			
+			
+			fmap.put("fundName", faList.get(i).getFundBoard().getSubject());
+			fmap.put("status", faList.get(i).getFundBoard().getState());
+			fmap.put("url", "/fundBoard/detail/" + faList.get(i).getFundBoard().getId());
+			double now = faList.get(i).getFundBoard().getFundCurrent();
+			double max = faList.get(i).getFundBoard().getFundAmount();
+			double percent = now / max * 100.0;
+			fmap.put("percent", String.format("%.2f",percent) + "%");
+			
+			fundList.add(fmap);
+		}
+		
+		return fundList;
+	}
+	
 }

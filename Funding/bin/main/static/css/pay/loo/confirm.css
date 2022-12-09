@@ -1,12 +1,10 @@
-section {
-    position: relative;
-}
+section {position: relative;}
 
 .title {padding: 30px 0;}
 
 .payinfo {
-    position: absolute;
-    left: 270px;
+    display: flex;
+    justify-content: center;
 }
 
 table, th, td {
@@ -21,9 +19,7 @@ table, th, td {
 
 thead {background: #ababab;}
 
-th:first-child {
-    padding: 5px 5px;
-}
+th:first-child {padding: 5px 5px;}
 
 th:nth-child(3) {width: 300px;}
 th:nth-child(5) {width: 110px;}
@@ -56,7 +52,7 @@ button:hover {background-color: #5e5252;}
 
 .page a {
     padding: 5px 10px;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
 }
 

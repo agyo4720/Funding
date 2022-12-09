@@ -1,6 +1,7 @@
 package com.funding.remit;
 
-import java.sql.Date;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -35,6 +36,6 @@ public class Remit {
 	private LocalDateTime requestedAt ; //등록날짜
 	
 	@Column(name = "payoutDate  ")
-	private LocalDateTime  payoutDate  ; //공연완료날짜
+	private String  payoutDate  ; //공연완료날짜
 	
 }

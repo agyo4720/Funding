@@ -85,9 +85,12 @@ public class SelfBoardController {
 	@RequestMapping("/detail/{username}")
 	public String showDetail(@PathVariable("username")String username, Model model) {
 		
-		SelfBoard selfBoard = selfBoardService.findByUsername(username);
+		Optional<SelfBoard> selfBoard = selfBoardService.findByUsername(username);
+		if(selfBoard.isEmpty()) {
+			return "redirect:/selfBoard/form";
+		}
 		
-		model.addAttribute("selfBoard", selfBoard);
+		model.addAttribute("selfBoard", selfBoard.get());
 		return "/selfBoard/selfBoardDetail";
 	}
 	

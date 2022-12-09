@@ -1,17 +1,13 @@
 section {position: relative;}
 
 .myinfo {
-    position: absolute;
-    left: 500px;
+    display: flex;
+    justify-content: center;
 }
 
 .title {padding: 30px 0;}
 
-.view {
-    display: flex;
-    margin: 13px 0;
-    height: 30px;
-}
+.view {margin-bottom: 10px;}
 
 .view p {
     width: 100px;
@@ -50,6 +46,11 @@ section {position: relative;}
 
 .myinfo button:hover {
 	background: #5c5c5c;
+}
+
+#form2 .view input {
+    margin: 3px 0;
+    height: 30px;
 }
 
 #changePwdBtn{

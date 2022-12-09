@@ -1,5 +1,6 @@
 package com.funding.remit;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ public class RemitService {
 	private final RemitRepository remitRepository;
 
 	//송금한내역
-	public void remitInfo(String subMallId, Integer payoutAmount, LocalDateTime payoutDate) {
+	public void remitInfo(String subMallId, Integer payoutAmount, String payoutDate) {
 		List<Remit> rList = new ArrayList<>(); //서브몰등록 리스트
 		Remit remit = new Remit();
 		remit.setSubMallId(subMallId);//고유ID

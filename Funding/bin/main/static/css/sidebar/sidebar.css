@@ -1,3 +1,4 @@
+/* 사이드바 버튼 */
 .sidebarbtn {
 	position: fixed;
 	width: 100px;
@@ -20,6 +21,7 @@
 	margin: 0 12px;
 }
 
+/* 사이드바 */
 .sidebar {
 	position: fixed;
     padding: 20px;
@@ -35,36 +37,40 @@
 .sidebar hr {margin: 20px 0;}
 .sidebar h4 {margin-bottom: 10px;}
 
-.sidebar.active{
-	 transform: translateX(-240px);
-}
-
-
+.sidebar.active {transform: translateX(-240px);}
 
 /* 알림 */
-.alert a {
-    color: #fff;
-    padding: 5px 0;
+.alertbox {
+	display: block;
+	margin: 15px 0px;
+	padding: 10px;
+	color: #fff;
+	background-color: #666666;
+	border-radius: 5px;
 }
 
-.alert a:hover {
-    text-decoration: underline;
-    text-underline-position: under;
+.alert a {
+	font-size: 14px;
+	color: #fff;
+}
+
+.alert_con {
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 /* 현재 펀딩중인 목록 */
-.fundList a div {
-    color: #fff;
-    padding: 5px 0;
+.fundTargetList a, .fundList a {
+	width: 100%;
+	font-size: 14px;
+	color: #fff;
 }
 
-.fundList a div:hover {
-    text-decoration: underline;
-    text-underline-position: under;
-}
-
-.alertbox{
-	border: 2px solid rgb(255, 48, 48);
-	margin: 15px 0px;
-	border-radius: 5px;
+.alert_status {
+	display: inline-block;
+	background-color: #888888;
+	padding: 3px 10px;
+	margin-top: 5px;
+	border-radius: 10px;
 }

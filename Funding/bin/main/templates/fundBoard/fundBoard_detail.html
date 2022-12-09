@@ -46,37 +46,37 @@
 			<!-- 우측 -->
 			<div class="right">
 				<!-- 공연 상세 정보 -->
-				<!-- 공연 진행 상태 -->
 				<div class="view">
 					<div class="status">
 						<div th:text="${fundBoard.state}">상태</div>
 					</div>
 				</div>
-				<!-- 작성자 -->
+
 				<div class="view">
 					<label for="writer">작성자</label>
 					<p th:text="${fundBoard.fundUser.username}"></p>
 				</div>
-				<!-- 공연일 -->
+
 				<div class="view">
 					<label for="startDate">공연일</label>
 					<p th:text="${#temporals.format(fundBoard.startDateTime, 'yyyy-MM-dd (E) HH:mm')}">공연일</p>
 				</div>
-				<!-- 공연장 -->
+
 				<div class="view">
 					<label for="place">공연장</label>
 					<p th:text="${fundBoard.place}"></p>
 				</div>
-				<!-- 공연 시간 -->
+
 				<div class="view">
 					<label for="runtime">공연시간</label>
 					<p th:text="|${fundBoard.runtime}분|">공연시간</p>
 				</div>
-				<!-- // 공연 상세 정보 -->
+
 				<div class="con_hr_detail">
 					<hr/>
 				</div>
 				
+				<!-- 펀딩 정보 -->
 				<div class="view int_progress">
                 	<progress th:value="|${fundBoard.fundCurrent * 100 / fundBoard.fundAmount}|" max="100"></progress>
                 	<span th:text="|${fundBoard.fundCurrent * 100 / fundBoard.fundAmount}%|"></span>
@@ -86,23 +86,28 @@
 					<label for="fundCurrent">현재 펀딩 금액</label>
 					<p th:text="|${#numbers.formatInteger(fundBoard.fundCurrent, 1, 'COMMA')}원|"></p>
 				</div>
+
 				<div class="view" id="fundAmount">
 					<label for="fundAmount">총 펀딩 금액</label>
 					<p th:text="|${#numbers.formatInteger(fundBoard.fundAmount, 3, 'COMMA')}원|"></p>
 				</div>
+
 				<div class="view">
 					<label for="duration">펀딩기간</label>
 					<p th:text="|${#temporals.format(fundBoard.createDate, 'yyyy-MM-dd (E)')} ~ 
 						${#temporals.format(fundBoard.fundDuration, 'yyyy-MM-dd (E)')}|"></p>
 				</div>
+
 				<div class="view">
 					<label for="count">현재 인원</label>
 					<p th:text="|${fundBoard.currentMember}명|"></p>
 				</div>
+
 				<div class="view minFund">
 					<label for="minFund">최소 펀딩 금액</label>
 					<p th:text="|${#numbers.formatInteger(fundBoard.minFund, 3, 'COMMA')}원|"></p>
 				</div>
+
 				<div sec:authorize="hasRole('ROLE_USER')">
 					<button th:if="${result == true}" class="con_btn" th:onclick="'location.href=\''+ @{/pay/can/cancel(paymentKey=${payCode})} + '\''" type="submit">환불하기</button>
 					<button th:if="${result == false}" class="con_btn" th:onclick="'location.href=\''+ @{|/pay/tossPay/${fundBoard.id}|} + '\''">결제하기</button>
@@ -119,6 +124,7 @@
 		<!-- 참여 아티스트 -->
 		<div>
 			<!-- 참여 아티스트 유효성 검사 시작 -->
+<<<<<<< HEAD
 			<input hidden class="username" th:value="${#authentication.getPrincipal().getUsername()}">
 			
 			<div>현재 참여중인 아티스트</div>
@@ -140,6 +146,51 @@
 			
 			<!-- 참여 아티스트 유효성 검사 끝 -->
 		</div>
+=======
+			<div sec:authorize="isAuthenticated()">
+				<input hidden class="username1" th:value="${#authentication.getPrincipal().getUsername()}">
+			</div>
+			<div class="art_head">
+				<div class="title">
+					<h2>현재 참여중인 아티스트</h2>
+				</div>
+				
+				<div class="art_part" sec:authorize="hasRole('ROLE_ARTIST')">			
+					<a id="btn1" th:href="@{|/fundArtistList/join/${fundBoard.id}|}">참여하기</a>
+				</div>
+			</div>
+			
+			<div class="art_view">
+
+				<div class="art_con" th:each="fundArtistList : ${fundArtistList}">
+					<!-- 프로필 -->
+					<div class="profile">
+						<div class="image">
+							<img th:src="|/selfBoard/img/${fundArtistList.fundArtist.selfBoard.id}|"/>
+						</div>
+						<div class="pr">
+							<h3><a th:href="@{|/selfBoard/detail/${fundArtistList.fundArtist.nickname}|}"
+								th:text="${fundArtistList.fundArtist.nickname}">자기소개 보기</a></h3>
+							</div>
+							<div sec:authorize="isAuthenticated()">
+								<input hidden class="username" th:value="${#authentication.getPrincipal().getUsername()}"/>
+							</div>
+						</div>
+						
+						<!-- 투표수 -->
+						<div class="vote">
+							<span th:text="|${fundArtistList.fundUserList.size()}개|"></span>
+							<!-- 투표 버튼 -->
+							<a id="btn2" sec:authorize="hasRole('ROLE_USER')"
+							th:href="@{|/fundArtistList/score/${fundArtistList.id}/${fundBoard.id}|}">투표하기</a>
+							<input hidden class="fundArtistList" 
+							th:value="${fundArtistList.fundArtist.username}"/>
+						</div>
+					</div>
+					<!-- 참여 아티스트 유효성 검사 끝 -->
+				</div>
+			</div>
+>>>>>>> a33ba8b888fb81e8ebdede54f003d6f8ca4e0096
 		<!-- // 참여 아티스트 -->
 		
 		<div class="con_hr">

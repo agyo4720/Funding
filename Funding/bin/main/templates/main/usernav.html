@@ -2,25 +2,40 @@
 
 <nav>
     <h3>마이페이지</h3>
-
+    
     <hr/>
 	
     <ul>
         <li><a href="/user/myInfo/">회원 정보</a></li>
-        <li><a href="/pay/loo/confirm">결제</a></li>
+        <li sec:authorize="hasRole('ROLE_USER')"><a href="/pay/loo/confirm">결제</a></li>
         <li><a href="/categorie/list">카테고리 리스트</a></li>
         <li sec:authorize="hasRole('ROLE_ARTIST')"><a href="/pay/loo/lookup">계좌관리</a></li>
-        <li sec:authorize="hasRole('ROLE_ARTIST')"><a th:href="@{|/selfBoard/detail/${myInfo.nickname}|}">자기소개 보기</a></li>
+        <li sec:authorize="hasRole('ROLE_ARTIST')"><a class="info">자기소개 보기</a></li>
         <li sec:authorize="hasRole('ROLE_ARTIST')"><a href="/selfBoard/form">자기소개 작성</a></li>
     </ul>
 </nav>
-
+<input hidden class="artist" th:value="${#authentication.getPrincipal().getUsername()}"/>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
     let url = window.location.search
     let Params = new URLSearchParams(url)
-
+    let artist = $(".artist").val()
     
-    console.log(Params)
+    let info = document.querySelector(".info")
+    let infoUrl = "/selfBoard/detail/"
+    if(info != null){
+    	$.ajax({
+    		url : '/user/myInfo/ajax'
+    		,data : 'artist='+artist
+    		,success : function(result){
+    			infoUrl += result
+    			info.href= infoUrl
+    		}
+    		,error: function(){
+    			alert("에러발생")
+			}
+   		})
+    }
     
     
     // let cateList = document.querySelectorAll('.cate')

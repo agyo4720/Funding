@@ -42,8 +42,9 @@ section {
     padding: 10px 20px;
     margin: 20px auto;
     width: 900px;
+    background-color: #f8f8f8;
     border: 0.1px solid #bfbfbf;
-    border-radius: 30px;
+    border-radius: 15px;
 }
 
 .con_list {
@@ -53,7 +54,10 @@ section {
 
 .image {margin: 10px;}
 
-img {object-fit: cover;}
+.image img {
+    object-fit: cover;
+    border-radius: 5px;
+}
 
 .con {
     margin: 20px 0 20px 40px;
@@ -64,10 +68,11 @@ img {object-fit: cover;}
     display: inline-block;
     padding: 3px 15px;
     margin-bottom: 7px;
+    background-color: #B00E0E;
     border: 2px solid #B00E0E;
     border-radius: 20px;
     font-weight: bold;
-    color: #B00E0E;
+    color: #fff;
 }
 
 .con_title {
@@ -108,8 +113,9 @@ img {object-fit: cover;}
     margin-right: 25px;
     width: 150px;
     height: 150px;
+    color: #fff;
     border-radius: 50%;
-    background: #eba7a7;
+    background: #cf4b4b;
     text-align: center;
 }
 

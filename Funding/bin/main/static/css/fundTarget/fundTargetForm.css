@@ -56,6 +56,8 @@ section select, input[type=radio], img {cursor: pointer;}
     padding: 7px 10px;
 }
 
+.int_image img {border-radius: 5px;}
+
 /* 작성 완료 버튼 */
 section button {
     cursor: pointer;
