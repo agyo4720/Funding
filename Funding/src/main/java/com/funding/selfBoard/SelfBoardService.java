@@ -43,12 +43,12 @@ public class SelfBoardService {
 		Optional<SelfBoard> selfBoard = selfBoardRepository.findByFundArtist(fundArtist.get());
 		return selfBoard;
 	}
-	
+		
 
 	public SelfBoard findByFundArtist(FundArtist fundArtist) {
-		
+			
 		return this.selfBoardRepository.findByFundArtist(fundArtist).get();
-		
+			
 	}
 
 }
