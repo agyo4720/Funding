@@ -1,17 +1,36 @@
 <link rel="stylesheet" href="/css/main/usernav.css">
 
-<nav>
-    <h3>마이페이지</h3>
+<nav class="wnav">
+    <div class="wtitle">
+        <h3 class="wh3">마이페이지</h3>
+    </div>
 
-    <hr/>
+    <hr class="whr"/>
 	
-    <ul>
-        <li><a href="/user/myInfo/">회원 정보</a></li>
-        <li sec:authorize="hasRole('ROLE_USER')"><a href="/pay/loo/confirm">결제</a></li>
-        <li><a href="/categorie/list">카테고리 리스트</a></li>
-        <li sec:authorize="hasRole('ROLE_ARTIST')"><a href="/pay/loo/lookup">계좌관리</a></li>
-        <li sec:authorize="hasRole('ROLE_ARTIST')"><a class="info" href="/">자기소개 보기</a></li>
-        <li sec:authorize="hasRole('ROLE_ARTIST')"><a href="/selfBoard/form">자기소개 작성</a></li>
+    <ul class="wul">
+        <li class="wli">
+            <a class="wa" href="/user/myInfo/">회원 정보</a>
+        </li>
+
+        <li class="wli" sec:authorize="hasRole('ROLE_USER')">
+            <a href="/pay/loo/confirm">결제</a>
+        </li>
+        
+        <li class="wli">
+            <a class="a" href="/categorie/list">카테고리 리스트</a>
+        </li>
+
+        <li class="wli" sec:authorize="hasRole('ROLE_ARTIST')">
+            <a class="wa" href="/pay/loo/lookup">계좌관리</a>
+        </li>
+
+        <li class="wli" sec:authorize="hasRole('ROLE_ARTIST')">
+            <a class="wa info" href="/">자기소개 보기</a>
+        </li>
+
+        <li class="wli" sec:authorize="hasRole('ROLE_ARTIST')">
+            <a class="wa" href="/selfBoard/form">자기소개 작성</a>
+        </li>
     </ul>
 </nav>
 <input hidden class="artist" th:value="${#authentication.getPrincipal().getUsername()}"/>
