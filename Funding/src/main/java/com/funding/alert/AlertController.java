@@ -205,8 +205,7 @@ public class AlertController {
 		//LocalDateTime testDate = LocalDateTime.parse("2023-12-25 12:00", format1);
 		//LocalDateTime.now().plusDays(7);
 		for(FundTargetList i : tList) {
-			if(i.getFundBoardTarget().getStartDate().isBefore(LocalDateTime.now().plusDays(7))) {
-				log.info("리스트 삭제 할까요?");
+			if(i.getFundBoardTarget().getStartDate().plusDays(7).isBefore(LocalDateTime.now())) {
 				fundTargetListService.delete(user1, i.getFundBoardTarget());
 			}
 		}
@@ -294,7 +293,7 @@ public class AlertController {
 		//LocalDateTime testDate = LocalDateTime.parse("2023-12-25 12:00", format1);
 		//LocalDateTime.now().plusDays(7);
 		for(FundList i : fbList) {
-			if(i.getFundBoard().getStartDateTime().isBefore(LocalDateTime.now().plusDays(7))) {
+			if(i.getFundBoard().getStartDateTime().plusDays(7).isBefore(LocalDateTime.now())) {
 				fundListService.deleteFund(user1, i.getFundBoard());
 			}
 		}
