@@ -2,9 +2,3 @@
     display: flex;
     justify-content: center;
 }
-
-#image_container {
-    box-sizing: border-box;
-    width: 300px;
-    height: 300px;
-}

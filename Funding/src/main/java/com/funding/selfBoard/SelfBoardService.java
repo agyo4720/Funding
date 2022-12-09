@@ -36,11 +36,13 @@ public class SelfBoardService {
 		return selfBoard.get();
 	}
 	
-	// 유저네임으로 찾기
-	public SelfBoard findByUsername(String username) {
-		Optional<FundArtist> fundArtist = fundArtistRepository.findByNickname(username);
+
+	// 유저네임으로 찾기 // 중복에러뜸
+	public Optional<SelfBoard> findByUsername(String username) {
+		Optional<FundArtist> fundArtist = fundArtistRepository.findByusername(username);
 		Optional<SelfBoard> selfBoard = selfBoardRepository.findByFundArtist(fundArtist.get());
-		return selfBoard.get();
+		return selfBoard;
 	}
+	
 
 }
