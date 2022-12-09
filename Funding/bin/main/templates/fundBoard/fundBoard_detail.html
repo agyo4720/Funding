@@ -205,13 +205,8 @@
 			<div class="cmt_view" th:each="answer : ${answerList}">
 				<div class="cmt">
 					<div class="cmt_head">
-<<<<<<< HEAD
-						<p class="id" th:text="${answer.fundUser} != null ? ${answer.fundUser.username} : ${answer.fundArtist.username}">아이디</p>
-						<p class="time" th:text="${#temporals.format(answer.createDate, 'MM-dd HH:mm:ss')}">댓글 시간</p>
-=======
 						<p class="id" th:text="${answer.fundUser.username}">아이디</p>
 						<p class="time" th:text="${#temporals.format(answer.createDate, 'yyyy-MM-dd (E) HH:mm')}">댓글 시간</p>
->>>>>>> hahaha
 						<a class="cmt_delete" th:href="@{|/answer/delete/${answer.id}?location=board&id=${fundBoard.id}|}">삭제</a>
 					</div>
 					<p th:text="${answer.content}">댓글 내용</p>
@@ -265,27 +260,41 @@
 	<script>
 		let val1 = $('#val1').val()
 		let fdid1 = $('#fdid1').val()
-	
+	    let url = val1 ;
+	    alert(url)
 		$('#btn1').click(function(e){
 		    e.preventDefault();
 		    e.stopPropagation();
 		    
 			$.ajax({
-				url:val1,
-				type:'POST',
-				data: {
-					id:fdid1
-				},
-				
+				url: url,
+				type:'POST',				
 				success: function(result){
 					console.log(result)
-						alert(result);
-				    $('.image').append(result)
+					alert(result);
+					let html = '<div class="art_con">'
+					html += '<div class="profile">'
+					html += '	<div class="image">'
+					html += '		<img src="/selfBoard/img/3">'
+					html += '	</div>'
+					html += '	<div class="pr">'
+					html += '		<h3><a href="/selfBoard/detail/zmfpdydvkq">'+ result.nickname  +'</a></h3>'
+					html += '		</div>'
+					html += '		<div>'
+					html += '			<input hidden="" class="username" value="zmfpdydvkq">'
+					html += '		</div>'
+					html += '	</div>'
+					html += '   <div class="vote">'
+					html += '<span>0개</span>'
+					html += '		<input hidden="" class="fundArtistList" value="zmfpdydvkq">'
+					html += '	</div>'
+					html += '</div>'	
+				    $('.image').append(html)
 				}
 				,
 				error: function(xhr){
 					console.log(xhr);
-					alert('아이디를 찾을 수 없습니다.');
+					alert(xhr.status +':'+xhr.textStatus);
 				}
 			})
 		})
