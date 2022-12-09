@@ -146,8 +146,8 @@
 							<img th:src="|/selfBoard/img/${fundArtistList.fundArtist.selfBoard.id}|"/>
 						</div>
 						<div class="pr">
-							<h3><a th:href="@{|/selfBoard/detail/${fundArtistList.fundArtist.nickname}|}"
-								th:text="${fundArtistList.fundArtist.nickname}">자기소개 보기</a></h3>
+							<h3><a th:href="@{|/selfBoard/detail/${fundArtistList.fundArtist.username}|}"
+								th:text="${fundArtistList.fundArtist.nickname}">프로필 보기</a></h3>
 							</div>
 							<div sec:authorize="isAuthenticated()">
 								<input hidden class="username" th:value="${#authentication.getPrincipal().getUsername()}"/>
@@ -203,8 +203,13 @@
 			<div class="cmt_view" th:each="answer : ${answerList}">
 				<div class="cmt">
 					<div class="cmt_head">
+<<<<<<< HEAD
 						<p class="id" th:text="${answer.fundUser} != null ? ${answer.fundUser.username} : ${answer.fundArtist.username}">아이디</p>
 						<p class="time" th:text="${#temporals.format(answer.createDate, 'MM-dd HH:mm:ss')}">댓글 시간</p>
+=======
+						<p class="id" th:text="${answer.fundUser.username}">아이디</p>
+						<p class="time" th:text="${#temporals.format(answer.createDate, 'yyyy-MM-dd (E) HH:mm')}">댓글 시간</p>
+>>>>>>> hahaha
 						<a class="cmt_delete" th:href="@{|/answer/delete/${answer.id}?location=board&id=${fundBoard.id}|}">삭제</a>
 					</div>
 					<p th:text="${answer.content}">댓글 내용</p>

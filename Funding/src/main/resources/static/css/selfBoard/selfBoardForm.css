@@ -2,3 +2,9 @@
     display: flex;
     justify-content: center;
 }
+
+.view {display: flex;}
+
+.wrap label {
+    width: 100px;
+}

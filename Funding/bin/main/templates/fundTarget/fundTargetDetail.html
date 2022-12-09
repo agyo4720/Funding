@@ -155,7 +155,7 @@
                     <div class="cmt_head">
                         <p class="id" th:text="${answer.fundUser} != null ? 
                         ${answer.fundUser.username} : ${answer.fundArtist.username}">아이디</p>
-                        <p class="time" th:text="${#temporals.format(answer.createDate, 'yyyy-MM-dd HH:mm (E)')}">2022-11-21 10:25</p>
+                        <p class="time" th:text="${#temporals.format(answer.createDate, 'yyyy-MM-dd (E) HH:mm')}">2022-11-21 10:25</p>
                         <a class="cmt_delete" th:href="@{|/answer/delete/${answer.id}?location=target&id=${fundBoardTarget.id}|}">삭제</a>
                     </div>
                     <p th:text="${answer.content}">댓글 내용</p>
