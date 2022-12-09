@@ -124,29 +124,6 @@
 		<!-- 참여 아티스트 -->
 		<div>
 			<!-- 참여 아티스트 유효성 검사 시작 -->
-<<<<<<< HEAD
-			<input hidden class="username" th:value="${#authentication.getPrincipal().getUsername()}">
-			
-			<div>현재 참여중인 아티스트</div>
-			
-			<div sec:authorize="hasRole('ROLE_ARTIST')">			
-				<button id="btn1">참여하기</button>
-				<input hidden id="val1" th:value="@{|/fundArtistList/join/${fundBoard.id}|}">
-				<input hidden id="fbid1" th:value="${fundBoard.id}">
-			</div>
-					
-			<div th:each="fundArtistList : ${fundArtistList}">
-				<img th:src="|/selfBoard/img/${fundArtistList.fundArtist.selfBoard.id}|" width="30" height="35">
-				<a th:href="@{|/selfBoard/detail/${fundArtistList.fundArtist.nickname}|}" th:text="${fundArtistList.fundArtist.nickname}">자기소개 보기</a>
-				<a id="btn2" sec:authorize="hasRole('ROLE_USER')" th:href="@{|/fundArtistList/score/${fundArtistList.id}/${fundBoard.id}|}">투표하기</a>
-				
-				<span th:text="|${fundArtistList.fundUserList.size()}개|"></span>
-				<input hidden class="fundArtistList" th:value="${fundArtistList.fundArtist.username}">
-			</div>
-			
-			<!-- 참여 아티스트 유효성 검사 끝 -->
-		</div>
-=======
 			<div sec:authorize="isAuthenticated()">
 				<input hidden class="username1" th:value="${#authentication.getPrincipal().getUsername()}">
 			</div>
@@ -190,7 +167,6 @@
 					<!-- 참여 아티스트 유효성 검사 끝 -->
 				</div>
 			</div>
->>>>>>> a33ba8b888fb81e8ebdede54f003d6f8ca4e0096
 		<!-- // 참여 아티스트 -->
 		
 		<div class="con_hr">
