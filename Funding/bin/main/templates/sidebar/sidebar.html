@@ -61,24 +61,27 @@
 							$('.alert').append(
 								"<a href=\"" + item.url + "?alertId=" + item.alertId + "\">"
 								+ "<div class=\"alertbox\">"
-								+ item.Guestname + "님이 댓글을 달았습니다."
-								+ "<div class=\"alert_con\">" + item.content + "</div></div></a>")
-								
+								+ item.Guestname + "님이 댓글을 달았습 니다."
+								+ "<div class=\"alert_con\">" + item.content
+								+ "</div></div></a>")
 						}else if(item.type == "마감"){
 							$('.alert').append(
 								"<a href=\"" + item.url + "?alertId=" + item.alertId + "\">"
 								+ "<div class=\"alertbox\">"
-								+ "<div class=\"alert_con\">" + item.content + "</div></div></a>")
+								+ "<div class=\"alert_conS\">" + item.content
+								+ "</div></div></a>")
 						}else if(item.type == "펀딩"){
 							$('.alert').append(
 								"<a href=\"" + item.url + "?alertId=" + item.alertId + "\">"
 								+ "<div class=\"alertbox\">"
-								+ "<div class=\"alert_con\">" + item.content + "</div></div></a>")
+								+ "<div class=\"alert_con\">" + item.content
+								+ "</div></div></a>")
 						}else if(item.type == "취소"){
 							$('.alert').append(
 								"<a href=\"" +  "/?alertId=" + item.alertId + "\">"
 								+ "<div class=\"alertbox\">"
-								+ "<div class=>\"alert_con\">" + item.content + "</div></div></a>")
+								+ "<div class=>\"alert_con\">" + item.content
+								+ "</div></div></a>")
 						}
 					})
 				}
@@ -96,11 +99,12 @@
 						$('.fundTargetList').append(
 							"<a href=\"" + item.url + "\">"
 							+ "<div class=\"alertbox\">"
+							+ "<div class=\"alert_con\">"
+							+ item.fundName + "</div>"
 							+ "<div class=\"alert_status\">"
 							+ item.status + " "
 							+ item.percent + "</div>"
-							+ "<div class=\"alert_con\">"
-							+ item.fundName + "</div></div></a>")
+							+ "</div></a>")
 					})
 				}
 			})
@@ -117,11 +121,12 @@
 						$('.fundList').append(
 							"<a href=\"" + item.url + "\">"
 							+ "<div class=\"alertbox\">"
+							+ "<div class=\"alert_con\">"
+							+ item.fundName + "</div>"
 							+ "<div class=\"alert_status\">"
 							+ item.status + " "
 							+ item.percent + "</div>"
-							+ "<div class=\"alert_con\">"
-							+ item.fundName + "</div></div></a>")
+							+ "</div></a>")
 					})
 				}
 			})
