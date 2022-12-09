@@ -1,3 +1,4 @@
+
 form {
     margin: 30px auto;
     padding: 5px 40px;
@@ -28,9 +29,18 @@ section select, input[type=radio], img {cursor: pointer;}
     height: 27px;
 }
 
-#date { margin: 5px 0; }
+/* 대표 이미지 */
+.int_image {
+    display: flex;
+    flex-wrap: wrap;
+}
 
-.int_image {display: flex; flex-wrap: wrap; margin-right: 30px;}
+.img {
+    margin-right: 20px;
+    margin-bottom: 5px;
+}
+
+.img img {border-radius: 5px;}
 
 /* SummerNote */
 .note-toolbar {
@@ -76,7 +86,4 @@ section button:hover {
 }
 
 /* 에러 */
-.errors{
-    color: red;
-    display: none;
-}
+.errors{display: none; margin-top: 5px; margin-left: 210px;}

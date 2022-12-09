@@ -1,28 +1,55 @@
-section h2 {
-    margin: 20px 60px;
+section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 0 100px;
 }
 
-.sec_fund {
+.view {
+    width: 1000px;
+    margin: 10px 0;
+}
+
+.view h2 {margin: 20px 5px;}
+
+.list {
     display: flex;
     justify-content: space-evenly;
-    padding: 0 30px;
+    padding: 30px;
+    background-color: #f8f8f8;
+    border: 0.1px solid #dddddd;
+    border-radius: 10px;
 }
 
 .list_form {
     cursor: pointer;
-    padding: 22px 20px;
-    width: 210px;
-    height: 300px;
-    border: 1px solid;
-    border-radius: 25px;
+    width: 160px;
+    height: 250px;
     text-align: center;
 }
 
 .list_form p {
     cursor: pointer;
-    margin-top: 10px;
-    overflow:hidden;
+    width: 150px;
+    margin-top: 5px;
+    overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     font-weight: bold;
+}
+
+.image img {
+    opacity: 1;
+    display: block;
+    transition: .5s ease;
+    backface-visibility: hidden;
+    object-fit: cover;
+    width: 150px;
+    height: 215px;
+    border-radius: 5px;
+    filter: brightness(100%) drop-shadow(2px 2px 2px rgb(83, 83, 83));
+}
+
+.image:hover img {
+    filter: brightness(50%) drop-shadow(2px 2px 2px rgb(83, 83, 83));
 }

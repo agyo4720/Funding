@@ -64,8 +64,6 @@ public class FundBoardController {
 	private final CancelsService cancelsService;
 	private final AlertService alertService;
 
-
-
 	// 미지정 펀드 리스트(페이징)
 	// URL에 페이지 변수 page가 전달되지 않은 경우 디폴트 값으로 0이 되도록 설정
 	@RequestMapping("/list")
@@ -175,7 +173,8 @@ public class FundBoardController {
 
 		FundBoard fundBoard = this.fundBoardService.findById(id);
 		model.addAttribute("fundBoard", fundBoard);
-
+		
+		
 		List<Answer> answerList = this.answerService.findByFundBoard(fundBoard);
 		model.addAttribute("answerList", answerList);
 		List<FundArtistList> fundArtistList = this.fundArtistListService.findByFundBoard(fundBoard);
@@ -195,7 +194,7 @@ public class FundBoardController {
 			sale.get(i).getPayCode();
 			model.addAttribute("payCode",sale.get(i).getPayCode());
 		}
-
+		
 		//펀딩 유무 확인
 		boolean result = false;
 		if(principal != null) {
@@ -211,6 +210,7 @@ public class FundBoardController {
 
 		return "/fundBoard/fundBoard_detail";
 	}
+		
 
 	// id로 카테고리 리스트 가져오기
 	@RequestMapping("/categorie/{id}")
@@ -249,30 +249,26 @@ public class FundBoardController {
 		List<Sale> sale = saleRepository.findByFundBoard(nick.getSubject());
 		for(int i=0; i<sale.size(); i++){
 			if(sale.get(i).getCheckin().equals("결제완료")) {
-				sale.get(i).getPayCode();
-				sale.get(i).setCheckin("게시글 삭제");
-
 				cancelsController.totalCancel(sale.get(i).getPayCode(),"게시글 삭제");
 				cancelsService.totalCancelInfo(sale.get(i).getOrederId(), Integer.valueOf(sale.get(i).getPayMoney()).intValue(), sale.get(i).getOrderName(),
-						sale.get(i).getCheckin(),sale.get(i).getFundUser(),sale.get(i).getUsername());
+						"게시글 삭제",sale.get(i).getFundUser(),sale.get(i).getUsername());
 			}
 		}
 
-		
 		//미지정 리스트 삭제
 		List<FundList> fList = fundListService.findByFundBoard(nick);
-		alertService.deleteBoardThenAlert(fList);
 		for(int i=0;i>fList.size();i++) {
 			fundListService.deleteFund(fList.get(i).getFundUser(), nick);
 		}
-
-
+		
+		//삭제시 알림 추가
+		alertService.deleteBoardThenAlert(fList);
+		
 		this.fundBoardService.delete(id);
-
 
 		return "redirect:/fundBoard/list";
 	}
 	
-	// 2022/12/05 - 1 작업중
+	// 2022/12/09 - 2 작업중
 
 }

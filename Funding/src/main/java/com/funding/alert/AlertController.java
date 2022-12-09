@@ -2,6 +2,9 @@ package com.funding.alert;
 
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -61,33 +64,18 @@ public class AlertController {
 			Optional<FundArtist> art = fundArtistService.findByuserName(username);
 			List<Alert> artList = alertService.findByHostArtist(art.get());
 			List<HashMap<String, String>> alretList = new ArrayList<>();
+			
+			
 			for(int i=0; i<artList.size(); i++) {
 				HashMap<String, String> map = new HashMap<>();
 				map.put("alertId", artList.get(i).getId().toString());
-				
-				boolean guestcheck = true;
-				if(artList.get(i).getGuestUser() != null) {
-					map.put("Guestname", artList.get(i).getGuestUser().getUsername());
-				}else if(artList.get(i).getGuestArtist() != null) {
-					map.put("Guestname", artList.get(i).getGuestArtist().getUsername());
-				}else {
-					guestcheck = false;
-				}
-				
-				//접속자와 댓글 생성자 같으면 출력 안함
-				if(guestcheck) {
-					String userequals = artList.get(i).getGuestUser().getUsername();
-					if(art.get().getUsername().equals(userequals)) {
-						continue;
-					}
-				}
 				map.put("content", artList.get(i).getContent());
 				map.put("url", artList.get(i).getUrl());
 				map.put("type", artList.get(i).getWitchAlert());
 				alretList.add(map);
-				
-				return alretList;
 			}
+			
+			return alretList;
 		}
 		
 
@@ -133,16 +121,16 @@ public class AlertController {
 	}
 	
 	
-	//펀딩 기간 마감시 업데이트
+	//지정펀딩 기간 마감시 업데이트
 	@RequestMapping("/update")
 	@ResponseBody
-	public String fundEndDate() throws Exception{
+	public String fundEndDate(@RequestParam("user")String username) throws Exception{
 		List<FundBoardTarget> targetList = fundTargetService.findAllList();
 		
 		for(int i=0; i<targetList.size(); i++) {
 			
 			//펀딩기간 만료시 알림
-			//LocalDate d1 = LocalDate.parse("2022-12-05",DateTimeFormatter.ISO_DATE);
+			LocalDate d1 = LocalDate.parse("2022-12-25",DateTimeFormatter.ISO_DATE);
 			if(targetList.get(i).getFundDurationE().isBefore(LocalDate.now()) &&
 					targetList.get(i).getStatus().equals("진행중")) {
 				
@@ -155,15 +143,18 @@ public class AlertController {
 				//기간 지나고 100% 미달성시 환불 시킴
 				if(targetList.get(i).getFundCurrent() < targetList.get(i).getFundAmount()) {
 					List<Sale> sale = saleRepository.findByFundBoardTarget(targetList.get(i).getSubject());
-					for(int j=0; i<sale.size(); j++){
-						cancelsController.totalCancel(sale.get(j).getPayCode(),"기간만료 환불");
-						cancelsService.totalCancelInfo(
-								sale.get(j).getOrederId()
-								, sale.get(i).getPayMoney()
-								, sale.get(i).getOrderName()
-								, "기간만료 환불"
-								, sale.get(i).getFundUser()
-								, sale.get(i).getUsername());
+					for(int j=0; j<sale.size(); j++){
+						if(sale.get(j).getCheckin().equals("결제완료")) {
+							
+							cancelsController.totalCancel(sale.get(j).getPayCode(),"기간만료 환불");
+							cancelsService.totalCancelInfo(
+									sale.get(j).getOrederId()
+									, Integer.valueOf(sale.get(j).getPayMoney()).intValue()
+									, sale.get(j).getOrderName()
+									, "기간만료 환불"
+									, sale.get(j).getFundUser()
+									, sale.get(j).getUsername());
+						}
 					}
 				}
 				
@@ -198,8 +189,31 @@ public class AlertController {
 					FundUser user = fListList.get(j).getFundUser();
 					alertService.fundEndAmount(fundBoardTarget, user.getUsername());
 				}
+			}else if(targetList.get(i).getFundCurrent() < targetList.get(i).getFundAmount() && 
+					targetList.get(i).getStatus().equals("100%⇑⇑⇑")) {
+				targetList.get(i).setStatus("진행중");
+				fundTargetService.addTargetFund(targetList.get(i));
+				
 			}
 		}
+		
+		//지정펀딩 공연 날짜 7일 지나면 리스트에서 삭제
+		FundUser user1 = fundUserService.findByuserName(username).get();
+		List<FundTargetList> tList = fundTargetListService.findByFundUser(user1);
+		
+		//DateTimeFormatter format1 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		//LocalDateTime testDate = LocalDateTime.parse("2023-12-25 12:00", format1);
+		//LocalDateTime.now().plusDays(7);
+		for(FundTargetList i : tList) {
+			if(i.getFundBoardTarget().getStartDate().plusDays(7).isBefore(LocalDateTime.now())) {
+				fundTargetListService.delete(user1, i.getFundBoardTarget());
+			}
+		}
+		
+		
+		
+		
+		
 		
 		
 		//미지정 알림업데이트
@@ -208,7 +222,7 @@ public class AlertController {
 		for(int i=0; i<bList.size(); i++) {
 				
 			//펀딩기간 만료시 알림
-			//LocalDate d1 = LocalDate.parse("2022-12-05",DateTimeFormatter.ISO_DATE);
+			LocalDate d12 = LocalDate.parse("2023-12-05",DateTimeFormatter.ISO_DATE);
 			if(bList.get(i).getFundDuration().isBefore(LocalDate.now()) &&
 					bList.get(i).getState().equals("진행중")) {
 				
@@ -221,15 +235,18 @@ public class AlertController {
 				//기간 지나고 100% 미달성시 환불 시킴
 				if(bList.get(i).getFundCurrent() < bList.get(i).getFundAmount()) {
 					List<Sale> sale = saleRepository.findByFundBoard(bList.get(i).getSubject());
-					for(int j=0; i<sale.size(); j++){
-						cancelsController.totalCancel(sale.get(j).getPayCode(),"기간만료 환불");
-						cancelsService.totalCancelInfo(
-								sale.get(j).getOrederId()
-								, sale.get(i).getPayMoney()
-								, sale.get(i).getOrderName()
-								, "기간만료 환불"
-								, sale.get(i).getFundUser()
-								, sale.get(i).getUsername());
+					for(int j=0; j<sale.size(); j++){
+						if(sale.get(j).getCheckin().equals("결제완료")) {
+							
+							cancelsController.totalCancel(sale.get(j).getPayCode(),"기간만료 환불");
+							cancelsService.totalCancelInfo(
+									sale.get(j).getOrederId()
+									, Integer.valueOf(sale.get(i).getPayMoney()).intValue()
+									, sale.get(i).getOrderName()
+									, "기간만료 환불"
+									, sale.get(i).getFundUser()
+									, sale.get(i).getUsername());
+						}
 					}
 				}
 				
@@ -263,11 +280,27 @@ public class AlertController {
 					FundUser user = fList.get(j).getFundUser();
 					alertService.fundBoardEndAmount(fundBoard, user.getUsername());
 				}
+			}else if(bList.get(i).getFundCurrent() < bList.get(i).getFundAmount() && 
+					bList.get(i).getState().equals("100%⇑⇑⇑")) {
+				bList.get(i).setState("진행중");
+				fundBoardService.addFundBoard(bList.get(i));
 			}
-			
-			
 		}
-				
+		
+		
+		
+		
+		//미지정펀딩 공연 날짜 7일 지나면 리스트에서 삭제
+		List<FundList> fbList = fundListService.findByFundUser(user1);
+		
+		//DateTimeFormatter format1 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		//LocalDateTime testDate = LocalDateTime.parse("2023-12-25 12:00", format1);
+		//LocalDateTime.now().plusDays(7);
+		for(FundList i : fbList) {
+			if(i.getFundBoard().getStartDateTime().plusDays(7).isBefore(LocalDateTime.now())) {
+				fundListService.deleteFund(user1, i.getFundBoard());
+			}
+		}
 		
 			
 		return "알림 정리 했어요";

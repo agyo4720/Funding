@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.funding.fundArtist.FundArtist;
@@ -75,6 +76,14 @@ public class UserController {
 		return "user/myInfo";
 	}
 	
+	//계좌관리에 사이드바 사용
+	@RequestMapping("/myInfo/ajax")
+	@ResponseBody
+	public String myInfoAjax(@RequestParam("artist") String artist) {
+		Optional<FundArtist> FA = this.fundArtistService.findByuserName(artist);
+		return FA.get().getUsername();
+	}
+	
 	// 비밀번호 초기화 하기위한 id 입력 폼 요청
 	@GetMapping("/resetPwd")
 	public String resetPwd() {
@@ -117,6 +126,40 @@ public class UserController {
 		}
 		
 		return "redirect:/user/login";
+	}
+	
+	// 비밀번호 수정2
+	@PostMapping("/resetPwdConfirm2")
+	public String resetPwdConfirm3(String pwd, Principal principal){
+
+		Optional<FundUser> FU = this.fundUserService.findByuserName(principal.getName());
+		Optional<FundArtist> FA = this.fundArtistService.findByuserName(principal.getName());
+		
+		if(FU.isPresent()) {
+			this.fundUserService.resetPwd(FU.get().getUsername(), pwd);
+		}
+		
+		if(FA.isPresent()) {
+			this.fundArtistService.resetPwd(FA.get().getUsername(), pwd);
+		}
+		
+		
+		return "redirect:/user/myInfo";
+	}
+	
+	// 전화번호 수정
+	@PostMapping("/resetMobile")
+	public String resetMobile(Principal principal, String mobile) {
+		Optional<FundUser> FU = this.fundUserService.findByuserName(principal.getName());
+		Optional<FundArtist> FA = this.fundArtistService.findByuserName(principal.getName());
+		if(FU.isPresent()) {
+			this.fundUserService.resetMobile(FU.get(),mobile);
+		}
+		if(FA.isPresent()) {
+			this.fundArtistService.resetMobile(FA.get(),mobile);
+		}
+		
+		return "redirect:/user/myInfo";
 	}
 
 	

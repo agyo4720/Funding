@@ -1,7 +1,6 @@
 package com.funding.fundArtistList;
 
 
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -17,19 +16,15 @@ import com.funding.fundUser.FundUser;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 @Setter
 @Getter
-@ToString
 @Entity
 public class FundArtistList {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;	// 고유번호
-	
-	private Integer likeConut; // 투표수
 	
 	@ManyToOne
 	private FundBoard fundBoard; // 펀딩글
@@ -39,4 +34,5 @@ public class FundArtistList {
 	
 	@ManyToMany
 	private Set<FundUser> fundUserList; // 누가 투표했는가?
+	
 }

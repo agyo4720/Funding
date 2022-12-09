@@ -1,7 +1,5 @@
 package com.funding.fundArtistList;
 
-import java.security.Principal;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -34,6 +32,7 @@ public class FundArtistListService {
 		
 		List<FundArtistList> fundArtistList = this.fundArtistListRepository.findByFundArtist(fundArtist);
 		
+		
 		// fundArtistList를 반복문을 사용해서 같은 유저일 경우 반복문에서 빠져나가는 로직
 		for(FundArtistList fal : fundArtistList) {
 			if(fal.getFundBoard().getId().equals(fundBoard.getId())) {
@@ -43,7 +42,6 @@ public class FundArtistListService {
 	
 		FundArtistList fundArtistLists = new FundArtistList();
 		
-		fundArtistLists.setLikeConut(0);
 		fundArtistLists.setFundArtist(fundArtist);
 		fundArtistLists.setFundBoard(fundBoard);
 		
@@ -64,32 +62,44 @@ public class FundArtistListService {
 		return fundArtistList.get();
 	}
 	
-//	// 미지정 펀드 아티스트 투표하기
-//	public void score(FundArtistList fundArtistList, FundUser fundUser) {
-//		
-//		List<FundArtistList> fal = this.fundArtistListRepository.findByFundUser(fundUser);
-//
-//		Integer i = fundArtistList.getLikeConut();
-//		i++;
-//		
-//		fundArtistList.setLikeConut(i);
-//		
-//		this.fundArtistRepository.save(fundArtistList);
-//		
-//	}
-	
 	// 미지정 펀드 아티스트 투표하기
-	public void addvote(FundBoard fundBoard, FundArtist fundArtist, FundUser fundUser, Integer id) {
+	public void addvote(
+			FundBoard fundBoard,
+			FundArtist fundArtist,
+			FundUser fundUser,
+			Integer id) {
 		
-		//List<FundArtistList> fList = this.fundArtistListRepository.findByFundBoardAndFundArtist(fundBoard, fundArtist);
 		Optional<FundArtistList> fundArtistList = fundArtistListRepository.findById(id);
+		
 		Set<FundUser> sUser = fundArtistList.get().getFundUserList();
+	
 		sUser.add(fundUser);
+		
 		fundArtistList.get().setFundUserList(sUser);
 		
 		this.fundArtistListRepository.save(fundArtistList.get());
 				
 	}
 	
+	// 미저정펀딩 참여 중복조회
+	public Optional<FundArtistList> search(FundArtist fundArtist, FundBoard fundBoard) {
+		
+		Optional<FundArtistList> fal = this.fundArtistListRepository.findByFundBoardAndFundArtist(fundBoard, fundArtist);
+		
+		return fal;
+	
+	}
+
+	//아티스트로 찾기
+	public List<FundArtistList> findByFundArtist(FundArtist artist) {
+		List<FundArtistList> faList = fundArtistListRepository.findByFundArtist(artist);
+		return faList;
+	}
+	
+	//해당 리스트 지우기
+	public void deleteList(List<FundArtistList> faList) {
+		fundArtistListRepository.deleteAll(faList);
+	}
+
 
 }

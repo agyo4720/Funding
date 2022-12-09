@@ -237,22 +237,20 @@ public class FundTargetController {
 		List<Sale> sale = saleRepository.findByFundBoardTarget(nick.getSubject());
 		for(int i=0; i<sale.size(); i++){
 			if(sale.get(i).getCheckin().equals("결제완료")) {
-				sale.get(i).getPayCode();
-				sale.get(i).setCheckin("게시글 삭제");
-				
 				cancelsController.totalCancel(sale.get(i).getPayCode(),"게시글 삭제");
 				cancelsService.totalCancelInfo(sale.get(i).getOrederId(), Integer.valueOf(sale.get(i).getPayMoney()).intValue(), sale.get(i).getOrderName(), 
-						sale.get(i).getCheckin(),sale.get(i).getFundUser(),sale.get(i).getUsername());
+						"게시글 삭제",sale.get(i).getFundUser(),sale.get(i).getUsername());
 			}
 		}
 		
 		log.info("삭제컨트롤로 실행됨");
 		//지정리스트 삭제
 		List<FundTargetList> fList = fundTargetListService.findByFundBoardTarget(nick);
-		alertService.deleteTargetThenAlert(fList);
 		for(int i=0;i>fList.size();i++) {
 			fundTargetListService.delete(fList.get(i).getFundUser(), nick);
 		}
+		//삭제 알림 추가
+		alertService.deleteTargetThenAlert(fList);
 		
 		fundTargetService.delete(id);
 		return "redirect:/";

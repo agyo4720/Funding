@@ -4,9 +4,8 @@ section {
 }
 
 /* 타이틀 */
-section .s_title {
-    margin: 10px auto;
-    width: 100px;
+.title {
+    text-align: center;
 }
 
 /* 카테고리 */
@@ -43,8 +42,9 @@ section .s_title {
     padding: 10px 20px;
     margin: 20px auto;
     width: 900px;
-    border: 1px solid #bfbfbf;
-    border-radius: 30px;
+    background-color: #f8f8f8;
+    border: 0.1px solid #bfbfbf;
+    border-radius: 15px;
 }
 
 .con_list {
@@ -54,21 +54,25 @@ section .s_title {
 
 .image {margin: 10px;}
 
-img {object-fit: cover;}
+.image img {
+    object-fit: cover;
+    border-radius: 5px;
+}
 
 .con {
     margin: 20px 0 20px 40px;
-    width: 100%;
+    width: 550px;
 }
 
 .status {
     display: inline-block;
     padding: 3px 15px;
     margin-bottom: 7px;
+    background-color: #B00E0E;
     border: 2px solid #B00E0E;
     border-radius: 20px;
     font-weight: bold;
-    color: #B00E0E;
+    color: #fff;
 }
 
 .con_title {
@@ -104,6 +108,23 @@ img {object-fit: cover;}
 
 .view:last-child {margin: 0 auto;}
 
+/* 퍼센테이지 */
+.graph {
+    margin-right: 25px;
+    width: 150px;
+    height: 150px;
+    color: #fff;
+    border-radius: 50%;
+    background: #cf4b4b;
+    text-align: center;
+}
+
+.graph_view {
+    transform: translateY(80%);
+}
+
+.graph_view p {margin-bottom: 5px; font-weight: bold;}
+
 /* 페이징 */
 .page {
     display: flex;
@@ -121,9 +142,7 @@ img {object-fit: cover;}
     text-underline-position: under;
 }
 
-.page .active {
-    color: #B00E0E;
-}
+.page .active {color: #B00E0E;}
 
 /* 펀딩 만들기 버튼 */
 .btn_create {

@@ -15,9 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.funding.Categorie.Categorie;
 import com.funding.Categorie.CategorieRepository;
-import com.funding.fundArtist.FundArtist;
 import com.funding.fundArtist.FundArtistRepository;
-import com.funding.fundArtistList.FundArtistList;
 import com.funding.fundUser.FundUser;
 
 import lombok.RequiredArgsConstructor;
@@ -137,7 +135,7 @@ public class FundBoardService {
 		List<Sort.Order> sorts = new ArrayList<>();
 		sorts.add(Sort.Order.desc("createDate"));
 		
-		Pageable pageable = PageRequest.of(page, 1, Sort.by(sorts));
+		Pageable pageable = PageRequest.of(page, 3, Sort.by(sorts));
 		
 		return this.fundBoardRepository.findAll(pageable);
 	}
