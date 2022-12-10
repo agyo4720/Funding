@@ -265,27 +265,41 @@
 	<script>
 		let val1 = $('#val1').val()
 		let fdid1 = $('#fdid1').val()
-	
+	    let url = val1 ;
+	    alert(url)
 		$('#btn1').click(function(e){
 		    e.preventDefault();
 		    e.stopPropagation();
 		    
 			$.ajax({
-				url:val1,
-				type:'POST',
-				data: {
-					id:fdid1
-				},
-				
+				url: url,
+				type:'POST',				
 				success: function(result){
 					console.log(result)
-						alert(result);
-				    $('.image').append(result)
+					alert(result);
+					let html = '<div class="art_con">'
+					html += '<div class="profile">'
+					html += '	<div class="image">'
+					html += '		<img src="/selfBoard/img/3">'
+					html += '	</div>'
+					html += '	<div class="pr">'
+					html += '		<h3><a href="/selfBoard/detail/zmfpdydvkq">'+ result.nickname  +'</a></h3>'
+					html += '		</div>'
+					html += '		<div>'
+					html += '			<input hidden="" class="username" value="zmfpdydvkq">'
+					html += '		</div>'
+					html += '	</div>'
+					html += '   <div class="vote">'
+					html += '<span>0개</span>'
+					html += '		<input hidden="" class="fundArtistList" value="zmfpdydvkq">'
+					html += '	</div>'
+					html += '</div>'	
+				    $('.image').append(html)
 				}
 				,
 				error: function(xhr){
 					console.log(xhr);
-					alert('아이디를 찾을 수 없습니다.');
+					alert(xhr.status +':'+xhr.textStatus);
 				}
 			})
 		})

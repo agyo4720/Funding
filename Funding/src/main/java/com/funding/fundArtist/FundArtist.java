@@ -9,10 +9,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.funding.fundArtistList.FundArtistList;
+
+import javax.persistence.OneToOne;
+
 import com.funding.selfBoard.SelfBoard;
 
 import lombok.Getter;
@@ -40,10 +44,10 @@ public class FundArtist {
 	private Date birth;			// 생년월일
 	private String role;		// 권한등급
 	private Integer likeCount;	// 추천 수
-	
+
 	@OneToOne(mappedBy = "fundArtist")
 	private SelfBoard selfBoard;
-	
+
 	@OneToMany(mappedBy = "fundArtist")
 	private List<FundArtistList> fundArtistList;
 }

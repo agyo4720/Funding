@@ -21,6 +21,8 @@ import com.funding.fundArtist.FundArtistService;
 import com.funding.fundBoardTarget.FundTargetService;
 import com.funding.fundUser.FundUser;
 import com.funding.fundUser.FundUserService;
+import com.funding.selfBoard.SelfBoard;
+import com.funding.selfBoard.SelfBoardService;
 import com.funding.user.mailValidation.EmailService;
 
 import lombok.RequiredArgsConstructor;
@@ -35,6 +37,7 @@ public class UserController {
 	private final FundTargetService fundTargetService;
 	private final EmailService emailService;
 	private final PasswordEncoder passwordEncoder;
+	private final SelfBoardService selfBoardService;
 	
 	String username = null;
 	String userRole = null;
@@ -82,6 +85,23 @@ public class UserController {
 	public String myInfoAjax(@RequestParam("artist") String artist) {
 		Optional<FundArtist> FA = this.fundArtistService.findByuserName(artist);
 		return FA.get().getUsername();
+	}
+	
+	//프로필 작성 유무에 따른 링크 변경
+	@RequestMapping("/myInfo/profile")
+	@ResponseBody
+	public String profileAjax(@RequestParam("artist") String artist) {
+		Optional<SelfBoard> SB = this.selfBoardService.findByUsername(artist);
+		
+		if(SB.isPresent()) {
+			return "1";
+		}
+		if(SB.isEmpty()) {
+			return "0";
+		}
+		
+		return "";
+		
 	}
 	
 	// 비밀번호 초기화 하기위한 id 입력 폼 요청

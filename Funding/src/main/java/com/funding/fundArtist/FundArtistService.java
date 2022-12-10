@@ -57,6 +57,7 @@ public class FundArtistService {
 		fundArtist.setMobile(mobile);
 		this.fundArtistRepository.save(fundArtist);
 	}
+
 	
 	// 해당 id로 데이터 찾기(박남규)
 	public FundArtist findById(Integer id) {
