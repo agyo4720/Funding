@@ -148,7 +148,7 @@
 					<!-- 프로필 -->
 					<div class="profile">
 						<a th:href="@{|/selfBoard/detail/${fundArtistList.fundArtist.username}|}">
-							<div class="image">
+							<div class="pro_image">
 								<img th:src="|/selfBoard/img/${fundArtistList.fundArtist.selfBoard.id}|"/>
 							</div>
 							<div class="pr">
@@ -266,7 +266,7 @@
 		let val1 = $('#val1').val()
 		let fdid1 = $('#fdid1').val()
 	    let url = val1 ;
-	    alert(url)
+		
 		$('#btn1').click(function(e){
 		    e.preventDefault();
 		    e.stopPropagation();
@@ -276,25 +276,30 @@
 				type:'POST',				
 				success: function(result){
 					console.log(result)
-					alert(result);
-					let html = '<div class="art_con">'
-					html += '<div class="profile">'
-					html += '	<div class="image">'
-					html += '		<img src="/selfBoard/img/3">'
-					html += '	</div>'
-					html += '	<div class="pr">'
-					html += '		<h3><a href="/selfBoard/detail/zmfpdydvkq">'+ result.nickname  +'</a></h3>'
-					html += '		</div>'
-					html += '		<div>'
-					html += '			<input hidden="" class="username" value="zmfpdydvkq">'
-					html += '		</div>'
-					html += '	</div>'
-					html += '   <div class="vote">'
-					html += '<span>0개</span>'
-					html += '		<input hidden="" class="fundArtistList" value="zmfpdydvkq">'
-					html += '	</div>'
-					html += '</div>'	
-				    $('.image').append(html)
+					alert('등록이 되었습니다.');
+					let html
+						= '<div class="art_view"'
+						+ '<div class="art_con">'
+						+ '<div class="profile">'
+						+ '  <a href="/selfBoard/detail/'+ result.username + '\">'
+						+ '    <div class="pro_image">'
+						+ '      <img src="/selfBoard/img/' + result.id + '"/>'
+						+ '    </div>'
+						+ '	   <div class="pr">'
+						+ '	     <h3>'+ result.nickname  +'</a></h3>'
+						+ '	   </div>'
+						+ '	   <div>'
+						+ '      <input hidden class="username" value=\"' + result.username + '\">'
+						+ '    </div>'
+						+ '  </a>'
+						+ '  <div class="vote">'
+						+ '    <span>0개</span>'
+						+ '    <input hidden class="fundArtistList" value=\"' + result.username + '\">'
+						+ '  </div>'
+						+ '</div>'
+						+ '</div>'
+						+ '</div>'
+				    $('.pro_image').append(html)
 				}
 				,
 				error: function(xhr){

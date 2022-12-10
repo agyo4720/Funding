@@ -64,8 +64,6 @@ public class FundArtistListController {
 		
 		HashMap<String, Object> map = new HashMap<>();
 		
-		List<FundArtistList> fundArtistList = this.fundArtistListService.findByFundBoard(furndBoard);
-		
 		fundArtist.getSelfBoard();
 		
 		map.put("nickname", fundArtist.getNickname());
@@ -73,12 +71,8 @@ public class FundArtistListController {
 		map.put("id", fundArtist.getId());
 		fundArtist.getSelfBoard().getFilePath();
 				
-		log.info("____________________________________" + fundArtist.getUsername());
-		log.info("____________________________________" + fundArtist.getSelfBoard());
 		log.info("____________________________________" + fundArtist.getId());
-		System.out.println("____________________________________" + fundArtist.getUsername());
-		System.out.println("____________________________________" + fundArtist.getSelfBoard().getFilePath());
-		System.out.println("____________________________________" + fundArtist.getId());
+		log.info("____________________________________" + fundArtist.getUsername());
 				
 		/*
 		if(fundArtist.getSelfBoard() == null) {

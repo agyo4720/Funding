@@ -36,10 +36,12 @@
                     <label>장르</label>
                     <input type="text" th:field="*{genre}" value="">
                 </div>
-
-                <div class="view">
-                    <label>대표이미지</label>
-                    <input type="file" name="file" onchange="imgprint(event)">
+                
+                <div class="image">
+                    <div class="view">
+                        <label>대표이미지</label>
+                        <input type="file" name="file" onchange="imgprint(event)">
+                    </div>
                     <div id="image_container"></div>
                 </div>
                 
@@ -120,7 +122,6 @@
                 img.setAttribute("src", event.target.result);
                 document.querySelector("#image_container").appendChild(img);
             };
-
             reader.readAsDataURL(event.target.files[0]);
         }
     </script>
