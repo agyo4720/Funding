@@ -37,6 +37,7 @@
 				<div class="pro_txt">
 					<h3 th:text="${selfBoard.subject}"></h3>
 					<div class="content" th:utext="${selfBoard.content}"></div>
+					<a th:href="@{|/selfBoard/modify/${#authentication.getPrincipal().getUsername()}|}">수정하기</a>
 				</div>
 			</div>
 		</div>

@@ -104,5 +104,13 @@ public class SelfBoardController {
 		log.info("셀프보드 이미지 신호 받음 : ");
 		return new UrlResource("file:" + imgPath);
 	}
-
+	
+	// 자기소개 수정
+	@RequestMapping("/modify/{username}")
+	public String modifySelfBoard(@PathVariable("username")String username, Model model) {
+		
+		Optional<SelfBoard> selfBoard = selfBoardService.findByUsername(username);
+		model.addAttribute("selfBoardForm", selfBoard.get());
+		return "/selfBoard/selfBoardForm";
+	}
 }
