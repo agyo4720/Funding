@@ -31,6 +31,8 @@
 	<div sec:authorize="hasRole('ROLE_ARTIST')">
 		<h4>현재 신청한 펀딩목록</h4>
 		<div class="fundList2"></div>
+
+		<hr/>
 		
 		<h4>공연 디테일 지정</h4>
 		<div class="fundModify"></div>
@@ -160,8 +162,7 @@
 							+ "<div class=\"alert_status\">"
 							+ item.status + " "
 							+ item.percent + "</div>"
-							+ "</div></a>"
-							)
+							+ "</div></a>")
 					})
 				}
 			})
@@ -181,14 +182,10 @@
 								+ "<div class=\"alertbox\">"
 								+ item.content
 								+ "</div></a>")
-								
 						}
-						
 					})
 				}
 			})
-			
-			
 		}
 	})
 	

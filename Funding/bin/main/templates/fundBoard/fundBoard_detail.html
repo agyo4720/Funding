@@ -11,6 +11,9 @@
 	
     <!-- favicon -->
     <link rel="shortcut icon" href="/img/favicon/ms-icon-310x310.png" type="image/x-icon" />
+
+	<!-- fontawsome -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" />
 </head>
 <body>
 
@@ -144,24 +147,26 @@
 				<div class="art_con" th:each="fundArtistList : ${fundArtistList}">
 					<!-- 프로필 -->
 					<div class="profile">
-						<div class="image">
-							<img th:src="|/selfBoard/img/${fundArtistList.fundArtist.selfBoard.id}|"/>
-						</div>
-						<div class="pr">
-							<h3><a th:href="@{|/selfBoard/detail/${fundArtistList.fundArtist.username}|}"
-								th:text="${fundArtistList.fundArtist.nickname}">프로필 보기</a></h3>
+						<a th:href="@{|/selfBoard/detail/${fundArtistList.fundArtist.username}|}">
+							<div class="pro_image">
+								<img th:src="|/selfBoard/img/${fundArtistList.fundArtist.selfBoard.id}|"/>
+							</div>
+							<div class="pr">
+								<h3 th:text="${fundArtistList.fundArtist.nickname}">프로필</h3>
 							</div>
 							<div sec:authorize="isAuthenticated()">
 								<input hidden class="username" th:value="${#authentication.getPrincipal().getUsername()}"/>
 							</div>
-						</div>
+						</a>
 						
 						<!-- 투표수 -->
 						<div class="vote">
 							<span th:text="|${fundArtistList.fundUserList.size()}개|"></span>
 							<!-- 투표 버튼 -->
 							<a id="btn2" sec:authorize="hasRole('ROLE_USER')"
-							th:href="@{|/fundArtistList/score/${fundArtistList.id}/${fundBoard.id}|}">투표하기</a>
+								th:href="@{|/fundArtistList/score/${fundArtistList.id}/${fundBoard.id}|}">
+								<i class="fal fa-thumbs-up"></i>
+							</a>
 							<input hidden class="fundArtistList" 
 							th:value="${fundArtistList.fundArtist.username}"/>
 						</div>
@@ -205,7 +210,7 @@
 			<div class="cmt_view" th:each="answer : ${answerList}">
 				<div class="cmt">
 					<div class="cmt_head">
-						<p class="id" th:text="${answer.fundUser.username}">아이디</p>
+						<p class="id" th:text="${answer.fundUser} != null ? ${answer.fundUser.username} : ${answer.fundArtist.username}">아이디</p>
 						<p class="time" th:text="${#temporals.format(answer.createDate, 'yyyy-MM-dd (E) HH:mm')}">댓글 시간</p>
 						<a class="cmt_delete" th:href="@{|/answer/delete/${answer.id}?location=board&id=${fundBoard.id}|}">삭제</a>
 					</div>
@@ -261,7 +266,7 @@
 		let val1 = $('#val1').val()
 		let fdid1 = $('#fdid1').val()
 	    let url = val1 ;
-	    alert(url)
+		
 		$('#btn1').click(function(e){
 		    e.preventDefault();
 		    e.stopPropagation();
@@ -271,25 +276,30 @@
 				type:'POST',				
 				success: function(result){
 					console.log(result)
-					alert(result);
-					let html = '<div class="art_con">'
-					html += '<div class="profile">'
-					html += '	<div class="image">'
-					html += '		<img src="/selfBoard/img/3">'
-					html += '	</div>'
-					html += '	<div class="pr">'
-					html += '		<h3><a href="/selfBoard/detail/zmfpdydvkq">'+ result.nickname  +'</a></h3>'
-					html += '		</div>'
-					html += '		<div>'
-					html += '			<input hidden="" class="username" value="zmfpdydvkq">'
-					html += '		</div>'
-					html += '	</div>'
-					html += '   <div class="vote">'
-					html += '<span>0개</span>'
-					html += '		<input hidden="" class="fundArtistList" value="zmfpdydvkq">'
-					html += '	</div>'
-					html += '</div>'	
-				    $('.image').append(html)
+					alert('등록이 되었습니다.');
+					let html
+						= '<div class="art_view"'
+						+ '<div class="art_con">'
+						+ '<div class="profile">'
+						+ '  <a href=\"/selfBoard/detail/'+ result.username + '\">'
+						+ '    <div class="pro_image">'
+						+ '      <img src=\"/selfBoard/img/' + result.id + '\"/>'
+						+ '    </div>'
+						+ '	   <div class="pr">'
+						+ '	     <h3>'+ result.nickname  +'</a></h3>'
+						+ '	   </div>'
+						+ '	   <div>'
+						+ '      <input hidden class="username" value=\"' + result.username + '\">'
+						+ '    </div>'
+						+ '  </a>'
+						+ '  <div class="vote">'
+						+ '    <span>0개</span>'
+						+ '    <input hidden class="fundArtistList" value=\"' + result.username + '\">'
+						+ '  </div>'
+						+ '</div>'
+						+ '</div>'
+						+ '</div>'
+				    $('.pro_image').append(html)
 				}
 				,
 				error: function(xhr){

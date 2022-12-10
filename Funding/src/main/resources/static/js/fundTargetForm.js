@@ -47,7 +47,7 @@ content.addEventListener('focusout',checkCon)
 
 function checkSub(){
     if(subject.value === ""){
-        error[0].innerHTML='빈칸이에용.'
+        error[0].innerHTML='공연명은 필수항목 입니다.'
         error[0].style.display='block'
     }else{
         error[0].style.display='none'
@@ -55,7 +55,7 @@ function checkSub(){
 }
 function checkAertiest(){
     if(aertiest.value === ""){
-        error[1].innerHTML='빈칸이에용.'
+        error[1].innerHTML='아티스트는 필수항목 입니다.'
         error[1].style.display='block'
     }else{
         error[1].style.display='none'
@@ -63,7 +63,7 @@ function checkAertiest(){
 }
 function checkPlace(){
     if(place.value === ""){
-        error[2].innerHTML='빈칸이에용.'
+        error[2].innerHTML='공연장은 필수항목 입니다.'
         error[2].style.display='block'
     }else{
         error[2].style.display='none'
@@ -71,7 +71,7 @@ function checkPlace(){
 }
 function checkRuntime(){
     if(runtime.value === ""){
-        error[3].innerHTML='숫자입력해줘용.'
+        error[3].innerHTML='공연시간은 필수항목 입니다.'
         error[3].style.display='block'
     }else{
         error[3].style.display='none'
@@ -79,7 +79,7 @@ function checkRuntime(){
 }
 function checkFundDurationE(){
     if(fundDurationE.value === ""){
-        error[4].innerHTML='빈칸이에용.'
+        error[4].innerHTML='펀딩 기간은 필수항목 입니다.'
         error[4].style.display='block'
     }else{
         error[4].style.display='none'
@@ -90,7 +90,7 @@ function checkFundDurationE(){
 }
 function checkStartDate(){
     if(startDate.value === ""){
-        error[5].innerHTML='빈칸이에용.'
+        error[5].innerHTML='공연일은 필수항목 입니다.'
         error[5].style.display='block'
     }else{
         error[5].style.display='none'
@@ -98,10 +98,10 @@ function checkStartDate(){
 }
 function checkMinFund(){
     if(minFund.value === ""){
-        error[6].innerHTML='빈칸이에용.'
+        error[6].innerHTML='1인 최소 펀딩 금액은 필수항목 입니다.'
         error[6].style.display='block'
     }else if(parseInt(minFund.value) < parseInt(1000)){
-        error[6].innerHTML='1000원 이상해주세요.'
+        error[6].innerHTML='1인 최소 펀딩 금액은 1000원 입니다.'
         error[6].style.display='block'
     }else{
         error[6].style.display='none'
@@ -109,10 +109,10 @@ function checkMinFund(){
 }
 function checkFundAmount(){
     if(fundAmount.value === ""){
-        error[7].innerHTML='빈칸이에용.'
+        error[7].innerHTML='펀딩 목표 금액은 필수항목 입니다.'
         error[7].style.display='block'
     }else if(parseInt(minFund.value) >= parseInt(fundAmount.value)){
-		error[7].innerHTML='최소금액보다 커야해요.'
+		error[7].innerHTML='최소 펀딩 금액보다 커야합니다.'
         error[7].style.display='block'
 	}else{
         error[7].style.display='none'
@@ -120,7 +120,7 @@ function checkFundAmount(){
 }
 function checkCon(){
     if(content.value === ""){
-        error[8].innerHTML='빈칸이에용.'
+        error[8].innerHTML='펀딩 내용은 필수항목 입니다.'
         error[8].style.display='block'
     }else{
         error[8].style.display='none'

@@ -260,6 +260,9 @@
 			if(fundAmount.value === ""){
 				errors[7].innerHTML='펀딩 목표 금액은 필수항목 입니다.'
 				errors[7].style.display='block'
+			}else if(parseInt(minFund.field) >= parseInt(fundAmount.field)){
+				error[7].innerHTML='최소 펀딩 금액보다 커야합니다.'
+				error[7].style.display='block'
 			}else{
 				errors[7].style.display='none'
 			}
@@ -303,7 +306,7 @@
 						uploadSummernoteImageFile(files[0],this);
 					}	
 				}
-			})		
+			})
 		})
 			
 		// 썸머노트 이미지 업로드
