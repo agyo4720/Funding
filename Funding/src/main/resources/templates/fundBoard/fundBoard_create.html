@@ -1,0 +1,67 @@
+<!-- 미지정펀딩 생성 -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+
+	<!-- CSS -->
+
+	<!-- favicon -->
+    <link rel="shortcut icon" href="img/favicon/ms-icon-310x310.png" type="image/x-icon" />
+</head>
+<body>
+	<!-- 홈페이지 상단 nav -->
+	<header th:replace="/main/nav"></header>
+
+	<div>
+		<form th:action="@{/fundBoard/list}" object="${fundBoardForm}" method="POST">
+			
+			<label for="subject">제목</label>
+			<input type="text" th:field="*{subject}">
+			
+			<label for="content">내용</label>
+			<input type="text" th:field="*{content}">
+			
+			<label for="place">장소</label>
+			<input type="text" th:field="*{place}">
+			
+			<label for="startDate">공연 시작 일자</label>
+			<input type="text" th:field="*{startDate}">
+			
+			<label for="runtime">공연 시간</label>
+			<input type="text" th:field="*{runtime}">
+			
+			<label for="fundDuration">공연 기간</label>
+			<input type="text" th:field="*{fundDuration}">
+			
+			<label for="minFund">1인 최소 펀딩 금액</label>
+			<input type="text" th:field="*{minFund}">
+			
+			<label for="fundAmoundt">펀딩 목표 금액</label>
+			<input type="text" th:field="*{fundAmoundt}">
+			
+			<label for="fundCurrent">펀딩 현재 금액</label>
+			<input type="text" th:field="*{fundCurrent}">
+			
+			<label for="currentMember">현재 모집 인원</label>
+			<input type="text" th:field="*{currentMember}">
+			
+			<label for="vote">별점 투표 수</label>
+			<input type="text" th:field="*{vote}">
+			
+			<label for="star">별점 평균</label>
+			<input type="text" th:field="*{star}">
+			
+			<label for="state">펀딩 상태</label>
+			<input type="text" th:field="*{state}">
+			
+			<a><button type="submit">등록하기</button></a>
+		
+		</form>
+	</div>
+		
+</body>
+</html>
