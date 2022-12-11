@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,7 +7,7 @@
     <title>Let's Funding</title>
 
     <!-- CSS -->
-    <link rel="stylesheet" href="../../static/css/fundBoard/fundBoard_list.css" th:href="@{/css/fundBoard/fundBoard_list.css}">
+    <link rel="stylesheet" href="../../static/css/fundBoard/fundBoard_form.css" th:href="@{/css/fundBoard/fundBoard_form.css}">
 
     <!-- favicon -->
     <link rel="shortcut icon" href="/img/favicon/ms-icon-310x310.png" type="image/x-icon" />
@@ -16,6 +16,37 @@
     <!-- 홈페이지 상단 nav-->
 	<header th:replace="/main/nav"></header>
 
-    
+    <!-- 선정된 아티스트 수정 Form -->
+    <section>
+        <form>
+            <!-- 타이틀 -->
+            <div class="title">
+                <h2>미지정 펀딩</h2>
+            </div>
+
+            <!-- 공연명 -->
+            <div class="int int_title">
+				<label for="subject">공연명</label>
+				<input type="text" id="subject" readonly>
+				<span class="errors" style="display: none">에러출력</span>
+			</div>
+
+            <!-- 공연장 -->
+			<div class="int int_place">
+				<label for="place">공연장</label>
+				<input type="text" id="place" autocomplete="off" placeholder="장소를 입력하세요.">
+				<span class="errors" style="display: none">에러출력</span>
+			</div>
+
+            <!-- 공연시간 -->
+			<div class="int int_runtime">
+				<label for="runtime">공연시간</label>
+				<input type="number" id="runtime" autocomplete="off" placeholder="분 단위로 입력 입력하세요.">
+				<span class="errors" style="display: none">에러출력</span>
+			</div>
+
+            <button type="submit">등록하기</button>
+        </form>
+    </section>    
 </body>
 </html>
