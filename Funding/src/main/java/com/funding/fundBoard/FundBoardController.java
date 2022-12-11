@@ -169,7 +169,7 @@ public class FundBoardController {
 			@PathVariable ("id") Integer id,
 			Principal principal,
 			Model model,
-			Integer alertId){
+			Integer alertId) throws Exception{
 
 		FundBoard fundBoard = this.fundBoardService.findById(id);
 		model.addAttribute("fundBoard", fundBoard);
@@ -206,6 +206,13 @@ public class FundBoardController {
 				}
 			}
 		}
+		
+		//펀딩 마감시 아티스트 추려냄
+		if(fundBoard.getState().equals("100%⇑⇑⇑")) {
+			alertService.fundBoardSuccess(fundBoard);
+		}
+		
+		
 		model.addAttribute("result", result);
 
 		return "/fundBoard/fundBoard_detail";

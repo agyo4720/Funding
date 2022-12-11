@@ -51,8 +51,7 @@ public class FundArtistListController {
 	
 	// 미지정 펀드 아티스트 참여
 	@RequestMapping("/join/{id}")
-	@ResponseBody
-	public HashMap<String, Object> join(
+	public String join(
 			@PathVariable("id") Integer id,
 			Principal principal,
 			Model model) {
@@ -62,30 +61,18 @@ public class FundArtistListController {
 		
 		Optional<FundArtistList> fal = this.fundArtistListService.search(fundArtist, furndBoard);
 		
-		HashMap<String, Object> map = new HashMap<>();
-		
-		fundArtist.getSelfBoard();
-		
-		map.put("nickname", fundArtist.getNickname());
-		map.put("filepath", fundArtist.getSelfBoard().getFilePath());
-		map.put("id", fundArtist.getId());
-		fundArtist.getSelfBoard().getFilePath();
-				
-		log.info("____________________________________" + fundArtist.getId());
-		log.info("____________________________________" + fundArtist.getUsername());
-				
-		/*
-		if(fundArtist.getSelfBoard() == null) {
-			return "프로필을 먼저 등록해주세요.";
+		if(fal.isEmpty()) {
+			if(fundArtist.getSelfBoard() == null) {
+				return String.format("redirect:/selfBoard/detail/%s", fundArtist.getUsername());
+			}else {
+				model.addAttribute("info", "success");
+				this.fundArtistListService.join(fundArtist, furndBoard);
+				return "/fundBoard/joinArtist";
+			}
+		}else{
+			model.addAttribute("info", "fail");
+			return "/fundBoard/joinArtist";
 		}
-		
-		if(fal.isPresent()) {
-			return "이미 참여했습니다.";
-		} */
-				
-		this.fundArtistListService.join(fundArtist, furndBoard);
-
-		return map;
 	}
 	
 	// 펀드 참여 아티스트 투표하기

@@ -137,8 +137,6 @@
 				
 				<div class="art_part" sec:authorize="hasRole('ROLE_ARTIST')">			
 					<a id="btn1" th:href="@{|/fundArtistList/join/${fundBoard.id}|}">참여하기</a>
-					<input id="val1" type="hidden" th:value="@{|/fundArtistList/join/${fundBoard.id}|}">
-					<input id="fdid1" type="hidden" th:value="${fundBoard.id}">
 				</div>
 			</div>
 			
@@ -163,10 +161,12 @@
 						<div class="vote">
 							<span th:text="|${fundArtistList.fundUserList.size()}개|"></span>
 							<!-- 투표 버튼 -->
-							<a id="btn2" sec:authorize="hasRole('ROLE_USER')"
-								th:href="@{|/fundArtistList/score/${fundArtistList.id}/${fundBoard.id}|}">
-								<i class="fal fa-thumbs-up"></i>
-							</a>
+							<div th:if="${!fundArtistList.fundBoard.state.toString().equals('공연')}">
+								<a id="btn2" sec:authorize="hasRole('ROLE_USER')"
+									th:href="@{|/fundArtistList/score/${fundArtistList.id}/${fundBoard.id}|}">
+									<i class="fal fa-thumbs-up"></i>
+								</a>
+							</div>
 							<input hidden class="fundArtistList" 
 							th:value="${fundArtistList.fundArtist.username}"/>
 						</div>
@@ -261,54 +261,7 @@
 		
 	</script>
 	-->
-	
-	<script>
-		let val1 = $('#val1').val()
-		let fdid1 = $('#fdid1').val()
-	    let url = val1 ;
-		
-		$('#btn1').click(function(e){
-		    e.preventDefault();
-		    e.stopPropagation();
-		    
-			$.ajax({
-				url: url,
-				type:'POST',				
-				success: function(result){
-					console.log(result)
-					alert('등록이 되었습니다.');
-					let html
-						= '<div class="art_view"'
-						+ '<div class="art_con">'
-						+ '<div class="profile">'
-						+ '  <a href=\"/selfBoard/detail/'+ result.username + '\">'
-						+ '    <div class="pro_image">'
-						+ '      <img src=\"/selfBoard/img/' + result.id + '\"/>'
-						+ '    </div>'
-						+ '	   <div class="pr">'
-						+ '	     <h3>'+ result.nickname  +'</a></h3>'
-						+ '	   </div>'
-						+ '	   <div>'
-						+ '      <input hidden class="username" value=\"' + result.username + '\">'
-						+ '    </div>'
-						+ '  </a>'
-						+ '  <div class="vote">'
-						+ '    <span>0개</span>'
-						+ '    <input hidden class="fundArtistList" value=\"' + result.username + '\">'
-						+ '  </div>'
-						+ '</div>'
-						+ '</div>'
-						+ '</div>'
-				    $('.pro_image').append(html)
-				}
-				,
-				error: function(xhr){
-					console.log(xhr);
-					alert(xhr.status +':'+xhr.textStatus);
-				}
-			})
-		})
-	</script>
+
 	
 </body>
 </html>
