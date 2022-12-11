@@ -48,7 +48,6 @@ public class FundTargetListService {
 	//해당 리스트 지우기
 	public void delete(FundUser user, FundBoardTarget fundBoardTarget) {
 		List<FundTargetList> ftList = fundTargetListRepository.findByFundUserAndFundBoardTarget(user, fundBoardTarget);
-		log.info("삭제할 타겟 리스트 1개 : " + ftList.toString());
 		fundTargetListRepository.delete(ftList.get(0));
 	}
 	

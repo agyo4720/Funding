@@ -3,21 +3,15 @@ section {
     width: 1000px;
 }
 
-.s_title {
-    margin-left: 30px;
-}
-
-.title {
-    margin: 20px 0;
-}
+.title {margin: 20px 0;}
 
 .con_hr_detail hr {
-    border-top: 1px solid #6a6a6a;
+    border-top: 1px solid #bfbfbf;
 }
 
 .con_hr hr {
     margin: 40px 0;
-    border-top: 1px solid #6a6a6a;
+    border-top: 1px solid #bfbfbf;
 }
 
 /* con */
@@ -35,9 +29,9 @@ section {
     letter-spacing: 1px;
 }
 
-.image {
-    margin-top: 10px;
-}
+.image {margin-top: 10px;}
+
+.image img {border-radius: 5px;}
 
 /* right */
 .right {
@@ -200,16 +194,21 @@ section {
 
 /*----------- 진행도 바-----------*/
 progress {
-	height: 35px;
-	width: 250px;
+	height: 25px;
+	width: 310px;
 	-webkit-appearance: none;
 }
+
+.int_progress span {
+    margin-left: 10px;
+}
+
 ::-webkit-progress-bar {
-	background-color: grey;
+	background-color: #bfbfbf;
 	border-radius: 30px;
 }
 
 ::-webkit-progress-value {
-	background-color: rgb(250, 78, 78);
+	background-color: #d33131;
 	border-radius: 30px;
 }

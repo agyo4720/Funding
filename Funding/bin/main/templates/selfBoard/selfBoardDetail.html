@@ -1,9 +1,46 @@
-<div>디테일</div>
-<div>
-	<div>
-		<img th:src="|/selfBoard/img/${selfBoard.id}|" width="300" height="350">
-	</div>
-	<div th:text="|제목 : ${selfBoard.subject}|"></div>
-	<div th:utext="|장르설명 : ${selfBoard.genre}|"></div>
-	<div th:utext="|내용 : ${selfBoard.content}|"></div>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Let's Funding : 프로필</title>
+	<!-- CSS -->
+	<link rel="stylesheet" href="../../static/css/selfBoard/selfBoardDetail.css" th:href="@{/css/selfBoard/selfBoardDetail.css}">
+</head>
+<body>
+	<!-- 홈페이지 상단 nav -->
+	<header th:replace="/main/nav"></header>
+
+	<section>
+        <!-- nav -->
+        <nav th:replace="/main/usernav"></nav>
+
+		<!-- 프로필 -->
+		<div class="wrap">
+			<div class="profile">
+				<div class="pro_tit">
+					<div class="image">
+						<img th:src="|/selfBoard/img/${selfBoard.id}|">
+					</div>
+					<div class="pro_con">
+						<div class="view">
+							<label>아티스트</label>
+							<p th:text="${selfBoard.fundArtist.nickname}"></p>
+						</div>
+						<div class="view">
+							<label>장르</label>
+							<p th:text="${selfBoard.genre}"></p>
+						</div>
+					</div>
+				</div>
+				<div class="pro_txt">
+					<h3 th:text="${selfBoard.subject}"></h3>
+					<div class="content" th:utext="${selfBoard.content}"></div>
+					<a th:href="@{|/selfBoard/modify/${#authentication.getPrincipal().getUsername()}|}">수정하기</a>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

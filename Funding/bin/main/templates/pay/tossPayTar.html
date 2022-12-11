@@ -84,13 +84,13 @@
 
     <script src="https://js.tosspayments.com/v1"></script> <!-- 토스결제창 불러오기  -->
     <script>
-        var tossPayments = TossPayments("test_ck_OALnQvDd2VJjgjj4daVMj7X41mNW");
-        var button = document.getElementById("payment-button");
-        var minfund = document.querySelector('#num').value;
+        var tossPayments = TossPayments("test_ck_OALnQvDd2VJjgjj4daVMj7X41mNW");//토스 클라이언트키
+        var button = document.getElementById("payment-button");//결제방식
+        var minfund = document.querySelector('#num').value;//펀딩최소금액
 
-        var orderId = new Date().getTime();
-        var pk = document.getElementById("id").value;
-        var userAndPk = orderId + '-' + pk;
+        var orderId = new Date().getTime();//주문번호는 중복불가
+        var pk = document.getElementById("id").value;//공연정보 아이디를 들고옴
+        var userAndPk = orderId + '-' + pk;//증가,감소할때 공연정보 아이디가 필요해서 주문번호랑 같이 값넘김
         var check = document.getElementById('checkB');
 
         button.addEventListener("click", function (e) {
@@ -99,8 +99,8 @@
 
             console.log(check.checked);
             
-            if(check.checked == true) {
-                if(parseInt(amount) >= parseInt(minfund)){
+            if(check.checked == true) { //알림 체크해야지 가능
+                if(parseInt(amount) >= parseInt(minfund)){//최소펀딩금액 보다 커야지 결제가능
                 var paymentData = {
                     amount: amount,
                     orderId: userAndPk,

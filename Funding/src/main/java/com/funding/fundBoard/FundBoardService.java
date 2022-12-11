@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.funding.Categorie.Categorie;
 import com.funding.Categorie.CategorieRepository;
+import com.funding.fundArtist.FundArtistRepository;
 import com.funding.fundUser.FundUser;
 
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,7 @@ public class FundBoardService {
 
 	private final FundBoardRepository fundBoardRepository;
 	private final CategorieRepository categorieRepository;
+	private final FundArtistRepository fundArtistRepository; 
 	
 	// 펀드보드 리스트
 	public List<FundBoard> findAll(){
@@ -133,7 +135,7 @@ public class FundBoardService {
 		List<Sort.Order> sorts = new ArrayList<>();
 		sorts.add(Sort.Order.desc("createDate"));
 		
-		Pageable pageable = PageRequest.of(page, 1, Sort.by(sorts));
+		Pageable pageable = PageRequest.of(page, 5, Sort.by(sorts));
 		
 		return this.fundBoardRepository.findAll(pageable);
 	}
@@ -144,7 +146,7 @@ public class FundBoardService {
 		List<Sort.Order> sorts = new ArrayList<>();
 		sorts.add(Sort.Order.desc("createDate"));
 		
-		Pageable pageable = PageRequest.of(page, 3, Sort.by(sorts));
+		Pageable pageable = PageRequest.of(page, 1, Sort.by(sorts));
 		
 		return this.fundBoardRepository.findByCategorie(pageable, categorie);
 	}

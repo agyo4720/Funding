@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.funding.fundArtist.FundArtist;
@@ -20,6 +21,8 @@ import com.funding.fundArtist.FundArtistService;
 import com.funding.fundBoardTarget.FundTargetService;
 import com.funding.fundUser.FundUser;
 import com.funding.fundUser.FundUserService;
+import com.funding.selfBoard.SelfBoard;
+import com.funding.selfBoard.SelfBoardService;
 import com.funding.user.mailValidation.EmailService;
 
 import lombok.RequiredArgsConstructor;
@@ -34,6 +37,7 @@ public class UserController {
 	private final FundTargetService fundTargetService;
 	private final EmailService emailService;
 	private final PasswordEncoder passwordEncoder;
+	private final SelfBoardService selfBoardService;
 	
 	String username = null;
 	String userRole = null;
@@ -73,6 +77,31 @@ public class UserController {
 		}
 		
 		return "user/myInfo";
+	}
+	
+	//계좌관리에 사이드바 사용
+	@RequestMapping("/myInfo/ajax")
+	@ResponseBody
+	public String myInfoAjax(@RequestParam("artist") String artist) {
+		Optional<FundArtist> FA = this.fundArtistService.findByuserName(artist);
+		return FA.get().getUsername();
+	}
+	
+	//프로필 작성 유무에 따른 링크 변경
+	@RequestMapping("/myInfo/profile")
+	@ResponseBody
+	public String profileAjax(@RequestParam("artist") String artist) {
+		Optional<SelfBoard> SB = this.selfBoardService.findByUsername(artist);
+		
+		if(SB.isPresent()) {
+			return "1";
+		}
+		if(SB.isEmpty()) {
+			return "0";
+		}
+		
+		return "";
+		
 	}
 	
 	// 비밀번호 초기화 하기위한 id 입력 폼 요청
@@ -117,6 +146,40 @@ public class UserController {
 		}
 		
 		return "redirect:/user/login";
+	}
+	
+	// 비밀번호 수정2
+	@PostMapping("/resetPwdConfirm2")
+	public String resetPwdConfirm3(String pwd, Principal principal){
+
+		Optional<FundUser> FU = this.fundUserService.findByuserName(principal.getName());
+		Optional<FundArtist> FA = this.fundArtistService.findByuserName(principal.getName());
+		
+		if(FU.isPresent()) {
+			this.fundUserService.resetPwd(FU.get().getUsername(), pwd);
+		}
+		
+		if(FA.isPresent()) {
+			this.fundArtistService.resetPwd(FA.get().getUsername(), pwd);
+		}
+		
+		
+		return "redirect:/user/myInfo";
+	}
+	
+	// 전화번호 수정
+	@PostMapping("/resetMobile")
+	public String resetMobile(Principal principal, String mobile) {
+		Optional<FundUser> FU = this.fundUserService.findByuserName(principal.getName());
+		Optional<FundArtist> FA = this.fundArtistService.findByuserName(principal.getName());
+		if(FU.isPresent()) {
+			this.fundUserService.resetMobile(FU.get(),mobile);
+		}
+		if(FA.isPresent()) {
+			this.fundArtistService.resetMobile(FA.get(),mobile);
+		}
+		
+		return "redirect:/user/myInfo";
 	}
 
 	

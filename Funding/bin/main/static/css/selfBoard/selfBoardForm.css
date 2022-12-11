@@ -1,0 +1,17 @@
+.wrap {
+    display: flex;
+    justify-content: center;
+}
+
+.view {display: flex;}
+
+.wrap label {
+    width: 100px;
+}
+
+.image img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}

@@ -71,13 +71,26 @@ public class SelfBoardController {
 	}
 	
 	
-	//디테일 보여주기
-	@RequestMapping("/detail/{id}")
-	public String showDetail(@PathVariable("id")Integer id, Model model) {
+//	//디테일 보여주기
+//	@RequestMapping("/detail/{id}")
+//	public String showDetail(@PathVariable("id")Integer id, Model model) {
+//		
+//		SelfBoard selfBoard = selfBoardService.findById(id);
+//		
+//		model.addAttribute("selfBoard", selfBoard);
+//		return "/selfBoard/selfBoardDetail";
+//	}
+	
+	//디테일 보여주기 유저네임
+	@RequestMapping("/detail/{username}")
+	public String showDetail(@PathVariable("username")String username, Model model) {
 		
-		SelfBoard selfBoard = selfBoardService.findById(id);
+		Optional<SelfBoard> selfBoard = selfBoardService.findByUsername(username);
+		if(selfBoard.isEmpty()) {
+			return "redirect:/selfBoard/form";
+		}
 		
-		model.addAttribute("selfBoard", selfBoard);
+		model.addAttribute("selfBoard", selfBoard.get());
 		return "/selfBoard/selfBoardDetail";
 	}
 	
@@ -91,5 +104,13 @@ public class SelfBoardController {
 		log.info("셀프보드 이미지 신호 받음 : ");
 		return new UrlResource("file:" + imgPath);
 	}
-
+	
+	// 자기소개 수정
+	@RequestMapping("/modify/{username}")
+	public String modifySelfBoard(@PathVariable("username")String username, Model model) {
+		
+		Optional<SelfBoard> selfBoard = selfBoardService.findByUsername(username);
+		model.addAttribute("selfBoardForm", selfBoard.get());
+		return "/selfBoard/selfBoardForm";
+	}
 }

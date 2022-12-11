@@ -1,11 +1,16 @@
 package com.funding.selfBoard;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.funding.answer.Answer;
 import com.funding.fundArtist.FundArtist;
 
 import lombok.Getter;
@@ -26,11 +31,15 @@ public class SelfBoard {
 	
 	private String filePath;
 	
-	private Integer starPoint;
-	
 	private String genre;
 	
+	private Integer starPoint;
+	
+	@OneToMany(mappedBy = "selfBoard")
+	private List<Answer> answer;
+	
 	@OneToOne
+	@JoinColumn(unique = true)
 	private FundArtist fundArtist;
 	
 }

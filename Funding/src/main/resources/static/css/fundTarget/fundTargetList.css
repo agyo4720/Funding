@@ -4,9 +4,8 @@ section {
 }
 
 /* 타이틀 */
-section .s_title {
-    margin: 10px auto;
-    width: 100px;
+.title {
+    text-align: center;
 }
 
 /* 카테고리 */
@@ -33,8 +32,7 @@ section .s_title {
 .categorie form a:last-child {margin-right: 0;}
 
 .categorie form a:last-child::after {
-    padding: 0;
-    margin-left: 0;
+    padding: 0; margin-left: 0;
 }
 
 .cate.active{color: #B00E0E;}
@@ -42,29 +40,39 @@ section .s_title {
 /* 공연 리스트 Form */
 .list_form {
     padding: 10px 20px;
-    margin: 30px auto;
+    margin: 20px auto;
     width: 900px;
-    border: 1px solid #7c7c7c;
-    border-radius: 30px;
+    background-color: #f8f8f8;
+    border: 0.1px solid #bfbfbf;
+    border-radius: 15px;
 }
 
-.con_list {display: flex;}
+.con_list {
+    display: flex;
+    align-items: center;
+}
 
 .image {margin: 10px;}
 
+.image img {
+    object-fit: cover;
+    border-radius: 5px;
+}
+
 .con {
     margin: 20px 0 20px 40px;
-    width: 100%;
+    width: 550px;
 }
 
 .status {
     display: inline-block;
     padding: 3px 15px;
     margin-bottom: 7px;
+    background-color: #B00E0E;
     border: 2px solid #B00E0E;
     border-radius: 20px;
     font-weight: bold;
-    color: #B00E0E;
+    color: #fff;
 }
 
 .con_title {
@@ -74,6 +82,7 @@ section .s_title {
 .con_title p {color: #7c7c7c;}
 
 .con_title a h3 {
+    display: inline-block;
     cursor: pointer;
     margin-top: 7px;
     letter-spacing: 2px;
@@ -99,6 +108,23 @@ section .s_title {
 
 .view:last-child {margin: 0 auto;}
 
+/* 퍼센테이지 */
+.graph {
+    margin-right: 25px;
+    width: 150px;
+    height: 150px;
+    color: #fff;
+    border-radius: 50%;
+    background: #cf4b4b;
+    text-align: center;
+}
+
+.graph_view {
+    transform: translateY(80%);
+}
+
+.graph_view p {margin-bottom: 5px; font-weight: bold;}
+
 /* 페이징 */
 .page {
     display: flex;
@@ -116,9 +142,7 @@ section .s_title {
     text-underline-position: under;
 }
 
-.page .active {
-    color: #B00E0E;
-}
+.page .active {color: #B00E0E;}
 
 /* 펀딩 만들기 버튼 */
 .btn_create {
@@ -138,7 +162,3 @@ section .s_title {
 .btn_create:hover {
     background-color: #5e5252;
 }
-
-
-
-

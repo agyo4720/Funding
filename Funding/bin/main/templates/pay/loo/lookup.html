@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Let's Funding</title>
+	
+	<!-- CSS -->
+    <link rel="stylesheet" href="/css/pay/loo/lookup.css">
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="img/favicon/ms-icon-310x310.png" type="image/x-icon" />
+
+	<!-- fontawsome -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+<head>
+<body>
+<!-- 홈페이지 상단 nav -->
+<header th:replace="/main/nav"></header>
+	<section>
+	<!-- nav -->
+	<nav th:replace="/main/usernav"></nav>
+
+	<!-- 계좌 -->
+	<input type="hidden" id="msg" th:value="${msg}" />
+	<input type="hidden" id="message" th:value="${message}" />
+
+
+	<div class="payinfo">
+		<div class="con">
+			<button th:onclick="'window.open(location.href=\'' + @{/pay/rem/enroll} + '\'
+				, \'window_name\', \'width=430, height=500, location=no, status=no, scrollbars=yes\')'" type="submit">계좌등록</button>
+			<button th:onclick="'location.href=\'' + @{/pay/rem/enroll} + '\''" type="submit">계좌등록</button>
+			<button th:onclick="'location.href=\'' + @{/pay/rem/revise} + '\''" type="submit">계좌수정</button>
+			
+			
+			<h1>계좌삭제</h1>
+			<p>----------------------</p>
+			<form th:action="@{/pay/rem/deletionRequest}" method="GET">
+			<input type="text"  id="subMallId" placeholder="서브몰ID" name="subMallId" value="" />
+			<button th:onclick="'location.href=\'' + @{/pay/rem/deletion} + '\''" type="submit">계좌삭제</button>
+			</form>
+			
+			
+			<h1>계좌조회</h1>
+			<p>----------------------</p>
+			<form th:action="@{/pay/loo/lookup}" method="GET">
+			<input type="text"  id="subMallId" placeholder="서브몰ID" name="subMallId" value="" />
+			<button id="revise-button" type="submit">조회하기</button>
+			</form>
+			
+			
+			
+			
+				<table border="1">
+					<tr>
+						<th align="center" width="160">서브몰ID</th>
+						<th align="center" width="160">공연완료날짜</th>
+						<th align="center" width="160">금액</th>
+						<th align="center" width="160">등록날짜</th>
+					</tr>
+					<tr th:each="list : ${rList}">
+						<td align="center" th:text="${list.subMallId}"></td>
+						<td align="center" th:text="${#strings.substring(list.payoutDate, 0, 10)}"></td>
+						<td align="center" th:text="| ${list.payoutAmount}원|"></td>
+						<td align="center" th:text="${list.requestedAt}"></td>
+					</tr>		
+				</table>
+			
+				<!-- 페이징 -->
+				<div th:if="${rList != null}">
+					<div class="page" th:if="${!rList.isEmpty()}">
+						<div th:if="${rList.number > 0}">
+							<a th:href="@{|?page=${rList.number-1}&subMallId=${subMallId}|}">
+								<i class="fas fa-chevron-left"></i>
+							</a>
+						</div>
+						<div th:each="page : ${#numbers.sequence(0,rList.totalPages-1)}"
+						th:if="${rList.number-5 < page and rList.number+5 > page}">
+							<a th:classappend="${page == rList.number} ? 'active'" th:text="${page+1}" 
+							th:href="@{|?page=${page}&subMallId=${subMallId}|}"></a>
+						</div>
+						<div th:if="${rList.number < rList.totalPages-1}">
+							<a th:href="@{|?page=${rList.number+1}&subMallId=${subMallId}|}">
+								<i class="fas fa-chevron-right"></i>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</section>
+
+
+
+
+	<script>
+
+		var result= document.querySelector('#msg').value;
+		console.log(result);
+		var message= document.querySelector('#message').value;
+		if(result === "Success"){
+			alert("송금완료!");
+		} else if(result === "Fail"){
+			alert(message);
+		}
+
+		else if(result === "SUccess"){
+			alert("수정완료!");
+		}else if(result === "FAil"){
+			alert(message);
+		}
+
+		else if(result === "SUCcess"){
+			alert("등록성공!");
+		}else if(result === "FAIl"){
+			alert(message);
+		}
+
+		else if(result === "SUCCess"){
+			alert("삭제성공!");
+		}else if(result === "FAIL"){
+			alert(message);
+		}
+
+	</script>
+</body>
+</html>

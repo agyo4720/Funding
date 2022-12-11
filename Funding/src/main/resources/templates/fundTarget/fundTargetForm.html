@@ -30,7 +30,7 @@
 			<form th:object="${targetForm}" method="post" enctype="multipart/form-data">
 
 				<div class="title">
-					<h2>지정 펀딩</h2>
+					<h2>지정 펀딩 작성</h2>
 				</div>
 				
 				<div class="int int_cate">
@@ -40,17 +40,17 @@
 					</select>
 				</div>
 				<div class="int int_title">
-					<label for="title">제목</label>
+					<label for="title">공연명</label>
 					<input class="subject" id="title" type="text" th:field="*{subject}" autocomplete="off">
 					<div class="errorList" style="display: none"></div>
 				</div>
 				<div class="int int_artist">
-					<label for="artist">공연자</label>
+					<label for="artist">아티스트</label>
 					<input class="aertiest" id="artist" type="text" name="Aertiest" value="" autocomplete="off">
 					<div class="errorList" style="display: none"></div>
 				</div>
 				<div class="int int_place">
-					<label for="place">장소</label>
+					<label for="place">공연장</label>
 					<input class="place" id="place" type="text" th:field="*{place}" autocomplete="off">
 					<div class="errorList" style="display: none"></div>
 				</div>

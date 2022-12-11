@@ -1,17 +1,13 @@
 section {position: relative;}
 
 .myinfo {
-    position: absolute;
-    left: 500px;
+    display: flex;
+    justify-content: center;
 }
 
 .title {padding: 30px 0;}
 
-.view {
-    display: flex;
-    margin: 13px 0;
-    height: 30px;
-}
+.view {margin-bottom: 10px;}
 
 .view p {
     width: 100px;
@@ -33,4 +29,48 @@ section {position: relative;}
 
 .view button:hover {
     background: #5c5c5c;
+}
+
+.myinfo button{
+    cursor: pointer;
+    margin-left: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    background: #838383;
+    color: #fff;
+    letter-spacing: 2px;
+    line-height: 50%;
+    transition: 0.3s;
+}
+
+.myinfo button:hover {
+	background: #5c5c5c;
+}
+
+.view input {
+    margin: 3px 0;
+    height: 30px;
+}
+
+#changePwdBtn, #mobileBtn2{
+    cursor: pointer;
+    margin-left: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    background: #838383;
+    color: #fff;
+    letter-spacing: 2px;
+    line-height: 50%;
+    transition: 0.3s;
+}
+
+#changePwdBtn:hover, #mobileBtn2:hover {
+	background: #5c5c5c;
+}
+
+.error {
+    margin-bottom: 10px;
+    font-size: 14px;
 }
