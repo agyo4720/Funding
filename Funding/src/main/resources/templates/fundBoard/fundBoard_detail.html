@@ -161,10 +161,12 @@
 						<div class="vote">
 							<span th:text="|${fundArtistList.fundUserList.size()}개|"></span>
 							<!-- 투표 버튼 -->
-							<a id="btn2" sec:authorize="hasRole('ROLE_USER')"
-								th:href="@{|/fundArtistList/score/${fundArtistList.id}/${fundBoard.id}|}">
-								<i class="fal fa-thumbs-up"></i>
-							</a>
+							<div th:if="${!fundArtistList.fundBoard.state.toString().equals('공연')}">
+								<a id="btn2" sec:authorize="hasRole('ROLE_USER')"
+									th:href="@{|/fundArtistList/score/${fundArtistList.id}/${fundBoard.id}|}">
+									<i class="fal fa-thumbs-up"></i>
+								</a>
+							</div>
 							<input hidden class="fundArtistList" 
 							th:value="${fundArtistList.fundArtist.username}"/>
 						</div>
