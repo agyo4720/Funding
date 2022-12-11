@@ -30,16 +30,6 @@ public class FundArtistListService {
 	// 펀드 아티스트 참여
 	public void join(FundArtist fundArtist, FundBoard fundBoard) {
 		
-		List<FundArtistList> fundArtistList = this.fundArtistListRepository.findByFundArtist(fundArtist);
-		
-		
-		// fundArtistList를 반복문을 사용해서 같은 유저일 경우 반복문에서 빠져나가는 로직
-		for(FundArtistList fal : fundArtistList) {
-			if(fal.getFundBoard().getId().equals(fundBoard.getId())) {
-				return ;
-			}
-		}
-	
 		FundArtistList fundArtistLists = new FundArtistList();
 		
 		fundArtistLists.setFundArtist(fundArtist);
