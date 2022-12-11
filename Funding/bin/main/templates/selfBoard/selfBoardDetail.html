@@ -5,8 +5,13 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Let's Funding : 프로필</title>
+
 	<!-- CSS -->
 	<link rel="stylesheet" href="../../static/css/selfBoard/selfBoardDetail.css" th:href="@{/css/selfBoard/selfBoardDetail.css}">
+	<link rel="stylesheet" href="/css/main/usernav.css">
+
+	<!-- favicon -->
+	<link rel="shortcut icon" href="/img/favicon/ms-icon-310x310.png" type="image/x-icon" />
 </head>
 <body>
 	<!-- 홈페이지 상단 nav -->
@@ -37,8 +42,12 @@
 				<div class="pro_txt">
 					<h3 th:text="${selfBoard.subject}"></h3>
 					<div class="content" th:utext="${selfBoard.content}"></div>
-					<a th:href="@{|/selfBoard/modify/${#authentication.getPrincipal().getUsername()}|}">수정하기</a>
+					
 				</div>
+			</div>
+			<!-- 수정하기 -->
+			<div class="modi">
+				<a th:href="@{|/selfBoard/modify/${#authentication.getPrincipal().getUsername()}|}">수정하기</a>
 			</div>
 		</div>
 	</section>

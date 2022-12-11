@@ -10,11 +10,16 @@
 
     <!-- BootStrap -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+
     <!-- CSS -->
 	<link rel="stylesheet" href="../../static/css/selfBoard/selfBoardForm.css" th:href="@{/css/selfBoard/selfBoardForm.css}">
+    <link rel="stylesheet" href="/css/main/usernav_bootstrap.css">
 
     <!-- 썸머노트 -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="/img/favicon/ms-icon-310x310.png" type="image/x-icon" />
 </head>
 <body>
     <!-- 홈페이지 상단 nav -->
@@ -22,7 +27,7 @@
 
     <section>
         <!-- nav -->
-        <nav th:replace="/main/usernav"></nav>
+        <nav class="nav_wrap" th:replace="/main/usernav"></nav>
 
         <div class="wrap">
             <form th:object="${selfBoardForm}"  method="POST" enctype="multipart/form-data">
@@ -52,7 +57,7 @@
                 <div th:if="${#fields.hasAnyErrors()}">
                     <div th:each="err : ${#fields.allErrors()}" th:text="${err}"></div>
                 </div>
-                <button type="submit">작성하기</button>
+                <button class="pro_sub" type="submit">등록하기</button>
             </form>
         </div>
     </section>
@@ -66,7 +71,7 @@
         $(document).ready(function() {
             $('#summernote').summernote({
                 height: 300,
-                width: 740,
+                width: 800,
                 lang: "ko-KR",
                 toolbar: [
                     // [groupName, [list of button]]

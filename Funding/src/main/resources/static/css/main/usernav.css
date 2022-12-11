@@ -1,43 +1,23 @@
 nav {
     position: fixed;
-    padding: 30px 40px;
+    padding: 40px;
     left: 50px;
-    width: 100px;
+    width: 140px;
     height: 500px;
     background: #dddddd;
 }
 
-.wnav {
-    position: fixed;
-    padding: 30px 40px;
-    left: 50px;
-    width: 200px;
-    height: 500px;
-    background: #dddddd;
+nav h3 {
+    letter-spacing: 3px;
 }
-
-nav h3 {letter-spacing: 3px;}
-
-.wnav .wtitle .wh3 {letter-spacing: 3px;}
 
 nav hr {margin: 10px 0;}
 
-.wnav .whr {margin: 10px 0; border-top: 1px solid #000;}
-
 nav ul li {margin-bottom: 20px;}
 
-.wnav .wul .wli {margin-bottom: 20px;}
-
-nav ul li a {
-    /* color: #fff; */
-}
+nav ul li a {}
 
 nav ul li a:hover {
-    text-decoration: underline;
-    text-underline-position: under;
-}
-
-.wnav .wul .wli .wa:hover {
     text-decoration: underline;
     text-underline-position: under;
 }
