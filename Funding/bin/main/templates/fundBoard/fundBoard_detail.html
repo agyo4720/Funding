@@ -203,12 +203,13 @@
 			<div class="title">
 				<h2>댓글</h2>
 			</div>
-
-			<div class="cmt_form">
-				<form th:action="@{|/answer/fundBoard/create/${fundBoard.id}|}" method="GET">
-					<textarea class="int_cmt" name="content" placeholder="내용을 입력하세요."></textarea>
-					<button class="btn_cmt" type="submit">등록</button>
-				</form>
+			<div sec:authorize="isAuthenticated()">
+				<div class="cmt_form">
+					<form th:action="@{|/answer/fundBoard/create/${fundBoard.id}|}" method="GET">
+						<textarea class="int_cmt" name="content" placeholder="내용을 입력하세요."></textarea>
+						<button class="btn_cmt" type="submit">등록</button>
+					</form>
+				</div>
 			</div>
 			
 			<div class="cmt_view" th:each="answer : ${answerList}">
