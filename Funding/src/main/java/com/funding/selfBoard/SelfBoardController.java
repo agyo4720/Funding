@@ -69,7 +69,7 @@ public class SelfBoardController {
 					art.get()
 					);
 			
-			return "redirect:/";
+			return "redirect:/selfBoard/detail";
 			
 		} catch(NullPointerException e) {
 			selfBoardService.create(
@@ -80,7 +80,7 @@ public class SelfBoardController {
 					art.get()
 					);
 			
-			return "redirect:/";
+			return "redirect:/selfBoard/detail";
 		}
 
 		
@@ -110,6 +110,18 @@ public class SelfBoardController {
 		return "/selfBoard/selfBoardDetail";
 	}
 	
+	//디테일 보여주기
+	@RequestMapping("/detail")
+	public String showDetail2(Principal principal, Model model) {
+		
+		Optional<SelfBoard> selfBoard = selfBoardService.findByUsername(principal.getName());
+		if(selfBoard.isEmpty()) {
+			return "redirect:/selfBoard/form";
+		}
+		
+		model.addAttribute("selfBoard", selfBoard.get());
+		return "/selfBoard/selfBoardDetail";
+	}
 	
 	//이미지 보여주기
 	@GetMapping("/img/{id}")
