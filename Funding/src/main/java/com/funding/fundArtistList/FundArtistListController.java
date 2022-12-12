@@ -142,4 +142,12 @@ public class FundArtistListController {
 		return fundList;
 	}
 	
+	//아티스트 신청 취소
+	@RequestMapping("/delete/{id}")
+	public String cancelArtist(@PathVariable("id")Integer id) {
+		FundArtistList fundArtistList = fundArtistListService.findById(id);
+		fundArtistListService.delete(fundArtistList);
+		return "redirect:/";
+	}
+	
 }

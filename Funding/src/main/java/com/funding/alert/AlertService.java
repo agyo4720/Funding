@@ -223,9 +223,10 @@ public class AlertService {
 						index = i;
 					}
 				}
-				//나머지 아티스트 제거
+				//공연 상태 변경
 				FundBoard fundBaord = faList.get(index).getFundBoard();
 				fundBoard.setState("공연");
+				//나머지 아티스트 제거
 				fundBoardService.addFundBoard(fundBaord);
 				faList.remove(index);
 				fundArtistListService.deleteList(faList);

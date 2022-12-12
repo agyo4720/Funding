@@ -90,6 +90,10 @@ public class FundArtistListService {
 	public void deleteList(List<FundArtistList> faList) {
 		fundArtistListRepository.deleteAll(faList);
 	}
+	
+	public void delete(FundArtistList fundArtistList) {
+		fundArtistListRepository.delete(fundArtistList);
+	}
 
 
 }
