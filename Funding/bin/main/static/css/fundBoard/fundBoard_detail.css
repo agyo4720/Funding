@@ -143,13 +143,15 @@ section {
 
 .art_view {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
+    width: 1000px;
 }
 
 .art_con {
     display: inline-flex;
     align-items: center;
-    margin: 10px 30px 0 0;
+    margin: 20px 30px 0;
     padding: 10px 33px 13px 30px;
     background-color: #f3f3f3;
     border: 0.1px solid #707070;
@@ -161,33 +163,49 @@ section {
     align-items: center;
 }
 
-.profile img {
-    width: 70px;
-    height: 70px;
+.profile a {
+    display: flex;
+    align-items: center;
+}
+
+/* 프로필 이미지 */
+.pro_image {height: 100px;}
+
+.pro_image img {
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
     object-fit: cover;
 }
 
-.pr {
+/* 아티스트 이름 */
+.profile h3 {
+    cursor: pointer;
     width: 200px;
     text-align: center;
 }
 
-.vote a {
-    margin-left: 10px;
-    padding: 5px 10px;
-    background-color: #3E3636;
-    border-radius: 5px;
-    color: #fff;
-    font-weight: bold;
-    font-size: 14px;
-    letter-spacing: 2px;
+.vote {
+    display: flex;
+    align-items: center;
+}
+
+.vote span {
+    cursor: default;
+    padding-right: 10px;
+}
+
+#btn2 i::before {
+    content: "\f164";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 300;
+    font-size: 22px;
+    color: #3E3636;
     transition: 0.5s;
 }
 
-.vote a:hover {
-    color: #fff;
-    background-color: #5e5252;
+#btn2 i:hover::before {
+    color: #B00E0E;
 }
 
 /* 콘서트 내용 */

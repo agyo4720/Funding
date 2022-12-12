@@ -1,0 +1,26 @@
+.nav_wrap {
+    position: fixed;
+    padding: 20px 40px;
+    left: 50px;
+    width: 200px;
+    height: 600px;
+    background: #dddddd;
+}
+
+.nav_wrap h3 {
+    letter-spacing: 3px;
+    font-family: 'Do Hyeon', sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.nav_wrap hr {margin: 10px 0; border-top: 0.1px solid #000;}
+
+.nav_wrap ul li {margin-bottom: 20px;}
+
+.nav_wrap ul li a {}
+
+.nav_wrap ul li a:hover {
+    text-decoration: underline;
+    text-underline-position: under;
+}

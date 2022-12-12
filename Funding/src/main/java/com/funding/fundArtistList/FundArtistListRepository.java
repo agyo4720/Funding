@@ -1,6 +1,7 @@
 package com.funding.fundArtistList;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -16,5 +17,7 @@ public interface FundArtistListRepository extends JpaRepository<FundArtistList, 
 	
 	public List<FundArtistList> findByFundUserList(FundUser fundUserList);
 	
-	public List<FundArtistList> findByFundBoardAndFundArtist(FundBoard board, FundArtist artist);
+	public Optional<FundArtistList> findByFundBoardAndFundArtist(FundBoard board, FundArtist artist);
+	
+
 }

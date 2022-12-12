@@ -8,6 +8,6 @@ import com.funding.fundArtist.FundArtist;
 
 public interface SelfBoardRepository extends JpaRepository<SelfBoard, Integer>{
 
-	Optional<SelfBoard> findByFundArtist(FundArtist username);
+	Optional<SelfBoard> findByFundArtist(FundArtist fundArtist);
 
 }

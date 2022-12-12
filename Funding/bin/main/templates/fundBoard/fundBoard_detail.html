@@ -11,8 +11,13 @@
 	
     <!-- favicon -->
     <link rel="shortcut icon" href="/img/favicon/ms-icon-310x310.png" type="image/x-icon" />
+
+	<!-- fontawsome -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" />
 </head>
 <body>
+
+	<span th:text="${selfBoard}"></span>
 	
 	<!-- 홈페이지 상단 nav -->
     <header th:replace="/main/nav"></header>
@@ -136,28 +141,31 @@
 			</div>
 			
 			<div class="art_view">
-
 				<div class="art_con" th:each="fundArtistList : ${fundArtistList}">
 					<!-- 프로필 -->
 					<div class="profile">
-						<div class="image">
-							<img th:src="|/selfBoard/img/${fundArtistList.fundArtist.selfBoard.id}|"/>
-						</div>
-						<div class="pr">
-							<h3><a th:href="@{|/selfBoard/detail/${fundArtistList.fundArtist.nickname}|}"
-								th:text="${fundArtistList.fundArtist.nickname}">자기소개 보기</a></h3>
+						<a th:href="@{|/selfBoard/detail/${fundArtistList.fundArtist.username}|}">
+							<div class="pro_image">
+								<img th:src="|/selfBoard/img/${fundArtistList.fundArtist.selfBoard.id}|"/>
+							</div>
+							<div class="pr">
+								<h3 th:text="${fundArtistList.fundArtist.nickname}">프로필</h3>
 							</div>
 							<div sec:authorize="isAuthenticated()">
 								<input hidden class="username" th:value="${#authentication.getPrincipal().getUsername()}"/>
 							</div>
-						</div>
+						</a>
 						
 						<!-- 투표수 -->
 						<div class="vote">
 							<span th:text="|${fundArtistList.fundUserList.size()}개|"></span>
 							<!-- 투표 버튼 -->
-							<a id="btn2" sec:authorize="hasRole('ROLE_USER')"
-							th:href="@{|/fundArtistList/score/${fundArtistList.id}/${fundBoard.id}|}">투표하기</a>
+							<div th:if="${!fundArtistList.fundBoard.state.toString().equals('공연')}">
+								<a id="btn2" sec:authorize="hasRole('ROLE_USER')"
+									th:href="@{|/fundArtistList/score/${fundArtistList.id}/${fundBoard.id}|}">
+									<i class="fal fa-thumbs-up"></i>
+								</a>
+							</div>
 							<input hidden class="fundArtistList" 
 							th:value="${fundArtistList.fundArtist.username}"/>
 						</div>
@@ -201,8 +209,8 @@
 			<div class="cmt_view" th:each="answer : ${answerList}">
 				<div class="cmt">
 					<div class="cmt_head">
-						<p class="id" th:text="${answer.fundUser.username}">아이디</p>
-						<p class="time" th:text="${#temporals.format(answer.createDate, 'MM-dd HH:mm:ss')}">댓글 시간</p>
+						<p class="id" th:text="${answer.fundUser} != null ? ${answer.fundUser.username} : ${answer.fundArtist.username}">아이디</p>
+						<p class="time" th:text="${#temporals.format(answer.createDate, 'yyyy-MM-dd (E) HH:mm')}">댓글 시간</p>
 						<a class="cmt_delete" th:href="@{|/answer/delete/${answer.id}?location=board&id=${fundBoard.id}|}">삭제</a>
 					</div>
 					<p th:text="${answer.content}">댓글 내용</p>
@@ -216,23 +224,28 @@
 		</div>
 	</section>
 	
+	<!--
 	<script>
 		// 참여 아티스트 유효성 검사 시작
-		let username1 = document.querySelector('.username1').value;
+		let username = document.querySelector('.username').value;
 		let fundArtistList = document.querySelectorAll('.fundArtistList');
+		let fundUserList = document.querySelectorAll('.fundUserList');
+		let selfBoard = document.querySelector('.selfBoard');
+	
 		let btn1 = document.querySelector('#btn1');
+		let btn2 = document.querySelector('#btn2');
 
 		btn1.addEventListener('click', check);
 
 		function check(){
 
 			console.log('실행되었습니다!');
-
+			
 			let bol = true;
 
 			fundArtistList.forEach(function(e){
 
-				if(e.value == username1){
+				if(e.value == username){
 					bol = false;
 				}
 			})
@@ -242,13 +255,12 @@
 			}else{
 				alert("이미 참여하였습니다.");
 			}
-		
 		}
 		// 참여 아티스트 유효성 검사 끝	
+		
 	</script>
-	
-	
-	
+	-->
 
+	
 </body>
 </html>

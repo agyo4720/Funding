@@ -1,21 +1,21 @@
 nav {
     position: fixed;
-    padding: 30px 40px;
+    padding: 40px;
     left: 50px;
-    width: 100px;
+    width: 140px;
     height: 500px;
     background: #dddddd;
 }
 
-nav h3 {letter-spacing: 3px;}
+nav h3 {
+    letter-spacing: 3px;
+}
 
 nav hr {margin: 10px 0;}
 
 nav ul li {margin-bottom: 20px;}
 
-nav ul li a {
-    /* color: #fff; */
-}
+nav ul li a {}
 
 nav ul li a:hover {
     text-decoration: underline;

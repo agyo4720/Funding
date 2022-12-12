@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,7 +37,6 @@ import com.funding.fundArtistList.FundArtistList;
 import com.funding.fundArtistList.FundArtistListService;
 import com.funding.fundList.FundList;
 import com.funding.fundList.FundListService;
-import com.funding.fundTargetList.FundTargetList;
 import com.funding.fundUser.FundUser;
 import com.funding.fundUser.FundUserService;
 import com.funding.sale.Sale;
@@ -176,12 +173,12 @@ public class FundBoardController {
 
 		FundBoard fundBoard = this.fundBoardService.findById(id);
 		model.addAttribute("fundBoard", fundBoard);
-
+		
+		
 		List<Answer> answerList = this.answerService.findByFundBoard(fundBoard);
 		model.addAttribute("answerList", answerList);
 		List<FundArtistList> fundArtistList = this.fundArtistListService.findByFundBoard(fundBoard);
 		model.addAttribute("fundArtistList", fundArtistList);
-		
 		//알람으로 들어왔을 시 알람 삭제
 		if(alertId != null) {
 			alertService.deleteAlert(alertId);
@@ -197,7 +194,7 @@ public class FundBoardController {
 			sale.get(i).getPayCode();
 			model.addAttribute("payCode",sale.get(i).getPayCode());
 		}
-
+		
 		//펀딩 유무 확인
 		boolean result = false;
 		if(principal != null) {
@@ -209,15 +206,18 @@ public class FundBoardController {
 				}
 			}
 		}
-		model.addAttribute("result", result);
 		
-		//펀딩 기간 체크해서 마감시 공연자 선정
-		if(!fundBoard.getState().equals("진행중")) {
+		//펀딩 마감시 아티스트 추려냄
+		if(fundBoard.getState().equals("100%⇑⇑⇑")) {
 			alertService.fundBoardSuccess(fundBoard);
 		}
+		
+		
+		model.addAttribute("result", result);
 
 		return "/fundBoard/fundBoard_detail";
 	}
+		
 
 	// id로 카테고리 리스트 가져오기
 	@RequestMapping("/categorie/{id}")
@@ -262,7 +262,6 @@ public class FundBoardController {
 			}
 		}
 
-		
 		//미지정 리스트 삭제
 		List<FundList> fList = fundListService.findByFundBoard(nick);
 		for(int i=0;i>fList.size();i++) {
@@ -277,32 +276,11 @@ public class FundBoardController {
 		return "redirect:/fundBoard/list";
 	}
 	
-	
-	
-	
-	//아티스트가 수정하기 위한 링크 보내주기(ajax)
-	//@RequestMapping("/modify/fundBoard")
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	// 2022/12/05 - 1 작업중
+	// 2022/12/09 - 2 작업중
 
+//	선정된 아티스트 공연 일정 수정 페이지
+	@RequestMapping("/modify")
+	public String modify() {
+		return "/fundBoard/fundBoard_modify";
+	}
 }

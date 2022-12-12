@@ -2,6 +2,7 @@ package com.funding.alert;
 
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -16,6 +17,7 @@ import com.funding.fundArtist.FundArtistService;
 import com.funding.fundArtistList.FundArtistList;
 import com.funding.fundArtistList.FundArtistListService;
 import com.funding.fundBoard.FundBoard;
+import com.funding.fundBoard.FundBoardService;
 import com.funding.fundBoardTarget.FundBoardTarget;
 import com.funding.fundList.FundList;
 import com.funding.fundTargetList.FundTargetList;
@@ -36,6 +38,7 @@ public class AlertService {
 	private final AlertRepository alertRepository;
 	private final FundArtistService fundArtistService;
 	private final FundUserService fundUserService;
+	private final FundBoardService fundBoardService;
 	private final FundTargetListService fundTargetListService;
 	private final FundArtistListService fundArtistListService; 
 	private final CancelsController cancelsController;
@@ -199,13 +202,15 @@ public class AlertService {
 	
 	//미지정 펀딩기간 마감 + 100%시 공연자 당선
 	public void fundBoardSuccess(FundBoard fundBoard) throws Exception {
+		LocalDate d1 = LocalDate.parse("2022-12-22",DateTimeFormatter.ISO_DATE);
 		
 		//펀딩마감 되면 실행
-		if(fundBoard.getFundDuration().isBefore(LocalDate.now())) {
+		if(fundBoard.getFundDuration().isBefore(d1)) {
+//			if(fundBoard.getFundDuration().isBefore(LocalDate.now())) {
 		
 			List<FundArtistList> faList = fundArtistListService.findByFundBoard(fundBoard);
 			
-			if(faList.size() != 0) {
+			if(faList.size() > 0) {
 				log.info("아티스트 있어서 추려냄");
 				Set<FundUser> sUser = new HashSet<>();
 				int index = 0;
@@ -219,8 +224,12 @@ public class AlertService {
 					}
 				}
 				//나머지 아티스트 제거
+				FundBoard fundBaord = faList.get(index).getFundBoard();
+				fundBoard.setState("공연");
+				fundBoardService.addFundBoard(fundBaord);
 				faList.remove(index);
 				fundArtistListService.deleteList(faList);
+				//알림추가
 				modifyBoardAlert(fundArtistList);
 				
 			//아티스트가 아무도 없으면 환불
@@ -294,7 +303,7 @@ public class AlertService {
 	//아티스트 선정 후 수정 url 주기
 	public void modifyBoardAlert(FundArtistList fundArtistList) {
 		Alert alert = new Alert();
-		alert.setContent(fundArtistList.getFundBoard().getSubject() + "<br/>펀딩에 선정 되었습니다.<br/>공연세부정보를 수정해 주세요!");
+		alert.setContent(fundArtistList.getFundBoard().getSubject() + "<br/>펀딩에 선정 되었습니다.<br/>공연세부정보를 작성해 주세요!");
 		alert.setHostArtist(fundArtistList.getFundArtist());
 		alert.setWitchAlert("수정");
 		alert.setUrl("/fundBoard/modify/" + fundArtistList.getFundBoard().getId());

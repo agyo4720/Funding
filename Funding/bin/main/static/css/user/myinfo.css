@@ -48,12 +48,12 @@ section {position: relative;}
 	background: #5c5c5c;
 }
 
-#form2 .view input {
+.view input {
     margin: 3px 0;
     height: 30px;
 }
 
-#changePwdBtn{
+#changePwdBtn, #mobileBtn2{
     cursor: pointer;
     margin-left: 10px;
     padding: 10px 20px;
@@ -66,6 +66,11 @@ section {position: relative;}
     transition: 0.3s;
 }
 
-#changePwdBtn:hover {
+#changePwdBtn:hover, #mobileBtn2:hover {
 	background: #5c5c5c;
+}
+
+.error {
+    margin-bottom: 10px;
+    font-size: 14px;
 }

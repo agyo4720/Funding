@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -38,6 +39,7 @@ public class SelfBoard {
 	private List<Answer> answer;
 	
 	@OneToOne
+	@JoinColumn(unique = true)
 	private FundArtist fundArtist;
 	
 }

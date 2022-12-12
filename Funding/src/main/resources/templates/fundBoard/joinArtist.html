@@ -1,0 +1,16 @@
+<input hidden class="bool" th:value="${info}">
+
+<script>
+let bool = document.querySelector('.bool').value
+let homeUrl = '/'
+console.log(bool)
+document.addEventListener("DOMContentLoaded", function(){
+	if(bool == 'fail'){
+		alert('이미 신청 하였습니다.')
+		location.href=homeUrl
+	}else if(bool == 'success'){
+		alert('신청되었습니다.')
+		location.href=homeUrl
+	}
+})
+</script>

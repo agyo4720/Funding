@@ -9,6 +9,7 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="/css/user/myinfo.css">
+	<link rel="stylesheet" href="/css/main/usernav.css">
 
     <!-- favicon -->
     <link rel="shortcut icon" href="/img/favicon/ms-icon-310x310.png" type="image/x-icon" />
@@ -45,10 +46,10 @@
 					<div class="view">
 						<p>비밀번호</p>
 						<input id="password1" name="pwd" type="password"/>
-						<div id="pwd1CheckResult"></div>
+						<div id="pwd1CheckResult" class="error"></div>
 						<p>비밀번호 확인</p>
 						<input id="password2" name="pwdCheck" type="password"/>
-						<div id="pwd2CheckResult"></div>
+						<div id="pwd2CheckResult" class="error"></div>
 						<input id="changePwdBtn" type="submit" value="저장" />
 					</div>
 				</form>
@@ -60,7 +61,8 @@
 				<div id="mobile1" class="view" >
 					<p>전화번호</p>
 					<span id="mob" th:text="${myInfo.mobile}"></span>
-					<button id="mobileBtn1">변경</button></div>
+					<button id="mobileBtn1">변경</button>
+				</div>
 				<form id="form" action="/user/resetMobile" method="post">
 					<div hidden id="mobile2" class="view">
 						<p>전화번호</p>
@@ -68,7 +70,7 @@
 						<button id="mobileBtn2">저장</button>
 					</div>
 				</form>
-				<div id="mobileCheckResult"></div>
+				<div id="mobileCheckResult" class="error"></div>
 				
 				<!-- 이메일 -->
 				<div class="view">
@@ -97,6 +99,8 @@
         </div>
     </section>
 </body>
+
+<!-- 전화번호 유효성 검사 -->
 <script>
 	let mobileCut = $('#mob').text().substring(0,3)+" - "+$('#mob').text().substring(3,7) +" - "+$('#mob').text().substring(7,11)
 	$(document).ready($('#mob').html(mobileCut))
