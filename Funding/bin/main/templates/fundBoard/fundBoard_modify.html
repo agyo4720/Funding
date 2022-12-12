@@ -18,7 +18,7 @@
 
     <!-- 선정된 아티스트 수정 Form -->
     <section>
-        <form>
+        <form th:object="${fundBoardForm}" method="POST">
             <!-- 타이틀 -->
             <div class="title">
                 <h2>미지정 펀딩</h2>
@@ -26,24 +26,30 @@
 
             <!-- 공연명 -->
             <div class="int int_title">
-				<label for="subject">공연명</label>
-				<input type="text" id="subject" readonly>
-				<span class="errors" style="display: none">에러출력</span>
-			</div>
+                <label for="subject">공연명</label>
+                <input type="text" id="subject" th:placeholder="${fundBoard.subject}" readonly>
+            </div>
 
             <!-- 공연장 -->
-			<div class="int int_place">
-				<label for="place">공연장</label>
-				<input type="text" id="place" autocomplete="off" placeholder="장소를 입력하세요.">
-				<span class="errors" style="display: none">에러출력</span>
-			</div>
+            <div class="int int_place">
+                <label for="place">공연장</label>
+                <input type="text" id="place" autocomplete="off" placeholder="장소를 입력하세요.">
+                <span class="errors" style="display: none">에러출력</span>
+            </div>
 
             <!-- 공연시간 -->
-			<div class="int int_runtime">
-				<label for="runtime">공연시간</label>
-				<input type="number" id="runtime" autocomplete="off" placeholder="분 단위로 입력 입력하세요.">
-				<span class="errors" style="display: none">에러출력</span>
-			</div>
+            <div class="int int_runtime">
+                <label for="runtime">공연시간</label>
+                <input type="number" id="runtime" autocomplete="off" placeholder="분 단위로 입력 입력하세요.">
+                <span class="errors" style="display: none">에러출력</span>
+            </div>
+
+            <!-- 공연일 -->
+            <div class="int int_date">
+                <label for="startDateTime">공연일</label>
+                <input type="datetime-local" id="startDateTime">
+                <span class="errors" style="display: none">에러출력</span>
+            </div>
 
             <button type="submit">등록하기</button>
         </form>

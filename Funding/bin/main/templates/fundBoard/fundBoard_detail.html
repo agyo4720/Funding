@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,7 +17,7 @@
 </head>
 <body>
 
-	<span th:text="${selfBoard}"></span>
+	<span th:text="${selfBoard}">1</span>
 	
 	<!-- 홈페이지 상단 nav -->
     <header th:replace="/main/nav"></header>

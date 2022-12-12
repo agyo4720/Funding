@@ -19,84 +19,86 @@
     <header th:replace="/main/nav"></header>
 
     <section>
-
         <!-- nav -->
         <nav th:replace="/main/usernav"></nav>
         
-        <!-- 내 정보 조회 -->
-        <div class="myinfo">
-			<div class="con">
-				<div class="title">
-					<h2>회원 정보</h2>
-				</div>
+		<div class="wrap">
+			<!-- 내 정보 조회 -->
+			<div class="myinfo">
+				<div class="con">
+					<div class="title">
+						<h2>회원 정보</h2>
+					</div>
 
-				<!-- 아아디 -->
-				<div class="view">
-					<p>아이디</p>
-					<span th:text="${myInfo.username}"></span>
-				</div>
-				
-				<!-- 비밀번호 -->
-				<div id="pwdHidden" class="view">
-					<p>비밀번호</p>
-					<span>***********</span>
-					<button id="pwdBtn1">변경</button>
-				</div>
-				<form hidden id="form2" action="/user/resetPwdConfirm2" method="post"> 
+					<!-- 아아디 -->
 					<div class="view">
+						<p>아이디</p>
+						<span th:text="${myInfo.username}"></span>
+					</div>
+					
+					<!-- 비밀번호 -->
+					<div id="pwdHidden" class="view">
 						<p>비밀번호</p>
-						<input id="password1" name="pwd" type="password"/>
-						<div id="pwd1CheckResult" class="error"></div>
-						<p>비밀번호 확인</p>
-						<input id="password2" name="pwdCheck" type="password"/>
-						<div id="pwd2CheckResult" class="error"></div>
-						<input id="changePwdBtn" type="submit" value="저장" />
+						<span>***********</span>
+						<button id="pwdBtn1">변경</button>
 					</div>
-				</form>
+					<form hidden id="form2" action="/user/resetPwdConfirm2" method="post"> 
+						<div class="view">
+							<p>비밀번호</p>
+							<input id="password1" name="pwd" type="password"/>
+							<div id="pwd1CheckResult" class="error"></div>
+							<p>비밀번호 확인</p>
+							<input id="password2" name="pwdCheck" type="password"/>
+							<div id="pwd2CheckResult" class="error"></div>
+							<input id="changePwdBtn" type="submit" value="저장" />
+						</div>
+					</form>
 
-				<!-- 이름 -->
-				<div class="view"><p>이름</p><span th:text="${myInfo.nickname}"></span></div>
-				
-				<!-- 전화번호 -->
-				<div id="mobile1" class="view" >
-					<p>전화번호</p>
-					<span id="mob" th:text="${myInfo.mobile}"></span>
-					<button id="mobileBtn1">변경</button>
-				</div>
-				<form id="form" action="/user/resetMobile" method="post">
-					<div hidden id="mobile2" class="view">
+					<!-- 이름 -->
+					<div class="view"><p>이름</p><span th:text="${myInfo.nickname}"></span></div>
+					
+					<!-- 전화번호 -->
+					<div id="mobile1" class="view" >
 						<p>전화번호</p>
-						<input id="mobileModi" type="text" name="mobile" th:value="${myInfo.mobile}"></input>
-						<button id="mobileBtn2">저장</button>
+						<span id="mob" th:text="${myInfo.mobile}"></span>
+						<button id="mobileBtn1">변경</button>
 					</div>
-				</form>
-				<div id="mobileCheckResult" class="error"></div>
-				
-				<!-- 이메일 -->
-				<div class="view">
-					<p>이메일</p>
-					<span th:text="${myInfo.email}"></span>
-				</div>
+					<form id="form" action="/user/resetMobile" method="post">
+						<div hidden id="mobile2" class="view">
+							<p>전화번호</p>
+							<input id="mobileModi" type="text" name="mobile" th:value="${myInfo.mobile}"></input>
+							<button id="mobileBtn2">저장</button>
+						</div>
+					</form>
+					<div id="mobileCheckResult" class="error"></div>
+					
+					<!-- 이메일 -->
+					<div class="view">
+						<p>이메일</p>
+						<span th:text="${myInfo.email}"></span>
+					</div>
 
-				<!-- 생년월일 -->
-				<div class="view">
-					<p>생년월일</p>
-					<span th:text="${#dates.format(myInfo.birth, 'yyyy-MM-dd')}"></span>
-				</div>
-				
-				<!-- 성별 -->
-				<div class="view">
-					<p>성별</p>
-					<span th:text="${myInfo.gender}"></span>
-				</div>
+					<!-- 생년월일 -->
+					<div class="view">
+						<p>생년월일</p>
+						<span th:text="${#dates.format(myInfo.birth, 'yyyy-MM-dd')}"></span>
+					</div>
+					
+					<!-- 성별 -->
+					<div class="view">
+						<p>성별</p>
+						<span th:text="${myInfo.gender}"></span>
+					</div>
 
-				<!-- 권한 -->
-				<div class="view">
-					<p>권한</p>
-					<span th:text="${myInfo.role}"></span>
+					<!-- 권한 -->
+					<div class="view">
+						<p>권한</p>
+						<span th:text="${myInfo.role}"></span>
+					</div>
 				</div>
 			</div>
-        </div>
+		</div>
+
     </section>
 </body>
 
