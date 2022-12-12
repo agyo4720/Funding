@@ -68,8 +68,6 @@ public class FundBoardService {
 		fundBoard.setState("진행중");
 		fundBoard.setFundCurrent(0);
 		fundBoard.setCurrentMember(0);
-		fundBoard.setVote(0);
-		fundBoard.setStar(0);
 		fundBoard.setImgPath(imgPath);
 		fundBoard.setCreateDate(LocalDateTime.now());
 		fundBoard.setCategorie(categorie);
@@ -112,8 +110,6 @@ public class FundBoardService {
 		fundBoard.setState("진행중");
 		fundBoard.setFundCurrent(0);
 		fundBoard.setCurrentMember(0);
-		fundBoard.setVote(0);
-		fundBoard.setStar(0);
 		fundBoard.setFilePath(filePath);
 		fundBoard.setCreateDate(LocalDateTime.now());
 		fundBoard.setCategorie(categorie);
@@ -157,9 +153,7 @@ public class FundBoardService {
 		FundBoard fundBoard = new FundBoard();
 		
 		fundBoard.getMinFund();
-		fundBoard.getStar();
 		fundBoard.setMinFund(fundBoard.getMinFund() + minFund);
-		fundBoard.setStar(fundBoard.getStar() + star);
 
 		this.fundBoardRepository.save(fundBoard);
 		
