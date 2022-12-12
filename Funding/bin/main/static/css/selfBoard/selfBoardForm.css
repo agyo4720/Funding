@@ -3,15 +3,37 @@
     justify-content: center;
 }
 
-.view {display: flex;}
-
-.wrap label {
-    width: 100px;
+.view {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
 }
+
+.view input {height: 30px;}
+
+.wrap label {width: 100px;}
 
 .image img {
     width: 100px;
     height: 100px;
     border-radius: 50%;
     object-fit: cover;
+}
+
+/* 작성하기 버튼 */
+.pro_sub {
+    float: right;
+    padding: 5px 15px;
+    width: 100px;
+    background-color: #3a2c2c;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 15px;
+    letter-spacing: 2px;
+    transition: 0.5s;
+}
+
+.pro_sub:hover {
+    background-color: #5e5252;
 }

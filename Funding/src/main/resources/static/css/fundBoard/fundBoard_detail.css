@@ -143,13 +143,15 @@ section {
 
 .art_view {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
+    width: 1000px;
 }
 
 .art_con {
     display: inline-flex;
     align-items: center;
-    margin: 10px 30px 0 0;
+    margin: 20px 30px 0;
     padding: 10px 33px 13px 30px;
     background-color: #f3f3f3;
     border: 0.1px solid #707070;
@@ -166,17 +168,21 @@ section {
     align-items: center;
 }
 
-.profile h3 {
-    cursor: pointer;
-    width: 200px;
-    text-align: center;
-}
+/* 프로필 이미지 */
+.pro_image {height: 100px;}
 
-.profile img {
+.pro_image img {
     width: 100px;
     height: 100px;
     border-radius: 50%;
     object-fit: cover;
+}
+
+/* 아티스트 이름 */
+.profile h3 {
+    cursor: pointer;
+    width: 200px;
+    text-align: center;
 }
 
 .vote {
