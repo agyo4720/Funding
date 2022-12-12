@@ -288,7 +288,6 @@ public class FundBoardController {
 		FundBoard fundBoard = this.fundBoardService.findById(id);
 		model.addAttribute("fundBoard", fundBoard);
 		log.info(">>> " + fundBoard);
-		
 		return "/fundBoard/fundBoard_modify";
 	}
 }
