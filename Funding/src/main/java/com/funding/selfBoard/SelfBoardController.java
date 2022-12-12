@@ -58,16 +58,32 @@ public class SelfBoardController {
 		String savePath = fileService.saveFile(files);
 		Optional<FundArtist> art = fundArtistService.findByuserName(principal.getName());
 		
+		try {
+			SelfBoard selfBoard = this.selfBoardService.findByFundArtist(art.get());
+			
+			selfBoardService.modify(
+					selfBoardForm.getSubject(), 
+					selfBoardForm.getContent(), 
+					selfBoardForm.getGenre(), 
+					savePath, 
+					art.get()
+					);
+			
+			return "redirect:/";
+			
+		} catch(NullPointerException e) {
+			selfBoardService.create(
+					selfBoardForm.getSubject(), 
+					selfBoardForm.getContent(), 
+					selfBoardForm.getGenre(), 
+					savePath, 
+					art.get()
+					);
+			
+			return "redirect:/";
+		}
+
 		
-		selfBoardService.create(
-				selfBoardForm.getSubject(), 
-				selfBoardForm.getContent(), 
-				selfBoardForm.getGenre(), 
-				savePath, 
-				art.get()
-				);
-		
-		return "redirect:/";
 	}
 	
 	

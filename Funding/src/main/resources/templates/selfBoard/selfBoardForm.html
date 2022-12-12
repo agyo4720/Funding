@@ -25,7 +25,7 @@
         <nav th:replace="/main/usernav"></nav>
 
         <div class="wrap">
-            <form th:object="${selfBoardForm}"  method="POST" enctype="multipart/form-data">
+            <form th:object="${selfBoardForm}" action="/selfBoard/form" method="POST" enctype="multipart/form-data">
                 
                 <div class="view">
                     <label>프로필 제목</label>
