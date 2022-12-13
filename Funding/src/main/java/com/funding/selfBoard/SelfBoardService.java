@@ -63,5 +63,11 @@ public class SelfBoardService {
 		return this.selfBoardRepository.findByFundArtist(fundArtist).get();
 			
 	}
+	
+	public Optional<SelfBoard> findByFundArtist2(FundArtist fundArtist) {
+		
+		return this.selfBoardRepository.findByFundArtist(fundArtist);
+			
+	}
 
 }
