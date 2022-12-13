@@ -81,7 +81,7 @@
 				
 				<!-- 펀딩 정보 -->
 				<div class="view int_progress">
-                	<progress th:value="|${fundBoard.fundCurrent * 100 / fundBoard.fundAmount}|" max="100"></progress>
+                	<progress id="pro" th:value="|${fundBoard.fundCurrent * 100 / fundBoard.fundAmount}|" max="100"></progress>
                 	<span th:text="|${fundBoard.fundCurrent * 100 / fundBoard.fundAmount}%|"></span>
                 </div>
 
@@ -238,6 +238,16 @@
 			
 		</div>
 	</section>
+
+	<script>
+		var proVal = document.querySelector("#pro");
+		
+		console.log(proVal.value);
+
+		if(proVal.value <= 3) {
+			document.getElementById("pro").className = 'bar';
+		}
+	</script>
 	
 	<!--
 	<script>
@@ -275,10 +285,6 @@
 		
 	</script>
 	-->
-<<<<<<< HEAD
-
-	
-=======
 	<!--
 	<script>
 	
@@ -325,6 +331,5 @@
 		
 	</script>
 	-->
->>>>>>> namgo
 </body>
 </html>

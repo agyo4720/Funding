@@ -299,3 +299,7 @@ progress {
 	background-color: #d33131;
 	border-radius: 30px;
 }
+
+.bar::-webkit-progress-value {
+    border-radius: 50px 30px 30px 50px;
+}
