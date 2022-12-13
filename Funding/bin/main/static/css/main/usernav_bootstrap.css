@@ -1,5 +1,10 @@
+section {
+    display: flex;
+    justify-content: center;
+}
+
 .nav_wrap {
-    position: fixed;
+    margin-right: 50px;
     padding: 20px 40px;
     left: 50px;
     width: 200px;

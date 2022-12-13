@@ -10,7 +10,6 @@
     <ul>
         <li><a href="/user/myInfo/">회원 정보</a></li>
         <li sec:authorize="hasRole('ROLE_USER')"><a href="/pay/loo/confirm">결제</a></li>
-        <li><a href="/categorie/list">카테고리 리스트</a></li>
         <li sec:authorize="hasRole('ROLE_ARTIST')"><a href="/pay/loo/lookup">계좌관리</a></li>
         <li sec:authorize="hasRole('ROLE_ARTIST')"><a class="info">프로필</a></li>
     </ul>
@@ -45,10 +44,10 @@
     		,data : 'artist='+artist
     		,success : function(result){
 				if(result == 0){
-					$('.info').html('프로필 생성')
+					$('.info').html('프로필')
 				}
 				if(result == 1){
-					$('.info').html('내 프로필')
+					$('.info').html('프로필')
 				}
     		}
     		,error: function(){

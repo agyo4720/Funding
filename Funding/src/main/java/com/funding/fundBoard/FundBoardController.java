@@ -174,22 +174,24 @@ public class FundBoardController {
 		FundBoard fundBoard = this.fundBoardService.findById(id);
 		model.addAttribute("fundBoard", fundBoard);
 		
-		
 		List<Answer> answerList = this.answerService.findByFundBoard(fundBoard);
 		model.addAttribute("answerList", answerList);
+		
 		List<FundArtistList> fundArtistList = this.fundArtistListService.findByFundBoard(fundBoard);
 		model.addAttribute("fundArtistList", fundArtistList);
+		
 		//알람으로 들어왔을 시 알람 삭제
 		if(alertId != null) {
 			alertService.deleteAlert(alertId);
 		}
 
-
 		//펀딩버튼하면 환불버튼 변경
 		List<FundList> fList = fundListService.findByFundBoard(fundBoard);
+		
 		//환불버튼
 		FundBoard nick = fundBoardService.findById(id);
 		List<Sale> sale = saleRepository.findByFundBoard(nick.getSubject());
+		
 		for(int i=0; i<sale.size(); i++){
 			sale.get(i).getPayCode();
 			model.addAttribute("payCode",sale.get(i).getPayCode());
@@ -197,27 +199,28 @@ public class FundBoardController {
 		
 		//펀딩 유무 확인
 		boolean result = false;
+		
 		if(principal != null) {
 			for(FundList e : fList) {
 				String username = e.getFundUser().getUsername();
 				String loginName = principal.getName();
+				
 				if(username.equals(loginName)) {
 					result = true;
 				}
 			}
 		}
 		
+		model.addAttribute("result", result);
+		
 		//펀딩 마감시 아티스트 추려냄
 		if(fundBoard.getState().equals("100%⇑⇑⇑")) {
 			alertService.fundBoardSuccess(fundBoard);
 		}
-		
-		
-		model.addAttribute("result", result);
 
 		return "/fundBoard/fundBoard_detail";
 	}
-		
+	
 
 	// id로 카테고리 리스트 가져오기
 	@RequestMapping("/categorie/{id}")
@@ -280,7 +283,11 @@ public class FundBoardController {
 
 //	선정된 아티스트 공연 일정 수정 페이지
 	@RequestMapping("/modify/{id}")
-	public String modify() {
+	public String modify(@PathVariable ("id") Integer id, Model model) {
+		
+		FundBoard fundBoard = this.fundBoardService.findById(id);
+		model.addAttribute("fundBoard", fundBoard);
+		log.info(">>> " + fundBoard);
 		return "/fundBoard/fundBoard_modify";
 	}
 }

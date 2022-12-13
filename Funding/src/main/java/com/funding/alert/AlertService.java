@@ -205,8 +205,7 @@ public class AlertService {
 		LocalDate d1 = LocalDate.parse("2022-12-22",DateTimeFormatter.ISO_DATE);
 		
 		//펀딩마감 되면 실행
-		if(fundBoard.getFundDuration().isBefore(d1)) {
-//			if(fundBoard.getFundDuration().isBefore(LocalDate.now())) {
+		if(fundBoard.getFundDuration().isBefore(LocalDate.now())) {
 		
 			List<FundArtistList> faList = fundArtistListService.findByFundBoard(fundBoard);
 			

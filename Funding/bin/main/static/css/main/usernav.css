@@ -1,5 +1,10 @@
+section {
+    display: flex;
+    justify-content: center;
+}
+
 nav {
-    position: fixed;
+    margin-right: 50px;
     padding: 40px;
     left: 50px;
     width: 140px;
