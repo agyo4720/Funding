@@ -162,7 +162,7 @@ public class FundBoardController {
 		return "redirect:/fundBoard/list";
 
 	}
-
+	
 	// 미지정 펀드 디테일
 	@RequestMapping("/detail/{id}")
 	public String detail(
@@ -269,6 +269,6 @@ public class FundBoardController {
 		return "redirect:/fundBoard/list";
 	}
 	
-	// 2022/12/12 - 1 작업중
+	// 2022/12/13 - 1 작업중
 
 }
