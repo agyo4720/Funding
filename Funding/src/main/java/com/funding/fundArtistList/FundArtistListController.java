@@ -106,7 +106,6 @@ public class FundArtistListController {
 		
 		Optional<FundArtistList> fal = this.fundArtistListService.search(fundArtist, furndBoard);
 		
-<<<<<<< HEAD
 		if(fal.isEmpty()) {
 			if(fundArtist.getSelfBoard() == null) {
 				return String.format("redirect:/selfBoard/detail/%s", fundArtist.getUsername());
@@ -119,20 +118,6 @@ public class FundArtistListController {
 			model.addAttribute("info", "fail");
 			return "/fundBoard/joinArtist";
 		}
-=======
-		List<FundArtistList> fundArtistList = this.fundArtistListService.findByFundBoard(furndBoard);
-		
-		fundArtist.getSelfBoard();
-		
-		if(fundArtist.getSelfBoard() == null) {
-			
-			return String.format("redirect:/fundBoard/detail/%s", id);
-		}
-				
-		this.fundArtistListService.join(fundArtist, furndBoard);
-
-		return String.format("redirect:/fundBoard/detail/%s", id);
->>>>>>> namgo
 	}
 	
 	// 펀드 참여 아티스트 투표하기
