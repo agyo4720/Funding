@@ -49,6 +49,51 @@ public class FundArtistListController {
 		return "fundArtistList_list";
 	}
 	
+//	// 미지정 펀드 아티스트 참여
+//	@RequestMapping("/join/{id}")
+//	@ResponseBody
+//	public HashMap<String, Object> join(
+//			@PathVariable("id") Integer id,
+//			Principal principal,
+//			Model model) {
+//			
+//		FundArtist fundArtist = this.fundArtistService.findByuserName(principal.getName()).get();
+//		FundBoard furndBoard = this.fundBoardService.findById(id);
+//		
+//		Optional<FundArtistList> fal = this.fundArtistListService.search(fundArtist, furndBoard);
+//		
+//		HashMap<String, Object> map = new HashMap<>();
+//		
+//		List<FundArtistList> fundArtistList = this.fundArtistListService.findByFundBoard(furndBoard);
+//		
+//		fundArtist.getSelfBoard();
+//		
+//		map.put("nickname", fundArtist.getNickname());
+//		map.put("filepath", fundArtist.getSelfBoard().getFilePath());
+//		map.put("id", fundArtist.getId());
+//		fundArtist.getSelfBoard().getFilePath();
+//				
+//		log.info("____________________________________" + fundArtist.getUsername());
+//		log.info("____________________________________" + fundArtist.getSelfBoard());
+//		log.info("____________________________________" + fundArtist.getId());
+//		System.out.println("____________________________________" + fundArtist.getUsername());
+//		System.out.println("____________________________________" + fundArtist.getSelfBoard().getFilePath());
+//		System.out.println("____________________________________" + fundArtist.getId());
+//				
+//		/*
+//		if(fundArtist.getSelfBoard() == null) {
+//			return "프로필을 먼저 등록해주세요.";
+//		}
+//		
+//		if(fal.isPresent()) {
+//			return "이미 참여했습니다.";
+//		} */
+//				
+//		this.fundArtistListService.join(fundArtist, furndBoard);
+//
+//		return map;
+//	}
+	
 	// 미지정 펀드 아티스트 참여
 	@RequestMapping("/join/{id}")
 	public String join(
@@ -61,6 +106,7 @@ public class FundArtistListController {
 		
 		Optional<FundArtistList> fal = this.fundArtistListService.search(fundArtist, furndBoard);
 		
+<<<<<<< HEAD
 		if(fal.isEmpty()) {
 			if(fundArtist.getSelfBoard() == null) {
 				return String.format("redirect:/selfBoard/detail/%s", fundArtist.getUsername());
@@ -73,6 +119,20 @@ public class FundArtistListController {
 			model.addAttribute("info", "fail");
 			return "/fundBoard/joinArtist";
 		}
+=======
+		List<FundArtistList> fundArtistList = this.fundArtistListService.findByFundBoard(furndBoard);
+		
+		fundArtist.getSelfBoard();
+		
+		if(fundArtist.getSelfBoard() == null) {
+			
+			return String.format("redirect:/fundBoard/detail/%s", id);
+		}
+				
+		this.fundArtistListService.join(fundArtist, furndBoard);
+
+		return String.format("redirect:/fundBoard/detail/%s", id);
+>>>>>>> namgo
 	}
 	
 	// 펀드 참여 아티스트 투표하기

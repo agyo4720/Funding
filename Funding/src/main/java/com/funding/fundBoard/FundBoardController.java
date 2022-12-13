@@ -162,7 +162,7 @@ public class FundBoardController {
 		return "redirect:/fundBoard/list";
 
 	}
-
+	
 	// 미지정 펀드 디테일
 	@RequestMapping("/detail/{id}")
 	public String detail(
@@ -276,7 +276,7 @@ public class FundBoardController {
 		return "redirect:/fundBoard/list";
 	}
 	
-	// 2022/12/09 - 2 작업중
+	// 2022/12/13 - 1 작업중
 
 //	선정된 아티스트 공연 일정 수정 페이지
 	@RequestMapping("/modify/{id}")
