@@ -135,8 +135,10 @@
 					<h2>현재 참여중인 아티스트</h2>
 				</div>
 				
-				<div class="art_part" sec:authorize="hasRole('ROLE_ARTIST')">			
-					<a id="btn1" th:href="@{|/fundArtistList/join/${fundBoard.id}|}">참여하기</a>
+				<div class="art_part" sec:authorize="hasRole('ROLE_ARTIST')">	
+					<div th:if="${!fundBoard.state.toString().equals('공연')}">
+						<a id="btn1" th:href="@{|/fundArtistList/join/${fundBoard.id}|}">참여하기</a>
+					</div>		
 				</div>
 			</div>
 			
@@ -169,6 +171,9 @@
 							<input hidden class="fundArtistList" 
 							th:value="${fundArtistList.fundArtist.username}"/>
 						</div>
+						<div sec:authorize="hasRole('ROLE_ARTIST')" th:if="${fundArtistList.fundArtist.username == #authentication.getPrincipal().getUsername()}">
+							<a th:href="@{|/fundArtistList/delete/${fundArtistList.id}|}">취소</a>
+						</div>
 					</div>
 					<!-- 참여 아티스트 유효성 검사 끝 -->
 				</div>
@@ -198,12 +203,13 @@
 			<div class="title">
 				<h2>댓글</h2>
 			</div>
-
-			<div class="cmt_form">
-				<form th:action="@{|/answer/fundBoard/create/${fundBoard.id}|}" method="GET">
-					<textarea class="int_cmt" name="content" placeholder="내용을 입력하세요."></textarea>
-					<button class="btn_cmt" type="submit">등록</button>
-				</form>
+			<div sec:authorize="isAuthenticated()">
+				<div class="cmt_form">
+					<form th:action="@{|/answer/fundBoard/create/${fundBoard.id}|}" method="GET">
+						<textarea class="int_cmt" name="content" placeholder="내용을 입력하세요."></textarea>
+						<button class="btn_cmt" type="submit">등록</button>
+					</form>
+				</div>
 			</div>
 			
 			<div class="cmt_view" th:each="answer : ${answerList}">
@@ -211,7 +217,9 @@
 					<div class="cmt_head">
 						<p class="id" th:text="${answer.fundUser} != null ? ${answer.fundUser.username} : ${answer.fundArtist.username}">아이디</p>
 						<p class="time" th:text="${#temporals.format(answer.createDate, 'yyyy-MM-dd (E) HH:mm')}">댓글 시간</p>
-						<a class="cmt_delete" th:href="@{|/answer/delete/${answer.id}?location=board&id=${fundBoard.id}|}">삭제</a>
+						<div sec:authorize="hasRole('ROLE_USER')" th:if="${answer.fundUser.username == #authentication.getPrincipal().getUsername()}">
+							<a class="cmt_delete" th:href="@{|/answer/delete/${answer.id}?location=board&id=${fundBoard.id}|}">삭제</a>
+						</div>
 					</div>
 					<p th:text="${answer.content}">댓글 내용</p>
 				</div>
@@ -220,7 +228,14 @@
 		<!-- // 댓글 -->
 
 		<div>
-			<a th:href="@{|/fundBoard/delete/${fundBoard.id}|}">삭제</a>
+		<div sec:authorize="hasRole('ROLE_USER')">
+			<div th:if="${fundBoard.fundUser.username == #authentication.getPrincipal().getUsername()}">
+	           	<div th:if="${!fundBoard.state.toString().equals('100%⇑⇑⇑')}">
+	           		<a th:href="@{|/fundBoard/delete/${fundBoard.id}|}">삭제</a>
+	       		</div>
+	        </div>
+	    </div>
+			
 		</div>
 	</section>
 	

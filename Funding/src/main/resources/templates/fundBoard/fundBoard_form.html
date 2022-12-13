@@ -34,7 +34,6 @@
 			<div class="int int_cate">
 				<label for="categorieName">카테고리</label>
 				<select id="categorieName" th:field="*{categorieName}">
-					<option value="">카테고리 선택</option>
 					<option th:each="categorie : ${categorieList}" th:text="${categorie.categorieName}" th:value="${categorie.categorieName}"></option>
 				</select>
 				<span class="errors" style="display: none">에러출력</span>

@@ -144,7 +144,7 @@
 					alert("에러발생")
 				}
 			})
-		}else{
+		}else if(artist != null){
 			//아티스트 참여목록 불러오는 ajax
 			$.ajax({
 				url : '/fundArtistList/show'

@@ -279,7 +279,7 @@ public class FundBoardController {
 	// 2022/12/09 - 2 작업중
 
 //	선정된 아티스트 공연 일정 수정 페이지
-	@RequestMapping("/modify")
+	@RequestMapping("/modify/{id}")
 	public String modify() {
 		return "/fundBoard/fundBoard_modify";
 	}

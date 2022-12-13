@@ -15,12 +15,10 @@ import javax.persistence.OneToOne;
 
 import com.funding.Categorie.Categorie;
 import com.funding.answer.Answer;
-import com.funding.answerAns.AnswerAns;
 import com.funding.fundArtist.FundArtist;
 import com.funding.fundArtistList.FundArtistList;
 import com.funding.fundList.FundList;
 import com.funding.fundUser.FundUser;
-import com.funding.starScore.StarScore;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -61,10 +59,6 @@ public class FundBoard {
 
 	private Integer currentMember; // 현재 모집 인원
 	
-	private Integer vote; // 별점 투표 수
-	
-	private Integer star; // 별점 평균
-	
 	private LocalDateTime createDate; // 작성일시
 	
 	private String imgPath;
@@ -90,11 +84,6 @@ public class FundBoard {
 	@OneToMany(mappedBy = "fundBoard", cascade = CascadeType.REMOVE)
 	private List<Answer> answerList; // 질문들
 	
-	@OneToMany(mappedBy = "fundBoard", cascade = CascadeType.REMOVE)
-	private List<AnswerAns> answerAnsList; // 답변들
-	
-	@OneToMany(mappedBy = "fundBoard", cascade = CascadeType.REMOVE)
-	private List<StarScore> starScoreList;
-	// 제약 조건
+
 	
 }

@@ -58,16 +58,32 @@ public class SelfBoardController {
 		String savePath = fileService.saveFile(files);
 		Optional<FundArtist> art = fundArtistService.findByuserName(principal.getName());
 		
+		try {
+			SelfBoard selfBoard = this.selfBoardService.findByFundArtist(art.get());
+			
+			selfBoardService.modify(
+					selfBoardForm.getSubject(), 
+					selfBoardForm.getContent(), 
+					selfBoardForm.getGenre(), 
+					savePath, 
+					art.get()
+					);
+			
+			return "redirect:/selfBoard/detail";
+			
+		} catch(NullPointerException e) {
+			selfBoardService.create(
+					selfBoardForm.getSubject(), 
+					selfBoardForm.getContent(), 
+					selfBoardForm.getGenre(), 
+					savePath, 
+					art.get()
+					);
+			
+			return "redirect:/selfBoard/detail";
+		}
+
 		
-		selfBoardService.create(
-				selfBoardForm.getSubject(), 
-				selfBoardForm.getContent(), 
-				selfBoardForm.getGenre(), 
-				savePath, 
-				art.get()
-				);
-		
-		return "redirect:/";
 	}
 	
 	
@@ -94,6 +110,18 @@ public class SelfBoardController {
 		return "/selfBoard/selfBoardDetail";
 	}
 	
+	//디테일 보여주기
+	@RequestMapping("/detail")
+	public String showDetail2(Principal principal, Model model) {
+		
+		Optional<SelfBoard> selfBoard = selfBoardService.findByUsername(principal.getName());
+		if(selfBoard.isEmpty()) {
+			return "redirect:/selfBoard/form";
+		}
+		
+		model.addAttribute("selfBoard", selfBoard.get());
+		return "/selfBoard/selfBoardDetail";
+	}
 	
 	//이미지 보여주기
 	@GetMapping("/img/{id}")
