@@ -79,6 +79,9 @@
 * 유저 댓글  
 <img width="70%" src="https://user-images.githubusercontent.com/107646818/207570075-46584221-67d4-4694-933e-b4ceaf261f9c.png"/>  
 
+* 미지정펀딩 클릭시  
+<img width="70%" src="https://user-images.githubusercontent.com/107646818/207568686-e5ff9afe-a92f-4e87-a552-250a27602603.png"/>  
+
 * 아티스트 페이지  
 <img width="70%" src="https://user-images.githubusercontent.com/107646818/207570257-15119784-06d7-486b-bc2e-98cbd97aa757.png"/>  
 
@@ -94,8 +97,6 @@
 * 미지정 아티스트 투표  
 <img width="70%" src="https://user-images.githubusercontent.com/107646818/207570916-70ebe7e5-d003-4fa9-8d9a-ff35d20968b0.png"/>  
 
-* 미지정펀딩 클릭시  
-<img width="70%" src="https://user-images.githubusercontent.com/107646818/207568686-e5ff9afe-a92f-4e87-a552-250a27602603.png"/>  
 
 ### 4. 팀원 및 참고 자료
 * [하은교(팀장)](https://github.com/agyo4720)
