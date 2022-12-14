@@ -18,7 +18,7 @@
     <header th:replace="/main/nav"></header>
     
     <section>
-		<!-- 지정펀딩 -->
+		<!-- 지정 펀딩 -->
 		<div class="view top">
 			<h2>지정 펀딩</h2>
 			<div class="list">
@@ -40,6 +40,7 @@
 				</div>
 			</div>
 		</div>
+
 		<!-- 미지정 펀딩 -->
 		<div class="view bottm">
 			<h2>미지정 펀딩</h2>
@@ -51,7 +52,7 @@
 								<img th:src="${boardList.imgPath}">
 							</div>
 							<div th:if="${boardList.imgPath == null}">
-								<img th:src="|/fundTarget/img/${boardList.id}|">
+								<img th:src="|/fundBoard/img/${boardList.id}|">
 							</div>
 							<div class="con">
 								<p th:text="${boardList.subject}">공연 이름</p>
