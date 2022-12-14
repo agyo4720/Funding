@@ -44,16 +44,13 @@
 <img width="70%" src="https://user-images.githubusercontent.com/107646818/207566080-1a0b93d7-c135-428b-bdf5-b7d17a76a10c.png"/>
 
 * #### 회원가입  
-<img width="70%" src="https://user-images.githubusercontent.com/107646818/207566225-20c56314-d05e-401a-b020-2d292cfb70a3.png"/>
+<img width="60%" height="800" src="https://user-images.githubusercontent.com/107646818/207566225-20c56314-d05e-401a-b020-2d292cfb70a3.png"/>
 
 * #### 지정펀딩 클릭시  
 <img width="70%" src="https://user-images.githubusercontent.com/107646818/207566652-c68a5910-f2f8-4e2a-b1f2-d22b65312825.png"/>
 
 * #### 지정펀딩 클릭하고 카테고리  
 <img width="70%" src="https://user-images.githubusercontent.com/107646818/207566803-2a331b46-0661-43d2-9e12-c07fedfbec60.png"/>
-
-* #### 지정펀딩 클릭하고 카테고리  
-<img width="70%" src="https://user-images.githubusercontent.com/110438208/207573145-4b75f077-18fa-432d-a445-b3b4106624c3.png"/>
 
 * #### 펀딩전 디테일화면  
 <img width="70%" src="https://user-images.githubusercontent.com/107646818/207567018-2578843f-5ba6-4d16-a96c-09aa7cb406bd.png"/>
@@ -68,37 +65,37 @@
 <img width="70%" src="https://user-images.githubusercontent.com/107646818/207568412-af63cc65-f30f-44dd-80f5-7e3f5d265a3c.png"/>
 
 * #### 결제 성공시  
-<img width="70%" src="https://user-images.githubusercontent.com/107646818/207568979-90c7c83e-fc0c-41b6-941d-089462b6ef83.png"/>  
+<img width="80%" src="https://user-images.githubusercontent.com/107646818/207568979-90c7c83e-fc0c-41b6-941d-089462b6ef83.png"/>  
 
 * #### 결제내역  
-<img width="70%" src="https://user-images.githubusercontent.com/107646818/207569086-6409a480-1b2b-44a6-aba3-54b0e39b6296.png"/>  
+<img width="80%" src="https://user-images.githubusercontent.com/107646818/207569086-6409a480-1b2b-44a6-aba3-54b0e39b6296.png"/>  
 
 * #### 유저페이지  
-<img width="70%" src="https://user-images.githubusercontent.com/107646818/207569648-da625a67-bc16-4a9b-9d6f-78aaf91b96d9.png"/>  
+<img width="80%" src="https://user-images.githubusercontent.com/107646818/207569648-da625a67-bc16-4a9b-9d6f-78aaf91b96d9.png"/>  
 
 * #### 유저 정보변경  
-<img width="70%" src="https://user-images.githubusercontent.com/107646818/207569781-c34e3225-ba5d-4f91-b882-053ea52a4c90.png"/>  
+<img width="80%" src="https://user-images.githubusercontent.com/107646818/207569781-c34e3225-ba5d-4f91-b882-053ea52a4c90.png"/>  
 
 * #### 유저 댓글  
-<img width="70%" src="https://user-images.githubusercontent.com/107646818/207570075-46584221-67d4-4694-933e-b4ceaf261f9c.png"/>  
+<img width="80%" src="https://user-images.githubusercontent.com/107646818/207570075-46584221-67d4-4694-933e-b4ceaf261f9c.png"/>  
 
 * #### 미지정펀딩 클릭시  
-<img width="70%" src="https://user-images.githubusercontent.com/107646818/207568686-e5ff9afe-a92f-4e87-a552-250a27602603.png"/>  
+<img width="80%" src="https://user-images.githubusercontent.com/107646818/207568686-e5ff9afe-a92f-4e87-a552-250a27602603.png"/>  
 
 * #### 아티스트 페이지  
-<img width="70%" src="https://user-images.githubusercontent.com/107646818/207570257-15119784-06d7-486b-bc2e-98cbd97aa757.png"/>  
+<img width="80%" src="https://user-images.githubusercontent.com/107646818/207570257-15119784-06d7-486b-bc2e-98cbd97aa757.png"/>  
 
 * #### 아티스트 소개 작성 전  
-<img width="70%" src="https://user-images.githubusercontent.com/107646818/207570336-33d454b0-9670-4eea-b29a-ef8d220f554c.png"/>  
+<img width="80%" src="https://user-images.githubusercontent.com/107646818/207570336-33d454b0-9670-4eea-b29a-ef8d220f554c.png"/>  
 
 * #### 아티스트 소개 작성 후  
-<img width="70%" src="https://user-images.githubusercontent.com/107646818/207570503-7c8a0414-f392-4424-ad6f-5a494c2f9a2a.png"/>  
+<img width="80%" src="https://user-images.githubusercontent.com/107646818/207570503-7c8a0414-f392-4424-ad6f-5a494c2f9a2a.png"/>  
 
 * #### 계좌관리  
-<img width="70%" src="https://user-images.githubusercontent.com/107646818/207570661-d6ffe36d-0b1c-4162-8356-b6668e66dc0a.png"/>  
+<img width="80%" src="https://user-images.githubusercontent.com/107646818/207570661-d6ffe36d-0b1c-4162-8356-b6668e66dc0a.png"/>  
 
 * #### 미지정 아티스트 투표  
-<img width="70%" src="https://user-images.githubusercontent.com/107646818/207570916-70ebe7e5-d003-4fa9-8d9a-ff35d20968b0.png"/>  
+<img width="80%" src="https://user-images.githubusercontent.com/107646818/207570916-70ebe7e5-d003-4fa9-8d9a-ff35d20968b0.png"/>  
 
 
 ### 4. 팀원 및 참고 자료
