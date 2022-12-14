@@ -44,13 +44,14 @@ section {
     cursor: default;
     display: inline-block;
     padding: 3px 15px;
-    margin-bottom: 10px;
     margin-right: 20px;
     border: 2px solid #B00E0E;
     border-radius: 20px;
     color: #B00E0E;
     font-weight: bold;
 }
+
+.con_del {display: inline-block;}
 
 .con_del:hover {
     text-decoration: underline;

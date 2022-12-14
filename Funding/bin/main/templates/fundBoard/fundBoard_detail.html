@@ -53,6 +53,14 @@
 					<div class="status">
 						<div th:text="${fundBoard.state}">상태</div>
 					</div>
+					<!-- 삭제 버튼 -->
+					<div sec:authorize="hasRole('ROLE_USER')">
+						<div th:if="${fundBoard.fundUser.username == #authentication.getPrincipal().getUsername()}">
+							<div th:if="${!fundBoard.state.toString().equals('100%⇑⇑⇑')}">
+								<a class="con_del" th:href="@{|/fundBoard/delete/${fundBoard.id}|}">삭제</a>
+							</div>
+						</div>
+					</div>
 				</div>
 
 				<div class="view">
@@ -228,13 +236,6 @@
 		<!-- // 댓글 -->
 
 		<div>
-		<div sec:authorize="hasRole('ROLE_USER')">
-			<div th:if="${fundBoard.fundUser.username == #authentication.getPrincipal().getUsername()}">
-	           	<div th:if="${!fundBoard.state.toString().equals('100%⇑⇑⇑')}">
-	           		<a th:href="@{|/fundBoard/delete/${fundBoard.id}|}">삭제</a>
-	       		</div>
-	        </div>
-	    </div>
 			
 		</div>
 	</section>
@@ -244,7 +245,9 @@
 		
 		console.log(proVal.value);
 
-		if(proVal.value <= 3) {
+		if(proVal.value <= 2) {
+			document.getElementById("pro").className = 'bar2';
+		} else if(proVal.value <= 6) {
 			document.getElementById("pro").className = 'bar';
 		}
 	</script>

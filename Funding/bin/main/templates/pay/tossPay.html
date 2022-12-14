@@ -38,7 +38,7 @@
                 <h3 th:text="${fundBoard.subject}">공연 이름</h3>
                 <div class="view">
                     <label for="startDateTime">공연일</label>
-                    <p th:text="${#temporals.format(fundBoard.startDateTime, 'yyyy-MM-dd HH:mm')}">공연일</p>
+                    <p th:text="${#temporals.format(fundBoard.startDateTime, 'yyyy-MM-dd (E) HH:mm')}">공연일</p>
                 </div>
                 <div class="view">
                     <label for="place">공연장</label>

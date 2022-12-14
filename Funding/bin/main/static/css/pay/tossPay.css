@@ -23,6 +23,8 @@ section {
 
 .image {margin-right: 20px;}
 
+.image img {object-fit: cover; border-radius: 5px;}
+
 .con_detail h3 {margin-bottom: 10px;}
 
 .con_detail .view label {
