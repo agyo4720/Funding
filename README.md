@@ -31,7 +31,7 @@
 > 프로젝트 실행 예시 화면의 스크린샷과 같은 시각 자료를 사용할 수도 있고
 
 ### 4. 팀원 및 참고 자료
-> [팀장 하은교](https://github.com/agyo4720/Funding)  
+> [하은교(팀장)](https://github.com/agyo4720/Funding)  
 > [박남규](https://github.com/namgooo)  
 > [박용진](https://github.com/consr2)  
 > [백진용](https://github.com/qor8005)  
