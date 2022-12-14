@@ -18,7 +18,6 @@ let content = document.querySelector('.content');
 btn.addEventListener('click', function(e) {
     
     if(!confirm("등록하시겠습니까?")) {
-        alert("취소되었습니다.")
         e.preventDefault()
     } else {
         let count = 0;
@@ -34,10 +33,9 @@ btn.addEventListener('click', function(e) {
         }
 
         if(valid){
-            alert("등록되었습니다.")
-        }else{
+
+        } else {
             alert("내용을 다시 확인해주세요.")
-            console.log("sdfsdf")
             e.preventDefault()
         }
     }
