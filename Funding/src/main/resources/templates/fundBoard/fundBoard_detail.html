@@ -225,9 +225,11 @@
 					<div class="cmt_head">
 						<p class="id" th:text="${answer.fundUser} != null ? ${answer.fundUser.username} : ${answer.fundArtist.username}">아이디</p>
 						<p class="time" th:text="${#temporals.format(answer.createDate, 'yyyy-MM-dd (E) HH:mm')}">댓글 시간</p>
-						<div sec:authorize="hasRole('ROLE_USER')" th:if="${answer.fundUser.username == #authentication.getPrincipal().getUsername()}">
-							<a class="cmt_delete" th:href="@{|/answer/delete/${answer.id}?location=board&id=${fundBoard.id}|}">삭제</a>
-						</div>
+						<!--
+						<div sec:authorize="hasRole('ROLE_USER')" th:if="${answer.fundUser.username == #authentication.getPrincipal().getUsername()}"></div>
+						-->
+						<a class="cmt_delete" th:href="@{|/answer/delete/${answer.id}?location=board&id=${fundBoard.id}|}">삭제</a>
+						
 					</div>
 					<p th:text="${answer.content}">댓글 내용</p>
 				</div>
@@ -288,10 +290,7 @@
 		
 	</script>
 	-->
-<<<<<<< HEAD
-=======
 
->>>>>>> namgo
 	<!--
 	<script>
 	
@@ -338,9 +337,5 @@
 		
 	</script>
 	-->
-<<<<<<< HEAD
-=======
-
->>>>>>> namgo
 </body>
 </html>
