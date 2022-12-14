@@ -34,18 +34,18 @@
                 
                 <div class="view">
                     <label>프로필 제목</label>
-                    <input type="text" th:field="*{subject}" value="">
+                    <input type="text" th:field="*{subject}" value=""/>
                 </div>
 
                 <div class="view">
                     <label>장르</label>
-                    <input type="text" th:field="*{genre}" value="">
+                    <input type="text" th:field="*{genre}" value=""/>
                 </div>
                 
                 <div class="image">
                     <div class="view">
                         <label>대표이미지</label>
-                        <input type="file" name="file" onchange="imgprint(event)">
+                        <input type="file" name="file" src="${/selfBoard/img/{selfBoard.id}" onchange="imgprint(event)"/>
                     </div>
                     <div id="image_container"></div>
                 </div>
