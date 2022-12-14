@@ -51,7 +51,7 @@
 								<img th:src="${boardList.imgPath}">
 							</div>
 							<div th:if="${boardList.imgPath == null}">
-								<img th:src="|/fundTarget/img/${boardList.id}|">
+								<img th:src="|/fundBoard/img/${boardList.id}|">
 							</div>
 							<div class="con">
 								<p th:text="${boardList.subject}">공연 이름</p>

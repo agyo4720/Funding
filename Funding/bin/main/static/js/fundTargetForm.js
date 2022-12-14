@@ -16,22 +16,32 @@ let fundAmount = document.querySelector('.fundAmount');
 let content = document.querySelector('.content');
 
 btn.addEventListener('click', function(e) {
-    let count = 0;
-    for(i=0; i < error.length ; i++){
-        if(error[i].style.display == 'none'){
-            count += 1
+    
+    if(!confirm("등록하시겠습니까?")) {
+        alert("취소되었습니다.")
+        e.preventDefault()
+    } else {
+        let count = 0;
+
+        for(i=0; i < error.length ; i++){
+            if(error[i].style.display == 'none'){
+                count += 1
+            }
+        }
+        
+        if(count == error.length){
+            valid = true
+        }
+
+        if(valid){
+            alert("등록되었습니다.")
+        }else{
+            alert("내용을 다시 확인해주세요.")
+            console.log("sdfsdf")
+            e.preventDefault()
         }
     }
     
-    if(count == error.length){
-        valid = true
-    }
-    
-    if(valid){
-        
-    }else{
-        e.preventDefault();
-    }
 });
 
 subject.addEventListener('focusout',checkSub)
