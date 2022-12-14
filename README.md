@@ -8,14 +8,21 @@
 ---
 
 ## 목차  
-1.  왜 이 프로젝트를 기획했나요?
+1.  프로젝트 버전  
+2.  왜 이 프로젝트를 기획했나요?
 2.  주요기능  
 3.  프로젝트 사용 방법
 4.  팀원 및 참고 자료
 
 ---
 
-### 1. 왜 이 프로젝트를 기획했나요?
+### 1. 프로젝트 버전  
+* spring-boot : 2.7.5  
+* java : 17  
+* mysql : 8.0.29  
+* lombok : 1.18.24
+
+### 2. 왜 이 프로젝트를 기획했나요?
 > 공연은 항상 주체자들이 열었고 그 티캣을 소비자가 구매하는 방향이었습니다.  
 > 저희 팀인 이 프로젝트에서 그 소비방향에 변화를 주고 싶었습니다.  
 > 공연을 보고싶은 소비자들이 펀딩을 하고 해당 펀딩에 공연자들이 참여를 하는 시스템을 구축하였습니다.
@@ -31,10 +38,10 @@
 > 프로젝트 실행 예시 화면의 스크린샷과 같은 시각 자료를 사용할 수도 있고
 
 ### 4. 팀원 및 참고 자료
-> [하은교(팀장)](https://github.com/agyo4720/Funding)  
-> [박남규](https://github.com/namgooo)  
-> [박용진](https://github.com/consr2)  
-> [백진용](https://github.com/qor8005)  
-> [이동헌](https://github.com/startyuphoney)  
-> 사용자가 프로젝트를 설치하는 데 도움을 줄 수 있는 튜토리얼이나 자료를 참고했다면 그런 링크도 같이 첨부해야 합니다.
-  이렇게 함으로써 감사를 표현함과 동시에 사람들이 프로젝트의 첫 번째 사본을 얻을 수 있습니다.
+* [팀장 하은교](https://github.com/agyo4720/Funding)  
+* [박남규](https://github.com/namgooo)  
+* [박용진](https://github.com/consr2)  
+* [백진용](https://github.com/qor8005)  
+  * [토스페이먼츠 개발자센터](https://docs.tosspayments.com/reference)  
+* [이동헌](https://github.com/startyuphoney)  
+
