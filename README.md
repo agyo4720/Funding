@@ -41,7 +41,7 @@
 
 ### 4. 팀원 및 참고 자료
 * [하은교(팀장)](https://github.com/agyo4720)
- - [Daum 우편번호 서비스](https://postcode.map.daum.net/guide)
+  * [Daum 우편번호 서비스](https://postcode.map.daum.net/guide)
 * [박남규](https://github.com/namgooo)  
 * [박용진](https://github.com/consr2)  
 * [백진용](https://github.com/qor8005)  
