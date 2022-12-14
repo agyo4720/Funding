@@ -41,7 +41,7 @@
 <img width="70%" src="https://user-images.githubusercontent.com/107646818/207565645-addaa089-d660-4a3e-ac46-dbd389954102.png"/>
 
 * #### 로그인  
-<img width="40%" src="https://user-images.githubusercontent.com/107646818/207566080-1a0b93d7-c135-428b-bdf5-b7d17a76a10c.png"/>
+<img width="40%" src="https://user-images.githubusercontent.com/110438208/207574355-96f4c325-bc92-47f6-8242-eda863fb4c8e.png"/>
 
 * #### 회원가입  
 <img width="60%" height="800" src="https://user-images.githubusercontent.com/107646818/207574982-93d6fc6d-842b-4097-9c40-0098f90d382e.png"/>
