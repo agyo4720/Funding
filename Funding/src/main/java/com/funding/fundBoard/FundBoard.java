@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.funding.Categorie.Categorie;
+import com.funding.alert.Alert;
 import com.funding.answer.Answer;
 import com.funding.fundArtist.FundArtist;
 import com.funding.fundArtistList.FundArtistList;
@@ -84,6 +85,8 @@ public class FundBoard {
 	@OneToMany(mappedBy = "fundBoard", cascade = CascadeType.REMOVE)
 	private List<Answer> answerList; // 질문들
 	
-
+	//답글 목록
+	@OneToMany(mappedBy = "fundBoard", cascade = CascadeType.REMOVE)
+	private List<Alert> alertList;
 	
 }

@@ -60,7 +60,6 @@ public class SelfBoardController {
 		
 		try {
 			SelfBoard selfBoard = this.selfBoardService.findByFundArtist(art.get());
-			
 			selfBoardService.modify(
 					selfBoardForm.getSubject(), 
 					selfBoardForm.getContent(), 
