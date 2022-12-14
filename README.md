@@ -52,6 +52,9 @@
 * #### 지정펀딩 클릭하고 카테고리  
 <img width="70%" src="https://user-images.githubusercontent.com/107646818/207566803-2a331b46-0661-43d2-9e12-c07fedfbec60.png"/>
 
+* #### 펀딩글 작성화면
+<img width="70%" src="https://user-images.githubusercontent.com/110438208/207573145-4b75f077-18fa-432d-a445-b3b4106624c3.png"/>
+
 * #### 펀딩전 디테일화면  
 <img width="70%" src="https://user-images.githubusercontent.com/107646818/207567018-2578843f-5ba6-4d16-a96c-09aa7cb406bd.png"/>
 
