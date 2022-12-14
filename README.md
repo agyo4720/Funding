@@ -37,7 +37,7 @@
 * 유저, 아티스트의 개인 페이지(아티스트는 자신의 소개 페이지를 작성함)
 
 ### 3. 프로젝트 사용 방법
-> 프로젝트 실행 예시 화면의 스크린샷과 같은 시각 자료를 사용할 수도 있고
+> <img width="70%" src="https://user-images.githubusercontent.com/107646818/207524616-ae92b0a5-6daa-4b21-bc75-d41ca64ae601.jpg"/>
 
 ### 4. 팀원 및 참고 자료
 * [하은교(팀장)](https://github.com/agyo4720)  
