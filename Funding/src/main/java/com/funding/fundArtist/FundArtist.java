@@ -3,6 +3,7 @@ package com.funding.fundArtist;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.funding.alert.Alert;
 import com.funding.fundArtistList.FundArtistList;
 
 import javax.persistence.OneToOne;
@@ -50,4 +52,7 @@ public class FundArtist {
 
 	@OneToMany(mappedBy = "fundArtist")
 	private List<FundArtistList> fundArtistList;
+	
+	@OneToMany(mappedBy = "guestArtist", cascade = CascadeType.REMOVE)
+	private List<Alert> alertList;
 }

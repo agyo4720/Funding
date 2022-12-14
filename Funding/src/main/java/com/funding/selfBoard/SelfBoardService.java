@@ -34,6 +34,7 @@ public class SelfBoardService {
 	public void create(String subject, String content, String genre, String path, FundArtist artiest) {
 
 		SelfBoard selfBoard = new SelfBoard();
+		
 		selfBoard.setSubject(subject);
 		selfBoard.setContent(content);
 		selfBoard.setGenre(genre);

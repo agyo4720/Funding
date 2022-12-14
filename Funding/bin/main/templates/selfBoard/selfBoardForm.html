@@ -125,7 +125,14 @@
             reader.onload = function(event) {
                 var img = document.createElement("img");
                 img.setAttribute("src", event.target.result);
+               
+                if(document.querySelector("#image_container").querySelector('img') != null){
+                	document.querySelector("#image_container").querySelector('img').remove()
+                }
+	            
                 document.querySelector("#image_container").appendChild(img);
+	            
+	            console.log()
             };
             reader.readAsDataURL(event.target.files[0]);
         }
