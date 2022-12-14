@@ -226,9 +226,11 @@
 					<div class="cmt_head">
 						<p class="id" th:text="${answer.fundUser} != null ? ${answer.fundUser.username} : ${answer.fundArtist.username}">아이디</p>
 						<p class="time" th:text="${#temporals.format(answer.createDate, 'yyyy-MM-dd (E) HH:mm')}">댓글 시간</p>
-						<div sec:authorize="hasRole('ROLE_USER')" th:if="${answer.fundUser.username == #authentication.getPrincipal().getUsername()}">
-							<a class="cmt_delete" th:href="@{|/answer/delete/${answer.id}?location=board&id=${fundBoard.id}|}">삭제</a>
-						</div>
+						<!-- 1214 수정
+						<div sec:authorize="hasRole('ROLE_USER')" th:if="${answer.fundUser.username == #authentication.getPrincipal().getUsername()}"></div>
+						-->
+						<a class="cmt_delete" th:href="@{|/answer/delete/${answer.id}?location=board&id=${fundBoard.id}|}">삭제</a>
+						
 					</div>
 					<p th:text="${answer.content}">댓글 내용</p>
 				</div>
@@ -262,6 +264,57 @@
 		}
 		// 참여 아티스트 유효성 검사 끝			
 	</script>
+<<<<<<< HEAD
 
+=======
+	-->
+
+	<!--
+	<script>
+	
+		let val1 = $('#val1').val()
+		let fdid1 = $('#fdid1').val()
+	    let url = val1 ;
+	    alert(url)
+		$('#btn1').click(function(e){
+		    e.preventDefault();
+		    e.stopPropagation();
+		    
+			$.ajax({
+				url: url,
+				type:'POST',				
+				success: function(result){
+					console.log(result)
+					alert(result);
+					let html = '<div class="art_con">'
+					html += '<div class="profile">'
+					html += '	<div class="image">'
+					html += '		<img src="/selfBoard/img/3">'
+					html += '	</div>'
+					html += '	<div class="pr">'
+					html += '		<h3><a href="/selfBoard/detail/zmfpdydvkq">'+ result.nickname  +'</a></h3>'
+					html += '		</div>'
+					html += '		<div>'
+					html += '			<input hidden="" class="username" value="zmfpdydvkq">'
+					html += '		</div>'
+					html += '	</div>'
+					html += '   <div class="vote">'
+					html += '<span>0개</span>'
+					html += '		<input hidden="" class="fundArtistList" value="zmfpdydvkq">'
+					html += '	</div>'
+					html += '</div>'	
+				    $('.image').append(html)
+				}
+				,
+				error: function(xhr){
+					console.log(xhr);
+					alert(xhr.status +':'+xhr.textStatus);
+				}
+			})
+		})
+		
+	</script>
+	-->
+>>>>>>> namgo
 </body>
 </html>
