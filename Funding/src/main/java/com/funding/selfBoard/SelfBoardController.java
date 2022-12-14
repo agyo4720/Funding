@@ -48,29 +48,22 @@ public class SelfBoardController {
 	public String createForm(@Valid SelfBoardForm selfBoardForm,BindingResult bindingResult, Principal principal, 
 			@RequestParam("file")MultipartFile files, Model model) throws IllegalStateException, IOException {
 		
-		log.info("내용 : " + selfBoardForm.toString());
+		
 		
 		if(bindingResult.hasErrors()) {
 			return "/selfBoard/selfBoardForm";
 		}
+		String savePath = "aa";
 		
-		
-		String savePath = fileService.saveFile(files);
+		if(!files.isEmpty()) {
+			savePath = fileService.saveFile(files);
+			
+		}
 		Optional<FundArtist> art = fundArtistService.findByuserName(principal.getName());
 		
-		try {
-			SelfBoard selfBoard = this.selfBoardService.findByFundArtist(art.get());
-			selfBoardService.modify(
-					selfBoardForm.getSubject(), 
-					selfBoardForm.getContent(), 
-					selfBoardForm.getGenre(), 
-					savePath, 
-					art.get()
-					);
-			
-			return "redirect:/selfBoard/detail";
-			
-		} catch(NullPointerException e) {
+		Optional<SelfBoard> selfBoard = this.selfBoardService.findByFundArtist2(art.get());
+		
+		if(selfBoard.isEmpty()) {
 			selfBoardService.create(
 					selfBoardForm.getSubject(), 
 					selfBoardForm.getContent(), 
@@ -78,11 +71,29 @@ public class SelfBoardController {
 					savePath, 
 					art.get()
 					);
-			
-			return "redirect:/selfBoard/detail";
 		}
-
-		
+		if(selfBoard.isPresent()) {
+			log.info("수정작성됨");
+			if(files.isEmpty()) {
+				log.info("파일 없는 수정작성됨");
+				selfBoardService.modify(
+						selfBoardForm.getSubject(), 
+						selfBoardForm.getContent(), 
+						selfBoardForm.getGenre(), 
+						selfBoard.get().getFilePath(), 
+						art.get()
+						);
+				return "redirect:/selfBoard/detail";
+			}
+			selfBoardService.modify(
+					selfBoardForm.getSubject(), 
+					selfBoardForm.getContent(), 
+					selfBoardForm.getGenre(), 
+					savePath, 
+					art.get()
+					);
+		}
+		return "redirect:/selfBoard/detail";
 	}
 	
 	

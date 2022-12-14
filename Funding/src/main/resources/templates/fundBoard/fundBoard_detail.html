@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,7 +17,7 @@
 </head>
 <body>
 
-	<span th:text="${selfBoard}"></span>
+	<span th:text="${selfBoard}">1</span>
 	
 	<!-- 홈페이지 상단 nav -->
     <header th:replace="/main/nav"></header>
@@ -53,6 +53,14 @@
 					<div class="status">
 						<div th:text="${fundBoard.state}">상태</div>
 					</div>
+					<!-- 삭제 버튼 -->
+					<div sec:authorize="hasRole('ROLE_USER')">
+						<div th:if="${fundBoard.fundUser.username == #authentication.getPrincipal().getUsername()}">
+							<div th:if="${!fundBoard.state.toString().equals('100%⇑⇑⇑')}">
+								<a class="con_del" th:href="@{|/fundBoard/delete/${fundBoard.id}|}">삭제</a>
+							</div>
+						</div>
+					</div>
 				</div>
 
 				<div class="view">
@@ -81,7 +89,7 @@
 				
 				<!-- 펀딩 정보 -->
 				<div class="view int_progress">
-                	<progress th:value="|${fundBoard.fundCurrent * 100 / fundBoard.fundAmount}|" max="100"></progress>
+                	<progress id="pro" th:value="|${fundBoard.fundCurrent * 100 / fundBoard.fundAmount}|" max="100"></progress>
                 	<span th:text="|${fundBoard.fundCurrent * 100 / fundBoard.fundAmount}%|"></span>
                 </div>
 
@@ -228,16 +236,21 @@
 		<!-- // 댓글 -->
 
 		<div>
-		<div sec:authorize="hasRole('ROLE_USER')">
-			<div th:if="${fundBoard.fundUser.username == #authentication.getPrincipal().getUsername()}">
-	           	<div th:if="${!fundBoard.state.toString().equals('100%⇑⇑⇑')}">
-	           		<a th:href="@{|/fundBoard/delete/${fundBoard.id}|}">삭제</a>
-	       		</div>
-	        </div>
-	    </div>
 			
 		</div>
 	</section>
+
+	<script>
+		var proVal = document.querySelector("#pro");
+		
+		console.log(proVal.value);
+
+		if(proVal.value <= 2) {
+			document.getElementById("pro").className = 'bar2';
+		} else if(proVal.value <= 6) {
+			document.getElementById("pro").className = 'bar';
+		}
+	</script>
 	
 	<!--
 	<script>
@@ -275,7 +288,51 @@
 		
 	</script>
 	-->
-
+	<!--
+	<script>
 	
+		let val1 = $('#val1').val()
+		let fdid1 = $('#fdid1').val()
+	    let url = val1 ;
+	    alert(url)
+		$('#btn1').click(function(e){
+		    e.preventDefault();
+		    e.stopPropagation();
+		    
+			$.ajax({
+				url: url,
+				type:'POST',				
+				success: function(result){
+					console.log(result)
+					alert(result);
+					let html = '<div class="art_con">'
+					html += '<div class="profile">'
+					html += '	<div class="image">'
+					html += '		<img src="/selfBoard/img/3">'
+					html += '	</div>'
+					html += '	<div class="pr">'
+					html += '		<h3><a href="/selfBoard/detail/zmfpdydvkq">'+ result.nickname  +'</a></h3>'
+					html += '		</div>'
+					html += '		<div>'
+					html += '			<input hidden="" class="username" value="zmfpdydvkq">'
+					html += '		</div>'
+					html += '	</div>'
+					html += '   <div class="vote">'
+					html += '<span>0개</span>'
+					html += '		<input hidden="" class="fundArtistList" value="zmfpdydvkq">'
+					html += '	</div>'
+					html += '</div>'	
+				    $('.image').append(html)
+				}
+				,
+				error: function(xhr){
+					console.log(xhr);
+					alert(xhr.status +':'+xhr.textStatus);
+				}
+			})
+		})
+		
+	</script>
+	-->
 </body>
 </html>
