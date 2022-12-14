@@ -41,10 +41,10 @@
 <img width="70%" src="https://user-images.githubusercontent.com/107646818/207565645-addaa089-d660-4a3e-ac46-dbd389954102.png"/>
 
 * #### 로그인  
-<img width="70%" src="https://user-images.githubusercontent.com/107646818/207566080-1a0b93d7-c135-428b-bdf5-b7d17a76a10c.png"/>
+<img width="4%" src="https://user-images.githubusercontent.com/107646818/207566080-1a0b93d7-c135-428b-bdf5-b7d17a76a10c.png"/>
 
 * #### 회원가입  
-<img width="60%" height="800" src="https://user-images.githubusercontent.com/107646818/207566225-20c56314-d05e-401a-b020-2d292cfb70a3.png"/>
+<img width="40%" height="400" src="https://user-images.githubusercontent.com/107646818/207566225-20c56314-d05e-401a-b020-2d292cfb70a3.png"/>
 
 * #### 지정펀딩 클릭시  
 <img width="70%" src="https://user-images.githubusercontent.com/107646818/207566652-c68a5910-f2f8-4e2a-b1f2-d22b65312825.png"/>
