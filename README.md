@@ -44,7 +44,7 @@
 <img width="40%" src="https://user-images.githubusercontent.com/110438208/207574355-96f4c325-bc92-47f6-8242-eda863fb4c8e.png"/>
 
 * #### 회원가입  
-<img width="60%" height="800" src="https://user-images.githubusercontent.com/107646818/207574982-93d6fc6d-842b-4097-9c40-0098f90d382e.png"/>
+<img width="50%" height="800" src="https://user-images.githubusercontent.com/107646818/207574982-93d6fc6d-842b-4097-9c40-0098f90d382e.png"/>
 
 * #### 지정펀딩 클릭시  
 <img width="70%" src="https://user-images.githubusercontent.com/107646818/207566652-c68a5910-f2f8-4e2a-b1f2-d22b65312825.png"/>
@@ -67,11 +67,14 @@
 * #### 기간안에 펀딩 달성시  
 <img width="70%" src="https://user-images.githubusercontent.com/107646818/207568412-af63cc65-f30f-44dd-80f5-7e3f5d265a3c.png"/>
 
+* #### 결제방식  
+<img width="80%" src="https://user-images.githubusercontent.com/107646818/207762578-16f44e07-ae00-49c6-8290-06f81bce3a60.png"/>  
+
 * #### 결제 성공시  
 <img width="80%" src="https://user-images.githubusercontent.com/107646818/207568979-90c7c83e-fc0c-41b6-941d-089462b6ef83.png"/>  
 
 * #### 결제내역  
-<img width="80%" src="https://user-images.githubusercontent.com/107646818/207569086-6409a480-1b2b-44a6-aba3-54b0e39b6296.png"/>  
+<img width="90%" src="https://user-images.githubusercontent.com/107646818/207569086-6409a480-1b2b-44a6-aba3-54b0e39b6296.png"/>  
 
 * #### 유저페이지  
 <img width="80%" src="https://user-images.githubusercontent.com/107646818/207569648-da625a67-bc16-4a9b-9d6f-78aaf91b96d9.png"/>  
