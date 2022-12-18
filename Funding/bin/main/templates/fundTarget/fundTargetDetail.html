@@ -43,14 +43,6 @@
                     <div class="status">
                         <div th:text="${fundBoardTarget.status}">상태</div>
                     </div>
-                    <!-- 삭제 버튼 -->
-                    <div sec:authorize="hasRole('ROLE_USER')">
-	                    <div th:if="${fundBoardTarget.fundUser != null and fundBoardTarget.fundUser.username == #authentication.getPrincipal().getUsername()}">
-	                    	<div th:if="${!fundBoardTarget.status.toString().equals('100%⇑⇑⇑')}">
-			                    <a class="con_del" th:href="@{|/fundTarget/delete/${fundBoardTarget.id}|}">삭제</a>
-	                    	</div>
-	                    </div>
-                    </div>
                 </div>
                 
                 <div class="view">
@@ -79,7 +71,7 @@
                 </div>
                     
                 <div class="view int_progress">
-                	<progress th:value="|${fundBoardTarget.fundCurrent * 100 / fundBoardTarget.fundAmount}|" max="100"></progress>
+                	<progress id="pro" th:value="|${fundBoardTarget.fundCurrent * 100 / fundBoardTarget.fundAmount}|" max="100"></progress>
                 	<span th:text="|${fundBoardTarget.fundCurrent * 100 / fundBoardTarget.fundAmount}%|"></span>
                 </div>
                 
@@ -170,7 +162,29 @@
                 </div>
             </div>
         </div>
+
+        <!-- 게시물 삭제 버튼 -->
+        <div sec:authorize="hasRole('ROLE_USER')">
+            <div th:if="${fundBoardTarget.fundUser != null and fundBoardTarget.fundUser.username == #authentication.getPrincipal().getUsername()}">
+                <div th:if="${!fundBoardTarget.status.toString().equals('100%⇑⇑⇑')}">
+                    <a class="con_del" th:href="@{|/fundTarget/delete/${fundBoardTarget.id}|}">게시물 삭제</a>
+                </div>
+            </div>
+        </div>
 	</section>
+
+    <script>
+		var proVal = document.querySelector("#pro");
+		
+		console.log(proVal.value);
+
+		if(proVal.value <= 2) {
+			document.getElementById("pro").className = 'bar2';
+		} else if(proVal.value <= 6) {
+			document.getElementById("pro").className = 'bar';
+		}
+	</script>
+
 	<script>
 		let answerBtn = document.querySelector('.btn_cmt')
 		answerBtn.addEventListener('click', checkAns)
@@ -182,10 +196,23 @@
 			console.log(input)
 			if(input == ""){
 				e.preventDefault();
-				alert("빈칸은 안돼요")
+				alert("내용을 입력해주세요.")
 			}
 		}
-	
 	</script>
+
+    <script>
+        let conDel = document.querySelector('.con_del')
+        let cmtDel = document.querySelector('.cmt_delete')
+
+        conDel.addEventListener('click', delAlrt)
+        cmtDel.addEventListener('click', delAlrt)
+
+        function delAlrt(e) {
+            if(!confirm("삭제하시겠습니까?")) {
+                e.preventDefault()
+            }
+        }
+    </script>
 </body>
 </html>

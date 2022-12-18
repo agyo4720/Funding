@@ -53,14 +53,6 @@
 					<div class="status">
 						<div th:text="${fundBoard.state}">상태</div>
 					</div>
-					<!-- 삭제 버튼 -->
-					<div sec:authorize="hasRole('ROLE_USER')">
-						<div th:if="${fundBoard.fundUser.username == #authentication.getPrincipal().getUsername()}">
-							<div th:if="${!fundBoard.state.toString().equals('100%⇑⇑⇑')}">
-								<a class="con_del" th:href="@{|/fundBoard/delete/${fundBoard.id}|}">삭제</a>
-							</div>
-						</div>
-					</div>
 				</div>
 
 				<div class="view">
@@ -235,8 +227,13 @@
 		</div>
 		<!-- // 댓글 -->
 
-		<div>
-			
+		<!-- 삭제 버튼 -->
+		<div sec:authorize="hasRole('ROLE_USER')">
+			<div th:if="${fundBoard.fundUser.username == #authentication.getPrincipal().getUsername()}">
+				<div th:if="${!fundBoard.state.toString().equals('100%⇑⇑⇑')}">
+					<a class="con_del" th:href="@{|/fundBoard/delete/${fundBoard.id}|}">삭제</a>
+				</div>
+			</div>
 		</div>
 	</section>
 
@@ -249,6 +246,21 @@
 			document.getElementById("pro").className = 'bar2';
 		} else if(proVal.value <= 6) {
 			document.getElementById("pro").className = 'bar';
+		}
+	</script>
+
+	<script>
+		let conDel = document.querySelector('.con_del')
+		let cmtDel = document.querySelector('.cmt_delete')
+
+		conDel.addEventListener('click', delAlrt)
+		cmtDel.addEventListener('click', delAlrt)
+
+
+		function delAlrt(e) {
+			if(!confirm("삭제하시겠습니까?")) {
+				e.preventDefault()
+			}
 		}
 	</script>
 	
