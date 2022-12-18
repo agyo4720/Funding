@@ -47,7 +47,7 @@
 				</div>
 			</div>
 			<!-- 수정하기 -->
-			<div class="modi">
+			<div class="modi" sec:authorize="isAuthenticated()">
 				<a th:if="${selfBoard.fundArtist != null and #authentication.getPrincipal().getUsername() == selfBoard.fundArtist.username}" th:href="@{|/selfBoard/modify/${#authentication.getPrincipal().getUsername()}|}">수정하기</a>
 			</div>
 		</div>

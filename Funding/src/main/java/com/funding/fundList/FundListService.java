@@ -47,6 +47,10 @@ public class FundListService {
 		return fList;
 	}
 	
+	public List<FundList> findByFundUserAndFundBoard(FundUser user, FundBoard fundBoard){
+		List<FundList> fundList = fundListRepository.findByFundUserAndFundBoard(user, fundBoard);
+		return fundList;
+	}
 	
 	//지정펀딩 펀딩하면 db에 등록
 	public void insertList(Principal principal, FundBoard fundBoard) {

@@ -162,6 +162,7 @@
 						<div class="vote">
 							<span th:text="|${fundArtistList.fundUserList.size()}개|"></span>
 							<!-- 투표 버튼 -->
+							<input hidden class="votecheck" th:value="${vote}">
 							<div th:if="${!fundArtistList.fundBoard.state.toString().equals('공연')}">
 								<a id="btn2" sec:authorize="hasRole('ROLE_USER')"
 									th:href="@{|/fundArtistList/score/${fundArtistList.id}/${fundBoard.id}|}">
@@ -217,9 +218,11 @@
 					<div class="cmt_head">
 						<p class="id" th:text="${answer.fundUser} != null ? ${answer.fundUser.username} : ${answer.fundArtist.username}">아이디</p>
 						<p class="time" th:text="${#temporals.format(answer.createDate, 'yyyy-MM-dd (E) HH:mm')}">댓글 시간</p>
-						<div sec:authorize="hasRole('ROLE_USER')" th:if="${answer.fundUser.username == #authentication.getPrincipal().getUsername()}">
-							<a class="cmt_delete" th:href="@{|/answer/delete/${answer.id}?location=board&id=${fundBoard.id}|}">삭제</a>
-						</div>
+						<!-- 1214 수정
+						<div sec:authorize="hasRole('ROLE_USER')" th:if="${answer.fundUser.username == #authentication.getPrincipal().getUsername()}"></div>
+						-->
+						<a class="cmt_delete" th:href="@{|/answer/delete/${answer.id}?location=board&id=${fundBoard.id}|}">삭제</a>
+						
 					</div>
 					<p th:text="${answer.content}">댓글 내용</p>
 				</div>
@@ -247,6 +250,7 @@
 		} else if(proVal.value <= 6) {
 			document.getElementById("pro").className = 'bar';
 		}
+<<<<<<< HEAD
 	</script>
 
 	<script>
@@ -297,9 +301,24 @@
 			}
 		}
 		// 참여 아티스트 유효성 검사 끝	
+=======
+>>>>>>> f7dff81cc799a8e5356681954ef28221609ea2c2
 		
+		document.addEventListener("DOMContentLoaded", function(){
+			let vote = document.querySelector(".votecheck").value
+			if(String(vote) == "false"){
+				console.log("알림" + vote)
+				alert('펀딩을 해야 추천이 가능합니다')
+			}
+
+		}
+		// 참여 아티스트 유효성 검사 끝			
 	</script>
+<<<<<<< HEAD
+
+=======
 	-->
+
 	<!--
 	<script>
 	
@@ -346,5 +365,6 @@
 		
 	</script>
 	-->
+>>>>>>> namgo
 </body>
 </html>

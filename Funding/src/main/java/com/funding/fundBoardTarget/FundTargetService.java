@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.funding.Categorie.Categorie;
 import com.funding.fundUser.FundUser;
@@ -126,6 +127,7 @@ public class FundTargetService {
 		Page<FundBoardTarget> targetList = fundTargetRepository.findByCategorie(categorie, pageable);
 		return targetList;
 	}
+	
 	
 	//결재시 업데이트 됨
 	public void addTargetFund(FundBoardTarget fundBoardTarget) {

@@ -37,7 +37,72 @@
 * 유저, 아티스트의 개인 페이지(아티스트는 자신의 소개 페이지를 작성함)
 
 ### 3. 프로젝트 사용 방법
-> <img width="70%" src="https://user-images.githubusercontent.com/107646818/207524616-ae92b0a5-6daa-4b21-bc75-d41ca64ae601.jpg"/>
+* #### 이 프로젝트의 메인 페이지 입니다.  
+<img width="70%" src="https://user-images.githubusercontent.com/107646818/207565645-addaa089-d660-4a3e-ac46-dbd389954102.png"/>
+
+* #### 로그인  
+<img width="40%" src="https://user-images.githubusercontent.com/110438208/207574355-96f4c325-bc92-47f6-8242-eda863fb4c8e.png"/>
+
+* #### 회원가입  
+<img width="50%" height="800" src="https://user-images.githubusercontent.com/107646818/207574982-93d6fc6d-842b-4097-9c40-0098f90d382e.png"/>
+
+* #### 지정펀딩 클릭시  
+<img width="70%" src="https://user-images.githubusercontent.com/107646818/207566652-c68a5910-f2f8-4e2a-b1f2-d22b65312825.png"/>
+
+* #### 지정펀딩 클릭하고 카테고리  
+<img width="70%" src="https://user-images.githubusercontent.com/107646818/207566803-2a331b46-0661-43d2-9e12-c07fedfbec60.png"/>
+
+* #### 펀딩글 작성화면
+<img width="70%" src="https://user-images.githubusercontent.com/110438208/207573145-4b75f077-18fa-432d-a445-b3b4106624c3.png"/>
+
+* #### 펀딩전 디테일화면  
+<img width="70%" src="https://user-images.githubusercontent.com/107646818/207567018-2578843f-5ba6-4d16-a96c-09aa7cb406bd.png"/>
+
+* #### 펀딩후 디테일화면  
+<img width="70%" src="https://user-images.githubusercontent.com/107646818/207567191-64358636-636c-474b-87d6-062eaac7e8af.png"/>
+
+* #### 기간안에 펀딩 미달성시  
+<img width="70%" src="https://user-images.githubusercontent.com/107646818/207567530-ad6dc69e-83a2-4399-a8f8-28e6b09f2ffe.png"/>
+
+* #### 기간안에 펀딩 달성시  
+<img width="70%" src="https://user-images.githubusercontent.com/107646818/207568412-af63cc65-f30f-44dd-80f5-7e3f5d265a3c.png"/>
+
+* #### 결제방식  
+<img width="80%" src="https://user-images.githubusercontent.com/107646818/207762578-16f44e07-ae00-49c6-8290-06f81bce3a60.png"/>  
+
+* #### 결제 성공시  
+<img width="80%" src="https://user-images.githubusercontent.com/107646818/207568979-90c7c83e-fc0c-41b6-941d-089462b6ef83.png"/>  
+
+* #### 결제내역  
+<img width="90%" src="https://user-images.githubusercontent.com/107646818/207569086-6409a480-1b2b-44a6-aba3-54b0e39b6296.png"/>  
+
+* #### 유저페이지  
+<img width="80%" src="https://user-images.githubusercontent.com/107646818/207569648-da625a67-bc16-4a9b-9d6f-78aaf91b96d9.png"/>  
+
+* #### 유저 정보변경  
+<img width="80%" src="https://user-images.githubusercontent.com/107646818/207569781-c34e3225-ba5d-4f91-b882-053ea52a4c90.png"/>  
+
+* #### 유저 댓글  
+<img width="80%" src="https://user-images.githubusercontent.com/107646818/207570075-46584221-67d4-4694-933e-b4ceaf261f9c.png"/>  
+
+* #### 미지정펀딩 클릭시  
+<img width="80%" src="https://user-images.githubusercontent.com/107646818/207568686-e5ff9afe-a92f-4e87-a552-250a27602603.png"/>  
+
+* #### 아티스트 페이지  
+<img width="80%" src="https://user-images.githubusercontent.com/107646818/207570257-15119784-06d7-486b-bc2e-98cbd97aa757.png"/>  
+
+* #### 아티스트 소개 작성 전  
+<img width="80%" src="https://user-images.githubusercontent.com/107646818/207570336-33d454b0-9670-4eea-b29a-ef8d220f554c.png"/>  
+
+* #### 아티스트 소개 작성 후  
+<img width="80%" src="https://user-images.githubusercontent.com/107646818/207570503-7c8a0414-f392-4424-ad6f-5a494c2f9a2a.png"/>  
+
+* #### 계좌관리  
+<img width="80%" src="https://user-images.githubusercontent.com/107646818/207570661-d6ffe36d-0b1c-4162-8356-b6668e66dc0a.png"/>  
+
+* #### 미지정 아티스트 투표  
+<img width="80%" src="https://user-images.githubusercontent.com/107646818/207570916-70ebe7e5-d003-4fa9-8d9a-ff35d20968b0.png"/>  
+
 
 ### 4. 팀원 및 참고 자료
 * [하은교(팀장)](https://github.com/agyo4720)

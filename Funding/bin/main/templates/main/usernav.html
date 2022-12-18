@@ -14,7 +14,9 @@
         <li sec:authorize="hasRole('ROLE_ARTIST')"><a class="info">프로필</a></li>
     </ul>
 </nav>
-<input hidden class="artist" th:value="${#authentication.getPrincipal().getUsername()}"/>
+<div sec:authorize="isAuthenticated()">
+	<input hidden class="artist" th:value="${#authentication.getPrincipal().getUsername()}"/>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
@@ -56,15 +58,4 @@
    		})
 	};
     
-    // let cateList = document.querySelectorAll('.cate')
-
-    // document.addEventListener("DOMContentLoaded", addActive)
-
-    // function addActive() {
-    //     cateList.forEach(function(e) {
-    //         e.classList.remove('active')
-    //     })
-
-    //     cateList[cate].classList.add('cate')
-    // }
 </script>
