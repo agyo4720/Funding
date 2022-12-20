@@ -35,6 +35,7 @@ public class FundBoardTarget {
 	
 	private String subject;
 	
+	@Column(columnDefinition = "TEXT")
 	private String content;
 	
 	private String artiest;

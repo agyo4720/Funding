@@ -139,7 +139,6 @@ public class SelfBoardController {
 	public Resource showImg(@PathVariable("id")Integer id) throws IOException {
 		SelfBoard selfBoard = selfBoardService.findById(id);
 		String imgPath = selfBoard.getFilePath();
-		log.info("셀프보드 이미지 신호 받음 : ");
 		return new UrlResource("file:" + imgPath);
 	}
 	
