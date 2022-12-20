@@ -29,5 +29,17 @@
             </form>
         </div>
     </section>
+
+    <script>
+        let payBtn = document.querySelector('.pay_btn')
+        
+        payBtn.addEventListener('click', delAlrt)
+
+        function delAlrt(e) {
+            if(!confirm("환불하시겠습니까?")) {
+                e.preventDefault()
+            }
+        }
+    </script>
 </body>
 </html>

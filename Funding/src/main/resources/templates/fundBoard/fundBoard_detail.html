@@ -53,14 +53,6 @@
 					<div class="status">
 						<div th:text="${fundBoard.state}">상태</div>
 					</div>
-					<!-- 삭제 버튼 -->
-					<div sec:authorize="hasRole('ROLE_USER')">
-						<div th:if="${fundBoard.fundUser.username == #authentication.getPrincipal().getUsername()}">
-							<div th:if="${!fundBoard.state.toString().equals('100%⇑⇑⇑')}">
-								<a class="con_del" th:href="@{|/fundBoard/delete/${fundBoard.id}|}">삭제</a>
-							</div>
-						</div>
-					</div>
 				</div>
 
 				<div class="view">
@@ -226,9 +218,11 @@
 					<div class="cmt_head">
 						<p class="id" th:text="${answer.fundUser} != null ? ${answer.fundUser.username} : ${answer.fundArtist.username}">아이디</p>
 						<p class="time" th:text="${#temporals.format(answer.createDate, 'yyyy-MM-dd (E) HH:mm')}">댓글 시간</p>
-						<div sec:authorize="hasRole('ROLE_USER')" th:if="${answer.fundUser.username == #authentication.getPrincipal().getUsername()}">
-							<a class="cmt_delete" th:href="@{|/answer/delete/${answer.id}?location=board&id=${fundBoard.id}|}">삭제</a>
-						</div>
+						<!-- 1214 수정
+						<div sec:authorize="hasRole('ROLE_USER')" th:if="${answer.fundUser.username == #authentication.getPrincipal().getUsername()}"></div>
+						-->
+						<a class="cmt_delete" th:href="@{|/answer/delete/${answer.id}?location=board&id=${fundBoard.id}|}">삭제</a>
+						
 					</div>
 					<p th:text="${answer.content}">댓글 내용</p>
 				</div>
@@ -236,8 +230,13 @@
 		</div>
 		<!-- // 댓글 -->
 
-		<div>
-			
+		<!-- 삭제 버튼 -->
+		<div sec:authorize="hasRole('ROLE_USER')">
+			<div th:if="${fundBoard.fundUser.username == #authentication.getPrincipal().getUsername()}">
+				<div th:if="${!fundBoard.state.toString().equals('100%⇑⇑⇑')}">
+					<a class="con_del" th:href="@{|/fundBoard/delete/${fundBoard.id}|}">삭제</a>
+				</div>
+			</div>
 		</div>
 	</section>
 
@@ -251,6 +250,59 @@
 		} else if(proVal.value <= 6) {
 			document.getElementById("pro").className = 'bar';
 		}
+<<<<<<< HEAD
+	</script>
+
+	<script>
+		let conDel = document.querySelector('.con_del')
+		let cmtDel = document.querySelector('.cmt_delete')
+
+		conDel.addEventListener('click', delAlrt)
+		cmtDel.addEventListener('click', delAlrt)
+
+
+		function delAlrt(e) {
+			if(!confirm("삭제하시겠습니까?")) {
+				e.preventDefault()
+			}
+		}
+	</script>
+	
+	<!--
+	<script>
+		// 참여 아티스트 유효성 검사 시작
+		let username = document.querySelector('.username').value;
+		let fundArtistList = document.querySelectorAll('.fundArtistList');
+		let fundUserList = document.querySelectorAll('.fundUserList');
+		let selfBoard = document.querySelector('.selfBoard');
+	
+		let btn1 = document.querySelector('#btn1');
+		let btn2 = document.querySelector('#btn2');
+
+		btn1.addEventListener('click', check);
+
+		function check(){
+
+			console.log('실행되었습니다!');
+			
+			let bol = true;
+
+			fundArtistList.forEach(function(e){
+
+				if(e.value == username){
+					bol = false;
+				}
+			})
+
+			if(bol == true){
+				alert("참여 완료되었습니다.");
+			}else{
+				alert("이미 참여하였습니다.");
+			}
+		}
+		// 참여 아티스트 유효성 검사 끝	
+=======
+>>>>>>> f7dff81cc799a8e5356681954ef28221609ea2c2
 		
 		document.addEventListener("DOMContentLoaded", function(){
 			let vote = document.querySelector(".votecheck").value
@@ -262,6 +314,57 @@
 		})
 		// 참여 아티스트 유효성 검사 끝			
 	</script>
+<<<<<<< HEAD
 
+=======
+	-->
+
+	<!--
+	<script>
+	
+		let val1 = $('#val1').val()
+		let fdid1 = $('#fdid1').val()
+	    let url = val1 ;
+	    alert(url)
+		$('#btn1').click(function(e){
+		    e.preventDefault();
+		    e.stopPropagation();
+		    
+			$.ajax({
+				url: url,
+				type:'POST',				
+				success: function(result){
+					console.log(result)
+					alert(result);
+					let html = '<div class="art_con">'
+					html += '<div class="profile">'
+					html += '	<div class="image">'
+					html += '		<img src="/selfBoard/img/3">'
+					html += '	</div>'
+					html += '	<div class="pr">'
+					html += '		<h3><a href="/selfBoard/detail/zmfpdydvkq">'+ result.nickname  +'</a></h3>'
+					html += '		</div>'
+					html += '		<div>'
+					html += '			<input hidden="" class="username" value="zmfpdydvkq">'
+					html += '		</div>'
+					html += '	</div>'
+					html += '   <div class="vote">'
+					html += '<span>0개</span>'
+					html += '		<input hidden="" class="fundArtistList" value="zmfpdydvkq">'
+					html += '	</div>'
+					html += '</div>'	
+				    $('.image').append(html)
+				}
+				,
+				error: function(xhr){
+					console.log(xhr);
+					alert(xhr.status +':'+xhr.textStatus);
+				}
+			})
+		})
+		
+	</script>
+	-->
+>>>>>>> namgo
 </body>
 </html>
