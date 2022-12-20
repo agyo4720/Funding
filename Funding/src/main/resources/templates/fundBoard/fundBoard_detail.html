@@ -250,7 +250,12 @@
 		} else if(proVal.value <= 6) {
 			document.getElementById("pro").className = 'bar';
 		}
-<<<<<<< HEAD
+		
+		let vote = document.querySelector('.votecheck').value
+		console.log('vote : ' + vote)
+		if(vote == 'false'){
+			alert('결재 후 투표가 가능합니다')
+		}
 	</script>
 
 	<script>
@@ -266,105 +271,9 @@
 				e.preventDefault()
 			}
 		}
-	</script>
-	
-	<!--
-	<script>
-		// 참여 아티스트 유효성 검사 시작
-		let username = document.querySelector('.username').value;
-		let fundArtistList = document.querySelectorAll('.fundArtistList');
-		let fundUserList = document.querySelectorAll('.fundUserList');
-		let selfBoard = document.querySelector('.selfBoard');
-	
-		let btn1 = document.querySelector('#btn1');
-		let btn2 = document.querySelector('#btn2');
-
-		btn1.addEventListener('click', check);
-
-		function check(){
-
-			console.log('실행되었습니다!');
-			
-			let bol = true;
-
-			fundArtistList.forEach(function(e){
-
-				if(e.value == username){
-					bol = false;
-				}
-			})
-
-			if(bol == true){
-				alert("참여 완료되었습니다.");
-			}else{
-				alert("이미 참여하였습니다.");
-			}
-		}
-		// 참여 아티스트 유효성 검사 끝	
-=======
->>>>>>> f7dff81cc799a8e5356681954ef28221609ea2c2
 		
-		document.addEventListener("DOMContentLoaded", function(){
-			let vote = document.querySelector(".votecheck").value
-			if(String(vote) == "false"){
-				console.log("알림" + vote)
-				alert('펀딩을 해야 추천이 가능합니다')
-			}
-
-		})
-		// 참여 아티스트 유효성 검사 끝			
-	</script>
-<<<<<<< HEAD
-
-=======
-	-->
-
-	<!--
-	<script>
-	
-		let val1 = $('#val1').val()
-		let fdid1 = $('#fdid1').val()
-	    let url = val1 ;
-	    alert(url)
-		$('#btn1').click(function(e){
-		    e.preventDefault();
-		    e.stopPropagation();
-		    
-			$.ajax({
-				url: url,
-				type:'POST',				
-				success: function(result){
-					console.log(result)
-					alert(result);
-					let html = '<div class="art_con">'
-					html += '<div class="profile">'
-					html += '	<div class="image">'
-					html += '		<img src="/selfBoard/img/3">'
-					html += '	</div>'
-					html += '	<div class="pr">'
-					html += '		<h3><a href="/selfBoard/detail/zmfpdydvkq">'+ result.nickname  +'</a></h3>'
-					html += '		</div>'
-					html += '		<div>'
-					html += '			<input hidden="" class="username" value="zmfpdydvkq">'
-					html += '		</div>'
-					html += '	</div>'
-					html += '   <div class="vote">'
-					html += '<span>0개</span>'
-					html += '		<input hidden="" class="fundArtistList" value="zmfpdydvkq">'
-					html += '	</div>'
-					html += '</div>'	
-				    $('.image').append(html)
-				}
-				,
-				error: function(xhr){
-					console.log(xhr);
-					alert(xhr.status +':'+xhr.textStatus);
-				}
-			})
-		})
 		
 	</script>
-	-->
->>>>>>> namgo
+	
 </body>
 </html>

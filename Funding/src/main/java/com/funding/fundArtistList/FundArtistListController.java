@@ -89,13 +89,13 @@ public class FundArtistListController {
 		
 		// 해당 펀드아티스트리스트 아이디
 		FundArtistList fundArtistList = this.fundArtistListService.findById(faid);
-		
+		FundBoard fundBoard = this.fundBoardService.findById(fbid);
 		// 투표하기한 유저정보
 		FundUser fundUser = this.fundUserService.findByuserName(principal.getName()).get();
 		
-		List<FundList> fundList = fundListService.findByFundUserAndFundBoard(fundUser, fundArtistList.getFundBoard());
+		List<FundList> fundList = fundListService.findByFundUserAndFundBoard(fundUser, fundBoard);
 		
-		if(fundList != null) {
+		if(fundList.size() <= 0) {
 			rttr.addFlashAttribute("vote", "false");
 			return String.format("redirect:/fundBoard/detail/%s", fbid);
 		}else {
