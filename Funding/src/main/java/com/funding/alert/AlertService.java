@@ -202,7 +202,7 @@ public class AlertService {
 	
 	//미지정 펀딩기간 마감 + 100%시 공연자 당선
 	public void fundBoardSuccess(FundBoard fundBoard) throws Exception {
-		LocalDate d1 = LocalDate.parse("2022-12-22",DateTimeFormatter.ISO_DATE);
+		LocalDate d1 = LocalDate.parse("2022-12-25",DateTimeFormatter.ISO_DATE);
 		
 		//펀딩마감 되면 실행
 		if(fundBoard.getFundDuration().isBefore(LocalDate.now())) {

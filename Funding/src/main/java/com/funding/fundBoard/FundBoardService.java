@@ -173,4 +173,9 @@ public class FundBoardService {
 		List<FundBoard> bList = fundBoardRepository.findAll();
 		return bList;
 	}
+	
+	//펀딩 수정
+	public void modify(FundBoard fundBoard) {
+		fundBoardRepository.save(fundBoard);
+	}
 }

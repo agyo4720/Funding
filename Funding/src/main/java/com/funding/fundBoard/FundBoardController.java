@@ -282,12 +282,21 @@ public class FundBoardController {
 	// 2022/12/14 - 1 작업중
 
 //	선정된 아티스트 공연 일정 수정 페이지
-	@RequestMapping("/modify/{id}")
+	@GetMapping("/modify/{id}")
 	public String modify(@PathVariable ("id") Integer id, Model model) {
 		
+		log.info(">>> ");
 		FundBoard fundBoard = this.fundBoardService.findById(id);
 		model.addAttribute("fundBoard", fundBoard);
-		log.info(">>> " + fundBoard);
 		return "/fundBoard/fundBoard_modify";
+	}
+	
+	@PostMapping("/modify/{id}")
+	public String modifyEnd(@PathVariable ("id") Integer id,String place) {
+		
+		FundBoard fundBoard = this.fundBoardService.findById(id);
+		fundBoard.setPlace(place);
+		fundBoardService.modify(fundBoard);
+		return "redirect:/fundBoard/list";
 	}
 }
