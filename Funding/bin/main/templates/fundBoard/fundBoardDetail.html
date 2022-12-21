@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>fundBoard_detail</title>
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="/css/fundBoard/fundBoard_detail.css">
+	
+    <!-- favicon -->
+    <link rel="shortcut icon" href="/img/favicon/ms-icon-310x310.png" type="image/x-icon" />
+</head>
+<body>
+	
+	<!-- 홈페이지 상단 nav -->
+    <header th:replace="/main/nav"></header>
+
+	<section>
+		<!-- 공연 정보 -->
+		<div class="con">
+			<!-- 좌측 -->
+			<div class="left">
+				<!-- 카테고리 -->
+				<div class="cate">
+					<a href="/fundBoard/list"
+					th:text="|미지정 펀딩 > ${fundBoard.categorieName}|"></a>
+				</div>
+				<!-- 공연명 -->
+				<h3 th:text="${fundBoard.subject}">공연 이름</h3>
+				<!-- 이미지 -->
+				<div class="image">
+					<div th:if="${fundBoard.imgPath != null}">
+						<img th:src="${fundBoard.imgPath}" height="300">
+					</div>
+					<div th:if="${fundBoard.filePath != null}">
+						<img th:src="|/fundBoard/img/${fundBoard.id}|" height="300">
+					</div>
+				</div>
+			</div>
+			<!-- // 좌측 -->
+		
+			<!-- 우측 -->
+			<div class="right">
+				<!-- 공연 상세 정보 -->
+				<!-- 공연 진행 상태 -->
+				<div class="view">
+					<div class="status">
+						<div th:text="${fundBoard.state}">상태</div>
+					</div>
+				</div>
+				<!-- 작성자 -->
+				<div class="view">
+					<label for="writer">작성자</label>
+					<p th:text="${fundBoard.fundUser.username}"></p>
+				</div>
+				<!-- 공연일 -->
+				<div class="view">
+					<label for="startDate">공연일</label>
+					<p th:text="${#temporals.format(fundBoard.startDateTime, 'yyyy-MM-dd (E) HH:mm')}">공연일</p>
+				</div>
+				<!-- 공연장 -->
+				<div class="view">
+					<label for="place">공연장</label>
+					<p th:text="${fundBoard.place}"></p>
+				</div>
+				<!-- 공연 시간 -->
+				<div class="view">
+					<label for="runtime">공연시간</label>
+					<p th:text="|${fundBoard.runtime}분|">공연시간</p>
+				</div>
+				<!-- // 공연 상세 정보 -->
+				<div class="con_hr_detail">
+					<hr/>
+				</div>
+				
+				<div class="view int_progress">
+                	<progress th:value="|${fundBoard.fundCurrent * 100 / fundBoard.fundAmount}|" max="100"></progress>
+                	<span th:text="|${fundBoard.fundCurrent * 100 / fundBoard.fundAmount}%|"></span>
+                </div>
+
+				<div class="view" id="fundCurrent">
+					<label for="fundCurrent">현재 펀딩 금액</label>
+					<p th:text="|${#numbers.formatInteger(fundBoard.fundCurrent, 1, 'COMMA')}원|"></p>
+				</div>
+				<div class="view" id="fundAmount">
+					<label for="fundAmount">총 펀딩 금액</label>
+					<p th:text="|${#numbers.formatInteger(fundBoard.fundAmount, 3, 'COMMA')}원|"></p>
+				</div>
+				<div class="view">
+					<label for="duration">펀딩기간</label>
+					<p th:text="|${#temporals.format(fundBoard.createDate, 'yyyy-MM-dd (E)')} ~ 
+						${#temporals.format(fundBoard.fundDuration, 'yyyy-MM-dd (E)')}|"></p>
+				</div>
+				<div class="view">
+					<label for="count">현재 인원</label>
+					<p th:text="|${fundBoard.currentMember}명|"></p>
+				</div>
+				<div class="view minFund">
+					<label for="minFund">최소 펀딩 금액</label>
+					<p th:text="|${#numbers.formatInteger(fundBoard.minFund, 3, 'COMMA')}원|"></p>
+				</div>
+				<div sec:authorize="hasRole('ROLE_USER')">
+					<button th:if="${result == true}" class="con_btn" th:onclick="'location.href=\''+ @{/pay/can/cancel(paymentKey=${payCode})} + '\''" type="submit">환불하기</button>
+					<button th:if="${result == false}" class="con_btn" th:onclick="'location.href=\''+ @{|/pay/tossPay/${fundBoard.id}|} + '\''">결제하기</button>
+				</div>
+			</div>
+			<!-- // 우측 -->
+		</div>
+		<!-- // 공연 정보 -->
+		
+		<div class="con_hr">
+			<hr/>
+		</div>
+
+		<!-- 참여 아티스트 -->
+		<div>
+			<!-- 참여 아티스트 유효성 검사 시작 -->
+			<input hidden class="username" th:value="${#authentication.getPrincipal().getUsername()}">
+			
+			<div>현재 참여중인 아티스트</div>
+			
+			<div sec:authorize="hasRole('ROLE_ARTIST')">			
+				<a id="btn1" th:href="@{|/fundArtistList/join/${fundBoard.id}|}">참여하기</a>
+			</div>
+					
+			<div th:each="fundArtistList : ${fundArtistList}">
+				<img th:src="|/selfBoard/img/${fundArtistList.fundArtist.selfBoard.id}|" width="30" height="35">
+				<a th:href="@{|/selfBoard/detail/${fundArtistList.fundArtist.nickname}|}" th:text="${fundArtistList.fundArtist.nickname}">자기소개 보기</a>
+				<a id="btn2" sec:authorize="hasRole('ROLE_USER')" th:href="@{|/fundArtistList/score/${fundArtistList.id}/${fundBoard.id}|}">투표하기</a>
+				<span th:text="|${fundArtistList.fundUserList.size()}개|"></span>
+				<input hidden class="fundArtistList" th:value="${fundArtistList.fundArtist.username}">
+			</div>
+			
+			<!-- 참여 아티스트 유효성 검사 끝 -->
+		</div>
+		<!-- // 참여 아티스트 -->
+		
+		<div class="con_hr">
+			<hr/>
+		</div>
+
+		<!-- 공연 내용 -->
+		<div class="con_text">
+			<div class="title">
+                <h2>공연 내용</h2>
+			</div>
+
+			<div th:utext="${fundBoard.content}">설명</div>
+		</div>
+		<!-- // 공연 내용 -->
+
+		<div class="con_hr">
+            <hr/>
+        </div>
+		
+		<!-- 댓글 -->
+		<div class="con_comment">
+			<div class="title">
+				<h2>댓글</h2>
+			</div>
+
+			<div class="cmt_form">
+				<form th:action="@{|/answer/fundBoard/create/${fundBoard.id}|}" method="GET">
+					<textarea class="int_cmt" name="content" placeholder="내용을 입력하세요."></textarea>
+					<button class="btn_cmt" type="submit">등록</button>
+				</form>
+			</div>
+			
+			<div class="cmt_view" th:each="answer : ${answerList}">
+				<div class="cmt">
+					<div class="cmt_head">
+						<p class="id" th:text="${answer.fundUser} != null ? ${answer.fundUser.username} : ${answer.fundArtist.username}">아이디</p>
+						<p class="time" th:text="${#temporals.format(answer.createDate, 'MM-dd HH:mm:ss')}">댓글 시간</p>
+						<a class="cmt_delete" th:href="@{|/answer/delete/${answer.id}?location=board&id=${fundBoard.id}|}">삭제</a>
+					</div>
+					<p th:text="${answer.content}">댓글 내용</p>
+				</div>
+			</div>
+		</div>
+		<!-- // 댓글 -->
+
+		<div>
+			<a th:href="@{|/fundBoard/delete/${fundBoard.id}|}">삭제</a>
+		</div>
+	</section>
+		
+</body>
+</html>
